@@ -1,11 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../pages/Header'
 import Footer from '../pages/Footer'
 
 const Home = () => {
   const navigate = useNavigate()
-  const videoRef = useRef(null)
   const reviewsRef = useRef(null)
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0)
   const reviews = [
@@ -106,32 +105,8 @@ const Home = () => {
     const prevIndex = currentReviewIndex === 0 ? reviews.length - 1 : currentReviewIndex - 1
     scrollToReview(prevIndex)
   }
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && videoRef.current) {
-            videoRef.current.play()
-          } else if (videoRef.current) {
-            videoRef.current.pause()
-          }
-        })
-      },
-      { threshold: 0.5 }
-    )
 
-    const currentVideo = videoRef.current
-    if (currentVideo) {
-      observer.observe(currentVideo)
-    }
-
-    return () => {
-      if (currentVideo) {
-        observer.unobserve(currentVideo)
-      }
-    }
-  }, [])
-    const courses = [
+  const courses = [
     {
       id: 1,
       title: "Understanding Trauma",
@@ -152,6 +127,15 @@ const Home = () => {
 
   return (<div className="min-h-screen bg-cream">
       <Header />
+      
+      {/* Promotional Banner */}
+      <section className="w-full bg-white py-3 border-b border-gray-200 -mt-40 pt-33">
+        <div className="container max-w-7xl mx-auto text-center">
+          <p className="text-sm font-medium text-gray-800">
+            GET 10% OFF YOUR FIRST ORDER — WEL10 🎁
+          </p>
+        </div>
+      </section>
       
       {/* Testimonial Section */}
       <section className="w-full py-16 bg-cream">
@@ -246,38 +230,14 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>{/* You Will Overcome Section */}
+      </section>      {/* You Will Overcome Section */}
       <section className="w-full py-16 bg-cream">
         <div className="container px-4 md:px-6 max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">            {/* Video */}
-            <div className="flex justify-center">
-              <div className="relative max-w-sm">
-                {/* iPhone Frame */}
-                <img 
-                  src="/iphone.png" 
-                  alt="iPhone Frame" 
-                  className="w-full h-auto relative z-0"
-                />
-                {/* Video inside iPhone */}
-                <div className="absolute top-[4%] left-[13%] w-[75%] h-[89%] pointer-events-none">
-                  <video 
-                    ref={videoRef}
-                    controls
-                    muted
-                    className="w-full h-full object-cover rounded-[1.5rem] pointer-events-auto z-10"
-                    poster=""
-                  >
-                    <source src="/iphone-frame-vid.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
-              </div>
-            </div>
-            
+          <div className="max-w-4xl mx-auto">
             {/* Content */}
             <div>
-              <h2 className="text-3xl font-serif mb-8">You will overcome...</h2>
-              <ul className="space-y-4">
+              <h2 className="text-3xl font-fitzgerald mb-8 text-left">You will overcome...</h2>
+              <ul className="space-y-4 text-left">
                 <li className="flex items-start">
                   <div className="mr-2 mt-1">•</div>
                   <span>People-pleasing patterns and codependent tendencies</span>
@@ -304,8 +264,8 @@ const Home = () => {
                 </li>
               </ul>
               
-              <h2 className="text-3xl font-serif mt-10 mb-8">You will learn...</h2>
-              <ul className="space-y-4">
+              <h2 className="text-3xl font-fitzgerald mt-10 mb-8 text-left">You will learn...</h2>
+              <ul className="space-y-4 text-left">
                 <li className="flex items-start">
                   <div className="mr-2 mt-1">•</div>
                   <span>How to identify and heal your core trauma patterns</span>
@@ -331,7 +291,7 @@ const Home = () => {
       <section className="py-24 bg-white" id="courses">
         <div className="max-w-6xl mx-auto px-8">
           <div className="text-center mb-20">
-            <h2 className="text-4xl font-serif font-light mb-6 text-black leading-tight tracking-tight uppercase">
+            <h2 className="text-4xl font-fitzgerald font-light mb-6 text-black leading-tight tracking-tight uppercase">
               Our Courses
             </h2>
             <p className="text-xl max-w-2xl mx-auto text-black/80">
@@ -445,7 +405,7 @@ const Home = () => {
       <section className="py-24 bg-cream">
         <div className="max-w-7xl mx-auto px-8">
           <div className="text-center mb-20">
-            <h2 className="text-4xl font-serif font-light mb-6 text-black leading-tight tracking-tight">
+            <h2 className="text-4xl font-fitzgerald font-light mb-6 text-black leading-tight tracking-tight">
               Let The Reviews Speak For Themselves...
             </h2>
           </div>
@@ -504,7 +464,7 @@ const Home = () => {
       <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-black mb-4">
+            <h2 className="text-3xl font-fitzgerald font-bold text-black mb-4">
               Before purchasing, please review our most common questions on the 12-Month Pathway Membership below...
             </h2>
             <div className="w-full h-px bg-cream mt-8"></div>

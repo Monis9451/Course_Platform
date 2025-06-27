@@ -11,13 +11,13 @@ const Header = () => {
 
   const navigationItems = [
     { name: 'Home', path: '/' },
-    ...(user ? [] : [{ name: 'Login', path: '/login' }]), // Hide login if user is authenticated
+    // ...(user ? [] : [{ name: 'Login', path: '/login' }]), // Hide login if user is authenticated
     { name: 'All Courses', path: '/courses' },
-    { name: 'Unburdening Trauma', path: '/course/1' },
-    { name: 'Unburdening Love', path: '/course/2' },
-    { name: 'About The Mind Planner', path: '/about' },
+    // { name: 'Unburdening Trauma', path: '/course/1' },
+    // { name: 'Unburdening Love', path: '/course/2' },
+    { name: 'About The Founder', path: '/about' },
+    { name: 'Contact Us', path: '/support' },
     { name: 'Blogs', path: '/blogs' },
-    { name: 'Help Center', path: '/support' },
   ];
 
   const handleLogout = async () => {
@@ -46,7 +46,7 @@ const Header = () => {
   
   return (
     <div className="pt-40">
-      <nav className="bg-primary px-4 py-12 fixed top-0 w-full z-50 shadow-lg">
+      <nav className="bg-primary px-4 py-12 fixed top-0 w-full z-50 shadow-lg text-base">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           {/* Left - Hamburger Menu */}
           <div className="flex items-center">
@@ -63,7 +63,7 @@ const Header = () => {
               <img 
                 src="/mindplanner_new_logo.png" 
                 alt="The Mind Planner" 
-                className="h-16 md:h-20 w-auto cursor-pointer hover:opacity-90 transition-opacity duration-200" 
+                className="h-14 md:h-18 w-auto cursor-pointer hover:opacity-90 transition-opacity duration-200" 
               />
             </Link>
           </div>          {/* Right - Icons */}
@@ -137,7 +137,7 @@ const Header = () => {
           {/* Close Button */}
           <div className="flex justify-end p-4">
             <button
-              className="text-[#B45B29] hover:text-[#8B3A1A] focus:outline-none transition-colors duration-200"
+              className="text-black hover:text-gray-700 focus:outline-none transition-colors duration-200"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               <FiX className="h-6 w-6" />
@@ -155,18 +155,18 @@ const Header = () => {
                       className="h-10 w-10 rounded-full"
                     />
                   ) : (
-                    <div className="h-10 w-10 bg-[#B45B29] rounded-full flex items-center justify-center">
+                    <div className="h-10 w-10 bg-black rounded-full flex items-center justify-center">
                       <FiUser className="h-5 w-5 text-white" />
                     </div>
                   )}
                   <div>
-                    <p className="text-sm font-medium text-[#B45B29]">Signed in as</p>
+                    <p className="text-sm font-medium text-black">Signed in as</p>
                     <p className="text-xs text-gray-600 truncate">{user.email}</p>
                   </div>
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="flex items-center w-full text-left text-[#B45B29] hover:text-[#8B3A1A] text-sm py-2 transition-colors duration-200"
+                  className="flex items-center w-full text-left text-black hover:text-gray-700 text-sm py-2 transition-colors duration-200"
                 >
                   <FiLogOut className="h-4 w-4 mr-3" />
                   Sign out
@@ -175,11 +175,12 @@ const Header = () => {
             )}
             
             <div className="space-y-1">
+              <div className="border-t border-gray-200"></div>
               {navigationItems.map((item, index) => (
                 <Link
                   key={index}
                   to={item.path}
-                  className="block text-[#B45B29] hover:text-[#8B3A1A] text-lg py-3 border-b border-gray-200 transition-colors duration-200 font-medium"
+                  className="block text-black hover:text-gray-700 text-base py-3 border-b border-gray-200 transition-colors duration-200 font-medium"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.name}
