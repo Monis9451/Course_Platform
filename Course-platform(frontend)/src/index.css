@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+.bg-primary {
+  background-color: #B45B29;
+}
+
+.text-primary {
+  color: #B45B29;
+}
+
+.bg-primary-light {
+  background-color: #D97E4F;
+}
+
+.bg-primary-dark {
+  background-color: #8B3A1A;
+}
+
+.bg-warm-beige {
+  background-color: #F5E6D3;
+}
+
+.bg-cream {
+  background-color: #FDF8F3;
+}
+
+.text-warm-gray {
+  color: #6B5B4F;
+}
+
+.border-primary {
+  border-color: #B45B29;
+}
+
+.border-cream {
+  border-color: #FDF8F3;
+}
+
+.hover-primary:hover {
+  background-color: #8B3A1A;
+}

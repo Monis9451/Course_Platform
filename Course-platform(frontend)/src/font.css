@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Fitzgerald';
+  src: url('./assets/fonts/HV-Fitzgerald-Regular.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Ensure the font family is properly declared for Tailwind */
+.font-fitzgerald {
+  font-family: 'Fitzgerald', Arial, sans-serif;
+}
