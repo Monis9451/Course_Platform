@@ -312,18 +312,12 @@ const Login = () => {
           <div className="mt-8 text-center text-sm">
             <span className="text-black">Or log in with</span>
           </div>
-            <div className="mt-4 grid grid-cols-2 gap-4">
-            <button 
-              type="button"
-              className="bg-[#395693] text-white py-2 flex items-center justify-center"
-            >
-              Facebook
-            </button>
+            <div className="mt-4 flex justify-center">
             <button 
               type="button"
               onClick={handleGoogleAuth}
               disabled={loading}
-              className={`py-2 flex items-center justify-center text-white ${
+              className={`py-2 px-8 flex items-center justify-center text-white ${
                 loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#4285F4] hover:bg-[#3367d6]'
               }`}
             >

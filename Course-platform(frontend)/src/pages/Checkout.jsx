@@ -7,10 +7,10 @@ function Checkout() {
   return (
     <>
       <Header />
-      <div className="flex flex-col bg-[#f7f1e9] min-h-screen w-full px-4 sm:px-8">
+      <div className="flex flex-col bg-cream min-h-screen w-full px-4 sm:px-8">
         {/* Header */}
         <div className="flex flex-col items-center justify-center mt-12 mb-8 text-center">
-          <h1 className="text-[#B45B29] text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
+          <h1 className="text-black text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
             Complete Your Purchase
           </h1>
           <p className="text-gray-700 text-lg sm:text-xl">
@@ -22,7 +22,7 @@ function Checkout() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_450px] gap-10 lg:mx-24 mb-10">
           {/* Left Section */}
           <div className="bg-white p-6 sm:p-8 rounded-md flex flex-col">
-            <h1 className="text-[#B45B29] text-2xl sm:text-3xl font-bold mb-4">
+            <h1 className="text-black text-2xl sm:text-3xl font-bold mb-4">
               Your Course
             </h1>
 
@@ -35,7 +35,7 @@ function Checkout() {
               />
 
               <div className="flex flex-col col-span-1">
-                <h3 className="text-[#B45B29] font-semibold text-lg sm:text-xl">
+                <h3 className="text-black font-semibold text-lg sm:text-xl">
                   Unburdening Trauma: A 6-Week Self-Paced Course
                 </h3>
                 <p className="text-gray-600 text-sm sm:text-base">
@@ -48,7 +48,7 @@ function Checkout() {
                 </div>
               </div>
 
-              <p className="hidden sm:block text-[#B45B29] font-semibold col-span-1 self-center">
+              <p className="hidden sm:block text-black font-semibold col-span-1 self-center">
                 £75.00
               </p>
             </div>
@@ -66,7 +66,7 @@ function Checkout() {
 
             {/* Coupon */}
             <div className="flex flex-col">
-              <h2 className="text-[#B45B29] font-semibold text-xl">
+              <h2 className="text-black font-semibold text-xl">
                 Have a Coupon?
               </h2>
               <div className="flex flex-col sm:flex-row mt-6 mb-6 gap-3">
@@ -75,7 +75,7 @@ function Checkout() {
                   placeholder="Enter a Coupon Code"
                   type="text"
                 />
-                <button className="bg-gray-800 text-white px-4 py-3 rounded sm:rounded-r cursor-pointer">
+                <button className="bg-[#393128] text-white px-4 py-3 rounded sm:rounded-r cursor-pointer">
                   Apply
                 </button>
               </div>
@@ -84,7 +84,7 @@ function Checkout() {
 
           {/* Right Section */}
           <div className="bg-white p-6 sm:p-8 rounded-md flex flex-col">
-            <h1 className="text-[#B45B29] text-2xl sm:text-3xl font-bold">
+            <h1 className="text-black text-2xl sm:text-3xl font-bold">
               Order Summary
             </h1>
 

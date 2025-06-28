@@ -218,7 +218,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-[#bd6334] text-2xl mb-6">THE NEUROSCIENCE: HOW TRAUMA REWIRES THE BRAIN</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <h3 className="font-semibold mb-3 text-[#bd6334]">Understanding The Neuroscience of Trauma</h3>
               <p className="mb-4">Trauma isn't just something that happens to us - it changes us, right down to the way our brain functions. If you've ever wondered why certain triggers bring back overwhelming emotions, why your body reacts before your mind catches up, or why it feels impossible to just move on, the answer lies in how trauma rewires the brain.</p>
               <div className="flex items-centre">
@@ -420,7 +420,7 @@ const CourseContent = () => {
               </div>
             </div>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <h3 className="font-semibold mb-3 text-[#bd6334]">The Good News: Neuroplasticity</h3>
               <p className="mb-4">The brain can heal and form new neural pathways throughout life. The exercises in this course are designed to help your prefrontal cortex regain control, calm your amygdala, and help your hippocampus properly process traumatic memories.</p>
               <p className="italic">Understanding how trauma affects your brain is the first step toward healing these neural pathways.</p>
@@ -438,7 +438,7 @@ const CourseContent = () => {
             
             <p className="mb-6">When trauma occurs, it disrupts the delicate balance our nervous system maintains. Our body's fight-or-flight response (controlled by the sympathetic nervous system) can become stuck in overdrive, or sometimes, it can shut down entirely. This imbalance leads us into two primary states: hyperarousal and hypoarousal.</p>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-6">
+            <div className="bg-cream p-6 rounded-md mb-6">
               <h3 className="font-semibold mb-3 text-[#bd6334]">Hyperarousal vs. Hypoarousal</h3>
               <ul className="list-disc pl-8 mb-3 space-y-2">
                 <li><strong>Hyperarousal</strong> is when the nervous system is on constant alert, ready to react to perceived threats. You might feel anxious, overstimulated, or irrationally fearful, even when there's no immediate danger. It's like having an alarm system that always stays on, creating a state of restlessness or irritability.</li>
@@ -569,7 +569,7 @@ const CourseContent = () => {
               </div>
             </div>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <h3 className="font-semibold mb-4 text-[#bd6334]">Recognizing Your Patterns</h3>
               <p className="mb-4">Each of these responses is intelligent and protective. Each kept you alive. The work now isn't to get rid of them, but to recognise when they show up, thank them for their protection, and choose your response from a place of awareness.</p>
               <p className="mb-2 font-medium">Reflect on these questions:</p>
@@ -667,7 +667,7 @@ const CourseContent = () => {
               </div>
             </div>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <h3 className="font-semibold mb-4 text-[#bd6334]">Important to Remember</h3>
               <p className="mb-4"><strong>You're not losing your mind.</strong> These are normal responses to abnormal experiences. Dissociation happens when the mind says, "It's too much, let's pause this." Healing means helping those parts feel safe enough to come back.</p>
               
@@ -713,7 +713,7 @@ const CourseContent = () => {
               PERSONAL TRAUMA TIMELINE
             </h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <h3 className="font-semibold mb-3 text-[#bd6334]">Why Create a Timeline?</h3>
               <p className="mb-4">Creating a trauma timeline helps you visualize your life's journey and identify patterns. This process can reveal connections between past events and current behaviors, providing insight into your healing journey. By mapping these experiences, you gain a new perspective on your resilience and growth.</p>
               <div className="flex flex-col sm:flex-row gap-4 text-sm">
@@ -763,7 +763,7 @@ const CourseContent = () => {
               </div>
             </div>
             
-            <div className="p-1 border-4 border-[#f7f1e9] rounded-lg mb-8">
+            <div className="p-1 border-4 border-cream rounded-lg mb-8">
               <div className="p-6 border border-dashed border-[#bd6334] rounded-lg bg-white">
                 <h3 className="font-semibold mb-6 text-centre">Your Personal Timeline</h3>
                 
@@ -859,7 +859,7 @@ const CourseContent = () => {
               SELF-ASSESSMENT - TRAUMA RESPONSES
             </h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <h3 className="font-semibold mb-3 text-[#bd6334]">Why Self-Assessment Matters</h3>
               <p className="mb-4">Self-assessment is a powerful tool for trauma healing. By developing awareness of how trauma manifests in your daily life, you gain the ability to respond rather than react. This process builds your capacity for self-regulation and creates space for new patterns to emerge.</p>
               <div className="flex items-centre">
@@ -916,7 +916,7 @@ const CourseContent = () => {
               </div>
             </div>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <h3 className="font-semibold mb-3 text-[#bd6334]">Integration Practice</h3>
               <p className="mb-4">After completing your reflections, take a moment to place a hand on your heart. Acknowledge the courage it takes to look honestly at your patterns. Breathe deeply and offer yourself these words of compassion:</p>
               <div className="p-4 bg-white rounded-md italic text-centre">
@@ -942,7 +942,7 @@ const CourseContent = () => {
               SOMATIC MAPPING EXERCISE
             </h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <h3 className="font-semibold mb-3 text-[#bd6334]">Reconnecting with Your Body</h3>
               <p className="mb-4">Many trauma survivors experience disconnection from their bodies as a protective response. This powerful exercise will help you begin to notice and map bodily sensations—safely and gently. It's a way to tune in without judgment and create a visual language for how trauma resides in your physical form.</p>
               <div className="flex flex-col sm:flex-row gap-4 text-sm mt-4">
@@ -1043,7 +1043,7 @@ const CourseContent = () => {
               </ul>
             </div>
             
-            <div className="p-1 border-4 border-[#f7f1e9] rounded-lg mb-8">
+            <div className="p-1 border-4 border-cream rounded-lg mb-8">
               <div className="p-6 border border-dashed border-[#bd6334] rounded-lg bg-white">
                 <h3 className="font-semibold mb-6 text-centre">Your Body Map</h3>
                 
@@ -1127,7 +1127,7 @@ const CourseContent = () => {
               </div>
             </div>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <h3 className="font-semibold mb-3 text-[#bd6334]">Closing the Practice</h3>
               <div className="space-y-4">
                 <p className="mb-2">To complete this exercise:</p>
@@ -1213,7 +1213,7 @@ const CourseContent = () => {
             <div>
                 <h1 className="text-black text-2xl mb-6">WHY TRAUMA DISCONNECTS US FROM THE BODY</h1>
                 
-                <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+                <div className="bg-cream p-6 rounded-md mb-8">
                 <p className="mb-4">Trauma isn't just something that happens in the mind—it lives in the body.</p>
                 
                 <p className="mb-4">When we experience overwhelming events, the nervous system goes into survival mode: fight, flight, freeze, or fawn. To protect us, the body may numb sensations, shut down emotions, or create a sense of disconnection—as if we're outside our bodies.</p>
@@ -1445,7 +1445,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">FELT SENSE & BODY AWARENESS: LISTENING TO INNER SIGNALS</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">Your body is constantly communicating with you through physical sensations that carry important information about your needs, emotions, and safety.</p>
               
               <p className="mb-4">Felt sense is your body's internal knowing—the physical way your body communicates with you about your experience, often before your conscious mind can put it into words.</p>
@@ -1646,7 +1646,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">GROUNDING THROUGH THE SENSES: TOUCH, MOVEMENT, BREATH</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">When trauma triggers your nervous system, you may find yourself disconnected from the present moment—either hypervigilant and anxious, or numb and shut down.</p>
               
               <p className="mb-4">Grounding techniques use your five senses to bring you back to the here and now. By intentionally connecting with what you can see, hear, touch, smell, and taste, you provide your brain with clear evidence that you're safe in the present moment, not trapped in the past.</p>
@@ -1862,7 +1862,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">SAFE SPACE VISUALIZATION</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">Creating a mental safe space gives your nervous system a powerful way to experience safety, even when your external environment feels threatening or overwhelming.</p>
               
               <p className="mb-4">By regularly practicing this visualisation, you build neural pathways that make it easier to access feelings of safety and calm during times of distress.</p>
@@ -2066,7 +2066,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">SOMATIC REFLECTION – WHEN DO I FEEL PRESENT?</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">Somatic reflection is a powerful practise of turning inward to observe your bodily experience with curiosity and compassion. It helps you recognise what circumstances, relationships, and environments support your sense of safety and presence.</p>
               
               <p className="mb-4">By identifying when you naturally feel present in your body, you can intentionally create more of these conditions in your life, strengthening your capacity for embodiment.</p>
@@ -2443,7 +2443,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">MINDFUL MOVEMENT PRACTICE</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">Mindful movement provides a gentle yet powerful way to reconnect with your body after trauma. By combining physical movement with present-moment awareness, you create new neural pathways that support embodied presence.</p>
               
               <p className="mb-4">Unlike high-intensity exercise which can sometimes be triggering, mindful movement practices emphasise awareness, gentle exploration, and respecting your body's limits.</p>
@@ -2723,7 +2723,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">BODY AWARENESS MEDITATION</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">Body awareness meditation (sometimes called a body scan) is a foundational practise for reconnecting with your physical self after trauma.</p>
               
               <p className="mb-4">This practise involves systematically bringing attention to different parts of your body, noticing sensations without trying to change them. It helps create a map of your internal landscape and builds your capacity to be present with bodily experience.</p>
@@ -3036,7 +3036,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">UNDERSTANDING THE INNER CHILD AND EMOTIONAL WOUNDS</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">We all carry a child within us – the part that experienced the world with wonder, vulnerability, and raw emotion. This inner child still lives inside, influencing how we react, what we fear, and what we deeply desire.</p>
               
               <p className="mb-4">When this child part of ourselves experienced hurt, rejection, or neglect (even in small ways), emotional wounds formed. These wounds don't simply disappear with time – they shape our adult behaviors, relationships, and self-beliefs.</p>
@@ -3305,7 +3305,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">HOW CHILDHOOD PAIN SHAPES ADULT PATTERNS</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">The coping mechanisms that helped you survive childhood difficulties often become the very patterns that limit you as an adult. What once protected you may now be preventing authentic connection, joy, and freedom.</p>
               
               <p className="mb-4">Understanding the link between your early experiences and current struggles removes shame and creates clarity. When you see how your patterns made perfect sense given what you went through, self-compassion naturally emerges.</p>
@@ -3613,7 +3613,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">REPARENTING: OFFERING COMPASSION TO THE SELF WITHIN</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">Reparenting is one of the most profound gifts you can give yourself on your healing journey. It's the practise of becoming the loving, attuned parent your inner child needed—and perhaps didn't fully receive.</p>
               
               <p className="mb-4">When we experience childhood wounds or trauma, parts of us remain stuck at those developmental stages, waiting for the nurturing, protection, or validation they needed. Through reparenting, you learn to offer those unmet needs to yourself.</p>
@@ -3840,7 +3840,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">MEET YOUR INNER CHILD</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">This guided audio meditation creates a safe, nurturing space for you to connect with your inner child. Through gentle visualisation and compassionate dialogue, you'll begin building a relationship with this vulnerable part of yourself.</p>
               
               <p className="mb-4">Regular practise strengthens this connection, allowing for deeper healing of childhood wounds and the development of greater self-compassion.</p>
@@ -4023,7 +4023,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">WHAT MY INNER CHILD NEEDS TO HEAR</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">Our inner child often carries wounds from moments when critical emotional needs went unmet. These unmet needs continue to influence our adult lives until we learn to provide what was missing.</p>
               
               <p className="mb-4">This practise focuses on identifying and expressing the specific messages your inner child needs to hear—words that perhaps were never spoken when you most needed them.</p>
@@ -4267,7 +4267,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">CREATING A SELF-COMPASSION RITUAL</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">Self-compassion is the practise of treating yourself with the same kindness, concern, and support you'd offer to a good friend. Yet for many of us, especially those with trauma histories, self-compassion doesn't come naturally. We need to deliberately cultivate it through consistent practise.</p>
               
               <p className="mb-4">Creating a regular self-compassion ritual helps rewire neural pathways that may be tuned toward self-criticism, making compassionate self-treatment more automatic over time.</p>
@@ -4454,7 +4454,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">LETTER TO YOUR INNER CHILD</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">Writing a letter to your inner child is a powerful way to express the understanding, validation, and love that your younger self may have needed. This compassionate communication helps bridge the gap between your adult self and the child within who still carries unresolved feelings or needs.</p>
               
               <p className="mb-4">Through this letter, you can offer your inner child the words they most needed to hear and create a sense of safety, acceptance, and nurturing that may have been missing.</p>
@@ -4577,7 +4577,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">INNER CHILD HEALING MEDITATION</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">This guided meditation creates a sacred space for you to connect with your inner child. Through visualisation and compassionate dialogue, you'll begin the process of healing old wounds and establishing a nurturing relationship with this vulnerable part of yourself.</p>
               
               <p className="mb-4">Regular practise of this meditation helps rebuild trust between your adult self and your inner child, allowing for deeper integration and healing.</p>
@@ -4767,7 +4767,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">THE INNER NARRATIVE: 'I'M NOT ENOUGH,' 'I'M UNSAFE,' 'I'M ALONE'</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">The stories we tell ourselves shape our entire experience of life. Limiting beliefs are those internal narratives that constrain what we think is possible, acceptable, or available to us. They act like invisible prison walls, restricting our choices and experiences.</p>
               
               <p className="mb-4">Many of our most powerful limiting beliefs formed early in life before we had the cognitive abilities to question them. These core beliefs are particularly challenging to identify precisely because they feel like absolute truths rather than optional perspectives.</p>
@@ -5134,7 +5134,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">HOW TRAUMA SHAPES BELIEFS ABOUT SELF AND OTHERS</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">After trauma, our minds create specific patterns of meaning to make sense of what happened. These trauma-related beliefs serve as protective mechanisms but often restrict our wellbeing and potential.</p>
               
               <p className="mb-4">Recognising these common trauma-related beliefs is the first step toward challenging their hold over your life. When you see that many trauma survivors share similar thoughts, it normalises your experience and reduces shame.</p>
@@ -5417,7 +5417,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">RELATIONSHIPS AS HEALING SPACES</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">While trauma often occurs in relationships, healing also happens in relationship. When we experience consistent safety, attunement, and respect with others, our nervous systems gradually relearn that connection can be nurturing rather than threatening.</p>
               
               <p className="mb-4">Healthy relationships serve as containers for healing—spaces where we can practise vulnerability, receive co-regulation, express needs, and experience repair after ruptures. These healing relationships may include friendships, romantic partnerships, family connections, therapeutic relationships, or community bonds.</p>
@@ -5759,7 +5759,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">CREATING YOUR ONGOING HEALING PRACTICE</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">Healing from trauma isn't a one-time event—it's an ongoing practise that becomes integrated into your daily life. As you've progressed through this programme, you've developed tools and insights that can serve you long after this course ends.</p>
               
               <p className="mb-4">Creating a sustainable healing practise means establishing rhythms and rituals that support your continued growth. This isn't about perfection or rigid schedules; it's about creating a flexible framework that nourishes your wellbeing and helps you maintain the progress you've made.</p>
@@ -6046,7 +6046,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">REFRAMING STUCK POINTS</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">Once you've identified your stuck points—those thoughts and beliefs that keep you trapped in trauma responses—the next step is learning to reframe them. Reframing doesn't mean denying your experience or forcing positivity; it means developing more balanced, compassionate, and accurate ways of understanding what happened to you.</p>
               
               <p className="mb-4">Effective reframing acknowledges the reality of your experience while opening possibilities for healing and growth. It helps you move from rigid, trauma-influenced thinking patterns to more flexible, empowering perspectives that support your recovery.</p>
@@ -6373,7 +6373,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">TAKING SMALL BOLD ACTIONS</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">Creating alternative beliefs intellectually is just the first step—the real transformation happens when these new beliefs become embodied in your nervous system and daily life.</p>
               
               <p className="mb-4">Visualisation is a powerful tool for this embodiment process. By imagining yourself living from your new beliefs, you create neural pathways that make these beliefs more accessible and natural over time.</p>
@@ -6656,7 +6656,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">BUILDING YOUR COMMUNITY</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">Healing doesn't happen in isolation. Building a supportive community around you is essential for maintaining your progress and continuing to grow. Your community might include friends, family, therapy groups, online communities, or new connections you make along your healing journey.</p>
               
               <p className="mb-4">The people in your healing community don't all need to understand trauma or be on their own healing paths, but they should be able to offer consistent support, respect your boundaries, and celebrate your growth.</p>
@@ -6752,7 +6752,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">INTEGRATION MEDITATION</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">This guided meditation is designed to help you connect with your inner strength and resilience. Through a combination of breathwork, visualisation, and gentle self-compassion practices, this meditation will guide you toward a deeper sense of empowerment.</p>
               
               <p className="mb-4">As you listen, allow yourself to be fully present with the experience. There's no right or wrong way to meditate—simply observe whatever arises with curiosity and kindness toward yourself.</p>
@@ -7110,7 +7110,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">EMOTIONAL ENERGY & HOW THE BODY STORES PAIN</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">Emotions are not merely psychological experiences—they are energetic phenomena that have physical components in our bodies. When we don't process emotional energy fully, it doesn't simply disappear but instead becomes stored within our physical form, often manifesting as tension, pain, or dysfunction.</p>
               
               <p className="mb-4">For decades, researchers and clinicians have observed the connection between emotional experiences and physical symptoms. From the pioneering work of trauma researchers to modern neuroscience, evidence consistently shows that our bodies become repositories for unprocessed emotional experiences.</p>
@@ -7624,7 +7624,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">RELEASE AS A PATH TO FREEDOM AND WHOLENESS</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">When we hold onto suppressed emotions, we limit our capacity for authentic living. The process of emotional release isn't simply about letting go of what doesn't serve us—it's about creating space for greater freedom, wholeness, and vitality in our lives.</p>
               
               <p className="mb-4">Release work is both a physical and psychological process. As you practise allowing emotions to move through you rather than remain stored in your body, you'll discover that emotions are meant to be in motion—they are "energy in motion"—not static states that define you or remain permanently lodged in your physical form.</p>
@@ -7982,7 +7982,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">WRITING TO RELEASE</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">Writing is one of the most powerful and accessible tools for emotional release. When we put pen to paper (or fingers to keyboard) with the intention of expressing our unprocessed emotions, we create a container for them to safely move from inside us onto the external page.</p>
               
               <p className="mb-4">Writing allows us to process emotions at our own pace, without the self-consciousness or time pressure that might occur in interpersonal exchanges. It creates a bridge between our internal world and external expression, helping us make sense of feelings that might otherwise remain tangled or overwhelming.</p>
@@ -8458,7 +8458,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">DRAWING YOUR EMOTIONS</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">Visual expression offers a powerful pathway for emotional release, especially for feelings that are difficult to articulate in words. When we engage in drawing or other visual arts as a release practise, we access different neural pathways and parts of our brain than verbal processing allows.</p>
               
               <p className="mb-4">This approach is particularly valuable for emotions that feel preverbal, deeply somatic, or too complex to fully capture in language. The visual representation creates a container for emotions while simultaneously allowing them movement and expression.</p>
@@ -8672,7 +8672,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">BREATHWORK FOR EMOTIONAL CLEARING</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">Your breath is one of the most powerful tools available for emotional release and clearing. Conscious breathing practices create direct access to your autonomic nervous system, allowing you to release stored tension patterns and facilitate the movement of stuck emotional energy.</p>
               
               <p className="mb-4">Breathwork offers a unique advantage for emotional release because it works directly with your physiology. When emotions are suppressed, our breathing patterns often become restricted as part of containing those feelings. By changing how we breathe, we can reverse this process and create space for emotional energy to move and release.</p>
@@ -9025,7 +9025,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">GUIDED RELEASE MEDITATION</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">This guided meditation combines somatic awareness, breathwork, and visualisation to facilitate a gentle yet powerful emotional release process. It creates a safe container for allowing held emotions to move through your system, helping to free energy that has been bound in suppression.</p>
               
               <p className="mb-4">While our other release practices have focused on active expression, this meditation offers a complementary approach—creating space and safety for emotions to emerge and release naturally, with minimum guidance and maximum self-regulation.</p>
@@ -9048,7 +9048,7 @@ const CourseContent = () => {
               
               <div className="flex justify-centre mb-6">
                 <div className="relative w-64 h-64">
-                  <div className="absolute inset-0 bg-gradient-to-b from-[#f7f1e9] to-white rounded-full"></div>
+                  <div className="absolute inset-0 bg-gradient-to-b from-cream to-white rounded-full"></div>
                   <div className="absolute inset-4 border-4 border-[#bd6334] border-dashed rounded-full"></div>
                   <div className="absolute w-full h-full">
                     <svg viewBox="0 0 100 100" className="w-full h-full">
@@ -9316,7 +9316,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">CREATING YOUR ONGOING HEALING PRACTICE</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">As you near the end of this course, it's time to create a personalised healing plan that will support your continued growth. This plan serves as a bridge between the structured learning environment of the course and your ongoing independent journey.</p>
               
               <p className="mb-4">An effective healing plan is both practical and flexible, taking into account your unique needs, resources, and circumstances. It provides direction without becoming rigid, allowing space for your healing process to unfold organically.</p>
@@ -9734,7 +9734,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">VISIONING THE HEALED SELF & EMBRACING POST-TRAUMA GROWTH</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">In trauma recovery, we often focus intensely on what needs healing, sometimes overlooking the remarkable strengths and progress we've already developed. Taking time to acknowledge and celebrate your journey is not just a pleasant addition—it's an essential component of healing.</p>
               
               <p className="mb-4">Intentional celebration helps rewire your brain to recognise positive changes, countering the negativity bias that can keep you focused only on what's still difficult. It also reinforces neural pathways associated with resilience, growth, and possibility.</p>
@@ -10090,7 +10090,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">HEALING ACTION PLAN (WRITING PRACTICE)</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">Creating a personalised healing action plan is one of the most empowering steps you can take in your recovery journey. This isn't about having all the answers right now—it's about identifying what works for you and building a practical roadmap for moving forward.</p>
               
               <p className="mb-4">Your healing action plan will be unique to you, incorporating the tools, insights, and practices that resonate most deeply with your experience and needs.</p>
@@ -10240,7 +10240,7 @@ const CourseContent = () => {
               </div>
             </div>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <h4 className="font-medium mb-3 text-[#bd6334]">A Note on Setbacks</h4>
               <p className="mb-3">Healing isn't linear. There will be difficult days, moments when old patterns resurface, times when progress feels slow or non-existent. This is normal and doesn't mean you're failing.</p>
               <p className="mb-3">When setbacks happen:</p>
@@ -10265,7 +10265,7 @@ const CourseContent = () => {
           <div>
             <h1 className="text-black text-2xl mb-6">FUTURE-SELF REFLECTION (SENTENCE COMPLETION)</h1>
             
-            <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+            <div className="bg-cream p-6 rounded-md mb-8">
               <p className="mb-4">This powerful exercise invites you to connect with your future self—the version of you who has continued healing, growing, and thriving. Sentence completion helps your subconscious mind express truths that your analytical mind might overlook.</p>
               
               <p className="mb-4">As you complete these sentences, trust the first thoughts that come to mind. There are no right or wrong answers—only your authentic responses. This exercise creates a bridge between where you are now and where you're heading on your healing journey.</p>
@@ -10534,7 +10534,7 @@ const CourseContent = () => {
   // Loading state
   if (!module) {
     return (
-      <div className="flex items-centre justify-centre h-screen bg-[#f7f1e9]">
+      <div className="flex items-centre justify-centre h-screen bg-cream">
         <div className="animate-spin h-12 w-12 border-t-2 border-b-2 border-[#bd6334] rounded-full"></div>
       </div>
     );

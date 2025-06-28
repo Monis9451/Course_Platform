@@ -14,7 +14,7 @@ const Footer = () => {
 
   return (
     <div>      {/* Footer */}
-      <footer className="w-full bg-cream text-black">
+      <footer className="w-full bg-[#ECEBE8] text-black">
         <div className="container px-8 md:px-12 max-w-7xl mx-auto py-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
             
@@ -30,7 +30,7 @@ const Footer = () => {
                 <input
                   type="text"
                   placeholder="Full Name"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-md bg-white text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#B45B29]"
+                  className="w-full px-4 py-3 border border-black rounded-md bg-white text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#B45B29]"
                 />
                 <input
                   type="email"
@@ -38,11 +38,11 @@ const Footer = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-md bg-white text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#B45B29]"
+                  className="w-full px-4 py-3 border border-black rounded-md bg-white text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#B45B29]"
                 />
                 <button
                   type="submit"
-                  className="w-full bg-[#B8A082] text-white px-6 py-3 rounded-md font-medium hover:bg-[#A68D6F] transition-colors"
+                  className="w-full bg-[#CCBFAF] text-black px-6 py-3 rounded-md font-medium hover:bg-[#E0D8CE] transition-colors"
                 >
                   Subscribe
                 </button>

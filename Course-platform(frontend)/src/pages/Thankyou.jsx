@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function ThankYou() {
   return (
     <div className="container max-w-4xl mx-auto px-4 py-20">
-      <div className="bg-white rounded-lg shadow-lg p-12 text-center">
+      <div className="bg-cream rounded-lg shadow-lg p-12 text-center">
         <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-8">
           <svg
             xmlns="http://www.w3.org/2000/svg"

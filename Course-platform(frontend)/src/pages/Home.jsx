@@ -10,34 +10,34 @@ const Home = () => {
   const reviews = [
     {
       id: 1,
-      text: "I've been a member of TBM for about four years now, and I can honestly say it has been nothing short of transformational. I'm deeply grateful to this community and the TBM process. It has supported me in ways I can't fully express.",
+      text: 'From the moment I opened this journal, I felt a sense of calm and inspiration. The thoughtful prompts guided me through my fears and helped me clarify my vision, turning vague ideas into actionable steps. Each exercise encouraged deep reflection, allowing me to confront what was holding me back and embrace my personal power. I can already tell this is going to be a transformative tool on my journey, and I am actually motivated to use it everyday" - Maria, T (Consultant)',
       rating: 5
     },
     {
       id: 2,
-      text: "52 years old, TBM is the most effective, life-changing thing I've ever done. I've gotten all the material items on my list and the personal growth is beyond. I'm obsessed and encourage everyone to check it out.",
+      text: 'The journal’s structure is incredibly thoughtful, helping me reflect on the fears and limiting beliefs I’ve carried for years. Each prompt felt like it was guiding me toward unlocking a part of myself I hadn’t explored before. What really stands out is how practical yet personal it is—the tools are rooted in real strategies but allow for deep, meaningful reflection. It really is more than just a journal and I am so grateful to have this" - Anna, P (Legal Assistant)',
       rating: 5
     },
-    {
-      id: 3,
-      text: "TBM has literally shifted EVERYTHING! Life hasn't been the same since I joined- I know it sounds dramatic, but I literally feel like I live in an absolutely different reality and am still trying to adjust and understand. AND my manifestation came through after just 3 weeks of doing the work - I'm still mind blown. It's still all very fresh but definitely better than anything I ever could have dreamed of! THANK YOU TBM!",
-      rating: 5
-    },
-    {
-      id: 4,
-      text: "This program has completely transformed my relationship with myself and others. The tools and techniques are practical and powerful.",
-      rating: 5
-    },
-    {
-      id: 5,
-      text: "After years of therapy, this was the breakthrough I needed. The results speak for themselves - my life is completely different now.",
-      rating: 5
-    },
-    {
-      id: 6,
-      text: "The Mind Planner approach is unlike anything I've tried before. It's backed by real science and delivers real results.",
-      rating: 5
-    }
+    // {
+    //   id: 3,
+    //   text: "TBM has literally shifted EVERYTHING! Life hasn't been the same since I joined- I know it sounds dramatic, but I literally feel like I live in an absolutely different reality and am still trying to adjust and understand. AND my manifestation came through after just 3 weeks of doing the work - I'm still mind blown. It's still all very fresh but definitely better than anything I ever could have dreamed of! THANK YOU TBM!",
+    //   rating: 5
+    // },
+    // {
+    //   id: 4,
+    //   text: "This program has completely transformed my relationship with myself and others. The tools and techniques are practical and powerful.",
+    //   rating: 5
+    // },
+    // {
+    //   id: 5,
+    //   text: "After years of therapy, this was the breakthrough I needed. The results speak for themselves - my life is completely different now.",
+    //   rating: 5
+    // },
+    // {
+    //   id: 6,
+    //   text: "The Mind Planner approach is unlike anything I've tried before. It's backed by real science and delivers real results.",
+    //   rating: 5
+    // }
   ]
 
   const faqs = [
@@ -87,22 +87,54 @@ const Home = () => {
 
   const scrollToReview = (index) => {
     if (reviewsRef.current) {
-      const reviewWidth = reviewsRef.current.children[0].offsetWidth + 24 // including gap
-      reviewsRef.current.scrollTo({
-        left: reviewWidth * index,
-        behavior: 'smooth'
-      })
+      const container = reviewsRef.current
+      const containerWidth = container.offsetWidth
+      const isDesktop = window.innerWidth >= 1024 // lg breakpoint
+      
+      if (isDesktop) {
+        // On desktop, show 2 reviews at a time
+        const scrollPosition = Math.floor(index / 2) * containerWidth
+        container.scrollTo({
+          left: scrollPosition,
+          behavior: 'smooth'
+        })
+      } else {
+        // On mobile, show 1 review at a time
+        const reviewWidth = container.children[0].offsetWidth + 32 // including gap
+        container.scrollTo({
+          left: reviewWidth * index,
+          behavior: 'smooth'
+        })
+      }
       setCurrentReviewIndex(index)
     }
   }
 
   const nextReview = () => {
-    const nextIndex = currentReviewIndex === reviews.length - 1 ? 0 : currentReviewIndex + 1
+    const isDesktop = window.innerWidth >= 1024
+    let nextIndex
+    
+    if (isDesktop) {
+      // On desktop, move by 2 reviews
+      nextIndex = currentReviewIndex + 2 >= reviews.length ? 0 : currentReviewIndex + 2
+    } else {
+      // On mobile, move by 1 review
+      nextIndex = currentReviewIndex === reviews.length - 1 ? 0 : currentReviewIndex + 1
+    }
     scrollToReview(nextIndex)
   }
 
   const prevReview = () => {
-    const prevIndex = currentReviewIndex === 0 ? reviews.length - 1 : currentReviewIndex - 1
+    const isDesktop = window.innerWidth >= 1024
+    let prevIndex
+    
+    if (isDesktop) {
+      // On desktop, move by 2 reviews
+      prevIndex = currentReviewIndex - 2 < 0 ? Math.max(0, reviews.length - 2) : currentReviewIndex - 2
+    } else {
+      // On mobile, move by 1 review
+      prevIndex = currentReviewIndex === 0 ? reviews.length - 1 : currentReviewIndex - 1
+    }
     scrollToReview(prevIndex)
   }
 
@@ -113,7 +145,7 @@ const Home = () => {
       description: "A self-paced program",
       img_src: "/1.png",
       img_alt: "Understanding Trauma Course",
-      category: "BUNDLE"
+      category: "COURSE"
     },
     {
       id: 2,
@@ -121,6 +153,14 @@ const Home = () => {
       description: "A comprehensive guide",
       img_src: "/love_course.png",
       img_alt: "Understanding Love Course",
+      category: "COURSE"
+    },
+    {
+      id: 3,
+      title: "Bundle",
+      description: "Understanding Trauma + Understanding Love",
+      img_src: "/1.png",
+      img_alt: "Course Bundle",
       category: "BUNDLE"
     }
   ];
@@ -151,7 +191,7 @@ const Home = () => {
                 ))}
               </div>
               <blockquote className="text-lg text-gray-800 italic mb-4 leading-relaxed">
-                "I didn't believe in manifestation until I found this method. After years of being single and unfulfilled, I manifested my DREAM partner. We are so happy."
+                "I was lucky enough to be an early user and I can confidently say it’s not only beautiful, but the content truly resonates."
               </blockquote>
             </div>
 
@@ -176,7 +216,7 @@ const Home = () => {
                 ))}
               </div>
               <blockquote className="text-lg text-gray-800 italic mb-4 leading-relaxed">
-                "This membership gave me the power to face my fears, quit my job, and start my own business. Now I'm making 10X my old salary!!!"
+                "I had the privilege of being one of the first to use The Unclaimed Power Journal, and it’s honestly been such a powerful experience."
               </blockquote>
             </div>
           </div>
@@ -297,22 +337,23 @@ const Home = () => {
             <p className="text-xl max-w-2xl mx-auto text-black/80">
               Developed by Dr. Samina Khatun based on evidence-based therapeutic approaches
             </p>
-          </div>          {/* Course Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-16">
+          </div>          {/* Course Grid - Aligned with pricing cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
               {courses.map((course) => (
-                <div key={course.id} className="group cursor-pointer">                  <div className="relative mb-4">
-                    <div className="h-37 bg-gray-300 flex items-center justify-center overflow-hidden">
-                      <img src={course.img_src} alt={course.img_alt} className="object-contain h-full w-full" />
+                <div key={course.id} className="group cursor-pointer">                  
+                  <div className="relative mb-6">
+                    <div className="h-60 bg-gray-300 flex items-center justify-center overflow-hidden rounded-2xl">
+                      <img src={course.img_src} alt={course.img_alt} className="object-cover h-full w-full" />
                     </div>
                     <div className="absolute top-4 right-4">
-                      <span className="bg-primary text-white text-xs px-2 py-1 rounded">
+                      <span className="bg-primary text-white text-sm px-3 py-1 rounded-full font-medium">
                         {course.category}
                       </span>
                     </div>
                   </div>
-                  <div>
-                    <h3 className="font-bold text-gray-900 mb-2">{course.title}</h3>
-                    <p className="text-warm-gray text-sm font-normal">{course.description}</p>
+                  <div className="text-center">
+                    <h3 className="font-bold text-gray-900 mb-3 text-lg">{course.title}</h3>
+                    <p className="text-warm-gray text-base font-normal">{course.description}</p>
                   </div>
                 </div>
               ))}
@@ -402,11 +443,11 @@ const Home = () => {
           </div>
               </div> 
               </section>      {/* Reviews Section */}
-      <section className="py-24 bg-cream">
+      <section className="pt-24 pb-16" style={{ backgroundColor: '#393128' }}>
         <div className="max-w-7xl mx-auto px-8">
           <div className="text-center mb-20">
-            <h2 className="text-4xl font-fitzgerald font-light mb-6 text-black leading-tight tracking-tight">
-              Let The Reviews Speak For Themselves...
+            <h2 className="text-4xl font-fitzgerald font-light mb-6 text-white leading-tight tracking-tight">
+              Your Journey, Your Words
             </h2>
           </div>
 
@@ -414,9 +455,10 @@ const Home = () => {
           <div className="relative">
             <div 
               ref={reviewsRef}
-              className="flex gap-8 overflow-x-hidden scroll-smooth pb-4  "
-            >              {reviews.map((review) => (
-                <div key={review.id} className="flex-none w-96 h-96 bg-white p-8 rounded-2xl shadow-lg flex flex-col">
+              className="flex gap-8 lg:gap-12 overflow-x-hidden scroll-smooth pb-4"
+            >              
+              {reviews.map((review, index) => (
+                <div key={review.id} className="flex-none w-full sm:w-96 lg:w-[calc(50%-1.5rem)] flex flex-col items-center text-center relative">
                   {/* Stars */}
                   <div className="flex justify-center mb-6">
                     {[...Array(review.rating)].map((_, i) => (
@@ -426,12 +468,17 @@ const Home = () => {
                     ))}
                   </div>
                   
-                  {/* Review Text - Scrollable */}
-                  <div className="flex-1 overflow-y-auto">
-                    <p className="text-gray-800 text-center leading-relaxed text-base">
+                  {/* Review Text */}
+                  <div className="flex-1 px-4 lg:px-6">
+                    <p className="text-white text-center leading-relaxed text-base lg:text-lg italic">
                       "{review.text}"
                     </p>
                   </div>
+                  
+                  {/* Separator line - only show between reviews on desktop, not after last one */}
+                  {index < reviews.length - 1 && (
+                    <div className="hidden lg:block absolute right-0 top-1/2 transform -translate-y-1/2 h-32 w-px bg-white/20"></div>
+                  )}
                 </div>
               ))}
             </div>
@@ -440,18 +487,18 @@ const Home = () => {
             <div className="flex justify-center mt-12 gap-6">
               <button
                 onClick={prevReview}
-                className="p-4 bg-white rounded-full shadow-lg hover:shadow-xl transition-shadow duration-200 group"
+                className="p-4 bg-white/10 backdrop-blur-sm rounded-full hover:bg-white/20 transition-all duration-200 group border border-white/20"
               >
-                <svg className="w-6 h-6 text-gray-600 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-white group-hover:text-yellow-400 transition-colors" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
               
               <button
                 onClick={nextReview}
-                className="p-4 bg-white rounded-full shadow-lg hover:shadow-xl transition-shadow duration-200 group"
+                className="p-4 bg-white/10 backdrop-blur-sm rounded-full hover:bg-white/20 transition-all duration-200 group border border-white/20"
               >
-                <svg className="w-6 h-6 text-gray-600 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-white group-hover:text-yellow-400 transition-colors" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
               </button>

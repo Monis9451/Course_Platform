@@ -35,7 +35,7 @@ const Courses = () => {
     <div>
         <Header />
         {/* Hero section */}
-      <section className="bg-[#f7f1e9] py-20">
+      <section className="bg-cream py-20">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-serif text-center text-black mb-6">Our Courses</h1>
           <p className="text-xl text-center text-black max-w-3xl mx-auto mb-10">
@@ -54,7 +54,7 @@ const Courses = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {courses?.map((course) => (
-                <div key={course.id} className="bg-[#f7f1e9] overflow-hidden group shadow-md">                  <div className="aspect-[4/3] relative overflow-hidden">
+                <div key={course.id} className="bg-cream overflow-hidden group shadow-md">                  <div className="aspect-[4/3] relative overflow-hidden">
                     <img 
                       src={course.img_src} 
                       alt={course.img_alt} 

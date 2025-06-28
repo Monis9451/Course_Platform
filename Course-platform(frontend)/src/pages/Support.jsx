@@ -75,7 +75,7 @@ function Support() {
       <Header />
       
       {/* Support Center Header */}
-      <div className="flex flex-col items-center justify-center bg-[#f7f1e9] h-[350px] text-center px-4">
+      <div className="flex flex-col items-center justify-center bg-cream h-[350px] text-center px-4">
         <h1 className="text-3xl font-bold mb-4">Support Center</h1>
         <p className="text-gray-700 max-w-xl">
           We're here to help you on your journey. Get in touch with our team or
@@ -136,7 +136,7 @@ function Support() {
           
           {/* Page Title */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-light text-[#B45B29] mb-6">
+            <h1 className="text-4xl md:text-5xl font-light text-black mb-6">
               The Mind Planner - Contact Us
             </h1>
             <p className="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed">
@@ -152,14 +152,14 @@ function Support() {
               
               {/* Media and Collaboration Enquiries */}
               <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
-                <h3 className="text-xl font-semibold text-[#B45B29] mb-4">Media and Collaboration Enquiries</h3>
+                <h3 className="text-xl font-semibold text-black mb-4">Media and Collaboration Enquiries</h3>
                 <p className="text-gray-700 mb-4 leading-relaxed">
                   We're eager to collaborate with mental health services, media professionals and journalists. For all collaboration-related questions or 
                   opportunities, please reach out to:
                 </p>
                 <div className="flex items-center space-x-2">
                   <span className="font-medium text-gray-800">Email:</span>
-                  <a href="mailto:info@themindplanner.com" className="text-[#B45B29] hover:underline">
+                  <a href="mailto:info@themindplanner.com" className="text-black hover:underline">
                     info@themindplanner.com
                   </a>
                 </div>
@@ -167,13 +167,13 @@ function Support() {
 
               {/* General Inquiries */}
               <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
-                <h3 className="text-xl font-semibold text-[#B45B29] mb-4">General Inquiries</h3>
+                <h3 className="text-xl font-semibold text-black mb-4">General Inquiries</h3>
                 <p className="text-gray-700 mb-4 leading-relaxed">
                   Have questions about our products or services? We're here to help. Contact us at:
                 </p>
                 <div className="flex items-center space-x-2">
                   <span className="font-medium text-gray-800">Email:</span>
-                  <a href="mailto:info@themindplanner.com" className="text-[#B45B29] hover:underline">
+                  <a href="mailto:info@themindplanner.com" className="text-black hover:underline">
                     info@themindplanner.com
                   </a>
                 </div>
@@ -181,13 +181,13 @@ function Support() {
 
               {/* Customer Support */}
               <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
-                <h3 className="text-xl font-semibold text-[#B45B29] mb-4">Customer Support</h3>
+                <h3 className="text-xl font-semibold text-black mb-4">Customer Support</h3>
                 <p className="text-gray-700 mb-4 leading-relaxed">
                   Need assistance with orders, shipping, returns, or anything else? Our Customer Support team is ready to assist:
                 </p>
                 <div className="flex items-center space-x-2 mb-4">
                   <span className="font-medium text-gray-800">Email:</span>
-                  <a href="mailto:support@themindplanner.com" className="text-[#B45B29] hover:underline">
+                  <a href="mailto:support@themindplanner.com" className="text-black hover:underline">
                     support@themindplanner.com
                   </a>
                 </div>
@@ -199,7 +199,7 @@ function Support() {
 
               {/* Company Address */}
               <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
-                <h3 className="text-xl font-semibold text-[#B45B29] mb-4">Company Address</h3>
+                <h3 className="text-xl font-semibold text-black mb-4">Company Address</h3>
                 <div className="space-y-2 text-gray-700">
                   <p className="font-medium">The Mind Planner Limited</p>
                   <p>128 City Road, London, United Kingdom, EC1V 2NX</p>
@@ -211,7 +211,7 @@ function Support() {
             {/* Contact Form */}
             <div className="bg-white p-8 rounded-lg shadow-xl border border-gray-200">
               <div className="text-center mb-8">
-                <h2 className="text-3xl font-light text-[#B45B29] mb-4">CONTACT US</h2>
+                <h2 className="text-3xl font-light text-black mb-4">CONTACT US</h2>
                 <p className="text-gray-600">Send us a message and we'll get back to you soon</p>
               </div>
 
@@ -220,7 +220,7 @@ function Support() {
                 {/* Name and Email Row */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-[#B45B29] mb-2 uppercase tracking-wide">
+                    <label className="block text-sm font-medium text-black mb-2 uppercase tracking-wide">
                       Name
                     </label>
                     <input
@@ -229,12 +229,12 @@ function Support() {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 bg-cream border-2 border-gray-300 rounded-lg focus:border-[#B45B29] focus:outline-none transition-colors text-gray-800 placeholder-gray-500"
+                      className="w-full px-4 py-3 bg-cream border-2 border-gray-300 rounded-lg focus:border-black focus:outline-none transition-colors text-gray-800 placeholder-gray-500"
                       placeholder="Your full name"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-[#B45B29] mb-2 uppercase tracking-wide">
+                    <label className="block text-sm font-medium text-black mb-2 uppercase tracking-wide">
                       Email
                     </label>
                     <input
@@ -243,7 +243,7 @@ function Support() {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 bg-cream border-2 border-gray-300 rounded-lg focus:border-[#B45B29] focus:outline-none transition-colors text-gray-800 placeholder-gray-500"
+                      className="w-full px-4 py-3 bg-cream border-2 border-gray-300 rounded-lg focus:border-black focus:outline-none transition-colors text-gray-800 placeholder-gray-500"
                       placeholder="your.email@example.com"
                     />
                   </div>
@@ -251,7 +251,7 @@ function Support() {
 
                 {/* Phone Number */}
                 <div>
-                  <label className="block text-sm font-medium text-[#B45B29] mb-2 uppercase tracking-wide">
+                  <label className="block text-sm font-medium text-black mb-2 uppercase tracking-wide">
                     Phone Number
                   </label>
                   <input
@@ -259,14 +259,14 @@ function Support() {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-cream border-2 border-gray-300 rounded-lg focus:border-[#B45B29] focus:outline-none transition-colors text-gray-800 placeholder-gray-500"
+                    className="w-full px-4 py-3 bg-cream border-2 border-gray-300 rounded-lg focus:border-black focus:outline-none transition-colors text-gray-800 placeholder-gray-500"
                     placeholder="Your phone number (optional)"
                   />
                 </div>
 
                 {/* Message */}
                 <div>
-                  <label className="block text-sm font-medium text-[#B45B29] mb-2 uppercase tracking-wide">
+                  <label className="block text-sm font-medium text-black mb-2 uppercase tracking-wide">
                     Message
                   </label>
                   <textarea
@@ -275,7 +275,7 @@ function Support() {
                     onChange={handleInputChange}
                     required
                     rows="6"
-                    className="w-full px-4 py-3 bg-cream border-2 border-gray-300 rounded-lg focus:border-[#B45B29] focus:outline-none transition-colors resize-vertical text-gray-800 placeholder-gray-500"
+                    className="w-full px-4 py-3 bg-cream border-2 border-gray-300 rounded-lg focus:border-black focus:outline-none transition-colors resize-vertical text-gray-800 placeholder-gray-500"
                     placeholder="Tell us how we can help you..."
                   ></textarea>
                 </div>
@@ -297,7 +297,7 @@ function Support() {
 
           {/* Additional Info */}
           <div className="text-center mt-12 bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <h3 className="text-xl font-semibold text-[#B45B29] mb-3">
+            <h3 className="text-xl font-semibold text-black mb-3">
               We're Here to Help
             </h3>
             <p className="text-gray-600 max-w-3xl mx-auto leading-relaxed">
