@@ -1,11 +1,13 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { FiEye, FiEyeOff } from 'react-icons/fi'
 import { 
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
   signInWithPopup, 
+  signInWithRedirect,
+  getRedirectResult,
   GoogleAuthProvider 
 } from 'firebase/auth'
 import { auth } from '../config/firebase'
@@ -29,8 +31,31 @@ const Login = () => {
   // Get the intended destination from location state
   const from = location.state?.from?.pathname || '/';
 
-  // Google Auth Provider
+  // Google Auth Provider with proper configuration
   const googleProvider = new GoogleAuthProvider();
+  
+  // Configure Google provider for better production compatibility
+  googleProvider.setCustomParameters({
+    prompt: 'select_account'
+  });
+
+  // Check for redirect result on component mount
+  useEffect(() => {
+    const checkRedirectResult = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result) {
+          console.log('Google redirect sign in successful:', result.user);
+          navigate(from, { replace: true });
+        }
+      } catch (error) {
+        console.error('Google redirect auth error:', error);
+        setErrors({ general: 'Google authentication failed. Please try again.' });
+      }
+    };
+
+    checkRedirectResult();
+  }, [navigate, from]);
 
   // Handle input changes
   const handleInputChange = (e) => {
@@ -131,22 +156,59 @@ const Login = () => {
   // Handle Google authentication
   const handleGoogleAuth = async () => {
     setLoading(true);
-    setErrors({});    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      console.log('Google sign in successful:', result.user);
-      navigate(from, { replace: true }); // Redirect to intended page or home
+    setErrors({});
+
+    try {
+      // Clear any existing auth state
+      await auth.signOut().catch(() => {});
+      
+      try {
+        // Try popup first
+        const result = await signInWithPopup(auth, googleProvider);
+        console.log('Google sign in successful:', result.user);
+        navigate(from, { replace: true });
+      } catch (popupError) {
+        console.warn('Popup failed, trying redirect:', popupError);
+        
+        // If popup fails (common in production), use redirect
+        if (popupError.code === 'auth/popup-blocked' || 
+            popupError.code === 'auth/cancelled-popup-request' ||
+            popupError.code === 'auth/popup-closed-by-user') {
+          
+          await signInWithRedirect(auth, googleProvider);
+          return; // signInWithRedirect doesn't return a promise result
+        }
+        
+        throw popupError; // Re-throw if it's not a popup-related error
+      }
     } catch (error) {
       console.error('Google auth error:', error);
       let errorMessage = 'Google authentication failed. Please try again.';
       
-      if (error.code === 'auth/popup-closed-by-user') {
-        errorMessage = 'Google sign-in was cancelled.';
-      } else if (error.code === 'auth/popup-blocked') {
-        errorMessage = 'Popup was blocked. Please allow popups and try again.';
+      switch (error.code) {
+        case 'auth/popup-closed-by-user':
+          errorMessage = 'Google sign-in was cancelled.';
+          break;
+        case 'auth/popup-blocked':
+          errorMessage = 'Popup was blocked. Redirecting to Google...';
+          break;
+        case 'auth/cancelled-popup-request':
+          errorMessage = 'Another popup is already open. Please try again.';
+          break;
+        case 'auth/network-request-failed':
+          errorMessage = 'Network error. Please check your connection and try again.';
+          break;
+        case 'auth/invalid-api-key':
+          errorMessage = 'Configuration error. Please contact support.';
+          break;
+        case 'auth/unauthorized-domain':
+          errorMessage = 'This domain is not authorized for Google sign-in.';
+          break;
+        default:
+          errorMessage = error.message || 'An unexpected error occurred.';
       }
       
       setErrors({ general: errorMessage });
-    } finally {
       setLoading(false);
     }
   };
