@@ -10,12 +10,14 @@ const Home = () => {
   const reviews = [
     {
       id: 1,
-      text: 'From the moment I opened this journal, I felt a sense of calm and inspiration. The thoughtful prompts guided me through my fears and helped me clarify my vision, turning vague ideas into actionable steps. Each exercise encouraged deep reflection, allowing me to confront what was holding me back and embrace my personal power. I can already tell this is going to be a transformative tool on my journey, and I am actually motivated to use it everyday" - Maria, T (Consultant)',
+      text: 'I was lucky enough to be an early user and I can confidently say it\'s not only beautiful, but the content truly resonates.',
+      subtext: '"From the moment I opened this journal, I felt a sense of calm and inspiration. The thoughtful prompts guided me through my fears and helped me clarify my vision, turning vague ideas into actionable steps. Each exercise encouraged deep reflection, allowing me to confront what was holding me back and embrace my personal power. I can already tell this is going to be a transformative tool on my journey, and I\'m actually motivated to use it everyday" - Maria, T (Consultant)',
       rating: 5
     },
     {
       id: 2,
-      text: 'The journal’s structure is incredibly thoughtful, helping me reflect on the fears and limiting beliefs I’ve carried for years. Each prompt felt like it was guiding me toward unlocking a part of myself I hadn’t explored before. What really stands out is how practical yet personal it is—the tools are rooted in real strategies but allow for deep, meaningful reflection. It really is more than just a journal and I am so grateful to have this" - Anna, P (Legal Assistant)',
+      text: 'I had the privilege of being one of the first to use The Unclaimed Power Journal, and it’s honestly been such a powerful experience.',
+      subtext: '"The journal’s structure is incredibly thoughtful, helping me reflect on the fears and limiting beliefs I’ve carried for years. Each prompt felt like it was guiding me toward unlocking a part of myself I hadn’t explored before. What really stands out is how practical yet personal it is—the tools are rooted in real strategies but allow for deep, meaningful reflection. It really is more than just a journal and I\'m so grateful to have this" - Anna, P (Legal Assistant)',
       rating: 5
     },
     // {
@@ -232,7 +234,7 @@ const Home = () => {
           <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
             Transform Your Mind, Break Barriers, and Unlock Your Full Potential – at Your Own Pace
           </h1>
-          <p className="text-lg text-warm-gray max-w-4xl mx-auto mb-8 leading-relaxed">
+          <p className="text-lg text-warm-gray max-w-2xl mx-auto mb-8 leading-relaxed">
             Backed by evidence-based psychology and neuroscience, these courses are designed to help you overcome challenges, rewire unhelpful patterns, and build a more empowered, fulfilling life. Whether you're working through trauma, low mood and/or anxiety, relationship blocks, or productivity struggles, you'll gain the tools to create lasting change.
           </p>          
           <button className="bg-primary hover-primary text-white px-6 py-2 md:px-8 md:py-3 rounded-4xl text-base md:text-lg font-semibold transition-colors duration-200">
@@ -272,8 +274,8 @@ const Home = () => {
         </div>
       </section>      {/* You Will Overcome Section */}
       <section className="w-full py-16 bg-cream">
-        <div className="container px-4 md:px-6 max-w-6xl mx-auto">
-          <div className="max-w-4xl mx-auto">
+        <div className="container px-4 md:px-6 max-w-5xl mx-auto">
+          <div className="max-w-3xl mx-auto">
             {/* Content */}
             <div>
               <h2 className="text-3xl font-fitzgerald mb-8 text-left">You will overcome...</h2>
@@ -334,7 +336,7 @@ const Home = () => {
             <h2 className="text-4xl font-fitzgerald font-light mb-6 text-black leading-tight tracking-tight uppercase">
               Our Courses
             </h2>
-            <p className="text-xl max-w-2xl mx-auto text-black/80">
+            <p className="text-xl max-w-xl mx-auto text-black/80">
               Developed by Dr. Samina Khatun based on evidence-based therapeutic approaches
             </p>
           </div>          {/* Course Grid - Aligned with pricing cards */}
@@ -444,7 +446,7 @@ const Home = () => {
               </div> 
               </section>      {/* Reviews Section */}
       <section className="pt-24 pb-16" style={{ backgroundColor: '#393128' }}>
-        <div className="max-w-7xl mx-auto px-8">
+        <div className="max-w-7xl mx-auto px-1">
           <div className="text-center mb-20">
             <h2 className="text-4xl font-fitzgerald font-light mb-6 text-white leading-tight tracking-tight">
               Your Journey, Your Words
@@ -455,32 +457,41 @@ const Home = () => {
           <div className="relative">
             <div 
               ref={reviewsRef}
-              className="flex gap-8 lg:gap-12 overflow-x-hidden scroll-smooth pb-4"
+              className="flex gap-32 lg:gap-118 overflow-x-hidden scroll-smooth pb-4"
             >              
-              {reviews.map((review, index) => (
-                <div key={review.id} className="flex-none w-full sm:w-96 lg:w-[calc(50%-1.5rem)] flex flex-col items-center text-center relative">
-                  {/* Stars */}
-                  <div className="flex justify-center mb-6">
-                    {[...Array(review.rating)].map((_, i) => (
-                      <svg key={i} className="w-5 h-5 text-yellow-400 fill-current mx-0.5" viewBox="0 0 24 24">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                      </svg>
-                    ))}
-                  </div>
-                  
-                  {/* Review Text */}
-                  <div className="flex-1 px-4 lg:px-6">
-                    <p className="text-white text-center leading-relaxed text-base lg:text-lg italic">
-                      "{review.text}"
-                    </p>
-                  </div>
-                  
-                  {/* Separator line - only show between reviews on desktop, not after last one */}
-                  {index < reviews.length - 1 && (
-                    <div className="hidden lg:block absolute right-0 top-1/2 transform -translate-y-1/2 h-32 w-px bg-white/20"></div>
-                  )}
+              {/* First Review - Now on Left */}
+              <div className="flex-none w-full lg:w-[calc(39%-6rem)] flex flex-col relative pl-0 lg:pl-0 order-1 lg:order-1">
+                {/* Main Review Text - Large and Centered */}
+                <div className="mb-8">
+                  <p className="text-white leading-tight text-xl lg:text-2xl font-medium">
+                    "I was lucky enough to be an early user and I can confidently say it's not only beautiful, but the content truly resonates."
+                  </p>
                 </div>
-              ))}
+                
+                {/* Subtext - Smaller and Justified */}
+                <div className="flex-1">
+                  <p className="text-white/90 text-justify leading-normal text-sm lg:text-base">
+                    "From the moment I opened this journal, I felt a sense of calm and inspiration. The thoughtful prompts guided me through my fears and helped me clarify my vision, turning vague ideas into actionable steps. Each exercise encouraged deep reflection, allowing me to confront what was holding me back and embrace my personal power. I can already tell this is going to be a transformative tool on my journey, and I'm actually motivated to use it everyday" - Maria, T (Consultant)
+                  </p>
+                </div>
+              </div>
+
+              {/* Second Review - Now on Right */}
+              <div className="flex-none w-full lg:w-[calc(39%-6rem)] flex flex-col relative pr-0 lg:pr-0 order-2 lg:order-2">
+                {/* Main Review Text - Large and Right Aligned */}
+                <div className="mb-8">
+                  <p className="text-white text-right leading-tight text-xl lg:text-2xl font-medium">
+                    "I had the privilege of being one of the first to use The Unclaimed Power Journal, and it's honestly been such a powerful experience."
+                  </p>
+                </div>
+                
+                {/* Subtext - Smaller and Justified */}
+                <div className="flex-1">
+                  <p className="text-white/90 text-justify leading-normal text-sm lg:text-base">
+                    "The journal's structure is incredibly thoughtful, helping me reflect on the fears and limiting beliefs I've carried for years. Each prompt felt like it was guiding me toward unlocking a part of myself I hadn't explored before. What really stands out is how practical yet personal it is—the tools are rooted in real strategies but allow for deep, meaningful reflection. It really is more than just a journal and I'm so grateful to have this" - Anna, P (Legal Assistant)
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Navigation Arrows */}
