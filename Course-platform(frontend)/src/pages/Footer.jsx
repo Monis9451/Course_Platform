@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { FaInstagram, FaTwitter, FaFacebook } from 'react-icons/fa'
+import './Footer.css'
 
 const Footer = () => {
   const [email, setEmail] = useState('')
@@ -16,22 +17,22 @@ const Footer = () => {
     <div>      {/* Footer */}
       <footer className="w-full bg-cream text-black">
         <hr />
-        <div className="container px-1 md:px-2 max-w-7xl mx-auto py-14">
+        <div className="container px-1 md:px-1 max-w-7xl mx-auto py-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
             
             {/* Left Column - Newsletter */}
             <div className="flex flex-col space-y-4">
-              <h3 className="text-lg font-bold text-[#393128] mb-3">Let's Stay Connected</h3>
-              <p className="text-sm text-[#393128] leading-relaxed mb-4">
+              <h3 className="text-lg font-bold text-[#393128] mb-3 font-marcellus">Let's Stay Connected</h3>
+              <p className="text-sm text-[#393128] leading-normal mb-4">
                 Subscribe to our newsletter for expert tips on mental health and self empowerment, plus exclusive updates on new offers, product launches, and more!
               </p>
               
               {/* Newsletter Signup */}
-              <form onSubmit={handleNewsletterSignup} className="space-y-3">
+              <form onSubmit={handleNewsletterSignup} className="space-y-3 text-sm">
                 <input
                   type="text"
                   placeholder="Full Name"
-                  className="w-full px-3 py-2 border border-black bg-cream text-[#393128] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#B45B29]"
+                  className="w-full px-3 py-2.5 border border-black bg-cream text-[#393128] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#B45B29]"
                 />
                 <input
                   type="email"
@@ -39,7 +40,7 @@ const Footer = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full px-3 py-2 border border-black bg-cream text-[#393128] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#B45B29]"
+                  className="w-full px-3 py-2.5 border border-black bg-cream text-[#393128] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#B45B29]"
                 />
                 <button
                   type="submit"
@@ -65,7 +66,7 @@ const Footer = () => {
 
             {/* Center Column - Services */}
             <div className="flex flex-col space-y-4 ml-38">
-              <h3 className="text-lg font-bold text-[#393128] mb-5">Services</h3>
+              <h3 className="text-lg font-bold text-[#393128] mb-5 font-marcellus">Services</h3>
               <ul className="space-y-3 text-sm">
                 <li><a href="/privacy-statement" className="text-[#393128] hover:underline">Privacy Statement</a></li>
                 <li><a href="/mental-health" className="text-[#393128] hover:underline">Mental Health</a></li>
@@ -73,7 +74,7 @@ const Footer = () => {
               </ul>
             </div>            {/* Right Column - About */}
             <div className="flex flex-col space-y-4 ml-10">
-              <h3 className="text-lg font-bold text-[#393128] mb-5">About The Mind Planner</h3>
+              <h3 className="text-lg font-bold text-[#393128] mb-5 font-marcellus">About The Mind Planner</h3>
               <ul className="space-y-3 text-sm">
                 <li><a href="/about" className="text-[#393128] hover:underline">About The Mind Planner</a></li>
                 <li><a href="/support" className="text-[#393128] hover:underline">Contact Us</a></li>
