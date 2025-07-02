@@ -83,7 +83,7 @@ const Footer = () => {
             </div></div>
 
         </div>        {/* Bottom Section with Copyright */}
-        <div className="border-t border-[#393128] bg-[#393128] text-white py-4">
+        <div className="border-t border-[#393128] bg-[#393128] text-white pt-4 pb-3">
           <div className="container px-8 md:px-12 max-w-7xl mx-auto">
             
             {/* Copyright */}

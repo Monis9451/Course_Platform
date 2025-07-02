@@ -203,7 +203,7 @@ const Home = () => {
                 <img 
                   src="/hero-img.png" 
                   alt="Course Platform" 
-                  className="w-full max-w-md h-auto object-contain"
+                  className="w-96 h-auto object-contain transform scale-125"
                 />
               </div>
             </div>
