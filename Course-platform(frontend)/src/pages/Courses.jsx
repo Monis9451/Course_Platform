@@ -11,7 +11,7 @@ const Courses = () => {
       description: "A 6-Week Self-Paced Programme designed to help you identify and heal trauma patterns, develop emotional regulation skills, and break free from limiting beliefs that hold you back.",
       img_src: "/1.png",
       img_alt: "Understanding Trauma Course",
-      category: "BUNDLE"
+      category: "COURSE"
     },
     {
       id: 2,
@@ -19,6 +19,14 @@ const Courses = () => {
       description: "A 6-Week Self-Paced Programme focused on building authentic relationships, understanding attachment styles, and creating healthy relationship patterns.",
       img_src: "/love_course.png",
       img_alt: "Understanding Love Course",
+      category: "COURSE"
+    },
+    {
+      id: 3,
+      title: "Bundle",
+      description: "Complete Bundle: Understanding Trauma + Understanding Love. Get both transformative courses together and save money. Complete access to trauma healing and relationship transformation programs.",
+      img_src: "/1.png",
+      img_alt: "Course Bundle",
       category: "BUNDLE"
     },
   ]
@@ -52,7 +60,7 @@ const Courses = () => {
               <p className="text-primary text-lg">Loading courses...</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {courses?.map((course) => (
                 <div key={course.id} className="bg-cream overflow-hidden group shadow-md">                  <div className="aspect-[4/3] relative overflow-hidden">
                     <img 
@@ -60,6 +68,11 @@ const Courses = () => {
                       alt={course.img_alt} 
                       className="object-contain w-full h-full transition-transform duration-700 group-hover:scale-105"
                     />
+                    <div className="absolute top-4 right-4">
+                      <span className="bg-primary text-white text-sm px-3 py-1 rounded-full font-medium">
+                        {course.category}
+                      </span>
+                    </div>
                   </div>
                   <div className="p-10">
                     <h3 className="text-2xl font-serif mb-4 text-black group-hover:text-[#bd6334] transition-colors uppercase">
@@ -69,7 +82,7 @@ const Courses = () => {
                       {course.description}
                     </p>                    <div className="flex gap-4">
                       <button 
-                        onClick={() => window.location.href = `/checkout/${course.id}`}
+                        onClick={() => window.location.href = course.id === 3 ? '/bundle' : `/checkout/${course.id}`}
                         className="bg-primary hover:bg-[#a3532c] text-white px-8 py-2 rounded-none transition-colors duration-200"
                       >
                         Buy Now
