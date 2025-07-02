@@ -46,15 +46,27 @@ const Header = () => {
   
   return (
     <div className="pt-40">
-      <nav className="bg-primary px-4 py-12 fixed top-0 w-full z-50 shadow-lg text-base">
+      <nav className="bg-primary px-4 py-11.5 fixed top-0 w-full z-50 shadow-lg text-base">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           {/* Left - Hamburger Menu */}
           <div className="flex items-center">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-white hover:text-gray-200 focus:outline-none transition-colors duration-200"
+              className="text-white hover:text-gray-200 focus:outline-none transition-colors duration-200 pl-1"
             >
-              <FiMenu className="h-6 w-6" />
+              <svg 
+                aria-hidden="true" 
+                focusable="false" 
+                role="presentation" 
+                className="h-7 w-7" 
+                viewBox="0 0 64 64"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <title>icon-hamburger</title>
+                <path d="M7 15h51M7 32h51M7 49h51"></path>
+              </svg>
             </button>
           </div>
 
@@ -63,11 +75,11 @@ const Header = () => {
               <img 
                 src="/mindplanner_new_logo.png" 
                 alt="The Mind Planner" 
-                className="h-14 md:h-18 w-auto cursor-pointer hover:opacity-90 transition-opacity duration-200" 
+                className="h-14 md:h-19 w-auto cursor-pointer hover:opacity-90 transition-opacity duration-200 pb-0.5" 
               />
             </Link>
           </div>          {/* Right - Icons */}
-          <div className="flex items-center space-x-2 md:space-x-6">
+          <div className="flex items-center space-x-2 md:space-x-6.5">
             {/* User Profile */}
             {user ? (
               <div className="relative profile-dropdown">
@@ -82,7 +94,15 @@ const Header = () => {
                       className="h-6 w-6 rounded-full"
                     />
                   ) : (
-                    <FiUser className="h-5 w-5" style={{ strokeWidth: 1 }} />
+                    <svg 
+                      className="h-7 w-7" 
+                      viewBox="0 0 64 64" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      strokeWidth="2"
+                    >
+                      <path d="M35 39.84v-2.53c3.3-1.91 6-6.66 6-11.41 0-7.63 0-13.82-9-13.82s-9 6.19-9 13.82c0 4.75 2.7 9.51 6 11.41v2.53c-10.18.85-18 6-18 12.16h42c0-6.19-7.82-11.31-18-12.16Z"></path>
+                    </svg>
                   )}
                   <FiChevronDown className="h-3 w-3 hidden md:block" />
                 </button>
@@ -109,15 +129,48 @@ const Header = () => {
                 to="/login" 
                 className="text-white hover:text-gray-200 transition-colors duration-200"
               >
-                <FiUser className="h-5 w-5" style={{ strokeWidth: 1 }} />
+                <svg 
+                  className="h-7 w-7" 
+                  viewBox="0 0 64 64" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2"
+                >
+                  <path d="M35 39.84v-2.53c3.3-1.91 6-6.66 6-11.41 0-7.63 0-13.82-9-13.82s-9 6.19-9 13.82c0 4.75 2.7 9.51 6 11.41v2.53c-10.18.85-18 6-18 12.16h42c0-6.19-7.82-11.31-18-12.16Z"></path>
+                </svg>
               </Link>
             )}
             
             <button className="text-white hover:text-gray-200 transition-colors duration-200">
-              <FiSearch className="h-5 w-5" style={{ strokeWidth: 1 }} />
+              <svg 
+                aria-hidden="true" 
+                focusable="false" 
+                role="presentation" 
+                className="h-7 w-7" 
+                viewBox="0 0 64 64"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <title>icon-search</title>
+                <path d="M47.16 28.58A18.58 18.58 0 1 1 28.58 10a18.58 18.58 0 0 1 18.58 18.58ZM54 54 41.94 42"></path>
+              </svg>
             </button>
             <Link to="/checkout" className="hidden md:block text-white hover:text-gray-200 transition-colors duration-200">
-              <FiShoppingCart className="h-5 w-5" style={{ strokeWidth: 1 }} />
+              <svg 
+                aria-hidden="true" 
+                focusable="false" 
+                role="presentation" 
+                className="h-7 w-7" 
+                viewBox="0 0 64 64"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path style={{strokeMiterlimit: 10}} d="M14 17.44h46.79l-7.94 25.61H20.96l-9.65-35.1H3"></path>
+                <circle cx="27" cy="53" r="2"></circle>
+                <circle cx="47" cy="53" r="2"></circle>
+              </svg>
             </Link>
           </div>
         </div>        {/* Mobile Menu Overlay */}
