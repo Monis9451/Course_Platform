@@ -447,7 +447,7 @@ const Home = () => {
               </section>      {/* Reviews Section */}
       <section className="pt-24 pb-16" style={{ backgroundColor: '#393128' }}>
         <div className="max-w-7xl mx-auto px-1">
-          <div className="text-center mb-20">
+          <div className="text-center mb-14">
             <h2 className="text-4xl font-fitzgerald font-light mb-6 text-white leading-tight tracking-tight">
               Your Journey, Your Words
             </h2>
