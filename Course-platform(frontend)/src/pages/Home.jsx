@@ -45,40 +45,46 @@ const Home = () => {
   const faqs = [
     {
       id: 1,
-      question: "Can I cancel anytime?",
-      answer: "Yes, you can cancel your membership at any time. A Pathway member who chooses the 12-month payment plan method may cancel their membership within the first 72 hours of enrollment for a $50 cancellation fee. After 72 hours the fee will be cancelled to the remaining cost of their membership agreement. All Lifetime Pathway Membership purchases are Pay in Full Pathway Memberships are final sale & there is no refund or payment plan options.",
+      question: "Can I cancel after purchasing? ",
+      answer: "Due to the nature of the programme (with immediate access to all materials), cancellations or refunds are not available once your purchase is complete. Please ensure you’re ready to begin before enrolling.",
       icon: "❌"
     },
     {
       id: 2,
-      question: "What if I don't login for an entire month? Can I get a refund for that payment?",
-      answer: "Unfortunately, we cannot provide refunds for months when you don't login. Your membership remains active and all content stays accessible to you. We recommend setting reminders to engage with the content regularly to get the most value from your investment.",
+      question: "What if I don’t access the material right away? Can I get a refund?",
+      answer: "No, refunds are not issued based on usage. You’ll have lifetime access, so you can start whenever it feels right for you.",
       icon: "💡"
     },
     {
       id: 3,
       question: "How often am I billed?",
-      answer: "If you choose the monthly payment option, you will be billed automatically every 30 days from your enrollment date. For annual memberships, you'll be billed once per year. All billing is handled securely through our payment processor.",
+      answer: "This is a one-time payment only. There are no recurring charges or subscriptions",
       icon: "💳"
     },
     {
       id: 4,
-      question: "Can I get an extension?",
-      answer: "Extensions may be available in certain circumstances. Please contact our support team to discuss your specific situation. We evaluate extension requests on a case-by-case basis, particularly for medical or emergency situations.",
+      question: "How much time should I dedicate each week?",
+      answer: "Each week includes a core video lesson, reflection exercises, and optional guided practices. Most people spend around 1–2 hours per week, but you’re free to go at your own pace. You can spend more time on any module that resonates — there's no need to rush.",
       icon: "📅"
     },
     {
       id: 5,
-      question: "Does this membership renew?",
-      answer: "Yes, monthly and annual memberships automatically renew unless you cancel before your next billing date. You'll receive email reminders before each renewal. Lifetime memberships do not renew as they provide permanent access.",
-      icon: "🔄"
+      question: "Do I need to be in therapy to do this?",
+      answer: "No. You do not need to be in therapy to benefit. However, if you are, this can be a powerful complement to the work you're already doing.",
+      icon: "🛋️"
     },
     {
       id: 6,
-      question: "What if I want to upgrade to lifetime access?",
-      answer: "You can upgrade to lifetime access at any time during your membership. Contact our support team and they'll help you transition to a lifetime membership. Any payments you've already made will be credited toward your lifetime membership cost.",
-      icon: "💡"
-    }
+      question: "Is there support available?",
+      answer: "Yes. You’ll be able to email Dr. Samina with questions related to the programme content. Please note this is not a substitute for therapy.",
+      icon: "⚙️"
+    },
+    {
+      id: 7,
+      question: "How long do I have access?",
+      answer: "You’ll receive lifetime access to all materials, so you can revisit them as often as you like, at your own pace.",
+      icon: "⏳"
+    },
   ]
 
   const [openFaqId, setOpenFaqId] = useState(null)
@@ -192,8 +198,11 @@ const Home = () => {
                   </svg>
                 ))}
               </div>
-              <blockquote className="text-lg text-gray-800 italic mb-4 leading-relaxed">
+              <blockquote className="text-xl text-gray-800 italic mb-4 leading-relaxed">
                 "I was lucky enough to be an early user and I can confidently say it’s not only beautiful, but the content truly resonates."
+              </blockquote>
+              <blockquote className="text-md text-gray-800 italic mb-4 leading-relaxed">
+                "From the moment I opened this journal, I felt a sense of calm and inspiration. The thoughtful prompts guided me through my fears and helped me clarify my vision, turning vague ideas into actionable steps. Each exercise encouraged deep reflection, allowing me to confront what was holding me back and embrace my personal power. I can already tell this is going to be a transformative tool on my journey, and I'm actually motivated to use it everyday" - Maria, T (Consultant)
               </blockquote>
             </div>
 
@@ -217,8 +226,11 @@ const Home = () => {
                   </svg>
                 ))}
               </div>
-              <blockquote className="text-lg text-gray-800 italic mb-4 leading-relaxed">
+              <blockquote className="text-xl text-gray-800 italic mb-4 leading-relaxed">
                 "I had the privilege of being one of the first to use The Unclaimed Power Journal, and it’s honestly been such a powerful experience."
+              </blockquote>
+              <blockquote className="text-md text-gray-800 italic mb-4 leading-relaxed">
+                "The journal’s structure is incredibly thoughtful, helping me reflect on the fears and limiting beliefs I’ve carried for years. Each prompt felt like it was guiding me toward unlocking a part of myself I hadn’t explored before. What really stands out is how practical yet personal it is—the tools are rooted in real strategies but allow for deep, meaningful reflection. It really is more than just a journal and I'm so grateful to have this" - Anna, P (Legal Assistant)
               </blockquote>
             </div>
           </div>
@@ -379,13 +391,21 @@ const Home = () => {
                 </div>
               </div>
               
-              {/* Button */}
-              <button
-                onClick={() => window.location.href = "/checkout/1"}
-                className="w-full bg-primary text-white py-4 px-6 rounded-full text-lg font-medium hover:bg-gray-800 transition-colors"
-              >
-                BUY THIS COURSE
-              </button>
+              {/* Buttons */}
+              <div className="flex gap-3">
+                <button
+                  onClick={() => window.location.href = "/checkout/1"}
+                  className="flex-1 bg-primary text-white py-3 px-4 rounded-full text-base font-medium hover:bg-gray-800 transition-colors"
+                >
+                  BUY THIS COURSE
+                </button>
+                <button
+                  onClick={() => window.location.href = "/course/1"}
+                  className="flex-1 border-2 border-primary text-primary py-3 px-4 rounded-full text-base font-medium hover:bg-primary hover:text-white transition-colors"
+                >
+                  LEARN MORE
+                </button>
+              </div>
             </div>
 
             {/* Unburdening Love Course Card */}
@@ -406,13 +426,21 @@ const Home = () => {
                 </div>
               </div>
               
-              {/* Button */}
-              <button
-                onClick={() => window.location.href = "/checkout/2"}
-                className="w-full bg-primary text-white py-4 px-6 rounded-full text-lg font-medium hover:bg-gray-800 transition-colors"
-              >
-                BUY THIS COURSE
-              </button>
+              {/* Buttons */}
+              <div className="flex gap-3">
+                <button
+                  onClick={() => window.location.href = "/checkout/2"}
+                  className="flex-1 bg-primary text-white py-3 px-4 rounded-full text-base font-medium hover:bg-gray-800 transition-colors"
+                >
+                  BUY THIS COURSE
+                </button>
+                <button
+                  onClick={() => window.location.href = "/course/2"}
+                  className="flex-1 border-2 border-primary text-primary py-3 px-4 rounded-full text-base font-medium hover:bg-primary hover:text-white transition-colors"
+                >
+                  LEARN MORE
+                </button>
+              </div>
             </div>
 
             {/* Bundle Offer Card */}

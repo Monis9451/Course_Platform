@@ -439,9 +439,9 @@ const CourseDetails = () => {
       <div className="min-h-screen bg-cream">
         <Header />
         <div className="container mx-auto px-4 py-20 text-center">
-          <h1 className="text-3xl font-serif text-black mb-4">Course Not Found</h1>
-          <p className="text-gray-600 mb-8">The course you're looking for doesn't exist or has been removed.</p>
-          <Link to="/courses" className="bg-primary text-white px-8 py-3 hover:bg-primary-dark transition-colors">
+          <h1 className="text-3xl font-fitzgerald text-black mb-4">Course Not Found</h1>
+          <p className="text-gray-600 font-fitzgerald mb-8">The course you're looking for doesn't exist or has been removed.</p>
+          <Link to="/courses" className="bg-primary text-white font-fitzgerald px-8 py-3 hover:bg-primary-dark transition-colors">
             Browse All Courses
           </Link>
         </div>
@@ -458,7 +458,7 @@ const CourseDetails = () => {
       {/* Breadcrumbs */}
       <div className="bg-white py-4 border border-gray-300">
         <div className="container mx-auto px-4">
-          <nav className="flex items-center space-x-2 text-sm">
+          <nav className="flex items-center space-x-2 text-sm font-fitzgerald">
             <Link to="/" className="text-primary hover:underline">Home</Link>
             <span className="text-gray-400">›</span>
             <Link to="/courses" className="text-primary hover:underline">Courses</Link>
@@ -470,10 +470,10 @@ const CourseDetails = () => {
       <section className="bg-cream py-16 md:py-24">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-5xl mx-auto">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-medium mb-6 leading-tight text-center">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-fitzgerald font-medium mb-6 leading-tight text-center">
               {course.title}: {course.subtitle}
             </h1>
-            <h2 className="text-xl md:text-2xl text-black mb-8 text-center font-serif">
+            <h2 className="text-xl md:text-2xl text-black mb-8 text-center font-fitzgerald">
               {course.description}
             </h2>
           </div>
@@ -492,11 +492,11 @@ const CourseDetails = () => {
               </div>
               {/* Duration & Level */}
               <div className="flex items-center gap-6 mt-auto">
-                <span className="flex items-center text-warm-gray text-base">
+                <span className="flex items-center text-warm-gray text-base font-fitzgerald">
                   <FiClock className="mr-2" />
                   {course.duration}
                 </span>
-                <span className="flex items-center text-warm-gray text-base">
+                <span className="flex items-center text-warm-gray text-base font-fitzgerald">
                   <FiUser className="mr-2" />
                   {course.level}
                 </span>
@@ -506,18 +506,18 @@ const CourseDetails = () => {
             {/* Right: Price & Features */}
             <div className="w-full md:w-1/3 bg-gray-50 rounded-lg shadow p-6 flex flex-col justify-between">
               <div>
-                <h3 className="text-xl font-serif font-medium mb-2 text-black">Course Price</h3>
-                <div className="text-3xl font-bold text-primary mb-6">£{course.price}.00</div>
+                <h3 className="text-xl font-fitzgerald font-medium mb-2 text-black">Course Price</h3>
+                <div className="text-3xl font-bold text-primary mb-6 font-fitzgerald">£{course.price}.00</div>
                 <ul className="mb-6 space-y-3">
-                  <li className="flex items-center text-black">
+                  <li className="flex items-center text-black font-fitzgerald">
                     <FaCheckCircle className="text-primary mr-2" />
                     Lifetime Access
                   </li>
-                  <li className="flex items-center text-black">
+                  <li className="flex items-center text-black font-fitzgerald">
                     <FaCheckCircle className="text-primary mr-2" />
                     24 Video Lessons
                   </li>
-                  <li className="flex items-center text-black">
+                  <li className="flex items-center text-black font-fitzgerald">
                     <FaCheckCircle className="text-primary mr-2" />
                     Downloadable Resources
                   </li>
@@ -525,11 +525,11 @@ const CourseDetails = () => {
               </div>
               <button
                 onClick={() => (window.location.href = `/checkout/${course.id}`)}
-                className="bg-primary hover:bg-primary-dark text-white font-medium px-6 py-3 rounded transition-colors duration-200 w-full mb-3"
+                className="bg-primary hover:bg-primary-dark text-white font-fitzgerald font-medium px-6 py-3 rounded transition-colors duration-200 w-full mb-3"
               >
                 Enroll Now
               </button>
-              <div className="text-center text-primary mt-2 text-sm">
+              <div className="text-center text-primary mt-2 text-sm font-fitzgerald">
                 Try a free sample lesson
               </div>
             </div>
@@ -538,7 +538,7 @@ const CourseDetails = () => {
       </section>      {/* Course Curriculum */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-serif text-black mb-12">Course Breakdown</h2>
+          <h2 className="text-3xl font-fitzgerald text-black mb-12">Course Breakdown</h2>
           
           <div className="space-y-8">
             {course.modules.map((module, moduleIndex) => (
@@ -556,19 +556,19 @@ const CourseDetails = () => {
 			<section className="py-16 bg-white">
 				<div className="container mx-auto px-4 lg:px-8">
 					<div className="max-w-4xl mx-auto">
-						<h2 className="text-2xl md:text-3xl font-medium mb-6 text-center text-primary font-serif uppercase">
+						<h2 className="text-2xl md:text-3xl font-medium mb-6 text-center text-primary font-fitzgerald uppercase">
 							Why This Course?
 						</h2>
-						<h3 className="text-xl font-medium mb-12 text-center text-black font-serif">
+						<h3 className="text-xl font-medium mb-12 text-center text-black font-fitzgerald">
 							Why "Unburdening Love" Is Different:
 						</h3>
 
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 							<div className="bg-cream p-6 rounded-lg shadow-sm">
-								<h3 className="font-medium text-lg mb-4 text-black">
+								<h3 className="font-medium text-lg mb-4 text-black font-fitzgerald">
 									Expert-Led
 								</h3>
-								<p className="text-warm-gray">
+								<p className="text-warm-gray font-fitzgerald">
 									Designed by a licensed psychologist with years of
 									experience in relationship therapy, this course combines science-backed methods
 									for deep healing.
@@ -576,20 +576,20 @@ const CourseDetails = () => {
 							</div>
 
 							<div className="bg-cream p-6 rounded-lg shadow-sm">
-								<h3 className="font-medium text-lg mb-4 text-black">
+								<h3 className="font-medium text-lg mb-4 text-black font-fitzgerald">
 									Affordable
 								</h3>
-								<p className="text-warm-gray">
+								<p className="text-warm-gray font-fitzgerald">
 									High-quality, transformative material without the hefty
 									price tag of therapy or one-on-one coaching.
 								</p>
 							</div>
 
 							<div className="bg-cream p-6 rounded-lg shadow-sm">
-								<h3 className="font-medium text-lg mb-4 text-black">
+								<h3 className="font-medium text-lg mb-4 text-black font-fitzgerald">
 									Self-Paced
 								</h3>
-								<p className="text-warm-gray">
+								<p className="text-warm-gray font-fitzgerald">
 									Complete the modules at your own pace with lifetime
 									access to all materials, so you can return to them
 									whenever you need.
@@ -597,10 +597,10 @@ const CourseDetails = () => {
 							</div>
 
 							<div className="bg-cream p-6 rounded-lg shadow-sm">
-								<h3 className="font-medium text-lg mb-4 text-black">
+								<h3 className="font-medium text-lg mb-4 text-black font-fitzgerald">
 									Personal Support
 								</h3>
-								<p className="text-warm-gray">
+								<p className="text-warm-gray font-fitzgerald">
 									Have your questions answered and get the support you
 									need via email throughout the course.
 								</p>
@@ -612,36 +612,36 @@ const CourseDetails = () => {
 			<section className="py-16 bg-white">
 				<div className="container mx-auto px-4 lg:px-8">
 					<div className="max-w-4xl mx-auto">
-						<h2 className="text-2xl md:text-3xl font-medium mb-6 text-center font-serif uppercase">
+						<h2 className="text-2xl md:text-3xl font-medium mb-6 text-center font-fitzgerald uppercase">
 							Testimonials
 						</h2>
-						<h3 className="text-xl font-medium mb-12 text-center text-black font-serif">
+						<h3 className="text-xl font-medium mb-12 text-center text-black font-fitzgerald">
 							Real Stories from Real Students
 						</h3>
 
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
 							<div className="bg-white p-6 rounded-lg shadow-sm">
-								<p className="text-warm-gray mb-6 italic">
+								<p className="text-warm-gray mb-6 italic font-fitzgerald">
 									"I had no idea how much I was carrying from my childhood
 									and past relationships. This course helped me see it and,
 									more importantly, let it go."
 								</p>
-								<p className="font-medium text-black">— Sarah M.</p>
+								<p className="font-medium text-black font-fitzgerald">— Sarah M.</p>
 							</div>
 
 							<div className="bg-white p-6 rounded-lg shadow-sm">
-								<p className="text-warm-gray mb-6 italic">
+								<p className="text-warm-gray mb-6 italic font-fitzgerald">
 									"The exercises helped me realize my own attachment style and how it was affecting my
 									relationship. I'm now communicating better and feeling more secure in love."
 								</p>
-								<p className="font-medium text-black">— James L.</p>
+								<p className="font-medium text-black font-fitzgerald">— James L.</p>
 							</div>
 						</div>						{/* Get Instant Access Section */}
 						<div className="text-center bg-cream p-8 rounded-lg">
-							<h3 className="text-2xl font-medium mb-4 text-black font-serif">
+							<h3 className="text-2xl font-medium mb-4 text-black font-fitzgerald">
 								Get Instant Access for Just £75
 							</h3>
-							<p className="text-warm-gray text-lg leading-relaxed">
+							<p className="text-warm-gray text-lg leading-relaxed font-fitzgerald">
 								This course is designed to give you lifetime access to transformative materials at an
 								affordable price. Whether you're looking to heal from past wounds, improve your
 								current relationship, or build a foundation of self-love, this course will guide you every
@@ -656,7 +656,7 @@ const CourseDetails = () => {
 			<section className="py-16 bg-white">
 				<div className="max-w-4xl mx-auto px-8">
 					<div className="text-center mb-12">
-						<h2 className="text-2xl md:text-3xl font-medium mb-8 text-center font-serif uppercase">
+						<h2 className="text-2xl md:text-3xl font-medium mb-8 text-center font-fitzgerald uppercase">
 							FAQ
 						</h2>
 						<div className="w-full h-px bg-gray-300"></div>
@@ -671,7 +671,7 @@ const CourseDetails = () => {
 								>
 									<div className="flex items-center">
 										<span className="text-lg mr-3">{faq.icon}</span>
-										<span className="text-gray-800 font-medium">{faq.question}</span>
+										<span className="text-gray-800 font-medium font-fitzgerald">{faq.question}</span>
 									</div>
 									<svg
 										className={`w-5 h-5 text-gray-500 transform transition-transform duration-200 ${
@@ -692,7 +692,7 @@ const CourseDetails = () => {
 									}`}
 								>
 									<div className="px-8">
-										<p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+										<p className="text-gray-600 leading-relaxed font-fitzgerald">{faq.answer}</p>
 									</div>
 								</div>
 							</div>
@@ -705,16 +705,16 @@ const CourseDetails = () => {
 			<section className="py-16 bg-cream">
 				<div className="container mx-auto px-4 lg:px-8">
 					<div className="max-w-3xl mx-auto text-center">
-						<h2 className="text-2xl md:text-3xl font-medium mb-10 font-serif">
+						<h2 className="text-2xl md:text-3xl font-medium mb-10 font-fitzgerald">
 							Ready to Start Your Transformation?
 						</h2>
 						<button
 							onClick={() => (window.location.href = `/checkout/${course.id}`)}
-							className="bg-primary hover:bg-gray-100 text-white font-medium px-12 py-4 uppercase text-lg transition-colors duration-200"
+							className="bg-primary hover:bg-gray-100 text-white font-medium px-12 py-4 uppercase text-lg transition-colors duration-200 font-fitzgerald"
 						>
 							Enroll Now for £{course.price}
 						</button>
-						<a href="/courses" className="block mt-6 text-primary hover:underline">
+						<a href="/courses" className="block mt-6 text-primary hover:underline font-fitzgerald">
 							Or view all our corses
 						</a>
 					</div>
@@ -735,17 +735,17 @@ function ModuleSection({ module, moduleNumber, isLessonCompleted }) {
       >
         <div className="flex items-center justify-between">
           <div className="flex items-start gap-3">
-            <div className="bg-primary text-white text-sm px-2 py-1 rounded font-medium">
+            <div className="bg-primary text-white text-sm px-2 py-1 rounded font-medium font-fitzgerald">
               Module {moduleNumber}
             </div>
             <div>
-              <h3 className="text-lg font-medium text-black mb-1">
+              <h3 className="text-lg font-medium text-black mb-1 font-fitzgerald">
                 {module.title}
               </h3>
-              <p className="text-gray-600 text-sm">
+              <p className="text-gray-600 text-sm font-fitzgerald">
                 {module.description}
               </p>
-              <p className="text-gray-500 text-xs mt-2">
+              <p className="text-gray-500 text-xs mt-2 font-fitzgerald">
                 {module.lessons.length} lessons
               </p>
             </div>
@@ -769,21 +769,21 @@ function ModuleSection({ module, moduleNumber, isLessonCompleted }) {
               <li key={lesson.id} className="hover:bg-gray-50 transition-colors">
                 <div className="flex items-center justify-between p-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-sm font-medium text-gray-600">
+                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-sm font-medium text-gray-600 font-fitzgerald">
                       {index + 1}
                     </div>
                     <div>
-                      <h4 className="font-medium text-black text-sm">
+                      <h4 className="font-medium text-black text-sm font-fitzgerald">
                         {lesson.title}
                       </h4>
-                      <p className="text-gray-600 text-xs mt-1">
+                      <p className="text-gray-600 text-xs mt-1 font-fitzgerald">
                         {lesson.description}
                       </p>
                     </div>
                   </div>
                   
                   <div className="flex items-center gap-3">
-                    <span className="text-sm text-gray-500">{lesson.duration}</span>
+                    <span className="text-sm text-gray-500 font-fitzgerald">{lesson.duration}</span>
                     
                     {isLessonCompleted(lesson.id) ? (
                       <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
