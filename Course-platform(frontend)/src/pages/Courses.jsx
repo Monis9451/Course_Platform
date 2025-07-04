@@ -5,26 +5,27 @@ import Header from '../pages/Header'
 const Courses = () => {
   const [isLoading, setIsLoading] = useState(true)
   
-  const courses = [    {
+  const courses = [
+    {
       id: 1,
-      title: "Understanding Trauma",
-      description: "A 6-Week Self-Paced Programme designed to help you identify and heal trauma patterns, develop emotional regulation skills, and break free from limiting beliefs that hold you back.",
+      title: "Unburdening Trauma",
+      description: "A 6-Week Self-Paced Programme - Break Emotional Cycles, Reclaim Peace & Rewire Your Response to Pain. Transform your life from within in just 6 weeks.",
       img_src: "/1.png",
-      img_alt: "Understanding Trauma Course",
+      img_alt: "Unburdening Trauma Course",
       category: "COURSE"
     },
     {
       id: 2,
-      title: "Understanding Love",
-      description: "A 6-Week Self-Paced Programme focused on building authentic relationships, understanding attachment styles, and creating healthy relationship patterns.",
+      title: "Unburdening Love",
+      description: "A 6-Week Self-Paced Course - Break Free from Relationship Blocks and Cultivate Healthy Love. Transform your relationships in just 6 weeks.",
       img_src: "/love_course.png",
-      img_alt: "Understanding Love Course",
+      img_alt: "Unburdening Love Course",
       category: "COURSE"
     },
     {
       id: 3,
       title: "Bundle",
-      description: "Complete Bundle: Understanding Trauma + Understanding Love. Get both transformative courses together and save money. Complete access to trauma healing and relationship transformation programs.",
+      description: "Complete Bundle: Unburdening Trauma + Unburdening Love. Get both transformative courses together and save money. Complete access to trauma healing and relationship transformation programs.",
       img_src: "/1.png",
       img_alt: "Course Bundle",
       category: "BUNDLE"

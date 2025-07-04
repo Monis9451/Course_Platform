@@ -20,26 +20,30 @@ const Home = () => {
       subtext: '"The journal’s structure is incredibly thoughtful, helping me reflect on the fears and limiting beliefs I’ve carried for years. Each prompt felt like it was guiding me toward unlocking a part of myself I hadn’t explored before. What really stands out is how practical yet personal it is—the tools are rooted in real strategies but allow for deep, meaningful reflection. It really is more than just a journal and I\'m so grateful to have this" - Anna, P (Legal Assistant)',
       rating: 5
     },
-    // {
-    //   id: 3,
-    //   text: "TBM has literally shifted EVERYTHING! Life hasn't been the same since I joined- I know it sounds dramatic, but I literally feel like I live in an absolutely different reality and am still trying to adjust and understand. AND my manifestation came through after just 3 weeks of doing the work - I'm still mind blown. It's still all very fresh but definitely better than anything I ever could have dreamed of! THANK YOU TBM!",
-    //   rating: 5
-    // },
-    // {
-    //   id: 4,
-    //   text: "This program has completely transformed my relationship with myself and others. The tools and techniques are practical and powerful.",
-    //   rating: 5
-    // },
-    // {
-    //   id: 5,
-    //   text: "After years of therapy, this was the breakthrough I needed. The results speak for themselves - my life is completely different now.",
-    //   rating: 5
-    // },
-    // {
-    //   id: 6,
-    //   text: "The Mind Planner approach is unlike anything I've tried before. It's backed by real science and delivers real results.",
-    //   rating: 5
-    // }
+    {
+      id: 3,
+      text: 'This course has completely transformed my relationship with myself and others. The tools and techniques are practical and powerful.',
+      subtext: '"After struggling with anxiety and self-doubt for years, I finally found the breakthrough I needed. The modules on trauma healing opened my eyes to patterns I didn\'t even realize I had. Each lesson built upon the last, creating a comprehensive healing journey that felt both gentle and transformative. I\'m now able to set boundaries, communicate my needs, and feel genuinely confident in who I am." - Sarah, K (Marketing Manager)',
+      rating: 5
+    },
+    {
+      id: 4,
+      text: 'The Mind Planner approach is unlike anything I\'ve tried before. It\'s backed by real science and delivers real results.',
+      subtext: '"What sets this apart from other self-help resources is the depth of psychological insight combined with practical application. Dr. Samina\'s approach helped me understand the root causes of my relationship patterns and gave me concrete tools to create healthier connections. The nervous system regulation techniques alone have been life-changing for managing my stress and emotional responses." - David, R (Software Developer)',
+      rating: 5
+    },
+    {
+      id: 5,
+      text: 'After years of therapy, this was the breakthrough I needed. The results speak for themselves - my life is completely different now.',
+      subtext: '"I\'ve been in therapy for years, but this course gave me practical tools I could use immediately. The way Dr. Samina explains complex psychological concepts in simple terms made everything click. I finally understood why I kept repeating the same patterns and learned how to break free. The inner child work was particularly powerful - I feel like I\'ve reclaimed parts of myself I lost long ago." - Rachel, M (Teacher)',
+      rating: 5
+    },
+    {
+      id: 6,
+      text: 'This programme has given me the confidence to create the relationships I\'ve always wanted but never thought I deserved.',
+      subtext: '"The attachment style module opened my eyes to how my childhood experiences were still controlling my adult relationships. Learning about my avoidant attachment helped me understand why I always pushed people away when they got too close. Now I have tools to stay present and connected, even when my nervous system wants to flee. My relationship with my partner has completely transformed." - Michael, T (Graphic Designer)',
+      rating: 5
+    }
   ]
 
   const faqs = [
@@ -93,80 +97,54 @@ const Home = () => {
     setOpenFaqId(openFaqId === faqId ? null : faqId)
   }
 
-  const scrollToReview = (index) => {
+  const scrollToReview = (pageIndex) => {
     if (reviewsRef.current) {
       const container = reviewsRef.current
       const containerWidth = container.offsetWidth
-      const isDesktop = window.innerWidth >= 1024 // lg breakpoint
       
-      if (isDesktop) {
-        // On desktop, show 2 reviews at a time
-        const scrollPosition = Math.floor(index / 2) * containerWidth
-        container.scrollTo({
-          left: scrollPosition,
-          behavior: 'smooth'
-        })
-      } else {
-        // On mobile, show 1 review at a time
-        const reviewWidth = container.children[0].offsetWidth + 32 // including gap
-        container.scrollTo({
-          left: reviewWidth * index,
-          behavior: 'smooth'
-        })
-      }
-      setCurrentReviewIndex(index)
+      // Scroll to the specific page (pair of reviews)
+      const scrollPosition = pageIndex * containerWidth
+      container.scrollTo({
+        left: scrollPosition,
+        behavior: 'smooth'
+      })
+      setCurrentReviewIndex(pageIndex)
     }
   }
 
   const nextReview = () => {
-    const isDesktop = window.innerWidth >= 1024
-    let nextIndex
-    
-    if (isDesktop) {
-      // On desktop, move by 2 reviews
-      nextIndex = currentReviewIndex + 2 >= reviews.length ? 0 : currentReviewIndex + 2
-    } else {
-      // On mobile, move by 1 review
-      nextIndex = currentReviewIndex === reviews.length - 1 ? 0 : currentReviewIndex + 1
-    }
+    const totalPages = Math.ceil(reviews.length / 2)
+    const nextIndex = currentReviewIndex === totalPages - 1 ? 0 : currentReviewIndex + 1
     scrollToReview(nextIndex)
   }
 
   const prevReview = () => {
-    const isDesktop = window.innerWidth >= 1024
-    let prevIndex
-    
-    if (isDesktop) {
-      // On desktop, move by 2 reviews
-      prevIndex = currentReviewIndex - 2 < 0 ? Math.max(0, reviews.length - 2) : currentReviewIndex - 2
-    } else {
-      // On mobile, move by 1 review
-      prevIndex = currentReviewIndex === 0 ? reviews.length - 1 : currentReviewIndex - 1
-    }
+    const totalPages = Math.ceil(reviews.length / 2)
+    const prevIndex = currentReviewIndex === 0 ? totalPages - 1 : currentReviewIndex - 1
     scrollToReview(prevIndex)
   }
 
   const courses = [
     {
       id: 1,
-      title: "Understanding Trauma",
-      description: "A self-paced program",
+      title: "Unburdening Trauma",
+      description: "A self-paced programme",
       img_src: "/1.png",
-      img_alt: "Understanding Trauma Course",
+      img_alt: "Unburdening Trauma Course",
       category: "COURSE"
     },
     {
       id: 2,
-      title: "Understanding Love",
+      title: "Unburdening Love",
       description: "A comprehensive guide",
       img_src: "/love_course.png",
-      img_alt: "Understanding Love Course",
+      img_alt: "Unburdening Love Course",
       category: "COURSE"
     },
     {
       id: 3,
       title: "Bundle",
-      description: "Understanding Trauma + Understanding Love",
+      description: "Unburdening Trauma + Unburdening Love",
       img_src: "/1.png",
       img_alt: "Course Bundle",
       category: "BUNDLE"
@@ -397,7 +375,7 @@ const Home = () => {
                   onClick={() => window.location.href = "/checkout/1"}
                   className="flex-1 bg-primary text-white py-3 px-4 rounded-full text-base font-medium hover:bg-gray-800 transition-colors"
                 >
-                  BUY THIS COURSE
+                  BUY NOW
                 </button>
                 <button
                   onClick={() => window.location.href = "/course/1"}
@@ -432,7 +410,7 @@ const Home = () => {
                   onClick={() => window.location.href = "/checkout/2"}
                   className="flex-1 bg-primary text-white py-3 px-4 rounded-full text-base font-medium hover:bg-gray-800 transition-colors"
                 >
-                  BUY THIS COURSE
+                  BUY NOW
                 </button>
                 <button
                   onClick={() => window.location.href = "/course/2"}
@@ -466,7 +444,7 @@ const Home = () => {
                 onClick={() => window.location.href = "/bundle"}
                 className="w-full bg-primary text-white py-4 px-6 rounded-full text-lg font-medium hover:bg-gray-800 transition-colors"
               >
-                BUY THIS COURSE
+                BUY NOW
               </button>
             </div>
 
@@ -485,41 +463,44 @@ const Home = () => {
           <div className="relative">
             <div 
               ref={reviewsRef}
-              className="flex gap-32 lg:gap-118 overflow-x-hidden scroll-smooth pb-4"
+              className="flex overflow-x-hidden scroll-smooth pb-4"
             >              
-              {/* First Review - Now on Left */}
-              <div className="flex-none w-full lg:w-[calc(39%-6rem)] flex flex-col relative pl-0 lg:pl-0 order-1 lg:order-1">
-                {/* Main Review Text - Large and Centered */}
-                <div className="mb-8">
-                  <p className="text-white leading-tight text-xl lg:text-2xl font-medium">
-                    "I was lucky enough to be an early user and I can confidently say it's not only beautiful, but the content truly resonates."
-                  </p>
+              {/* Group reviews in pairs and display them */}
+              {Array.from({ length: Math.ceil(reviews.length / 2) }, (_, pageIndex) => (
+                <div key={pageIndex} className="flex-none w-full flex gap-32 lg:gap-118">
+                  {/* Left Review */}
+                  {reviews[pageIndex * 2] && (
+                    <div className="w-full lg:w-[calc(39%-6rem)] flex flex-col relative pl-0 lg:pl-0">
+                      <div className="mb-8">
+                        <p className="text-white leading-tight text-xl lg:text-2xl font-medium text-left">
+                          "{reviews[pageIndex * 2].text}"
+                        </p>
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-white/90 text-justify leading-normal text-sm lg:text-base">
+                          {reviews[pageIndex * 2].subtext}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Right Review */}
+                  {reviews[pageIndex * 2 + 1] && (
+                    <div className="w-full lg:w-[calc(39%-6rem)] flex flex-col relative pr-0 lg:pr-0">
+                      <div className="mb-8">
+                        <p className="text-white text-right leading-tight text-xl lg:text-2xl font-medium">
+                          "{reviews[pageIndex * 2 + 1].text}"
+                        </p>
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-white/90 text-justify leading-normal text-sm lg:text-base">
+                          {reviews[pageIndex * 2 + 1].subtext}
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                
-                {/* Subtext - Smaller and Justified */}
-                <div className="flex-1">
-                  <p className="text-white/90 text-justify leading-normal text-sm lg:text-base">
-                    "From the moment I opened this journal, I felt a sense of calm and inspiration. The thoughtful prompts guided me through my fears and helped me clarify my vision, turning vague ideas into actionable steps. Each exercise encouraged deep reflection, allowing me to confront what was holding me back and embrace my personal power. I can already tell this is going to be a transformative tool on my journey, and I'm actually motivated to use it everyday" - Maria, T (Consultant)
-                  </p>
-                </div>
-              </div>
-
-              {/* Second Review - Now on Right */}
-              <div className="flex-none w-full lg:w-[calc(39%-6rem)] flex flex-col relative pr-0 lg:pr-0 order-2 lg:order-2">
-                {/* Main Review Text - Large and Right Aligned */}
-                <div className="mb-8">
-                  <p className="text-white text-right leading-tight text-xl lg:text-2xl font-medium">
-                    "I had the privilege of being one of the first to use The Unclaimed Power Journal, and it's honestly been such a powerful experience."
-                  </p>
-                </div>
-                
-                {/* Subtext - Smaller and Justified */}
-                <div className="flex-1">
-                  <p className="text-white/90 text-justify leading-normal text-sm lg:text-base">
-                    "The journal's structure is incredibly thoughtful, helping me reflect on the fears and limiting beliefs I've carried for years. Each prompt felt like it was guiding me toward unlocking a part of myself I hadn't explored before. What really stands out is how practical yet personal it is—the tools are rooted in real strategies but allow for deep, meaningful reflection. It really is more than just a journal and I'm so grateful to have this" - Anna, P (Legal Assistant)
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
 
             {/* Navigation Arrows */}
