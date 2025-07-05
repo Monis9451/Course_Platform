@@ -16,7 +16,7 @@ const Header = () => {
     // { name: 'Unburdening Trauma', path: '/course/1' },
     // { name: 'Unburdening Love', path: '/course/2' },
     { name: 'About The Founder', path: '/about' },
-    { name: 'Contact Us', path: '/support' },
+    { name: 'Contact Us', path: '/contact-us' },
     { name: 'Blogs', path: '/blogs' },
   ];
 

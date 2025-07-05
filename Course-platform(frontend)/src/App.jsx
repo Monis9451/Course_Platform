@@ -8,7 +8,7 @@ import CourseDetails from './pages/CourseDetails'
 // import CourseLanding from './pages/CourseLanding'
 import About from './pages/About'
 import CourseContent from './pages/CourseContent'
-import Support from "./pages/Support";
+import ContactUs from "./pages/ContactUs";
 import Checkout from "./pages/Checkout";
 import ThankYou from "./pages/Thankyou";
 import Blogs from './pages/Blogs';
@@ -30,7 +30,8 @@ const App = () => {
             {/* <Route path="/course/:id/landing" element={<CourseLanding />} /> */}
             <Route path="/about" element={<About />} />
             <Route path="/course-content/:id" element={<CourseContent />} />
-            <Route path="/support" element={<Support />} />
+            <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/support" element={<ContactUs />} />
             <Route path="/checkout/:id" element={<Checkout />} />
             <Route path="/thankyou" element={<ThankYou />} />
             <Route path="/Blogs" element={<Blogs />} />
