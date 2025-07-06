@@ -145,7 +145,7 @@ const Home = () => {
       id: 3,
       title: "Bundle",
       description: "Unburdening Trauma + Unburdening Love",
-      img_src: "/1.png",
+      img_src: "/3.png",
       img_alt: "Course Bundle",
       category: "BUNDLE"
     }

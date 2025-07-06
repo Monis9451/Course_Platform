@@ -4,7 +4,7 @@ import { FiUser, FiClock } from 'react-icons/fi'
 import { FaCheckCircle } from 'react-icons/fa'
 import Header from '../pages/Header'
 
-// Course data with new content structure
+// Course Data
 const dummyCoursesData = {
   1: {
     id: 1,
@@ -20,7 +20,7 @@ const dummyCoursesData = {
     level: "ALL LEVELS",
     price: 75,
     featured: true,
-    img_src: "/love_course.png",
+    img_src: "/1.png",
     img_alt: "Unburdening Trauma Course",
     benefits: [
       "Understand Trauma in the Body: Learn why trauma gets stored and how to gently release it through body-based awareness.",
@@ -263,7 +263,6 @@ const CourseDetails = () => {
   }
 
   useEffect(() => {
-    // Simulate API call - replace with actual API when database is ready
     const fetchCourse = () => {
       setTimeout(() => {
         const courseData = dummyCoursesData[parseInt(id)]
@@ -358,17 +357,14 @@ const CourseDetails = () => {
       <section className="bg-cream py-12 md:py-10">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="bg-white rounded-lg shadow-md p-6 md:p-10 flex flex-col md:flex-row gap-8 items-stretch max-w-5xl mx-auto">
-            {/* Left: Image + Info */}
             <div className="w-full md:w-2/3 flex flex-col items-center">
-              {/* Course Image Container */}
-              <div className="w-full h-48 md:h-64 bg-gray-100 rounded-lg overflow-hidden mb-6">
+              <div className="w-full max-w-md md:w-108 h-48 md:h-64 bg-gray-100 rounded-lg overflow-hidden mb-6">
                 <img 
-                  src="/3.png" 
+                  src={course.img_src} 
                   alt="course image" 
                   className="w-full h-full object-cover"
                 />
               </div>
-              {/* Duration & Level */}
               <div className="flex items-center gap-6 mt-auto">
                 <span className="flex items-center text-warm-gray text-base font-fitzgerald">
                   <FiClock className="mr-2" />
@@ -381,7 +377,6 @@ const CourseDetails = () => {
               </div>
             </div>
             
-            {/* Right: Price & Features */}
             <div className="w-full md:w-1/3 bg-gray-50 rounded-lg shadow p-6 flex flex-col justify-between">
               <div>
                 <h3 className="text-xl font-fitzgerald font-medium mb-2 text-black">Course Price</h3>

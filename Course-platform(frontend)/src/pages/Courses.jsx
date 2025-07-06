@@ -26,7 +26,7 @@ const Courses = () => {
       id: 3,
       title: "Bundle",
       description: "Complete Bundle: Unburdening Trauma + Unburdening Love. Get both transformative courses together and save money. Complete access to trauma healing and relationship transformation programs.",
-      img_src: "/1.png",
+      img_src: "/3.png",
       img_alt: "Course Bundle",
       category: "BUNDLE"
     },

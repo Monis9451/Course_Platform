@@ -9,6 +9,7 @@ import Module1Lesson4 from '../components/UnburdingTrauma/Module1Lesson4'
 import Module1Lesson5 from '../components/UnburdingTrauma/Module1Lesson5'
 import Module1Lesson6 from '../components/UnburdingTrauma/Module1Lesson6'
 import Module1Lesson7 from '../components/UnburdingTrauma/Module1Lesson7'
+import Module1Lesson8 from '../components/UnburdingTrauma/Module1Lesson8'
 
 import Module2Lesson1 from '../components/UnburdingTrauma/Module2Lesson1'
 import Module2Lesson2 from '../components/UnburdingTrauma/Module2Lesson2'
@@ -16,25 +17,36 @@ import Module2Lesson3 from '../components/UnburdingTrauma/Module2Lesson3'
 import Module2Lesson4 from '../components/UnburdingTrauma/Module2Lesson4'
 import Module2Lesson5 from '../components/UnburdingTrauma/Module2Lesson5'
 import Module2Lesson6 from '../components/UnburdingTrauma/Module2Lesson6'
+import Module2Lesson7 from '../components/UnburdingTrauma/Module2Lesson7'
 
 import Module3Lesson1 from '../components/UnburdingTrauma/Module3Lesson1'
 import Module3Lesson2 from '../components/UnburdingTrauma/Module3Lesson2'
 import Module3Lesson3 from '../components/UnburdingTrauma/Module3Lesson3'
-import { Module3Lesson4, Module3Lesson5, Module3Lesson6, Module3Lesson7 } from '../components/UnburdingTrauma/Module3Lessons'
+import Module3Lesson4 from '../components/UnburdingTrauma/Module3Lesson4'
+import Module3Lesson5 from '../components/UnburdingTrauma/Module3Lesson5'
+import Module3Lesson6 from '../components/UnburdingTrauma/Module3Lesson6'
+import Module3Lesson7 from '../components/UnburdingTrauma/Module3Lesson7'
+import Module3Lesson8 from '../components/UnburdingTrauma/Module3Lesson8'
 
-import { 
-  Module4Lesson1, Module4Lesson2, Module4Lesson3, Module4Lesson4, 
-  Module4Lesson5, Module4Lesson6, Module4Lesson7 
-} from '../components/UnburdingTrauma/Module4Lessons'
+import Module4Lesson1 from '../components/UnburdingTrauma/Module4Lesson1'
+import Module4Lesson2 from '../components/UnburdingTrauma/Module4Lesson2'
+import Module4Lesson3 from '../components/UnburdingTrauma/Module4Lesson3'
+import Module4Lesson4 from '../components/UnburdingTrauma/Module4Lesson4'
+import Module4Lesson5 from '../components/UnburdingTrauma/Module4Lesson3'
 
-import { 
-  Module5Lesson1, Module5Lesson2, Module5Lesson3, Module5Lesson4, 
-  Module5Lesson5, Module5Lesson6, Module5Lesson7 
-} from '../components/UnburdingTrauma/Module5Lessons'
+import Module5Lesson1 from '../components/UnburdingTrauma/Module5Lesson1'
+import Module5Lesson2 from '../components/UnburdingTrauma/Module5Lesson2'
+import Module5Lesson3 from '../components/UnburdingTrauma/Module5Lesson3'
+import Module5Lesson4 from '../components/UnburdingTrauma/Module5Lesson4'
+import Module5Lesson5 from '../components/UnburdingTrauma/Module5Lesson5'
+import Module5Lesson6 from '../components/UnburdingTrauma/Module5Lesson6'
+import Module5Lesson7 from '../components/UnburdingTrauma/Module5Lesson7'
 
-import { 
-  Module6Lesson1, Module6Lesson2, Module6Lesson3, Module6Lesson4, Module6Lesson5 
-} from '../components/UnburdingTrauma/Module6Lessons'
+import Module6Lesson1 from '../components/UnburdingTrauma/Module6Lesson1'
+import Module6Lesson2 from '../components/UnburdingTrauma/Module6Lesson2'
+import Module6Lesson3 from '../components/UnburdingTrauma/Module6Lesson3'
+import Module6Lesson4 from '../components/UnburdingTrauma/Module6Lesson4'
+import Module6Lesson5 from '../components/UnburdingTrauma/Module6Lesson5'
 
 const CourseContent_new = () => {
   const [selectedLesson, setSelectedLesson] = useState({ moduleIndex: 0, lessonIndex: 0 })
@@ -54,7 +66,8 @@ const CourseContent_new = () => {
           { title: "Lesson 4: Dissociation in PTSD: Depersonalisation, Derealisation, Dissociative Amnesia", component: Module1Lesson4 },
           { title: "Lesson 5: Personal Trauma Timeline", component: Module1Lesson5 },
           { title: "Lesson 6: Self-Assessment - Trauma Responses", component: Module1Lesson6 },
-          { title: "Lesson 7: Trauma Body Map", component: Module1Lesson7 }
+          { title: "Lesson 7: Somatic Mapping Exercise", component: Module1Lesson7 },
+          { title: "Lesson 8: Guided Visualisation - Grounding & Nervous System Regulation", component: Module1Lesson8 }
         ]
       },
       {
@@ -65,8 +78,9 @@ const CourseContent_new = () => {
           { title: "Lesson 2: Felt Sense & Body Awareness: Listening to Inner Signals", component: Module2Lesson2 },
           { title: "Lesson 3: Grounding Through the Senses: Touch, Movement, Breath", component: Module2Lesson3 },
           { title: "Lesson 4: Safe Space Visualisation", component: Module2Lesson4 },
-          { title: "Lesson 5: Somatic Reflection – When Do I Feel Safe?", component: Module2Lesson5 },
-          { title: "Lesson 6: Mindful Movement Practice", component: Module2Lesson6 }
+          { title: "Lesson 5: Somatic Reflection – When Do I Feel Present?", component: Module2Lesson5 },
+          { title: "Lesson 6: Mindful Movement Practice", component: Module2Lesson6 },
+          { title: "Lesson 7: Body Awareness Meditation", component: Module2Lesson7 }
         ]
       },
       {
@@ -79,7 +93,8 @@ const CourseContent_new = () => {
           { title: "Lesson 4: Meet your Inner Child", component: Module3Lesson4 },
           { title: "Lesson 5: What My Inner Child Needs to Hear", component: Module3Lesson5 },
           { title: "Lesson 6: Creating a Self-Compassion Ritual", component: Module3Lesson6 },
-          { title: "Lesson 7: Letter to your Inner Child", component: Module3Lesson7 }
+          { title: "Lesson 7: Letter to your Inner Child", component: Module3Lesson7 },
+          { title: "Lesson 8: Building Your Community – Support and Connection", component: Module3Lesson8 }
         ]
       },
       {
@@ -88,11 +103,9 @@ const CourseContent_new = () => {
         lessons: [
           { title: "Lesson 1: The Inner Narrative: \"I'm Not Enough,\" \"I'm Unsafe,\" \"I'm Alone\"", component: Module4Lesson1 },
           { title: "Lesson 2: How Trauma Shapes Beliefs About Self and Others", component: Module4Lesson2 },
-          { title: "Lesson 3: Transforming Inner Dialogue with Clarity and Compassion", component: Module4Lesson3 },
-          { title: "Lesson 4: Identifying Stuck Points", component: Module4Lesson4 },
-          { title: "Lesson 5: Reframing Stuck Points", component: Module4Lesson5 },
-          { title: "Lesson 6: Taking Small Bold Actions", component: Module4Lesson6 },
-          { title: "Lesson 7: Empowerment Meditation", component: Module4Lesson7 }
+          { title: "Lesson 3: Reframing Stuck Points", component: Module4Lesson3 },
+          { title: "Lesson 4: Taking Small Bold Actions", component: Module4Lesson4 },
+          { title: "Lesson 5: Integration Meditation", component: Module4Lesson5 }
         ]
       },
       {
