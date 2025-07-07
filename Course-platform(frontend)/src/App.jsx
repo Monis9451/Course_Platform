@@ -33,10 +33,11 @@ const App = () => {
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/support" element={<ContactUs />} />
             <Route path="/checkout/:id" element={<Checkout />} />
+            <Route path="/thankyou/:id" element={<ThankYou />} />
             <Route path="/thankyou" element={<ThankYou />} />
+            <Route path="/privacy-statement" element={<PrivacyStatement />} />
             <Route path="/Blogs" element={<Blogs />} />
             <Route path="/mental-health" element={<MentalHealth />} />
-            <Route path="/privacy-statement" element={<PrivacyStatement />} />
             <Route path="/disclaimer" element={<Disclaimer />} />
             <Route path="*" element={<Error />} />
           </Routes>

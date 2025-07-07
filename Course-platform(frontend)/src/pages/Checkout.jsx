@@ -1,9 +1,86 @@
 import { GoClock } from "react-icons/go";
 import { FaArrowRight } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Header from "../pages/Header";
 
+// Course Data
+const courseData = {
+  1: {
+    id: 1,
+    title: "Unburdening Trauma: A 6-Week Self-Paced Course",
+    description: "A transformative journey to heal past wounds and create lasting change",
+    duration: "6 weeks",
+    price: 75,
+    originalPrice: 120,
+    image: "/1.png",
+    benefits: [
+      "Lifetime Access to Course",
+      "All Course Materials & Resources",
+      "Email Support from Dr. Samina",
+    ]
+  },
+  2: {
+    id: 2,
+    title: "Unburdening Love: A 6-Week Self-Paced Course",
+    description: "Break free from relationship blocks and cultivate healthy love",
+    duration: "6 weeks",
+    price: 75,
+    originalPrice: 120,
+    image: "/love_course.png",
+    benefits: [
+      "Lifetime Access to Course",
+      "All Course Materials & Resources",
+      "Email Support from Dr. Samina",
+    ]
+  },
+  3: {
+    id: 3,
+    title: "Unburdening Love + Trauma: The 12-Week Self-Paced Healing Bundle",
+    description: "Complete healing journey combining both transformative courses",
+    duration: "12 weeks",
+    price: 120,
+    originalPrice: 150,
+    image: "/3.png",
+    benefits: [
+      "Lifetime Access to Both Courses",
+      "All Course Materials & Resources",
+      "Email Support from Dr. Samina",
+    ]
+  }
+};
+
 function Checkout() {
+  const { id } = useParams();
+  const [course, setCourse] = useState(null);
+
+  useEffect(() => {
+    const courseId = parseInt(id);
+    if (courseData[courseId]) {
+      setCourse(courseData[courseId]);
+    }
+  }, [id]);
+
+  if (!course) {
+    return (
+      <>
+        <Header />
+        <div className="flex flex-col bg-cream min-h-screen w-full px-4 sm:px-8">
+          <div className="flex flex-col items-center justify-center mt-12 mb-8 text-center">
+            <h1 className="text-black text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
+              Course Not Found
+            </h1>
+            <p className="text-gray-700 text-lg sm:text-xl">
+              The course you're looking for doesn't exist.
+            </p>
+            <Link to="/" className="mt-4 bg-[#B45B29] text-white px-6 py-3 rounded">
+              Return to Homepage
+            </Link>
+          </div>
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <Header />
@@ -29,27 +106,26 @@ function Checkout() {
             {/* Course Row */}
             <div className="grid grid-cols-[80px_1fr] sm:grid-cols-[100px_1fr_40px] gap-3 mt-4">
               <img
-                src="./1.png"
+                src={course.image}
                 alt="Course"
                 className="w-full h-full object-contain bg-gray-300 rounded-md"
               />
 
               <div className="flex flex-col col-span-1">
                 <h3 className="text-black font-semibold text-lg sm:text-xl">
-                  Unburdening Trauma: A 6-Week Self-Paced Course
+                  {course.title}
                 </h3>
                 <p className="text-gray-600 text-sm sm:text-base">
-                  A transformative journey to heal past wounds and create
-                  lasting change
+                  {course.description}
                 </p>
                 <div className="flex flex-row items-center gap-2 mt-1 text-gray-700">
                   <GoClock />
-                  <p className="text-sm">6 weeks</p>
+                  <p className="text-sm">{course.duration}</p>
                 </div>
               </div>
 
               <p className="hidden sm:block text-black font-semibold col-span-1 self-center">
-                £75.00
+                £{course.price}.00
               </p>
             </div>
 
@@ -59,7 +135,7 @@ function Checkout() {
             {/* Total */}
             <div className="flex flex-row items-center justify-between text-lg font-bold">
               <h2>Total:</h2>
-              <h2>£75.00</h2>
+              <h2>£{course.price}.00</h2>
             </div>
 
             <hr className="my-6 border-t border-gray-300" />
@@ -90,23 +166,19 @@ function Checkout() {
 
             <div className="flex flex-row items-center justify-between mt-5 text-base sm:text-lg">
               <p>Course Price</p>
-              <p>£75.00</p>
+              <p>£{course.price}.00</p>
             </div>
 
             <hr className="my-6 border-t border-gray-300" />
 
             <div className="flex flex-row items-center justify-between text-lg font-bold">
               <h2>Total:</h2>
-              <h2>£75.00</h2>
+              <h2>£{course.price}.00</h2>
             </div>
 
             {/* Benefits */}
             <div className="flex flex-col mt-10 gap-3 text-sm sm:text-base">
-              {[
-                "Lifetime Access to Course",
-                "All Course Materials & Resources",
-                "Money-Back Guarantee",
-              ].map((text, idx) => (
+              {course.benefits.map((text, idx) => (
                 <div key={idx} className="flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +197,7 @@ function Checkout() {
 
             {/* Button */}
 
-            <Link to="/thankyou">
+            <Link to={`/thankyou/${course.id}`}>
               <button className="w-full bg-[#B45B29] text-white cursor-pointer p-4 mt-10 mb-5 hover:bg-[#a44d1f] transition flex items-center justify-center gap-4 text-base sm:text-lg font-semibold">
                 Complete Purchase <FaArrowRight />
               </button>

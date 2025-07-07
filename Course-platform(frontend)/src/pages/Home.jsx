@@ -143,8 +143,8 @@ const Home = () => {
     },
     {
       id: 3,
-      title: "Bundle",
-      description: "Unburdening Trauma + Unburdening Love",
+      title: "Unburdening Love + Trauma Bundle",
+      description: "The 12-Week Self-Paced Healing Bundle",
       img_src: "/3.png",
       img_alt: "Course Bundle",
       category: "BUNDLE"
@@ -227,7 +227,9 @@ const Home = () => {
           <p className="text-lg text-warm-gray max-w-2xl mx-auto mb-8 leading-relaxed">
             Backed by evidence-based psychology and neuroscience, these courses are designed to help you overcome challenges, rewire unhelpful patterns, and build a more empowered, fulfilling life. Whether you're working through trauma, low mood and/or anxiety, relationship blocks, or productivity struggles, you'll gain the tools to create lasting change.
           </p>          
-          <button className="bg-primary hover-primary text-white px-6 py-2 md:px-8 md:py-3 rounded-4xl text-base md:text-lg font-semibold transition-colors duration-200">
+          <button
+          onClick={() => window.location.href = "/courses"}
+          className="bg-primary hover-primary text-white px-6 py-2 md:px-8 md:py-3 rounded-4xl text-base md:text-lg font-semibold transition-colors duration-200">
             EXPLORE COURSES
           </button>
         </div>
@@ -262,59 +264,54 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>      {/* You Will Overcome Section */}
+      </section>      {/* Key Practices Section */}
       <section className="w-full py-16 bg-cream">
-        <div className="container px-4 md:px-6 max-w-5xl mx-auto">
-          <div className="max-w-3xl mx-auto">
-            {/* Content */}
-            <div>
-              <h2 className="text-3xl font-fitzgerald mb-8 text-left">You will overcome...</h2>
-              <ul className="space-y-4 text-left">
-                <li className="flex items-start">
-                  <div className="mr-2 mt-1">•</div>
-                  <span>People-pleasing patterns and codependent tendencies</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="mr-2 mt-1">•</div>
-                  <span>Difficulties setting healthy boundaries</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="mr-2 mt-1">•</div>
-                  <span>Anxiety, self-doubt and imposter syndrome</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="mr-2 mt-1">•</div>
-                  <span>Negative thought patterns and self-criticism</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="mr-2 mt-1">•</div>
-                  <span>Repeating unhealthy relationship dynamics</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="mr-2 mt-1">•</div>
-                  <span>Limiting beliefs that block your potential</span>
-                </li>
-              </ul>
-              
-              <h2 className="text-3xl font-fitzgerald mt-10 mb-8 text-left">You will learn...</h2>
-              <ul className="space-y-4 text-left">
-                <li className="flex items-start">
-                  <div className="mr-2 mt-1">•</div>
-                  <span>How to identify and heal your core trauma patterns</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="mr-2 mt-1">•</div>
-                  <span>Tools to regulate your nervous system and reduce anxiety</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="mr-2 mt-1">•</div>
-                  <span>Techniques to break free from people-pleasing behfaviors</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="mr-2 mt-1">•</div>
-                  <span>How to build authentic relationships based on trust and respect</span>
-                </li>
-              </ul>
+        <div className="container px-4 md:px-6 max-w-7xl mx-auto">
+          <div className="mb-12">
+            <h2 className="text-4xl font-fitzgerald font-light mb-6 text-[#393128] leading-tight tracking-tight">
+              Key Practices
+            </h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Practice 1 - Embrace Imperfection */}
+            <div className="bg-[#ECE7E2] p-4 rounded-lg shadow-sm">
+              <h3 className="text-2xl font-medium text-[#393128] mb-4">
+                Embrace Imperfection
+              </h3>
+              <p className="text-[#393128] text-md leading-relaxed">
+                Journaling is not about perfection; it is a space to explore your thoughts and emotions without judgement. The Unclaimed Power Journal helps you reconnect with your true self, embracing the beauty that lies in life's imperfections. Through this practice, you embark on a journey of self awareness and acceptance, gaining deeper insight and returning to the essence of who you are.
+              </p>
+            </div>
+
+            {/* Practice 2 - Let Go of Control */}
+            <div className="bg-[#ECE7E2] p-4 rounded-lg shadow-sm">
+              <h3 className="text-2xl font-medium text-[#393128] mb-4">
+                Let Go of Control
+              </h3>
+              <p className="text-[#393128] text-md leading-relaxed">
+                Transform your journaling experience by letting go of rigid structure. Releasing control allows your thoughts and emotions to flow freely, unlocking unexpected insights and fostering self-discovery. Embrace the spontaneity of the process, letting your pen wander and revealing truths beneath the surface. This approach turns journaling into a cathartic and empowering journey.
+              </p>
+            </div>
+
+            {/* Practice 3 - Commit to Yourself */}
+            <div className="bg-[#ECE7E2] p-4 rounded-lg shadow-sm">
+              <h3 className="text-2xl font-medium text-[#393128] mb-4">
+                Commit to Yourself
+              </h3>
+              <p className="text-[#393128] text-md leading-relaxed">
+                In the hustle of life, it's easy to lose sight of your own needs and dreams. Committing to yourself is a powerful act of self preservation and self-discovery. By prioritising your growth and well-being, you reclaim your place as the central figure in your own story. The Unclaimed Power Journal encourages you to set aside time for self-reflection, deepening your connection with your authentic self.
+              </p>
+            </div>
+
+            {/* Practice 4 - Create Space */}
+            <div className="bg-[#ECE7E2] p-4 rounded-lg shadow-sm">
+              <h3 className="text-2xl font-medium text-[#393128] mb-4">
+                Create Space
+              </h3>
+              <p className="text-[#393128] text-md leading-relaxed">
+                Creating personal space amidst the daily chaos is essential. Establishing a daily journaling ritual allows you to step back and reflect, providing a sanctuary from the constant noise of obligations and daily demands. This intentional pause fosters balance and clarity, helping you reconnect with your inner thoughts and emotions. Over time, this practice cultivates deeper self-awareness and a stronger sense of inner stability.
+              </p>
             </div>
           </div>
         </div>
@@ -424,7 +421,7 @@ const Home = () => {
             {/* Bundle Offer Card */}
             <div className="bg-white border-2 border-gray-300 rounded-3xl p-8 text-center shadow-sm hover:shadow-md transition-shadow">
               {/* Crossed out price */}
-              <div className="text-lg text-gray-500 line-through mb-2">£240</div>
+              <div className="text-lg text-gray-500 line-through mb-2">£150</div>
               
               {/* Actual price */}
               <div className="text-4xl font-bold text-black mb-6">£120</div>
@@ -435,17 +432,25 @@ const Home = () => {
               {/* Description */}
               <div className="text-gray-700 mb-8 leading-relaxed h-20 overflow-hidden">
                 <div className="line-clamp-3">
-                  Get both transformative courses together and save £120. Complete access to trauma healing and relationship transformation programs...
+                  The 12-Week Self-Paced Healing Bundle combining both Unburdening Love and Unburdening Trauma for complete transformation...
                 </div>
               </div>
               
               {/* Button */}
-              <button
-                onClick={() => window.location.href = "/bundle"}
-                className="w-full bg-primary text-white py-4 px-6 rounded-full text-lg font-medium hover:bg-gray-800 transition-colors"
-              >
-                BUY NOW
-              </button>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => window.location.href = "/checkout/3"}
+                  className="flex-1 bg-primary text-white py-3 px-4 rounded-full text-base font-medium hover:bg-gray-800 transition-colors"
+                >
+                  BUY NOW
+                </button>
+                <button
+                  onClick={() => window.location.href = "/course/3"}
+                  className="flex-1 border-2 border-primary text-primary py-3 px-4 rounded-full text-base font-medium hover:bg-primary hover:text-white transition-colors"
+                >
+                  LEARN MORE
+                </button>
+              </div>
             </div>
 
           </div>

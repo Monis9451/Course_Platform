@@ -1,6 +1,66 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+
+// Course Data
+const courseData = {
+  1: {
+    id: 1,
+    title: "Unburdening Trauma: A 6-Week Self-Paced Course",
+    description: "A transformative journey to heal past wounds and create lasting change",
+    duration: "6 weeks",
+    image: "/1.png"
+  },
+  2: {
+    id: 2,
+    title: "Unburdening Love: A 6-Week Self-Paced Course",
+    description: "Break free from relationship blocks and cultivate healthy love",
+    duration: "6 weeks",
+    image: "/love_course.png"
+  },
+  3: {
+    id: 3,
+    title: "Unburdening Love + Trauma: The 12-Week Self-Paced Healing Bundle",
+    description: "Complete healing journey combining both transformative courses",
+    duration: "12 weeks",
+    image: "/3.png"
+  }
+};
 
 function ThankYou() {
+  const { id } = useParams();
+  const [course, setCourse] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      const courseId = parseInt(id);
+      if (courseData[courseId]) {
+        setCourse(courseData[courseId]);
+      }
+    } else {
+      // Default to course 1 if no ID provided (for backward compatibility)
+      setCourse(courseData[1]);
+    }
+  }, [id]);
+
+  if (!course) {
+    return (
+      <div className="container max-w-4xl mx-auto px-4 py-20">
+        <div className="bg-cream rounded-lg shadow-lg p-12 text-center">
+          <h1 className="text-3xl md:text-4xl font-serif mb-6 text-[#70533E]">
+            Course Not Found
+          </h1>
+          <p className="text-xl text-gray-700 mb-8">
+            The course you're looking for doesn't exist.
+          </p>
+          <Link to="/">
+            <button className="bg-[#bd6334] hover:bg-[#a65525] text-white py-3 px-6 rounded">
+              Return to Homepage
+            </button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="container max-w-4xl mx-auto px-4 py-20">
       <div className="bg-cream rounded-lg shadow-lg p-12 text-center">
@@ -27,7 +87,7 @@ function ThankYou() {
           Thank you for your purchase!
         </h1>
         <p className="text-xl text-gray-700 mb-8">
-          You now have access to Unburdening Trauma: A 6-Week Self-Paced Course.
+          You now have access to {course.title}.
         </p>
         <h2 className="text-xl font-medium mb-4 text-[#70533E]">
           Your Purchase Includes:
@@ -36,15 +96,14 @@ function ThankYou() {
           <div className="bg-gray-50 p-8 rounded-lg mb-8">
             <div className="flex items-start">
               <div className="w-12 h-12 bg-gray-200 rounded-md overflow-hidden flex-shrink-0 mr-4">
-                <img src="" className="w-full h-full object-cover" />
+                <img src={course.image} className="w-full h-full object-cover" alt={course.title} />
               </div>
               <div className="text-left">
                 <h3 className="font-medium">
-                  Unburdening Trauma: A 6-Week Self-Paced Course
+                  {course.title}
                 </h3>
                 <p className="text-sm text-gray-600">
-                  A transformative journey to heal past wounds and create
-                  lasting change
+                  {course.description}
                 </p>
               </div>
             </div>
@@ -55,7 +114,7 @@ function ThankYou() {
           </p>
           <div className="space-y-4">
             <a
-              href="/course-content/1"
+              href={`/course-content/${course.id}`}
               className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-11 rounded-md bg-[#bd6334] hover:bg-[#a65525] text-white py-6 px-8"
             >
               Start Learning Now
