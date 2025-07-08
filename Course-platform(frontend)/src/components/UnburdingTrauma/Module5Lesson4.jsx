@@ -3,14 +3,14 @@ import React from 'react'
 const Module5Lesson4 = () => {
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold text-[#bd6334] mb-6">Writing to Release</h1>
+      <h1 className="text-2xl font-bold text-black mb-6">Writing to Release</h1>
       
       <div className="prose max-w-none">
         <p className="text-lg leading-relaxed mb-6">
           Welcome to this powerful lesson on using writing as a tool for emotional release. Today, we explore how the simple act of putting pen to paper can become a transformative practice for healing and liberation.
         </p>
 
-        <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">The Healing Power of Written Expression</h2>
+        <h2 className="text-xl font-semibold text-[#bd6334] mt-8 mb-4">The Healing Power of Written Expression</h2>
         <p className="text-lg leading-relaxed mb-6">
           Writing is one of the most accessible and powerful tools for emotional release. When we translate our internal experiences into words on a page, we create a bridge between our inner world and external expression. This process helps us make sense of complex emotions and experiences that might otherwise remain tangled or overwhelming.
         </p>

@@ -3,14 +3,14 @@ import React from 'react'
 const Module5Lesson6 = () => {
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold text-[#bd6334] mb-6">Breathwork for Emotional Clearing</h1>
+      <h1 className="text-2xl font-bold text-black mb-6">Breathwork for Emotional Clearing</h1>
       
       <div className="prose max-w-none">
         <p className="text-lg leading-relaxed mb-6">
           Welcome to this transformative lesson on breathwork for emotional clearing. Today, we explore how conscious breathing can become your most accessible and powerful tool for releasing stored emotions and healing trauma patterns.
         </p>
 
-        <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">The Power of Conscious Breathing</h2>
+        <h2 className="text-xl font-semibold text-[#bd6334] mt-8 mb-4">The Power of Conscious Breathing</h2>
         <p className="text-lg leading-relaxed mb-6">
           Your breath is one of the most powerful tools available for emotional release and clearing. Conscious breathing practices create direct access to your autonomic nervous system, allowing you to release stored tension patterns and facilitate the movement of stuck emotional energy.
         </p>

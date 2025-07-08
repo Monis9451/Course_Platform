@@ -3,7 +3,7 @@ import React from 'react'
 const Module6Lesson2 = () => {
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold text-[#bd6334] mb-8">
+      <h1 className="text-2xl font-bold text-black mb-8">
         RESILIENCE THROUGH RHYTHM – DAILY AND WEEKLY RITUALS
       </h1>
       

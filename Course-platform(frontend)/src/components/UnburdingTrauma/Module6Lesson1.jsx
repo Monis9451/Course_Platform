@@ -3,7 +3,7 @@ import React from 'react'
 const Module6Lesson1 = () => {
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold text-[#bd6334] mb-8">
+      <h1 className="text-2xl font-bold text-black mb-8">
         CREATING YOUR ONGOING HEALING PRACTICE
       </h1>
       

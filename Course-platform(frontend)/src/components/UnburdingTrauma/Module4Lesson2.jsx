@@ -21,11 +21,11 @@ const Module4Lesson2 = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f8f4f0] to-[#e8ddd4] p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg- p-4 md:p-8">
+      <div className="max-w-4xl">
         {/* Header */}
-        <div className="text-centre mb-8">
-          <h2 className="text-xl md:text-2xl text-[#A0522D] mb-6">
+        <div className="text mb-8">
+          <h2 className="text-xl md:text-2xl text-black mb-6">
             How Trauma Shapes Beliefs About Self and Others
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-[#D2691E] to-[#CD853F] mx-auto rounded-full"></div>

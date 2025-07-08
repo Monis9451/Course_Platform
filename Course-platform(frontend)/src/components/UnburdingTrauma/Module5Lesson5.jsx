@@ -3,14 +3,14 @@ import React from 'react'
 const Module5Lesson5 = () => {
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold text-[#bd6334] mb-6">Drawing Your Emotions</h1>
+      <h1 className="text-2xl font-bold text-black mb-6">Drawing Your Emotions</h1>
       
       <div className="prose max-w-none">
         <p className="text-lg leading-relaxed mb-6">
           Welcome to this creative and liberating lesson on visual expression for emotional release. Today, we explore how drawing and other visual arts can become powerful tools for processing emotions that words cannot fully capture.
         </p>
 
-        <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">The Power of Visual Expression</h2>
+        <h2 className="text-xl font-semibold text-[#bd6334] mt-8 mb-4">The Power of Visual Expression</h2>
         <p className="text-lg leading-relaxed mb-6">
           Visual expression offers a unique pathway for emotional release, especially for feelings that are difficult to articulate in words. When we engage in drawing or other visual arts as a release practice, we access different neural pathways and parts of our brain than verbal processing allows.
         </p>

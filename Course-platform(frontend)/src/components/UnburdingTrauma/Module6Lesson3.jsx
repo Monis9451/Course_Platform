@@ -3,7 +3,7 @@ import React from 'react'
 const Module6Lesson3 = () => {
   return (
     <div className="p-8">
-      <h1 className="text-[#bd6334] text-2xl mb-6">VISIONING THE HEALED SELF & EMBRACING POST-TRAUMA GROWTH</h1>
+      <h1 className="text-black text-2xl mb-6">VISIONING THE HEALED SELF & EMBRACING POST-TRAUMA GROWTH</h1>
       
       <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
         <p className="mb-4">In trauma recovery, we often focus intensely on what needs healing, sometimes overlooking the remarkable strengths and progress we've already developed. Taking time to acknowledge and celebrate your journey is not just a pleasant addition—it's an essential component of healing.</p>

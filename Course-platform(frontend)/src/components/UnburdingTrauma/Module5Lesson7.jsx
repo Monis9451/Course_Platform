@@ -4,13 +4,13 @@ const Module5Lesson7 = () => {
   return (
     <div className="p-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-2xl md:text-4xl font-bold text-[#bd6334] mb-8 text-center">
+        <h1 className="text-2xl font-bold text-black mb-8">
           Guided Release Meditation
         </h1>
 
         {/* Introduction */}
         <div className="mb-8">
-          <p className="text-lg leading-relaxed mb-6">
+          <p className="text-md leading-relaxed mb-6">
             Welcome to a deeply transformative practice designed to support your healing journey. This guided release meditation will help you gently let go of stored emotional energy and trauma while creating space for peace and renewal within your body and mind.
           </p>
           
@@ -24,7 +24,7 @@ const Module5Lesson7 = () => {
 
         {/* Pre-Meditation Setup */}
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-[#bd6334] mb-4">
+          <h2 className="text-xl font-semibold text-[#bd6334] mb-4">
             Before We Begin
           </h2>
           
