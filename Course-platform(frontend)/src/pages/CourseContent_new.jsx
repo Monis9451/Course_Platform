@@ -63,6 +63,7 @@ import Module6Lesson5 from '../components/UnburdingTrauma/Module6Lesson5'
 
 const CourseContent_new = () => {
   const [selectedLesson, setSelectedLesson] = useState({ moduleIndex: 0, lessonIndex: 0 })
+  const [completedLessons, setCompletedLessons] = useState(new Set(['0-0'])) // Start with first lesson completed
 
   // Course data with all modules and lessons
   const courseData = {
@@ -152,20 +153,97 @@ const CourseContent_new = () => {
     setSelectedLesson({ moduleIndex, lessonIndex })
   }
 
+  // Navigation functions
+  const goToPreviousLesson = () => {
+    const { moduleIndex, lessonIndex } = selectedLesson
+    
+    if (lessonIndex > 0) {
+      // Go to previous lesson in same module
+      setSelectedLesson({ moduleIndex, lessonIndex: lessonIndex - 1 })
+    } else if (moduleIndex > 0) {
+      // Go to last lesson of previous module
+      const prevModule = courseData.modules[moduleIndex - 1]
+      setSelectedLesson({ moduleIndex: moduleIndex - 1, lessonIndex: prevModule.lessons.length - 1 })
+    }
+  }
+
+  const completeAndContinue = () => {
+    const { moduleIndex, lessonIndex } = selectedLesson
+    const lessonKey = `${moduleIndex}-${lessonIndex}`
+    
+    // Mark current lesson as completed
+    setCompletedLessons(prev => new Set([...prev, lessonKey]))
+    
+    // Navigate to next lesson
+    const currentModule = courseData.modules[moduleIndex]
+    if (lessonIndex < currentModule.lessons.length - 1) {
+      // Go to next lesson in same module
+      setSelectedLesson({ moduleIndex, lessonIndex: lessonIndex + 1 })
+    } else if (moduleIndex < courseData.modules.length - 1) {
+      // Go to first lesson of next module
+      setSelectedLesson({ moduleIndex: moduleIndex + 1, lessonIndex: 0 })
+    }
+  }
+
+  // Check if navigation buttons should be disabled
+  const isFirstLesson = selectedLesson.moduleIndex === 0 && selectedLesson.lessonIndex === 0
+  const isLastLesson = selectedLesson.moduleIndex === courseData.modules.length - 1 && 
+                      selectedLesson.lessonIndex === courseData.modules[courseData.modules.length - 1].lessons.length - 1
+
   // Get the current lesson component
   const getCurrentLessonComponent = () => {
     const currentModule = courseData.modules[selectedLesson.moduleIndex]
     const currentLesson = currentModule?.lessons[selectedLesson.lessonIndex]
     const LessonComponent = currentLesson?.component
     
-    return LessonComponent ? <LessonComponent /> : (
-      <div className="p-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">
-          Welcome to {courseData.title}
-        </h1>
-        <p className="text-lg text-gray-600">
-          Select a lesson from the sidebar to begin your learning journey.
-        </p>
+    return (
+      <div className="flex flex-col h-full">
+        {/* Navigation Buttons */}
+        <div className="flex justify-between items-center p-4 bg-white border-b border-gray-200">
+          <button
+            onClick={goToPreviousLesson}
+            disabled={isFirstLesson}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+              isFirstLesson 
+                ? 'bg-cream text-black cursor-not-allowed' 
+                : 'bg-cream text-black hover:bg-gray-200'
+            }`}
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+            Previous Lecture
+          </button>
+
+          <button
+            onClick={completeAndContinue}
+            disabled={isLastLesson}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+              isLastLesson
+                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                : 'bg-primary text-white hover:bg-primary-dark'
+            }`}
+          >
+            Complete and Continue
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Lesson Content */}
+        <div className="flex-1 overflow-y-auto">
+          {LessonComponent ? <LessonComponent /> : (
+            <div className="p-8">
+              <h1 className="text-3xl font-bold text-gray-900 mb-4">
+                Welcome to {courseData.title}
+              </h1>
+              <p className="text-lg text-gray-600">
+                Select a lesson from the sidebar to begin your learning journey.
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     )
   }
@@ -181,6 +259,8 @@ const CourseContent_new = () => {
           courseData={courseData}
           selectedLesson={selectedLesson}
           onLessonSelect={handleLessonSelect}
+          completedLessons={completedLessons}
+          setCompletedLessons={setCompletedLessons}
         />
         
         {/* Main Content Area */}
