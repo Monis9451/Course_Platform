@@ -38,8 +38,7 @@ import Module3Lesson3 from '../components/UnburdingTrauma/Module3Lesson3'
 import Module3Lesson4 from '../components/UnburdingTrauma/Module3Lesson4'
 import Module3Lesson5 from '../components/UnburdingTrauma/Module3Lesson5'
 import Module3Lesson6 from '../components/UnburdingTrauma/Module3Lesson6'
-import Module3Lesson7 from '../components/UnburdingTrauma/Module3Lesson7'
-import Module3Lesson8 from '../components/UnburdingTrauma/Module3Lesson8'
+import Module3Lesson7 from '../components/UnburdingTrauma/Module6Lesson6'
 
 import Module4Lesson1 from '../components/UnburdingTrauma/Module4Lesson1'
 import Module4Lesson2 from '../components/UnburdingTrauma/Module4Lesson2'
@@ -60,6 +59,7 @@ import Module6Lesson2 from '../components/UnburdingTrauma/Module6Lesson2'
 import Module6Lesson3 from '../components/UnburdingTrauma/Module6Lesson3'
 import Module6Lesson4 from '../components/UnburdingTrauma/Module6Lesson4'
 import Module6Lesson5 from '../components/UnburdingTrauma/Module6Lesson5'
+import Module6Lesson6 from '../components/UnburdingTrauma/Module6Lesson6'
 
 const CourseContent_new = () => {
   const [selectedLesson, setSelectedLesson] = useState({ moduleIndex: 0, lessonIndex: 0 })
@@ -108,7 +108,6 @@ const CourseContent_new = () => {
           { title: "What My Inner Child Needs to Hear", component: Module3Lesson5 },
           { title: "Creating a Self-Compassion Ritual", component: Module3Lesson6 },
           { title: "Letter to your Inner Child", component: Module3Lesson7 },
-          { title: "Building Your Community – Support and Connection", component: Module3Lesson8 }
         ]
       },
       {
@@ -143,7 +142,8 @@ const CourseContent_new = () => {
           { title: "Resilience Through Rhythm – Daily and Weekly Rituals", component: Module6Lesson2 },
           { title: "Visioning the Healed Self & Embracing Post-Trauma Growth", component: Module6Lesson3 },
           { title: "Healing Action Plan (Writing Practice)", component: Module6Lesson4 },
-          { title: "Future-Self Reflection (Sentence Completion)", component: Module6Lesson5 }
+          { title: "Future-Self Reflection (Sentence Completion)", component: Module6Lesson5 },
+          { title: "Building Your Community – Support and Connection", component: Module6Lesson6 }
         ]
       }
     ]

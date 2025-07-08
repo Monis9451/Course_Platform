@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Module3Lesson7 = () => {
+const Module6Lesson6 = () => {
   return (
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">LETTER TO YOUR INNER CHILD</h1>
@@ -124,4 +124,4 @@ const Module3Lesson7 = () => {
   );
 };
 
-export default Module3Lesson7;
+export default Module6Lesson6;
