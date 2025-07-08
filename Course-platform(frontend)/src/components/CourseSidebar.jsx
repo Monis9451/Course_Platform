@@ -110,10 +110,6 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect }) => {
                         : completedLessons.has(`${moduleIndex}-${lessonIndex}`)
                         ? 'text-black'
                         : 'text-gray-900'
-                    } ${
-                      completedLessons.has(`${moduleIndex}-${lessonIndex}`) 
-                        ? 'line-through opacity-70' 
-                        : ''
                     }`}>
                        {lesson.title}
                     </div>

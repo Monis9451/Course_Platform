@@ -73,76 +73,76 @@ const CourseContent_new = () => {
         title: "Module 1: Understanding Trauma & the Body",
         description: "Why We Get Stuck in Pain – and How Awareness Sets Us Free",
         lessons: [
-          { title: "Lesson 1: The Neuroscience: How trauma rewires the brain", component: Module1Lesson1 },
-          { title: "Lesson 2: The Nervous System & Trauma", component: Module1Lesson2 },
-          { title: "Lesson 3: Trauma Responses: Fight, Flight, Freeze, Fawn – How Trauma Manifests in Behaviour", component: Module1Lesson3 },
-          { title: "Lesson 4: Dissociation in PTSD: Depersonalisation, Derealisation, Dissociative Amnesia", component: Module1Lesson4 },
-          { title: "Lesson 5: Personal Trauma Timeline", component: Module1Lesson5 },
-          { title: "Lesson 6: Self-Assessment - Trauma Responses", component: Module1Lesson6 },
-          { title: "Lesson 7: Somatic Mapping Exercise", component: Module1Lesson7 },
-          { title: "Lesson 8: Guided Visualisation - Grounding & Nervous System Regulation", component: Module1Lesson8 }
+          { title: "The Neuroscience: How trauma rewires the brain", component: Module1Lesson1 },
+          { title: "The Nervous System & Trauma", component: Module1Lesson2 },
+          { title: "Trauma Responses: Fight, Flight, Freeze, Fawn – How Trauma Manifests in Behaviour", component: Module1Lesson3 },
+          { title: "Dissociation in PTSD: Depersonalisation, Derealisation, Dissociative Amnesia", component: Module1Lesson4 },
+          { title: "Personal Trauma Timeline", component: Module1Lesson5 },
+          { title: "Self-Assessment - Trauma Responses", component: Module1Lesson6 },
+          { title: "Somatic Mapping Exercise", component: Module1Lesson7 },
+          { title: "Guided Visualisation - Grounding & Nervous System Regulation", component: Module1Lesson8 }
         ]
       },
       {
         title: "Module 2: Reconnecting with the Body - Coming Back to Yourself",
         description: "Safety, Sensation, and Presence",
         lessons: [
-          { title: "Lesson 1: Why Trauma Disconnects Us from the Body", component: Module2Lesson1 },
-          { title: "Lesson 2: Felt Sense & Body Awareness: Listening to Inner Signals", component: Module2Lesson2 },
-          { title: "Lesson 3: Grounding Through the Senses: Touch, Movement, Breath", component: Module2Lesson3 },
-          { title: "Lesson 4: Safe Space Visualisation", component: Module2Lesson4 },
-          { title: "Lesson 5: Somatic Reflection – When Do I Feel Present?", component: Module2Lesson5 },
-          { title: "Lesson 6: Mindful Movement Practice", component: Module2Lesson6 },
-          { title: "Lesson 7: Body Awareness Meditation", component: Module2Lesson7 }
+          { title: "Why Trauma Disconnects Us from the Body", component: Module2Lesson1 },
+          { title: "Felt Sense & Body Awareness: Listening to Inner Signals", component: Module2Lesson2 },
+          { title: "Grounding Through the Senses: Touch, Movement, Breath", component: Module2Lesson3 },
+          { title: "Safe Space Visualisation", component: Module2Lesson4 },
+          { title: "Somatic Reflection – When Do I Feel Present?", component: Module2Lesson5 },
+          { title: "Mindful Movement Practice", component: Module2Lesson6 },
+          { title: "Body Awareness Meditation", component: Module2Lesson7 }
         ]
       },
       {
         title: "Module 3: Inner Child Healing",
         description: "Reclaiming the Parts of You That Still Hurt",
         lessons: [
-          { title: "Lesson 1: Understanding the Inner Child and Emotional Wounds", component: Module3Lesson1 },
-          { title: "Lesson 2: How Childhood Pain Shapes Adult Patterns", component: Module3Lesson2 },
-          { title: "Lesson 3: Reparenting: Offering Compassion to the Self Within", component: Module3Lesson3 },
-          { title: "Lesson 4: Meet your Inner Child", component: Module3Lesson4 },
-          { title: "Lesson 5: What My Inner Child Needs to Hear", component: Module3Lesson5 },
-          { title: "Lesson 6: Creating a Self-Compassion Ritual", component: Module3Lesson6 },
-          { title: "Lesson 7: Letter to your Inner Child", component: Module3Lesson7 },
-          { title: "Lesson 8: Building Your Community – Support and Connection", component: Module3Lesson8 }
+          { title: "Understanding the Inner Child and Emotional Wounds", component: Module3Lesson1 },
+          { title: "How Childhood Pain Shapes Adult Patterns", component: Module3Lesson2 },
+          { title: "Reparenting: Offering Compassion to the Self Within", component: Module3Lesson3 },
+          { title: "Meet your Inner Child", component: Module3Lesson4 },
+          { title: "What My Inner Child Needs to Hear", component: Module3Lesson5 },
+          { title: "Creating a Self-Compassion Ritual", component: Module3Lesson6 },
+          { title: "Letter to your Inner Child", component: Module3Lesson7 },
+          { title: "Building Your Community – Support and Connection", component: Module3Lesson8 }
         ]
       },
       {
         title: "Module 4: The Inner Narrative",
         description: "\"I'm Not Enough,\" \"I'm Unsafe,\" \"I'm Alone\"",
         lessons: [
-          { title: "Lesson 1: The Inner Narrative: \"I'm Not Enough,\" \"I'm Unsafe,\" \"I'm Alone\"", component: Module4Lesson1 },
-          { title: "Lesson 2: How Trauma Shapes Beliefs About Self and Others", component: Module4Lesson2 },
-          { title: "Lesson 3: Reframing Stuck Points", component: Module4Lesson3 },
-          { title: "Lesson 4: Taking Small Bold Actions", component: Module4Lesson4 },
-          { title: "Lesson 5: Integration Meditation", component: Module4Lesson5 }
+          { title: "The Inner Narrative: \"I'm Not Enough,\" \"I'm Unsafe,\" \"I'm Alone\"", component: Module4Lesson1 },
+          { title: "How Trauma Shapes Beliefs About Self and Others", component: Module4Lesson2 },
+          { title: "Reframing Stuck Points", component: Module4Lesson3 },
+          { title: "Taking Small Bold Actions", component: Module4Lesson4 },
+          { title: "Integration Meditation", component: Module4Lesson5 }
         ]
       },
       {
         title: "Module 5: Releasing Emotional Baggage",
         description: "Letting Go of What You've Been Carrying",
         lessons: [
-          { title: "Lesson 1: The Cost of Suppressed Emotions", component: Module5Lesson1 },
-          { title: "Lesson 2: Emotional Energy & How the Body Stores Pain", component: Module5Lesson2 },
-          { title: "Lesson 3: Release as a Path to Freedom and Wholeness", component: Module5Lesson3 },
-          { title: "Lesson 4: Writing to Release", component: Module5Lesson4 },
-          { title: "Lesson 5: Drawing Your Emotions", component: Module5Lesson5 },
-          { title: "Lesson 6: Breathwork for Emotional Clearing", component: Module5Lesson6 },
-          { title: "Lesson 7: Guided Release Meditation", component: Module5Lesson7 }
+          { title: "The Cost of Suppressed Emotions", component: Module5Lesson1 },
+          { title: "Emotional Energy & How the Body Stores Pain", component: Module5Lesson2 },
+          { title: "Release as a Path to Freedom and Wholeness", component: Module5Lesson3 },
+          { title: "Writing to Release", component: Module5Lesson4 },
+          { title: "Drawing Your Emotions", component: Module5Lesson5 },
+          { title: "Breathwork for Emotional Clearing", component: Module5Lesson6 },
+          { title: "Guided Release Meditation", component: Module5Lesson7 }
         ]
       },
       {
         title: "Module 6: Integration & Forward Momentum",
         description: "Staying Connected to Growth, Resilience, and Self-Love",
         lessons: [
-          { title: "Lesson 1: Creating Your Ongoing Healing Practice", component: Module6Lesson1 },
-          { title: "Lesson 2: Resilience Through Rhythm – Daily and Weekly Rituals", component: Module6Lesson2 },
-          { title: "Lesson 3: Visioning the Healed Self & Embracing Post-Trauma Growth", component: Module6Lesson3 },
-          { title: "Lesson 4: Healing Action Plan (Writing Practice)", component: Module6Lesson4 },
-          { title: "Lesson 5: Future-Self Reflection (Sentence Completion)", component: Module6Lesson5 }
+          { title: "Creating Your Ongoing Healing Practice", component: Module6Lesson1 },
+          { title: "Resilience Through Rhythm – Daily and Weekly Rituals", component: Module6Lesson2 },
+          { title: "Visioning the Healed Self & Embracing Post-Trauma Growth", component: Module6Lesson3 },
+          { title: "Healing Action Plan (Writing Practice)", component: Module6Lesson4 },
+          { title: "Future-Self Reflection (Sentence Completion)", component: Module6Lesson5 }
         ]
       }
     ]
