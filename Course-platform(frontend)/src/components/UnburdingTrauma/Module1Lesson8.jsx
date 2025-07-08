@@ -4,7 +4,6 @@ const Module1Lesson8 = () => {
   return (
     <div className="p-8">
       <h1 className="text-black text-2xl mb-8 flex items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M22 8.5a7.39 7.39 0 0 0-4-2.5"></path><path d="M18 12a7.39 7.39 0 0 0-4-2.5"></path><path d="M2 8.5a7.39 7.39 0 0 1 4-2.5"></path><path d="M6 12a7.39 7.39 0 0 1 4-2.5"></path><path d="M12 2a2.5 2.5 0 0 0 0 5"></path><path d="M12 11a2.5 2.5 0 1 0 0 5"></path><path d="M12 20a2.5 2.5 0 1 0 0 5"></path></svg>
         GUIDED VISUALISATION - GROUNDING & NERVOUS SYSTEM REGULATION
       </h1>
       
