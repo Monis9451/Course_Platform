@@ -1,6 +1,19 @@
 import React, { useState } from 'react'
 import CourseSidebar from '../components/CourseSidebar'
 
+// Import Marcellus font for this page only
+const fontStyle = `
+  @import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
+  
+  .marcellus-font {
+    font-family: 'Marcellus', serif;
+  }
+  
+  .marcellus-font * {
+    font-family: 'Marcellus', serif !important;
+  }
+`;
+
 // Import all lesson components
 import Module1Lesson1 from '../components/UnburdingTrauma/Module1Lesson1'
 import Module1Lesson2 from '../components/UnburdingTrauma/Module1Lesson2'
@@ -158,19 +171,24 @@ const CourseContent_new = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50">
-      {/* Sidebar */}
-      <CourseSidebar 
-        courseData={courseData}
-        selectedLesson={selectedLesson}
-        onLessonSelect={handleLessonSelect}
-      />
+    <>
+      {/* Add Marcellus font styles */}
+      <style>{fontStyle}</style>
       
-      {/* Main Content Area */}
-      <div className="flex-1 overflow-y-auto">
-        {getCurrentLessonComponent()}
+      <div className="flex h-screen bg-gray-50 marcellus-font">
+        {/* Sidebar */}
+        <CourseSidebar 
+          courseData={courseData}
+          selectedLesson={selectedLesson}
+          onLessonSelect={handleLessonSelect}
+        />
+        
+        {/* Main Content Area */}
+        <div className="flex-1 overflow-y-auto">
+          {getCurrentLessonComponent()}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
