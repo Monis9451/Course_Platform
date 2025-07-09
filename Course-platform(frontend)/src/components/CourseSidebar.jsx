@@ -66,7 +66,7 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
                     }`}
                   >
                     {/* Status Circle - positioned with some left spacing */}
-                    <div className="absolute left-1 flex-shrink-0">
+                    <div className="absolute left-4 flex-shrink-0">
                       <button
                         onClick={(e) => toggleLessonCompletion(moduleIndex, lessonIndex, e)}
                         className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${
@@ -98,72 +98,82 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
                     {/* Lesson Icon */}
                     <div className="mr-3 ml-12">
                       {lessonIndex === 0 ? (
-                        // First lesson - file icon
-                        <div className={`w-6 h-6 rounded flex items-center justify-center ${
+                        // First lesson - file text icon
+                        <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
                           selectedLesson?.moduleIndex === moduleIndex && 
                           selectedLesson?.lessonIndex === lessonIndex
                             ? 'bg-white'
                             : 'bg-primary'
                         }`}>
-                          <svg className={`w-4 h-4 ${
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`w-4 h-4 ${
                             selectedLesson?.moduleIndex === moduleIndex && 
                             selectedLesson?.lessonIndex === lessonIndex
                               ? 'text-primary'
                               : 'text-white'
-                          }`} fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+                          }`}>
+                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+                            <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+                            <path d="M10 9H8"></path>
+                            <path d="M16 13H8"></path>
+                            <path d="M16 17H8"></path>
                           </svg>
                         </div>
                       ) : lessonIndex % 3 === 1 ? (
                         // Edit icon for action/writing lessons
-                        <div className={`w-6 h-6 rounded flex items-center justify-center ${
+                        <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
                           selectedLesson?.moduleIndex === moduleIndex && 
                           selectedLesson?.lessonIndex === lessonIndex
                             ? 'bg-white'
                             : 'bg-yellow-500'
                         }`}>
-                          <svg className={`w-4 h-4 ${
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`w-4 h-4 ${
                             selectedLesson?.moduleIndex === moduleIndex && 
                             selectedLesson?.lessonIndex === lessonIndex
                               ? 'text-yellow-500'
                               : 'text-white'
-                          }`} fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                          }`}>
+                            <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path>
                           </svg>
                         </div>
                       ) : lessonIndex % 3 === 2 ? (
-                        // Audio/meditation icon
-                        <div className={`w-6 h-6 rounded flex items-center justify-center ${
+                        // Audio/volume icon
+                        <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
                           selectedLesson?.moduleIndex === moduleIndex && 
                           selectedLesson?.lessonIndex === lessonIndex
                             ? 'bg-white'
                             : 'bg-yellow-600'
                         }`}>
-                          <svg className={`w-4 h-4 ${
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`w-4 h-4 ${
                             selectedLesson?.moduleIndex === moduleIndex && 
                             selectedLesson?.lessonIndex === lessonIndex
                               ? 'text-yellow-600'
                               : 'text-white'
-                          }`} fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.776l-4.383-3.5A1 1 0 014 13V7a1 1 0 01.383-.776l4.383-3.5zM7 7.618V12.382L9 14.118V5.882L7 7.618zM15.657 6.343a1 1 0 011.414 0A9.972 9.972 0 0118 10a9.972 9.972 0 01-.929 3.657 1 1 0 01-1.414 0 1 1 0 010-1.414A7.971 7.971 0 0016 10c0-.89-.165-1.736-.464-2.536a1 1 0 010-1.414z" clipRule="evenodd" />
-                            <path fillRule="evenodd" d="M13.828 8.172a1 1 0 011.414 0 5.983 5.983 0 010 8.484 1 1 0 01-1.414-1.414 3.983 3.983 0 000-5.656 1 1 0 010-1.414z" clipRule="evenodd" />
+                          }`}>
+                            <path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"></path>
+                            <path d="M16 9a5 5 0 0 1 0 6"></path>
+                            <path d="M19.364 18.364a9 9 0 0 0 0-12.728"></path>
                           </svg>
                         </div>
                       ) : (
-                        // Default file icon
-                        <div className={`w-6 h-6 rounded flex items-center justify-center ${
+                        // Default file text icon
+                        <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
                           selectedLesson?.moduleIndex === moduleIndex && 
                           selectedLesson?.lessonIndex === lessonIndex
                             ? 'bg-white'
                             : 'bg-primary'
                         }`}>
-                          <svg className={`w-4 h-4 ${
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`w-4 h-4 ${
                             selectedLesson?.moduleIndex === moduleIndex && 
                             selectedLesson?.lessonIndex === lessonIndex
                               ? 'text-primary'
                               : 'text-white'
-                          }`} fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+                          }`}>
+                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+                            <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+                            <path d="M10 9H8"></path>
+                            <path d="M16 13H8"></path>
+                            <path d="M16 17H8"></path>
                           </svg>
                         </div>
                       )}
