@@ -71,7 +71,7 @@ const CourseContent_new = () => {
     description: "Why We Get Stuck in Pain – and How Awareness Sets Us Free",
     modules: [
       {
-        title: "Module 1: Understanding Trauma & the Body",
+        title: "Understanding Trauma & the Body",
         description: "Why We Get Stuck in Pain – and How Awareness Sets Us Free",
         lessons: [
           { title: "The Neuroscience: How trauma rewires the brain", component: Module1Lesson1 },
@@ -85,7 +85,7 @@ const CourseContent_new = () => {
         ]
       },
       {
-        title: "Module 2: Reconnecting with the Body - Coming Back to Yourself",
+        title: "Reconnecting with the Body - Coming Back to Yourself",
         description: "Safety, Sensation, and Presence",
         lessons: [
           { title: "Why Trauma Disconnects Us from the Body", component: Module2Lesson1 },
@@ -98,7 +98,7 @@ const CourseContent_new = () => {
         ]
       },
       {
-        title: "Module 3: Inner Child Healing",
+        title: "Inner Child Healing",
         description: "Reclaiming the Parts of You That Still Hurt",
         lessons: [
           { title: "Understanding the Inner Child and Emotional Wounds", component: Module3Lesson1 },
@@ -111,7 +111,7 @@ const CourseContent_new = () => {
         ]
       },
       {
-        title: "Module 4: The Inner Narrative",
+        title: "The Inner Narrative",
         description: "\"I'm Not Enough,\" \"I'm Unsafe,\" \"I'm Alone\"",
         lessons: [
           { title: "The Inner Narrative: \"I'm Not Enough,\" \"I'm Unsafe,\" \"I'm Alone\"", component: Module4Lesson1 },
@@ -122,7 +122,7 @@ const CourseContent_new = () => {
         ]
       },
       {
-        title: "Module 5: Releasing Emotional Baggage",
+        title: "Releasing Emotional Baggage",
         description: "Letting Go of What You've Been Carrying",
         lessons: [
           { title: "The Cost of Suppressed Emotions", component: Module5Lesson1 },
@@ -135,7 +135,7 @@ const CourseContent_new = () => {
         ]
       },
       {
-        title: "Module 6: Integration & Forward Momentum",
+        title: "Integration & Forward Momentum",
         description: "Staying Connected to Growth, Resilience, and Self-Love",
         lessons: [
           { title: "Creating Your Ongoing Healing Practice", component: Module6Lesson1 },
