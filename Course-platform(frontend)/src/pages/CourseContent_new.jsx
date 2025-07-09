@@ -198,6 +198,23 @@ const CourseContent_new = () => {
     
     return (
       <div className="flex flex-col h-full">
+        {/* Course Header */}
+        <div className="bg-gradient-to-r from-orange-800 to-orange-600 text-white px-6 py-4">
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => window.history.back()}
+              className="flex items-center gap-2 text-white hover:text-orange-200 transition-colors"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+              Back to Courses
+            </button>
+            <div className="h-6 w-px bg-orange-300"></div>
+            <h1 className="text-xl font-semibold">{courseData.title}</h1>
+          </div>
+        </div>
+
         {/* Navigation Buttons */}
         <div className="flex justify-between items-center p-4 bg-white border-b border-gray-200">
           <button
