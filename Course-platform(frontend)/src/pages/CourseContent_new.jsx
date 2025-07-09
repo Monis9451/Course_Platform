@@ -205,8 +205,8 @@ const CourseContent_new = () => {
             disabled={isFirstLesson}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
               isFirstLesson 
-                ? 'bg-cream text-black cursor-not-allowed' 
-                : 'bg-cream text-black hover:bg-gray-200'
+                ? 'text-[#6B7280] cursor-not-allowed' 
+                : 'text-[#6B7280] hover:bg-gray-200'
             }`}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -220,8 +220,8 @@ const CourseContent_new = () => {
             disabled={isLastLesson}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
               isLastLesson
-                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                : 'bg-primary text-white hover:bg-primary-dark'
+                ? 'text-[#6B7280] cursor-not-allowed'
+                : 'text-[#6B7280] hover:bg-primary-dark'
             }`}
           >
             Complete and Continue
@@ -233,7 +233,7 @@ const CourseContent_new = () => {
 
         {/* Lesson Content */}
         <div className="flex-1 overflow-y-auto">
-          <div className="pb-48">
+          <div className="pb-48 px-8 md:px-16 lg:px-24">
             {LessonComponent ? <LessonComponent /> : (
               <div className="p-8">
                 <h1 className="text-3xl font-bold text-gray-900 mb-4">
@@ -257,8 +257,8 @@ const CourseContent_new = () => {
       
       <div className="flex flex-col h-screen bg-gray-50 marcellus-font">
         {/* Course Header - Full Width */}
-        <div className="bg-primary text-white px-6 py-4 w-full">
-          <div className="flex items-center gap-4">
+        <div className="bg-primary text-white px-6 py-8 w-full">
+          <div className="flex items-center justify-between">
             <button 
               onClick={() => window.history.back()}
               className="flex items-center gap-2 text-white hover:text-orange-200 transition-colors"
@@ -266,10 +266,13 @@ const CourseContent_new = () => {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
-              Back to Courses
+              Back
             </button>
-            <div className="h-6 w-px bg-orange-300"></div>
-            <h1 className="text-xl font-semibold">{courseData.title}</h1>
+            
+            <h1 className="text-xl font-semibold absolute left-1/2 transform -translate-x-1/2">{courseData.title}</h1>
+            
+            {/* Empty div for balance */}
+            <div></div>
           </div>
         </div>
 
