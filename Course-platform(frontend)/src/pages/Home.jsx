@@ -279,7 +279,7 @@ const Home = () => {
               <h3 className="text-2xl font-medium text-[#393128] mb-4">
                 Embrace Imperfection
               </h3>
-              <p className="text-[#393128] text-md leading-relaxed">
+              <p className="text-[#393128] text-md leading-relaxed text-justify">
                 Journaling is not about perfection; it is a space to explore your thoughts and emotions without judgement. The Unclaimed Power Journal helps you reconnect with your true self, embracing the beauty that lies in life's imperfections. Through this practice, you embark on a journey of self awareness and acceptance, gaining deeper insight and returning to the essence of who you are.
               </p>
             </div>
@@ -289,7 +289,7 @@ const Home = () => {
               <h3 className="text-2xl font-medium text-[#393128] mb-4">
                 Let Go of Control
               </h3>
-              <p className="text-[#393128] text-md leading-relaxed">
+              <p className="text-[#393128] text-md leading-relaxed text-justify">
                 Transform your journaling experience by letting go of rigid structure. Releasing control allows your thoughts and emotions to flow freely, unlocking unexpected insights and fostering self-discovery. Embrace the spontaneity of the process, letting your pen wander and revealing truths beneath the surface. This approach turns journaling into a cathartic and empowering journey.
               </p>
             </div>
@@ -299,7 +299,7 @@ const Home = () => {
               <h3 className="text-2xl font-medium text-[#393128] mb-4">
                 Commit to Yourself
               </h3>
-              <p className="text-[#393128] text-md leading-relaxed">
+              <p className="text-[#393128] text-md leading-relaxed text-justify">
                 In the hustle of life, it's easy to lose sight of your own needs and dreams. Committing to yourself is a powerful act of self preservation and self-discovery. By prioritising your growth and well-being, you reclaim your place as the central figure in your own story. The Unclaimed Power Journal encourages you to set aside time for self-reflection, deepening your connection with your authentic self.
               </p>
             </div>
@@ -309,7 +309,7 @@ const Home = () => {
               <h3 className="text-2xl font-medium text-[#393128] mb-4">
                 Create Space
               </h3>
-              <p className="text-[#393128] text-md leading-relaxed">
+              <p className="text-[#393128] text-md leading-relaxed text-justify">
                 Creating personal space amidst the daily chaos is essential. Establishing a daily journaling ritual allows you to step back and reflect, providing a sanctuary from the constant noise of obligations and daily demands. This intentional pause fosters balance and clarity, helping you reconnect with your inner thoughts and emotions. Over time, this practice cultivates deeper self-awareness and a stronger sense of inner stability.
               </p>
             </div>
@@ -321,7 +321,7 @@ const Home = () => {
         <div className="max-w-6xl mx-auto px-8">
           <div className="text-center mb-20">
             <h2 className="text-4xl font-fitzgerald font-light mb-6 text-black leading-tight tracking-tight uppercase">
-              Our Courses
+              The Mind Programmes
             </h2>
             <p className="text-xl max-w-xl mx-auto text-black/80">
               Developed by Dr. Samina Khatun based on evidence-based therapeutic approaches
