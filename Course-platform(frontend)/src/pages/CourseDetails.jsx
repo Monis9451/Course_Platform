@@ -556,7 +556,7 @@ const CourseDetails = () => {
                   </li>
                   <li className="flex items-center text-black font-fitzgerald">
                     <FiVideo className="text-primary mr-2" />
-                    {course.lessons} Guided Lessons
+                    {course.id === 1 ? "8 Guided Meditations and Visualisations" : `${course.lessons} Guided Lessons`}
                   </li>
                   <li className="flex items-center text-black font-fitzgerald">
                     <FaHeadphones className="text-primary mr-2" />
@@ -564,7 +564,7 @@ const CourseDetails = () => {
                   </li>
                   <li className="flex items-center text-black font-fitzgerald">
                     <FiDownload className="text-primary mr-2" />
-                    Downloadable Workbooks
+                    All Programme Materials & Resources
                   </li>
                   <li className="flex items-center text-black font-fitzgerald">
                     <FiFileText className="text-primary mr-2" />
@@ -576,7 +576,7 @@ const CourseDetails = () => {
                 onClick={() => (window.location.href = `/checkout/${course.id}`)}
                 className="bg-primary hover:bg-primary-dark text-white font-fitzgerald font-medium px-6 py-3 rounded transition-colors duration-200 w-full mb-3"
               >
-                Enroll Now
+                Enrol Now
               </button>
             </div>
           </div>
@@ -744,7 +744,7 @@ const CourseDetails = () => {
               onClick={() => (window.location.href = `/checkout/${course.id}`)}
               className="bg-primary hover:bg-gray-100 text-white font-medium px-12 py-4 uppercase text-lg transition-colors duration-200 font-fitzgerald"
             >
-              Enroll Now for £{course.price}
+              Enrol Now for £{course.price}
             </button>
             <a href="/courses" className="block mt-6 text-primary hover:underline font-fitzgerald">
               Or view all our courses

@@ -12,13 +12,13 @@ return (
                 <div className="container mx-auto px-8 md:px-12 max-w-4xl">
                     {/* Page Title */}
                     <div className="text-center mb-12">
-                        <h1 className="text-4xl md:text-5xl font-light text-[#B45B29] mb-6">
+                        <h1 className="text-4xl md:text-5xl font-light text-black mb-6">
                             Mental Health
                         </h1>
                     </div>
 
                     {/* Content */}
-                    <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed space-y-6">
+                    <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed space-y-6 text-justify">
                         <p className="text-lg">
                             I want to acknowledge the importance of mental health and the challenges that many of us face. It's something I care deeply about and 
                             approach with the utmost respect. Please remember that while the tools provided within my resources can support your personal 

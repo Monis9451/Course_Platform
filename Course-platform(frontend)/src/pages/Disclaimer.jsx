@@ -12,13 +12,13 @@ const Disclaimer = () => {
                 <div className="container mx-auto px-8 md:px-12 max-w-4xl">
                     {/* Page Title */}
                     <div className="text-center mb-12">
-                        <h1 className="text-4xl md:text-5xl font-light text-[#B45B29] mb-6">
+                        <h1 className="text-4xl md:text-5xl font-light text-black mb-6">
                             Disclaimer
                         </h1>
                     </div>
 
                     {/* Content */}
-                    <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed space-y-6">
+                    <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed space-y-6 text-justify">
                         <p className="text-lg">
                             The Mind Planner by Dr. Samina offers a structured self-guided journey of personal growth and empowerment. While it draws upon evidence-based therapeutic principles and is designed to support you in overcoming fears, limiting beliefs, and emotional challenges, it is important to clarify that it is not a substitute for formal therapy, diagnosis, or medical treatment.
                         </p>
