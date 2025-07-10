@@ -3,21 +3,7 @@ import CourseSidebar from '../components/CourseSidebar'
 
 // Import Marcellus font for this page only
 const fontStyle = `
-  @import url('https://fonts.googleapis.com/css2?fam        {/* Lesson Content */}
-        <div className="flex-1 overflow-y-auto" ref={lessonContentRef}>
-          <div className="pb-48 px-8 md:px-16 lg:px-24">
-            {LessonComponent ? <LessonComponent /> : (
-              <div className="p-8">
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">
-                  Welcome to {courseData.title}
-                </h1>
-                <p className="text-lg text-gray-600">
-                  Select a lesson from the sidebar to begin your learning journey.
-                </p>
-              </div>
-            )}
-          </div>
-        </div>isplay=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
   
   .marcellus-font {
     font-family: 'Marcellus', serif;
@@ -168,7 +154,15 @@ const CourseContent_new = () => {
   }
 
   const handleLessonSelect = (moduleIndex, lessonIndex) => {
-    setSelectedLesson({ moduleIndex, lessonIndex })
+    // Check if this is a different lesson than the current one
+    if (selectedLesson.moduleIndex !== moduleIndex || selectedLesson.lessonIndex !== lessonIndex) {
+      setSelectedLesson({ moduleIndex, lessonIndex });
+      
+      // Reset scroll position when changing lessons
+      if (lessonContentRef.current) {
+        lessonContentRef.current.scrollTop = 0;
+      }
+    }
   }
 
   // Navigation functions
@@ -183,6 +177,11 @@ const CourseContent_new = () => {
       const prevModule = courseData.modules[moduleIndex - 1]
       setSelectedLesson({ moduleIndex: moduleIndex - 1, lessonIndex: prevModule.lessons.length - 1 })
     }
+    
+    // Reset scroll position
+    if (lessonContentRef.current) {
+      lessonContentRef.current.scrollTop = 0;
+    }
   }
 
   const completeAndContinue = () => {
@@ -192,6 +191,12 @@ const CourseContent_new = () => {
     // Mark current lesson as completed
     setCompletedLessons(prev => new Set([...prev, lessonKey]))
     
+    // Set progress to 100% for this lesson
+    setLessonProgress(prev => ({
+      ...prev,
+      [lessonKey]: 100
+    }));
+    
     // Navigate to next lesson
     const currentModule = courseData.modules[moduleIndex]
     if (lessonIndex < currentModule.lessons.length - 1) {
@@ -200,6 +205,11 @@ const CourseContent_new = () => {
     } else if (moduleIndex < courseData.modules.length - 1) {
       // Go to first lesson of next module
       setSelectedLesson({ moduleIndex: moduleIndex + 1, lessonIndex: 0 })
+    }
+    
+    // Reset scroll position
+    if (lessonContentRef.current) {
+      lessonContentRef.current.scrollTop = 0;
     }
   }
 
@@ -294,6 +304,7 @@ const CourseContent_new = () => {
           if (scrollPercentage > 95) {
             // Add to completed lessons
             setCompletedLessons(prevCompleted => new Set([...prevCompleted, lessonKey]));
+            return { ...prev, [lessonKey]: 100 }; // Set to 100% for visual completeness
           }
           
           return { ...prev, [lessonKey]: scrollPercentage };

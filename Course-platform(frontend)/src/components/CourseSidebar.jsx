@@ -12,22 +12,23 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
   
   // Calculate progress percentage - consider both completed lessons and partial progress
   const calculateOverallProgress = () => {
+    const totalPossibleProgress = totalLessons * 100; // 100% for each lesson
     let totalProgress = 0;
     
-    // Count each completed lesson as 100%
+    // First count all completed lessons as 100%
     currentCompletedLessons.forEach(() => {
       totalProgress += 100;
     });
     
-    // Add partial progress for lessons not yet marked as complete
+    // Add partial progress for lessons not marked as fully complete
     Object.entries(currentLessonProgress).forEach(([lessonKey, progress]) => {
       if (!currentCompletedLessons.has(lessonKey)) {
         totalProgress += progress;
       }
     });
     
-    // Calculate average progress (as a percentage of total possible progress)
-    return Math.round((totalProgress / (totalLessons * 100)) * 100);
+    // Calculate the overall percentage
+    return Math.min(100, Math.round((totalProgress / totalPossibleProgress) * 100));
   };
   
   const progressPercentage = calculateOverallProgress();
@@ -90,41 +91,37 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
                     <div className="absolute left-4 flex-shrink-0">
                       <button
                         onClick={(e) => toggleLessonCompletion(moduleIndex, lessonIndex, e)}
-                        className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all ${
+                        className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
                           currentCompletedLessons.has(`${moduleIndex}-${lessonIndex}`)
                             ? selectedLesson?.moduleIndex === moduleIndex && 
                               selectedLesson?.lessonIndex === lessonIndex
                               ? 'border-white bg-white' 
-                              : 'border-primary bg-primary'
+                              : 'border-primary bg-white'
                             : selectedLesson?.moduleIndex === moduleIndex && 
                               selectedLesson?.lessonIndex === lessonIndex
                             ? 'border-white bg-transparent' 
-                            : 'border-gray-300 bg-white hover:border-primary'
+                            : 'border-gray-300 bg-transparent hover:border-primary'
                         }`}
                       >
                         {/* For partial progress, show a progress fill */}
-                        {!currentCompletedLessons.has(`${moduleIndex}-${lessonIndex}`) && 
-                          currentLessonProgress[`${moduleIndex}-${lessonIndex}`] > 0 && (
+                        {currentLessonProgress[`${moduleIndex}-${lessonIndex}`] > 0 && (
                           <div 
-                            className="absolute bottom-0 left-0 right-0 rounded-full bg-primary transition-all duration-300"
-                            style={{ 
-                              height: `${currentLessonProgress[`${moduleIndex}-${lessonIndex}`]}%`,
-                              opacity: selectedLesson?.moduleIndex === moduleIndex && 
-                                      selectedLesson?.lessonIndex === lessonIndex ? 0.5 : 0.7
-                            }}
-                          />
-                        )}
-                        
-                        {/* Show checkmark for completed lessons */}
-                        {currentCompletedLessons.has(`${moduleIndex}-${lessonIndex}`) && (
-                          <svg className={`w-2.5 h-2.5 ${
-                            selectedLesson?.moduleIndex === moduleIndex && 
-                            selectedLesson?.lessonIndex === lessonIndex
-                              ? 'text-primary'
-                              : 'text-white'
-                          }`} fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
+                            className="absolute inset-0 rounded-full transition-all duration-300 overflow-hidden"
+                          >
+                            <div
+                              className={`absolute inset-0 rounded-full ${
+                                currentCompletedLessons.has(`${moduleIndex}-${lessonIndex}`) || 
+                                currentLessonProgress[`${moduleIndex}-${lessonIndex}`] >= 100
+                                  ? 'bg-white'
+                                  : 'bg-primary'
+                              }`}
+                              style={{
+                                clipPath: `inset(0 ${100 - currentLessonProgress[`${moduleIndex}-${lessonIndex}`]}% 0 0)`,
+                                opacity: selectedLesson?.moduleIndex === moduleIndex && 
+                                        selectedLesson?.lessonIndex === lessonIndex ? 0.7 : 1
+                              }}
+                            />
+                          </div>
                         )}
                       </button>
                     </div>
