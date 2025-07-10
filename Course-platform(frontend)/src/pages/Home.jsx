@@ -335,9 +335,9 @@ const Home = () => {
                       <img src={course.img_src} alt={course.img_alt} className="object-cover h-full w-full" />
                     </div>
                     <div className="absolute top-4 right-4">
-                      <span className="bg-primary text-white text-sm px-3 py-1 rounded-full font-medium">
+                      {/* <span className="bg-primary text-white text-sm px-3 py-1 rounded-full font-medium">
                         {course.category}
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                   <div className="text-center">

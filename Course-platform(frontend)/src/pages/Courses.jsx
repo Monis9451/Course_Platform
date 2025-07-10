@@ -69,11 +69,11 @@ const Courses = () => {
                       alt={course.img_alt} 
                       className="object-contain w-full h-full transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute top-4 right-4">
+                    {/* <div className="absolute top-4 right-4">
                       <span className="bg-primary text-white text-sm font-fitzgerald px-3 py-1 rounded-full font-medium">
                         {course.category}
                       </span>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="p-10">
                     <h3 className="text-2xl font-fitzgerald mb-4 text-black group-hover:text-[#bd6334] transition-colors uppercase">

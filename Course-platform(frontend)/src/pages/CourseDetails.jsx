@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { FiUser, FiClock } from 'react-icons/fi'
-import { FaCheckCircle } from 'react-icons/fa'
+import { FiUser, FiClock, FiFileText, FiVideo, FiDownload } from 'react-icons/fi'
+import { FaCheckCircle, FaHeadphones, FaPencilAlt, FaRegLightbulb } from 'react-icons/fa'
 import Header from '../pages/Header'
 
 // Course Data
@@ -525,14 +525,22 @@ const CourseDetails = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="flex items-center gap-6 mt-auto">
+              <div className="flex items-center gap-6 mt-auto flex-wrap">
                 <span className="flex items-center text-warm-gray text-base font-fitzgerald">
                   <FiClock className="mr-2" />
                   {course.duration}
                 </span>
                 <span className="flex items-center text-warm-gray text-base font-fitzgerald">
-                  <FiUser className="mr-2" />
-                  {course.level}
+                  <FaHeadphones className="mr-2" />
+                  Audio Content
+                </span>
+                <span className="flex items-center text-warm-gray text-base font-fitzgerald">
+                  <FaPencilAlt className="mr-2" />
+                  Workbooks
+                </span>
+                <span className="flex items-center text-warm-gray text-base font-fitzgerald">
+                  <FaRegLightbulb className="mr-2" />
+                  Exercises
                 </span>
               </div>
             </div>
@@ -543,16 +551,24 @@ const CourseDetails = () => {
                 <div className="text-3xl font-bold text-primary mb-6 font-fitzgerald">£{course.price}.00</div>
                 <ul className="mb-6 space-y-3">
                   <li className="flex items-center text-black font-fitzgerald">
-                    <FaCheckCircle className="text-primary mr-2" />
+                    <FiClock className="text-primary mr-2" />
                     Lifetime Access
                   </li>
                   <li className="flex items-center text-black font-fitzgerald">
-                    <FaCheckCircle className="text-primary mr-2" />
-                    {course.lessons} Video Lessons
+                    <FiVideo className="text-primary mr-2" />
+                    {course.lessons} Guided Lessons
                   </li>
                   <li className="flex items-center text-black font-fitzgerald">
-                    <FaCheckCircle className="text-primary mr-2" />
-                    Downloadable Resources
+                    <FaHeadphones className="text-primary mr-2" />
+                    Audio Meditations
+                  </li>
+                  <li className="flex items-center text-black font-fitzgerald">
+                    <FiDownload className="text-primary mr-2" />
+                    Downloadable Workbooks
+                  </li>
+                  <li className="flex items-center text-black font-fitzgerald">
+                    <FiFileText className="text-primary mr-2" />
+                    Practical Exercises
                   </li>
                 </ul>
               </div>
@@ -562,9 +578,6 @@ const CourseDetails = () => {
               >
                 Enroll Now
               </button>
-              <div className="text-center text-primary mt-2 text-sm font-fitzgerald">
-                Try a free sample lesson
-              </div>
             </div>
           </div>
         </div>
