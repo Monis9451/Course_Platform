@@ -1,8 +1,8 @@
 import React from 'react'
 
 const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLessons, setCompletedLessons, lessonProgress }) => {
-  // Use completedLessons from props or fallback to default
-  const currentCompletedLessons = completedLessons || new Set(['0-0'])
+  // Use completedLessons from props or fallback to empty set
+  const currentCompletedLessons = completedLessons || new Set([])
   const updateCompletedLessons = setCompletedLessons || (() => {})
   // Use lessonProgress from props or fallback to empty object
   const currentLessonProgress = lessonProgress || {}
@@ -89,36 +89,52 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
                   >
                     {/* Status Circle - positioned with some left spacing */}
                     <div className="absolute left-4 flex-shrink-0">
+                      {/* Completed lesson styling with double border effect */}
+                      {currentCompletedLessons.has(`${moduleIndex}-${lessonIndex}`) && !(selectedLesson?.moduleIndex === moduleIndex && 
+                        selectedLesson?.lessonIndex === lessonIndex) && (
+                        <div className="absolute inset-0 rounded-full border-2 border-primary">
+                          <div className="absolute inset-0 m-0.1 rounded-full border border-white bg-primary"></div>
+                        </div>
+                      )}
+                      
+                      {/* White fill for completed and selected lesson - completely white with no inner border */}
+                      {currentCompletedLessons.has(`${moduleIndex}-${lessonIndex}`) && (selectedLesson?.moduleIndex === moduleIndex && 
+                        selectedLesson?.lessonIndex === lessonIndex) && (
+                        <div className="absolute inset-0 rounded-full bg-white border-2 border-white">
+                        </div>
+                      )}
+                      
                       <button
                         onClick={(e) => toggleLessonCompletion(moduleIndex, lessonIndex, e)}
-                        className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
+                        className={`w-4 h-4 rounded-full flex items-center justify-center transition-all duration-300 ${
                           currentCompletedLessons.has(`${moduleIndex}-${lessonIndex}`)
                             ? selectedLesson?.moduleIndex === moduleIndex && 
                               selectedLesson?.lessonIndex === lessonIndex
-                              ? 'border-white bg-white' 
-                              : 'border-primary bg-white'
+                              ? 'border-0 border-transparent' 
+                              : 'border-0 border-transparent'
                             : selectedLesson?.moduleIndex === moduleIndex && 
                               selectedLesson?.lessonIndex === lessonIndex
-                            ? 'border-white bg-transparent' 
-                            : 'border-gray-300 bg-transparent hover:border-primary'
+                            ? 'border-2 border-white' 
+                            : 'border-2 border-[#B45B29]'
                         }`}
                       >
                         {/* For partial progress, show a progress fill */}
-                        {currentLessonProgress[`${moduleIndex}-${lessonIndex}`] > 0 && (
+                        {currentLessonProgress[`${moduleIndex}-${lessonIndex}`] > 0 && !currentCompletedLessons.has(`${moduleIndex}-${lessonIndex}`) && (
                           <div 
                             className="absolute inset-0 rounded-full transition-all duration-300 overflow-hidden"
+                            style={{ 
+                              padding: '1px'
+                            }}
                           >
                             <div
-                              className={`absolute inset-0 rounded-full ${
-                                currentCompletedLessons.has(`${moduleIndex}-${lessonIndex}`) || 
-                                currentLessonProgress[`${moduleIndex}-${lessonIndex}`] >= 100
-                                  ? 'bg-white'
-                                  : 'bg-primary'
-                              }`}
+                              className="absolute inset-0 rounded-full"
                               style={{
+                                backgroundColor: selectedLesson?.moduleIndex === moduleIndex && 
+                                    selectedLesson?.lessonIndex === lessonIndex
+                                    ? '#FFFFFF' // White for selected
+                                    : '#B45B29', // Brownish-orange for unselected
                                 clipPath: `inset(0 ${100 - currentLessonProgress[`${moduleIndex}-${lessonIndex}`]}% 0 0)`,
-                                opacity: selectedLesson?.moduleIndex === moduleIndex && 
-                                        selectedLesson?.lessonIndex === lessonIndex ? 0.7 : 1
+                                opacity: 1
                               }}
                             />
                           </div>

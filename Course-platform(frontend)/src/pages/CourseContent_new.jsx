@@ -63,7 +63,7 @@ import Module6Lesson6 from '../components/UnburdingTrauma/Module6Lesson6'
 
 const CourseContent_new = () => {
   const [selectedLesson, setSelectedLesson] = useState({ moduleIndex: 0, lessonIndex: 0 })
-  const [completedLessons, setCompletedLessons] = useState(new Set(['0-0'])) // Start with first lesson completed
+  const [completedLessons, setCompletedLessons] = useState(new Set([])) // Initialize with no lessons completed
   const [lessonProgress, setLessonProgress] = useState({}) // Track scroll progress for each lesson
   
   // Reference to the lesson content container
@@ -292,7 +292,7 @@ const CourseContent_new = () => {
       // Calculate how far we've scrolled as a percentage
       // scrollHeight - clientHeight = total scrollable distance
       const scrollableDistance = scrollHeight - clientHeight;
-      if (scrollableDistance <= 0) return 100; // If no scrollable content, consider as 100% complete
+      if (scrollableDistance <= 0) return 0; // If no scrollable content, don't mark it as complete automatically
       
       const scrollPercentage = Math.min(100, Math.ceil((scrollTop / scrollableDistance) * 100));
       
@@ -316,8 +316,8 @@ const CourseContent_new = () => {
     // Attach scroll event listener
     scrollContainer.addEventListener('scroll', calculateScrollProgress);
     
-    // Calculate initial scroll progress
-    calculateScrollProgress();
+    // We'll skip the initial calculation to prevent auto-completing lessons
+    // when they first load, user needs to scroll to show progress
     
     // Cleanup
     return () => {
