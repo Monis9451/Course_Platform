@@ -1,19 +1,40 @@
 import React from 'react'
 
-const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLessons, setCompletedLessons }) => {
+const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLessons, setCompletedLessons, lessonProgress }) => {
   // Use completedLessons from props or fallback to default
   const currentCompletedLessons = completedLessons || new Set(['0-0'])
   const updateCompletedLessons = setCompletedLessons || (() => {})
+  // Use lessonProgress from props or fallback to empty object
+  const currentLessonProgress = lessonProgress || {}
   
   // Calculate total lessons
   const totalLessons = courseData.modules.reduce((total, module) => total + module.lessons.length, 0)
   
-  // Calculate progress percentage
-  const progressPercentage = Math.round((currentCompletedLessons.size / totalLessons) * 100)
+  // Calculate progress percentage - consider both completed lessons and partial progress
+  const calculateOverallProgress = () => {
+    let totalProgress = 0;
+    
+    // Count each completed lesson as 100%
+    currentCompletedLessons.forEach(() => {
+      totalProgress += 100;
+    });
+    
+    // Add partial progress for lessons not yet marked as complete
+    Object.entries(currentLessonProgress).forEach(([lessonKey, progress]) => {
+      if (!currentCompletedLessons.has(lessonKey)) {
+        totalProgress += progress;
+      }
+    });
+    
+    // Calculate average progress (as a percentage of total possible progress)
+    return Math.round((totalProgress / (totalLessons * 100)) * 100);
+  };
+  
+  const progressPercentage = calculateOverallProgress();
   
   // Toggle lesson completion
   const toggleLessonCompletion = (moduleIndex, lessonIndex, event) => {
-    event.stopPropagation() // Prevent lesson selection when clicking the circle
+    event.stopPropagation()
     const lessonKey = `${moduleIndex}-${lessonIndex}`
     updateCompletedLessons(prev => {
       const newSet = new Set(prev)
@@ -69,25 +90,38 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
                     <div className="absolute left-4 flex-shrink-0">
                       <button
                         onClick={(e) => toggleLessonCompletion(moduleIndex, lessonIndex, e)}
-                        className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${
+                        className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all ${
                           currentCompletedLessons.has(`${moduleIndex}-${lessonIndex}`)
                             ? selectedLesson?.moduleIndex === moduleIndex && 
                               selectedLesson?.lessonIndex === lessonIndex
-                              ? 'border-white bg-white' // White background with white border when selected
-                              : 'border-primary bg-primary' // Primary when completed but not selected
+                              ? 'border-white bg-white' 
+                              : 'border-primary bg-primary'
                             : selectedLesson?.moduleIndex === moduleIndex && 
                               selectedLesson?.lessonIndex === lessonIndex
-                            ? 'border-white bg-transparent' // Transparent with white border when selected
-                            : 'border-gray-300 bg-white hover:border-primary' // Default state
+                            ? 'border-white bg-transparent' 
+                            : 'border-gray-300 bg-white hover:border-primary'
                         }`}
                       >
+                        {/* For partial progress, show a progress fill */}
+                        {!currentCompletedLessons.has(`${moduleIndex}-${lessonIndex}`) && 
+                          currentLessonProgress[`${moduleIndex}-${lessonIndex}`] > 0 && (
+                          <div 
+                            className="absolute bottom-0 left-0 right-0 rounded-full bg-primary transition-all duration-300"
+                            style={{ 
+                              height: `${currentLessonProgress[`${moduleIndex}-${lessonIndex}`]}%`,
+                              opacity: selectedLesson?.moduleIndex === moduleIndex && 
+                                      selectedLesson?.lessonIndex === lessonIndex ? 0.5 : 0.7
+                            }}
+                          />
+                        )}
+                        
                         {/* Show checkmark for completed lessons */}
                         {currentCompletedLessons.has(`${moduleIndex}-${lessonIndex}`) && (
                           <svg className={`w-2.5 h-2.5 ${
                             selectedLesson?.moduleIndex === moduleIndex && 
                             selectedLesson?.lessonIndex === lessonIndex
-                              ? 'text-primary' // Primary color checkmark when selected
-                              : 'text-white' // White checkmark when not selected
+                              ? 'text-primary'
+                              : 'text-white'
                           }`} fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
@@ -98,7 +132,6 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
                     {/* Lesson Icon */}
                     <div className="mr-3 ml-12">
                       {lessonIndex === 0 ? (
-                        // First lesson - file text icon
                         <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
                           selectedLesson?.moduleIndex === moduleIndex && 
                           selectedLesson?.lessonIndex === lessonIndex
@@ -119,7 +152,6 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
                           </svg>
                         </div>
                       ) : lessonIndex % 3 === 1 ? (
-                        // Edit icon for action/writing lessons
                         <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
                           selectedLesson?.moduleIndex === moduleIndex && 
                           selectedLesson?.lessonIndex === lessonIndex
@@ -137,7 +169,6 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
                           </svg>
                         </div>
                       ) : lessonIndex % 3 === 2 ? (
-                        // Audio/volume icon
                         <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
                           selectedLesson?.moduleIndex === moduleIndex && 
                           selectedLesson?.lessonIndex === lessonIndex
@@ -156,7 +187,6 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
                           </svg>
                         </div>
                       ) : (
-                        // Default file text icon
                         <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
                           selectedLesson?.moduleIndex === moduleIndex && 
                           selectedLesson?.lessonIndex === lessonIndex

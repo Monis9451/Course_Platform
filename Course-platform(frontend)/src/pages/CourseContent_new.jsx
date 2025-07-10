@@ -1,9 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import CourseSidebar from '../components/CourseSidebar'
 
 // Import Marcellus font for this page only
 const fontStyle = `
-  @import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
+  @import url('https://fonts.googleapis.com/css2?fam        {/* Lesson Content */}
+        <div className="flex-1 overflow-y-auto" ref={lessonContentRef}>
+          <div className="pb-48 px-8 md:px-16 lg:px-24">
+            {LessonComponent ? <LessonComponent /> : (
+              <div className="p-8">
+                <h1 className="text-3xl font-bold text-gray-900 mb-4">
+                  Welcome to {courseData.title}
+                </h1>
+                <p className="text-lg text-gray-600">
+                  Select a lesson from the sidebar to begin your learning journey.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>isplay=swap');
   
   .marcellus-font {
     font-family: 'Marcellus', serif;
@@ -64,7 +78,11 @@ import Module6Lesson6 from '../components/UnburdingTrauma/Module6Lesson6'
 const CourseContent_new = () => {
   const [selectedLesson, setSelectedLesson] = useState({ moduleIndex: 0, lessonIndex: 0 })
   const [completedLessons, setCompletedLessons] = useState(new Set(['0-0'])) // Start with first lesson completed
-
+  const [lessonProgress, setLessonProgress] = useState({}) // Track scroll progress for each lesson
+  
+  // Reference to the lesson content container
+  const lessonContentRef = useRef(null)
+  
   // Course data with all modules and lessons
   const courseData = {
     title: "Understanding Trauma: A 6-Week Self Paced Programme",
@@ -232,7 +250,7 @@ const CourseContent_new = () => {
         </div>
 
         {/* Lesson Content */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto" ref={lessonContentRef}>
           <div className="pb-48 px-8 md:px-16 lg:px-24">
             {LessonComponent ? <LessonComponent /> : (
               <div className="p-8">
@@ -249,6 +267,52 @@ const CourseContent_new = () => {
       </div>
     )
   }
+
+  // Effect to track scroll progress for the current lesson
+  useEffect(() => {
+    if (!lessonContentRef.current) return;
+    
+    const lessonKey = `${selectedLesson.moduleIndex}-${selectedLesson.lessonIndex}`;
+    const scrollContainer = lessonContentRef.current;
+    
+    // Function to calculate scroll percentage
+    const calculateScrollProgress = () => {
+      const { scrollTop, scrollHeight, clientHeight } = scrollContainer;
+      
+      // Calculate how far we've scrolled as a percentage
+      // scrollHeight - clientHeight = total scrollable distance
+      const scrollableDistance = scrollHeight - clientHeight;
+      if (scrollableDistance <= 0) return 100; // If no scrollable content, consider as 100% complete
+      
+      const scrollPercentage = Math.min(100, Math.ceil((scrollTop / scrollableDistance) * 100));
+      
+      // Only update if the new progress is higher than the previous
+      setLessonProgress(prev => {
+        const currentProgress = prev[lessonKey] || 0;
+        if (scrollPercentage > currentProgress) {
+          // If progress is more than 95%, consider lesson as fully completed
+          if (scrollPercentage > 95) {
+            // Add to completed lessons
+            setCompletedLessons(prevCompleted => new Set([...prevCompleted, lessonKey]));
+          }
+          
+          return { ...prev, [lessonKey]: scrollPercentage };
+        }
+        return prev;
+      });
+    };
+    
+    // Attach scroll event listener
+    scrollContainer.addEventListener('scroll', calculateScrollProgress);
+    
+    // Calculate initial scroll progress
+    calculateScrollProgress();
+    
+    // Cleanup
+    return () => {
+      scrollContainer.removeEventListener('scroll', calculateScrollProgress);
+    };
+  }, [selectedLesson, setCompletedLessons]);
 
   return (
     <>
@@ -285,6 +349,7 @@ const CourseContent_new = () => {
             onLessonSelect={handleLessonSelect}
             completedLessons={completedLessons}
             setCompletedLessons={setCompletedLessons}
+            lessonProgress={lessonProgress}
           />
           
           {/* Main Content Area */}
