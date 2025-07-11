@@ -50,19 +50,13 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
 
   // Helper function to determine icon type based on lesson data
   const getLessonIconType = (lesson, moduleIndex, lessonIndex) => {
-    // Debug logs
-    console.log(`Getting icon type for lesson: ${lesson.title}`);
-    console.log(`Module Index: ${moduleIndex}, Lesson Index: ${lessonIndex}`);
-    
     // Special case for Module 6 first lesson
     if (moduleIndex === 5 && lessonIndex === 0) {
-      console.log('Setting icon to PAGE for first lesson of Module 6');
       return 'page';
     }
     
     // First check if lesson has an explicit icon type property
     if (lesson.iconType) {
-      console.log(`Using explicit icon type: ${lesson.iconType}`);
       return lesson.iconType;
     }
     
@@ -71,7 +65,6 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
     
     // Special cases based on exact title matches
     if (moduleIndex === 5 && title === "creating your ongoing healing practice") {
-      console.log('Special case for Module 6 Lesson 1 based on title');
       return 'page';
     }
     
@@ -79,10 +72,8 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
     if (title.includes('exercise') || 
         (title.includes('practice') && !title.includes('creating your ongoing healing practice')) || 
         title.includes('checklist')) {
-      console.log(`Title-based icon: checkbox for "${title}"`);
       return 'checkbox';
     } else if (title.includes('audio') || title.includes('listen') || title.includes('podcast')) {
-      console.log(`Title-based icon: speaker for "${title}"`);
       return 'speaker';
     }
     
@@ -109,18 +100,11 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
       if (lessonIndex === 6) return 'speaker';
     } else if ( moduleIndex === 5) {
       // Already handled the first lesson at the top of the function
-      if (lessonIndex >= 1 && lessonIndex <= 2) {
-        console.log(`Setting icon to PAGE for lesson ${lessonIndex+1} of Module 6`);
-        return 'page';
-      }
-      if (lessonIndex >= 3 && lessonIndex <= 5) {
-        console.log(`Setting icon to CHECKBOX for lesson ${lessonIndex+1} of Module 6`);
-        return 'checkbox';
-      }
+      if (lessonIndex >= 1 && lessonIndex <= 2) return 'page';
+      if (lessonIndex >= 3 && lessonIndex <= 5) return 'checkbox';
     }
     
     // Default icon is document/page
-    console.log('Using default icon: page');
     return 'page';
   }
 
@@ -175,7 +159,7 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
   }
 
   return (
-    <div className="w-80 bg-white h-screen overflow-y-auto border-r border-gray-200 ">
+    <div className="w-80 bg-white max-h-screen h-full overflow-y-auto border-r border-gray-200" style={{ paddingBottom: "60px" }}>
       {/* Progress Section */}
       <div className="p-4 border-b border-gray-200">
         <div className="text-sm font-semibold text-gray-600 mb-1">Course Content</div>
