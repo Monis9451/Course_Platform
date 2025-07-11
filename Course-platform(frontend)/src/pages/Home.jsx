@@ -537,7 +537,7 @@ const Home = () => {
         <div className="max-w-4xl mx-auto px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-fitzgerald font-bold text-black mb-4">
-              Before purchasing, please review our most common questions on the 12-Month Pathway Membership below...
+              Before enrolling, please review our most frequently asked questions to ensure you have all the information you need:
             </h2>
             <div className="w-full h-px bg-cream mt-8"></div>
           </div>

@@ -228,20 +228,20 @@ const Login = () => {
     <div>
         <Header />        <div className="container mx-auto px-4 py-20">
         <div className="max-w-md mx-auto bg-cream p-8 shadow-md">
-          <h1 className="text-3xl font-serif text-center text-black mb-8">
+          <h1 className="text-3xl font-fitzgerald font-light text-center text-black mb-8">
             {isLogin ? "Log In to Your Account" : "Create an Account"}
           </h1>
             <div className="flex mb-8">
             <button 
               type="button"
-              className={`flex-1 py-2 text-center ${isLogin ? 'bg-primary text-white' : 'bg-white text-black'}`}
+              className={`flex-1 py-2 text-center font-light ${isLogin ? 'bg-primary text-white' : 'bg-white text-black'}`}
               onClick={() => handleModeSwitch(true)}
             >
               Log In
             </button>
             <button 
               type="button"
-              className={`flex-1 py-2 text-center ${!isLogin ? 'bg-primary text-white' : 'bg-white text-black'}`}
+              className={`flex-1 py-2 text-center font-light ${!isLogin ? 'bg-primary text-white' : 'bg-white text-black'}`}
               onClick={() => handleModeSwitch(false)}
             >
               Sign Up
@@ -249,7 +249,7 @@ const Login = () => {
           </div>
 
           {errors.general && (
-            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 text-sm">
+            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 text-sm font-light">
               {errors.general}
             </div>
           )}
@@ -257,7 +257,7 @@ const Login = () => {
           <form className="space-y-6" onSubmit={handleSubmit}>            {!isLogin && (
               <>
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-black mb-1">
+                  <label htmlFor="name" className="block text-sm font-light text-black mb-1">
                     Full Name
                   </label>
                   <input
@@ -270,13 +270,13 @@ const Login = () => {
                     placeholder="Enter your full name"
                   />
                   {errors.name && (
-                    <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+                    <p className="mt-1 text-sm text-red-600 font-light">{errors.name}</p>
                   )}
                 </div>
               </>
             )}
               <div>
-              <label htmlFor="email" className="block text-sm font-medium text-black mb-1">
+              <label htmlFor="email" className="block text-sm font-light text-black mb-1">
                 Email Address
               </label>
               <input
@@ -289,10 +289,10 @@ const Login = () => {
                 placeholder="Enter your email"
               />
               {errors.email && (
-                <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+                <p className="mt-1 text-sm text-red-600 font-light">{errors.email}</p>
               )}
             </div>            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-black mb-1">
+              <label htmlFor="password" className="block text-sm font-light text-black mb-1">
                 Password
               </label>
               <div className="relative">
@@ -318,17 +318,17 @@ const Login = () => {
                 </button>
               </div>
               {errors.password && (
-                <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+                <p className="mt-1 text-sm text-red-600 font-light">{errors.password}</p>
               )}
             </div>
             
             {isLogin ? (
               <div className="text-right">
-                <a href="#" className="text-sm text-primary hover:underline">
+                <a href="#" className="text-sm text-primary hover:underline font-light">
                   Forgot password?
                 </a>              </div>            ) : (
               <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-black mb-1">
+                <label htmlFor="confirmPassword" className="block text-sm font-light text-black mb-1">
                   Confirm Password
                 </label>
                 <div className="relative">
@@ -354,14 +354,14 @@ const Login = () => {
                   </button>
                 </div>
                 {errors.confirmPassword && (
-                  <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
+                  <p className="mt-1 text-sm text-red-600 font-light">{errors.confirmPassword}</p>
                 )}
               </div>
             )}
               <button 
               type="submit" 
               disabled={loading}
-              className={`w-full py-3 rounded-none text-white ${
+              className={`w-full py-3 rounded-none text-white font-light ${
                 loading 
                   ? 'bg-gray-400 cursor-not-allowed' 
                   : 'bg-primary hover:bg-primary-dark'
@@ -372,14 +372,14 @@ const Login = () => {
           </form>
           
           <div className="mt-8 text-center text-sm">
-            <span className="text-black">Or log in with</span>
+            <span className="text-black font-light">Or log in with</span>
           </div>
             <div className="mt-4 flex justify-center">
             <button 
               type="button"
               onClick={handleGoogleAuth}
               disabled={loading}
-              className={`py-2 px-8 flex items-center justify-center text-white ${
+              className={`py-2 px-8 flex items-center justify-center text-white font-light ${
                 loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#4285F4] hover:bg-[#3367d6]'
               }`}
             >
@@ -387,11 +387,11 @@ const Login = () => {
             </button>
           </div>
             <div className="mt-6 text-center text-sm">
-            <p className="text-black">
+            <p className="text-black font-light">
               {isLogin ? "Don't have an account? " : "Already have an account? "}
               <button 
                 type="button"
-                className="text-primary hover:underline"
+                className="text-primary hover:underline font-light"
                 onClick={() => handleModeSwitch(!isLogin)}
               >
                 {isLogin ? "Sign up" : "Log in"}
