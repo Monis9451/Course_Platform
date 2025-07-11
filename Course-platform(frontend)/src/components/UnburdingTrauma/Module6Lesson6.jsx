@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Module3Lesson8 = () => {
+const Module6Lesson6 = () => {
   return (
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">BUILDING YOUR COMMUNITY – SUPPORT AND CONNECTION (PRACTICAL STEPS)</h1>
@@ -239,4 +239,4 @@ const Module3Lesson8 = () => {
   )
 }
 
-export default Module3Lesson8
+export default Module6Lesson6

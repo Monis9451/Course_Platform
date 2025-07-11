@@ -38,13 +38,16 @@ import Module3Lesson3 from '../components/UnburdingTrauma/Module3Lesson3'
 import Module3Lesson4 from '../components/UnburdingTrauma/Module3Lesson4'
 import Module3Lesson5 from '../components/UnburdingTrauma/Module3Lesson5'
 import Module3Lesson6 from '../components/UnburdingTrauma/Module3Lesson6'
-import Module3Lesson7 from '../components/UnburdingTrauma/Module6Lesson6'
+import Module3Lesson7 from '../components/UnburdingTrauma/Module3Lesson7'
+import Module3Lesson8 from '../components/UnburdingTrauma/Module3Lesson8'
 
 import Module4Lesson1 from '../components/UnburdingTrauma/Module4Lesson1'
 import Module4Lesson2 from '../components/UnburdingTrauma/Module4Lesson2'
 import Module4Lesson3 from '../components/UnburdingTrauma/Module4Lesson3'
 import Module4Lesson4 from '../components/UnburdingTrauma/Module4Lesson4'
-import Module4Lesson5 from '../components/UnburdingTrauma/Module4Lesson3'
+import Module4Lesson5 from '../components/UnburdingTrauma/Module4Lesson5'
+import Module4Lesson6 from '../components/UnburdingTrauma/Module4Lesson6'
+import Module4Lesson7 from '../components/UnburdingTrauma/Module4Lesson7'
 
 import Module5Lesson1 from '../components/UnburdingTrauma/Module5Lesson1'
 import Module5Lesson2 from '../components/UnburdingTrauma/Module5Lesson2'
@@ -60,6 +63,7 @@ import Module6Lesson3 from '../components/UnburdingTrauma/Module6Lesson3'
 import Module6Lesson4 from '../components/UnburdingTrauma/Module6Lesson4'
 import Module6Lesson5 from '../components/UnburdingTrauma/Module6Lesson5'
 import Module6Lesson6 from '../components/UnburdingTrauma/Module6Lesson6'
+import Module6Lesson7 from '../components/UnburdingTrauma/Module6Lesson7'
 
 const CourseContent_new = () => {
   const [selectedLesson, setSelectedLesson] = useState({ moduleIndex: 0, lessonIndex: 0 })
@@ -84,7 +88,7 @@ const CourseContent_new = () => {
           { title: "Dissociation in PTSD: Depersonalisation, Derealisation, Dissociative Amnesia", component: Module1Lesson4 },
           { title: "Personal Trauma Timeline", component: Module1Lesson5 },
           { title: "Self-Assessment - Trauma Responses", component: Module1Lesson6 },
-          { title: "Somatic Mapping Exercise", component: Module1Lesson7 },
+          { title: "Trauma Body Map", component: Module1Lesson7 },
           { title: "Guided Visualisation - Grounding & Nervous System Regulation", component: Module1Lesson8 }
         ]
       },
@@ -111,7 +115,8 @@ const CourseContent_new = () => {
           { title: "Meet your Inner Child", component: Module3Lesson4 },
           { title: "What My Inner Child Needs to Hear", component: Module3Lesson5 },
           { title: "Creating a Self-Compassion Ritual", component: Module3Lesson6 },
-          { title: "Letter to your Inner Child", component: Module3Lesson7 },
+          { title: "Letter to your inner child", component: Module3Lesson7 },
+          { title: "Inner Child Healing Meditation", component: Module3Lesson8 }
         ]
       },
       {
@@ -120,9 +125,11 @@ const CourseContent_new = () => {
         lessons: [
           { title: "The Inner Narrative: \"I'm Not Enough,\" \"I'm Unsafe,\" \"I'm Alone\"", component: Module4Lesson1 },
           { title: "How Trauma Shapes Beliefs About Self and Others", component: Module4Lesson2 },
-          { title: "Reframing Stuck Points", component: Module4Lesson3 },
+          { title: "Transforming Inner Dialogue with Clarity and Compassion", component: Module4Lesson6 },
+          { title: "Identifying Stuck Points", component: Module4Lesson3 },
+          { title: "Reframing Negative Beliefs", component: Module4Lesson5 },
           { title: "Taking Small Bold Actions", component: Module4Lesson4 },
-          { title: "Integration Meditation", component: Module4Lesson5 }
+          { title: "Empowerment Meditation", component: Module4Lesson7 }
         ]
       },
       {
@@ -147,7 +154,8 @@ const CourseContent_new = () => {
           { title: "Visioning the Healed Self & Embracing Post-Trauma Growth", component: Module6Lesson3 },
           { title: "Healing Action Plan (Writing Practice)", component: Module6Lesson4 },
           { title: "Future-Self Reflection (Sentence Completion)", component: Module6Lesson5 },
-          { title: "Building Your Community – Support and Connection", component: Module6Lesson6 }
+          { title: "Building Your Community – Support and Connection", component: Module6Lesson6 },
+          { title: "Integration Meditation", component: Module6Lesson7 }
         ]
       }
     ]
@@ -351,17 +359,26 @@ const CourseContent_new = () => {
           </div>
         </div>
 
+        {/* Add custom CSS for scrolling */}
+        <style>{`
+          .custom-scrollbar::-webkit-scrollbar-track {
+            margin-bottom: 80px;
+          }
+        `}</style>
+        
         {/* Content Area with Sidebar and Main Content */}
         <div className="flex flex-1 overflow-hidden">
           {/* Sidebar */}
-          <CourseSidebar 
-            courseData={courseData}
-            selectedLesson={selectedLesson}
-            onLessonSelect={handleLessonSelect}
-            completedLessons={completedLessons}
-            setCompletedLessons={setCompletedLessons}
-            lessonProgress={lessonProgress}
-          />
+          <div className="sidebar-container h-full" style={{ minHeight: "calc(100vh - 120px)" }}>
+            <CourseSidebar 
+              courseData={courseData}
+              selectedLesson={selectedLesson}
+              onLessonSelect={handleLessonSelect}
+              completedLessons={completedLessons}
+              setCompletedLessons={setCompletedLessons}
+              lessonProgress={lessonProgress}
+            />
+          </div>
           
           {/* Main Content Area */}
           <div className="flex-1 overflow-y-auto">
