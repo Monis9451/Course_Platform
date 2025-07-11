@@ -249,7 +249,7 @@ const Login = () => {
           </div>
 
           {errors.general && (
-            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 text-sm font-light">
+            <div className="mb-4 p-3 bg-cream border border-primary text-textColor text-sm font-light">
               {errors.general}
             </div>
           )}
@@ -270,7 +270,7 @@ const Login = () => {
                     placeholder="Enter your full name"
                   />
                   {errors.name && (
-                    <p className="mt-1 text-sm text-red-600 font-light">{errors.name}</p>
+                    <p className="mt-1 text-sm text-primary font-light">{errors.name}</p>
                   )}
                 </div>
               </>
@@ -289,7 +289,7 @@ const Login = () => {
                 placeholder="Enter your email"
               />
               {errors.email && (
-                <p className="mt-1 text-sm text-red-600 font-light">{errors.email}</p>
+                <p className="mt-1 text-sm text-primary font-light">{errors.email}</p>
               )}
             </div>            <div>
               <label htmlFor="password" className="block text-sm font-light text-black mb-1">
@@ -318,7 +318,7 @@ const Login = () => {
                 </button>
               </div>
               {errors.password && (
-                <p className="mt-1 text-sm text-red-600 font-light">{errors.password}</p>
+                <p className="mt-1 text-sm text-primary font-light">{errors.password}</p>
               )}
             </div>
             
@@ -354,7 +354,7 @@ const Login = () => {
                   </button>
                 </div>
                 {errors.confirmPassword && (
-                  <p className="mt-1 text-sm text-red-600 font-light">{errors.confirmPassword}</p>
+                  <p className="mt-1 text-sm text-primary font-light">{errors.confirmPassword}</p>
                 )}
               </div>
             )}

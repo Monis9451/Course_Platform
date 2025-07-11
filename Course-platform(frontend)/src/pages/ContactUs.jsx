@@ -56,7 +56,7 @@ function ContactUs() {
                 opportunities, please reach out to:
               </p>
               <p className="text-gray-700">
-                <span className="font-medium">Email:</span> <a href="mailto:info@themindplanner.com" className="text-blue-600 hover:underline">info@themindplanner.com</a>
+                <span className="font-medium">Email:</span> <a href="mailto:info@themindplanner.com" className=" hover:underline">info@themindplanner.com</a>
               </p>
             </div>
 
@@ -67,7 +67,7 @@ function ContactUs() {
                 Have questions about our products or services? We're here to help. Contact us at:
               </p>
               <p className="text-gray-700">
-                <span className="font-medium">Email:</span> <a href="mailto:info@themindplanner.com" className="text-blue-600 hover:underline">info@themindplanner.com</a>
+                <span className="font-medium">Email:</span> <a href="mailto:info@themindplanner.com" className="hover:underline">info@themindplanner.com</a>
               </p>
             </div>
 
@@ -78,7 +78,7 @@ function ContactUs() {
                 Need assistance with orders, shipping, returns, or anything else? Our Customer Support team is ready to assist:
               </p>
               <p className="text-gray-700 mb-3">
-                <span className="font-medium">Email:</span> <a href="mailto:support@themindplanner.com" className="text-blue-600 hover:underline">support@themindplanner.com</a>
+                <span className="font-medium">Email:</span> <a href="mailto:support@themindplanner.com" className="hover:underline">support@themindplanner.com</a>
               </p>
               <p className="text-gray-600 leading-relaxed">
                 Your thoughts, questions, and feedback are important to us. We're committed to providing the best support and 

@@ -64,7 +64,7 @@ function ThankYou() {
   return (
     <div className="container max-w-4xl mx-auto px-4 py-20">
       <div className="bg-cream rounded-lg shadow-lg p-12 text-center">
-        <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-8">
+        <div className="inline-flex items-center justify-center w-20 h-20 bg-cream rounded-full mb-8">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -75,7 +75,7 @@ function ThankYou() {
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="lucide lucide-circle-check-big h-10 w-10 text-green-600"
+            class="lucide lucide-circle-check-big h-10 w-10 text-primary"
             data-replit-metadata="client/src/pages/ThankYou.tsx:50:12"
             data-component-name="CheckCircle"
           >

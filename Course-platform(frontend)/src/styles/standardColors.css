@@ -1,0 +1,59 @@
+/* 
+  standardColors.css
+  This file defines the standard color scheme for the entire application.
+  Import this file in your components to ensure color consistency.
+*/
+
+/* Text Colors */
+.text-standard {
+  color: #393128;
+}
+
+.text-error {
+  color: #B45B29;
+}
+
+.text-muted {
+  color: #8B8B8B;
+}
+
+/* Background Colors */
+.bg-standard {
+  background-color: #ECEBE8; /* cream */
+}
+
+.bg-highlight {
+  background-color: #B45B29; /* primary */
+}
+
+.bg-highlight-light {
+  background-color: #D97E4F; /* primary-light */
+}
+
+.bg-highlight-dark {
+  background-color: #8B3A1A; /* primary-dark */
+}
+
+.bg-error {
+  background-color: #ECEBE8;
+  border-color: #B45B29;
+}
+
+.bg-success {
+  background-color: #ECEBE8;
+  border-color: #B45B29;
+}
+
+/* Border Colors */
+.border-standard {
+  border-color: #B45B29;
+}
+
+/* Replace all these colors in your application:
+   - Use text-standard instead of text-gray-700, text-gray-800, etc.
+   - Use text-error instead of text-red-600, text-red-700, etc.
+   - Use bg-standard instead of bg-cream
+   - Use bg-highlight instead of bg-primary
+   - Use bg-error instead of bg-red-100, bg-red-200, etc.
+   - Use bg-success instead of bg-green-100, bg-green-200, etc.
+*/

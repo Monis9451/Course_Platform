@@ -16,6 +16,7 @@ import MentalHealth from './pages/MentalHealth';
 import PrivacyStatement from './pages/PrivacyStatement'
 import Disclaimer from './pages/Disclaimer';
 import Error from './pages/404';
+import './styles/standardColors.css'
 
 const App = () => {
   return (
