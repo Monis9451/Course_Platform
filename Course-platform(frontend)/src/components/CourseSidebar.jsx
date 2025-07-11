@@ -48,8 +48,134 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
     })
   }
 
+  // Helper function to determine icon type based on lesson data
+  const getLessonIconType = (lesson, moduleIndex, lessonIndex) => {
+    // Debug logs
+    console.log(`Getting icon type for lesson: ${lesson.title}`);
+    console.log(`Module Index: ${moduleIndex}, Lesson Index: ${lessonIndex}`);
+    
+    // Special case for Module 6 first lesson
+    if (moduleIndex === 5 && lessonIndex === 0) {
+      console.log('Setting icon to PAGE for first lesson of Module 6');
+      return 'page';
+    }
+    
+    // First check if lesson has an explicit icon type property
+    if (lesson.iconType) {
+      console.log(`Using explicit icon type: ${lesson.iconType}`);
+      return lesson.iconType;
+    }
+    
+    // Determine icon based on the lesson title keywords
+    const title = lesson.title ? lesson.title.toLowerCase() : '';
+    
+    // Special cases based on exact title matches
+    if (moduleIndex === 5 && title === "creating your ongoing healing practice") {
+      console.log('Special case for Module 6 Lesson 1 based on title');
+      return 'page';
+    }
+    
+    // Regular keyword matching
+    if (title.includes('exercise') || 
+        (title.includes('practice') && !title.includes('creating your ongoing healing practice')) || 
+        title.includes('checklist')) {
+      console.log(`Title-based icon: checkbox for "${title}"`);
+      return 'checkbox';
+    } else if (title.includes('audio') || title.includes('listen') || title.includes('podcast')) {
+      console.log(`Title-based icon: speaker for "${title}"`);
+      return 'speaker';
+    }
+    
+    // If no match by title, use the pattern from previous implementation
+    if (moduleIndex === 0) {
+      if (lessonIndex <= 3) return 'page';
+      if (lessonIndex >= 4 && lessonIndex <= 6) return 'checkbox';
+      if (lessonIndex === 7) return 'speaker';
+    } else if ( moduleIndex === 1) {
+      if (lessonIndex <= 2) return 'page';
+      if (lessonIndex === 3 || lessonIndex === 6) return 'speaker';
+      if (lessonIndex >= 4 && lessonIndex <= 5 ) return 'checkbox';
+    } else if ( moduleIndex === 2) {
+      if (lessonIndex <= 2) return 'page';
+      if (lessonIndex === 3 || lessonIndex === 7) return 'speaker';
+      if (lessonIndex >= 4 && lessonIndex <= 6) return 'checkbox';
+    } else if ( moduleIndex === 3) {
+      if (lessonIndex <= 2) return 'page';
+      if (lessonIndex <= 5) return 'checkbox';
+      if (lessonIndex === 6) return 'speaker';
+    } else if ( moduleIndex === 4) {
+      if (lessonIndex <= 2) return 'page';
+      if (lessonIndex <= 5) return 'checkbox';
+      if (lessonIndex === 6) return 'speaker';
+    } else if ( moduleIndex === 5) {
+      // Already handled the first lesson at the top of the function
+      if (lessonIndex >= 1 && lessonIndex <= 2) {
+        console.log(`Setting icon to PAGE for lesson ${lessonIndex+1} of Module 6`);
+        return 'page';
+      }
+      if (lessonIndex >= 3 && lessonIndex <= 5) {
+        console.log(`Setting icon to CHECKBOX for lesson ${lessonIndex+1} of Module 6`);
+        return 'checkbox';
+      }
+    }
+    
+    // Default icon is document/page
+    console.log('Using default icon: page');
+    return 'page';
+  }
+
+  // Helper function to render the appropriate icon
+  const renderLessonIcon = (iconType, isSelected) => {
+    switch (iconType) {
+      case 'checkbox':
+        return (
+          <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+            isSelected ? 'bg-white' : 'bg-yellow-500'
+          }`}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`w-4 h-4 ${
+              isSelected ? 'text-yellow-500' : 'text-white'
+            }`}>
+              <path d="M20 6 9 17l-5-5"></path>
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            </svg>
+          </div>
+        );
+      case 'speaker':
+        return (
+          <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+            isSelected ? 'bg-white' : 'bg-primary'
+          }`}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`w-4 h-4 ${
+              isSelected ? 'text-primary' : 'text-white'
+            }`}>
+              <path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"></path>
+              <path d="M16 9a5 5 0 0 1 0 6"></path>
+              <path d="M19.364 18.364a9 9 0 0 0 0-12.728"></path>
+            </svg>
+          </div>
+        );
+      case 'page':
+      default:
+        return (
+          <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+            isSelected ? 'bg-white' : 'bg-primary'
+          }`}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`w-4 h-4 ${
+              isSelected ? 'text-primary' : 'text-white'
+            }`}>
+              <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+              <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+              <path d="M10 9H8"></path>
+              <path d="M16 13H8"></path>
+              <path d="M16 17H8"></path>
+            </svg>
+          </div>
+        );
+    }
+  }
+
   return (
-    <div className="w-80 bg-white h-screen overflow-y-auto border-r border-gray-200">
+    <div className="w-80 bg-white h-screen overflow-y-auto border-r border-gray-200 ">
       {/* Progress Section */}
       <div className="p-4 border-b border-gray-200">
         <div className="text-sm font-semibold text-gray-600 mb-1">Course Content</div>
@@ -144,82 +270,8 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
 
                     {/* Lesson Icon */}
                     <div className="mr-3 ml-12">
-                      {lessonIndex === 0 ? (
-                        <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                          selectedLesson?.moduleIndex === moduleIndex && 
-                          selectedLesson?.lessonIndex === lessonIndex
-                            ? 'bg-white'
-                            : 'bg-primary'
-                        }`}>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`w-4 h-4 ${
-                            selectedLesson?.moduleIndex === moduleIndex && 
-                            selectedLesson?.lessonIndex === lessonIndex
-                              ? 'text-primary'
-                              : 'text-white'
-                          }`}>
-                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
-                            <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
-                            <path d="M10 9H8"></path>
-                            <path d="M16 13H8"></path>
-                            <path d="M16 17H8"></path>
-                          </svg>
-                        </div>
-                      ) : lessonIndex % 3 === 1 ? (
-                        <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                          selectedLesson?.moduleIndex === moduleIndex && 
-                          selectedLesson?.lessonIndex === lessonIndex
-                            ? 'bg-white'
-                            : 'bg-yellow-500'
-                        }`}>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`w-4 h-4 ${
-                            selectedLesson?.moduleIndex === moduleIndex && 
-                            selectedLesson?.lessonIndex === lessonIndex
-                              ? 'text-yellow-500'
-                              : 'text-white'
-                          }`}>
-                            <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                            <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path>
-                          </svg>
-                        </div>
-                      ) : lessonIndex % 3 === 2 ? (
-                        <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                          selectedLesson?.moduleIndex === moduleIndex && 
-                          selectedLesson?.lessonIndex === lessonIndex
-                            ? 'bg-white'
-                            : 'bg-yellow-600'
-                        }`}>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`w-4 h-4 ${
-                            selectedLesson?.moduleIndex === moduleIndex && 
-                            selectedLesson?.lessonIndex === lessonIndex
-                              ? 'text-yellow-600'
-                              : 'text-white'
-                          }`}>
-                            <path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"></path>
-                            <path d="M16 9a5 5 0 0 1 0 6"></path>
-                            <path d="M19.364 18.364a9 9 0 0 0 0-12.728"></path>
-                          </svg>
-                        </div>
-                      ) : (
-                        <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                          selectedLesson?.moduleIndex === moduleIndex && 
-                          selectedLesson?.lessonIndex === lessonIndex
-                            ? 'bg-white'
-                            : 'bg-primary'
-                        }`}>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`w-4 h-4 ${
-                            selectedLesson?.moduleIndex === moduleIndex && 
-                            selectedLesson?.lessonIndex === lessonIndex
-                              ? 'text-primary'
-                              : 'text-white'
-                          }`}>
-                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
-                            <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
-                            <path d="M10 9H8"></path>
-                            <path d="M16 13H8"></path>
-                            <path d="M16 17H8"></path>
-                          </svg>
-                        </div>
-                      )}
+                      {/* Determine the icon type for the lesson */}
+                      {renderLessonIcon(getLessonIconType(lesson, moduleIndex, lessonIndex), selectedLesson?.moduleIndex === moduleIndex && selectedLesson?.lessonIndex === lessonIndex)}
                     </div>
 
                     {/* Lesson Info */}
