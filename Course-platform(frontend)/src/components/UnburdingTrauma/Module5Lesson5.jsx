@@ -3,8 +3,8 @@ import React from 'react'
 const Module5Lesson5 = () => {
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold text-black mb-6">Drawing Your Emotions</h1>
-      
+      <h1 className="text-2xl font-bold text-black mb-6">DRAWING YOUR EMOTIONS</h1>
+
       <div className="prose max-w-none">
         <p className="text-lg leading-relaxed mb-6">
           Welcome to this creative and liberating lesson on visual expression for emotional release. Today, we explore how drawing and other visual arts can become powerful tools for processing emotions that words cannot fully capture.

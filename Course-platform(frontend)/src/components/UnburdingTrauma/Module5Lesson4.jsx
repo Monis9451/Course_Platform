@@ -3,8 +3,8 @@ import React from 'react'
 const Module5Lesson4 = () => {
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold text-black mb-6">Writing to Release</h1>
-      
+      <h1 className="text-2xl font-bold text-black mb-6">WRITING TO RELEASE</h1>
+
       <div className="prose max-w-none">
         <p className="text-lg leading-relaxed mb-6">
           Welcome to this powerful lesson on using writing as a tool for emotional release. Today, we explore how the simple act of putting pen to paper can become a transformative practice for healing and liberation.

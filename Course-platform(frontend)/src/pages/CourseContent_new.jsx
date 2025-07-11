@@ -75,7 +75,7 @@ const CourseContent_new = () => {
   
   // Course data with all modules and lessons
   const courseData = {
-    title: "Understanding Trauma: A 6-Week Self Paced Programme",
+    title: "Unburdening Trauma: A 6-Week Self Paced Programme",
     description: "Why We Get Stuck in Pain – and How Awareness Sets Us Free",
     modules: [
       {

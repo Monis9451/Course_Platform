@@ -5,7 +5,7 @@ const Module5Lesson7 = () => {
     <div className="p-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-2xl font-bold text-black mb-8">
-          Guided Release Meditation
+          GUIDED RELEASE MEDITATION
         </h1>
 
         {/* Introduction */}

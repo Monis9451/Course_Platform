@@ -33,7 +33,7 @@ const dummyCoursesData = {
     modules: [
       {
         id: 1,
-        title: "Understanding Trauma & the Body",
+        title: "Unburdening Trauma & the Body",
         description: "Why We Get Stuck in Pain – and How Awareness Sets Us Free"
       },
       {
@@ -278,7 +278,7 @@ const dummyCoursesData = {
     modules: [
       {
         id: 1,
-        title: "Understanding Trauma & the Body",
+        title: "Unburdening Trauma & the Body",
         description: "Why We Get Stuck in Pain – and How Awareness Sets Us Free"
       },
       {
