@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import CourseSidebar from '../components/CourseSidebar'
+import WorkshopSidebar from '../components/CourseSidebar'
 
 // Import Marcellus font for this page only
 const fontStyle = `
@@ -73,9 +73,9 @@ const CourseContent_new = () => {
   // Reference to the lesson content container
   const lessonContentRef = useRef(null)
   
-  // Course data with all modules and lessons
+  // Workshop data with all modules and lessons
   const courseData = {
-    title: "Unburdening Trauma: A 6-Week Self Paced Programme",
+    title: "Unburdening Trauma: A 6-Week Self Paced Workshop",
     description: "Why We Get Stuck in Pain – and How Awareness Sets Us Free",
     modules: [
       {
@@ -370,7 +370,7 @@ const CourseContent_new = () => {
         <div className="flex flex-1 overflow-hidden">
           {/* Sidebar */}
           <div className="sidebar-container h-full" style={{ minHeight: "calc(100vh - 120px)" }}>
-            <CourseSidebar 
+            <WorkshopSidebar 
               courseData={courseData}
               selectedLesson={selectedLesson}
               onLessonSelect={handleLessonSelect}

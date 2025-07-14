@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLessons, setCompletedLessons, lessonProgress }) => {
+const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSelect, completedLessons, setCompletedLessons, lessonProgress }) => {
   // Use completedLessons from props or fallback to empty set
   const currentCompletedLessons = completedLessons || new Set([])
   const updateCompletedLessons = setCompletedLessons || (() => {})
@@ -8,7 +8,7 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
   const currentLessonProgress = lessonProgress || {}
   
   // Calculate total lessons
-  const totalLessons = courseData.modules.reduce((total, module) => total + module.lessons.length, 0)
+  const totalLessons = workshopData.modules.reduce((total, module) => total + module.lessons.length, 0)
   
   // Calculate progress percentage - consider both completed lessons and partial progress
   const calculateOverallProgress = () => {
@@ -162,7 +162,7 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
     <div className="w-80 bg-white max-h-screen h-full overflow-y-auto border-r border-gray-200" style={{ paddingBottom: "60px" }}>
       {/* Progress Section */}
       <div className="p-4 border-b border-gray-200">
-        <div className="text-sm font-semibold text-gray-600 mb-1">Course Content</div>
+        <div className="text-sm font-semibold text-gray-600 mb-1">Workshop Content</div>
         <div className="text-xl font-bold text-primary mb-1">{progressPercentage}% COMPLETE</div>
         <div className="w-full bg-gray-200 rounded-full h-2">
           <div 
@@ -174,7 +174,7 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
 
       {/* Content List */}
       <div className="py-4">
-        {courseData.modules.map((module, moduleIndex) => (
+        {workshopData.modules.map((module, moduleIndex) => (
           <div key={moduleIndex} className="mb-4">
             {/* Module Title */}
             <div className="px-4 mb-3">
@@ -280,4 +280,4 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
   )
 }
 
-export default CourseSidebar
+export default WorkshopSidebar

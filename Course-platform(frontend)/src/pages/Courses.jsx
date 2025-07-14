@@ -9,25 +9,25 @@ const Courses = () => {
     {
       id: 1,
       title: "Unburdening Trauma",
-      description: "A 6-Week Self-Paced Programme - Break Emotional Cycles, Reclaim Peace & Rewire Your Response to Pain. Transform your life from within in just 6 weeks.",
+      description: "A 6-Week Self-Paced Workshop - Break Emotional Cycles, Reclaim Peace & Rewire Your Response to Pain. Transform your life from within in just 6 weeks.",
       img_src: "/1.png",
-      img_alt: "Unburdening Trauma Course",
-      category: "COURSE"
+      img_alt: "Unburdening Trauma Workshop",
+      category: "WORKSHOP"
     },
     {
       id: 2,
       title: "Unburdening Love",
-      description: "A 6-Week Self-Paced Course - Break Free from Relationship Blocks and Cultivate Healthy Love. Transform your relationships in just 6 weeks.",
+      description: "A 6-Week Self-Paced Workshop - Break Free from Relationship Blocks and Cultivate Healthy Love. Transform your relationships in just 6 weeks.",
       img_src: "/love_course.png",
-      img_alt: "Unburdening Love Course",
-      category: "COURSE"
+      img_alt: "Unburdening Love Workshop",
+      category: "WORKSHOP"
     },
     {
       id: 3,
       title: "Bundle",
-      description: "Complete Bundle: Unburdening Trauma + Unburdening Love. Get both transformative courses together and save money. Complete access to trauma healing and relationship transformation programs.",
+      description: "Complete Bundle: Unburdening Trauma + Unburdening Love. Get both transformative workshops together and save money. Complete access to trauma healing and relationship transformation programs.",
       img_src: "/3.png",
-      img_alt: "Course Bundle",
+      img_alt: "Workshop Bundle",
       category: "BUNDLE"
     },
   ]
@@ -46,7 +46,7 @@ const Courses = () => {
         {/* Hero section */}
       <section className="bg-cream py-20">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-fitzgerald text-center text-black mb-6">Our Courses</h1>
+          <h1 className="text-4xl md:text-5xl font-fitzgerald text-center text-black mb-6">Our Workshops</h1>
           <p className="text-xl font-fitzgerald text-center text-black max-w-3xl mx-auto mb-10">
             Transform your life with our professionally crafted self-paced courses designed to help you heal, grow, and thrive.
           </p>
