@@ -5,6 +5,26 @@ const Module3Lesson4 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">MEET YOUR INNER CHILD</h1>
       
+      <div className="mb-8">
+        <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
+        
+        <div className="bg-black p-1 rounded-md">
+          <button className="flex items-center w-full px-4 py-3 bg-black text-white hover:bg-gray-900 rounded-md">
+            <span className="flex-shrink-0 mr-3">▶</span>
+            <span className="text-sm">Listen to Inner Child Connection [18 mins].mp3</span>
+          </button>
+        </div>
+      </div>
+
+      <div className="mb-8">
+        <h2 className="font-semibold text-lg mb-3">JOURNAL</h2>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>What age did you connect with your inner child?</li>
+          <li>What did your inner child need from you most?</li>
+          <li>How can you continue this relationship in daily life?</li>
+        </ul>
+      </div>
+      
       <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
         <p className="mb-4">This guided audio meditation creates a safe, nurturing space for you to connect with your inner child. Through gentle visualisation and compassionate dialogue, you'll begin building a relationship with this vulnerable part of yourself.</p>
         

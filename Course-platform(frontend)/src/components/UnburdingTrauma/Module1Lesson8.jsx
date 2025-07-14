@@ -7,6 +7,26 @@ const Module1Lesson8 = () => {
         GUIDED VISUALISATION - GROUNDING & NERVOUS SYSTEM REGULATION
       </h1>
       
+      <div className="mb-8">
+        <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
+        
+        <div className="bg-black p-1 rounded-md">
+          <button className="flex items-center w-full px-4 py-3 bg-black text-white hover:bg-gray-900 rounded-md">
+            <span className="flex-shrink-0 mr-3">▶</span>
+            <span className="text-sm">Listen to Grounding Visualization [18 mins].mp3</span>
+          </button>
+        </div>
+      </div>
+
+      <div className="mb-8">
+        <h2 className="font-semibold text-lg mb-3">JOURNAL</h2>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>Did you have any Expander relationships?</li>
+          <li>Did any unworthiness come up as to why you couldn't have the same relationship as your Expanders?</li>
+          <li>Where do you think you need more Expanders?</li>
+        </ul>
+      </div>
+      
       <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
         <h3 className="font-semibold mb-3 text-[#bd6334]">What is Grounding?</h3>
         <p className="mb-4">Grounding is a powerful technique that helps you reconnect to the present moment—particularly helpful when you're feeling anxious, disconnected, or overwhelmed. It's about gently anchoring back into your body and your current environment, using your senses and breath.</p>

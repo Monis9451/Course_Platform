@@ -5,6 +5,26 @@ const Module2Lesson4 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">SAFE SPACE VISUALIZATION</h1>
       
+      <div className="mb-8">
+        <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
+        
+        <div className="bg-black p-1 rounded-md">
+          <button className="flex items-center w-full px-4 py-3 bg-black text-white hover:bg-gray-900 rounded-md">
+            <span className="flex-shrink-0 mr-3">▶</span>
+            <span className="text-sm">Listen to Safe Space Visualization [18 mins].mp3</span>
+          </button>
+        </div>
+      </div>
+
+      <div className="mb-8">
+        <h2 className="font-semibold text-lg mb-3">JOURNAL</h2>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>What details did you include in your safe space?</li>
+          <li>Did you encounter any resistance when trying to visualize safety?</li>
+          <li>How did your body feel during and after the visualization?</li>
+        </ul>
+      </div>
+      
       <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
         <p className="mb-4">Creating a mental safe space gives your nervous system a powerful way to experience safety, even when your external environment feels threatening or overwhelming.</p>
         
