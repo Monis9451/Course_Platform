@@ -175,9 +175,19 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
       {/* Content List */}
       <div className="py-4">
         {workshopData.modules.map((module, moduleIndex) => (
-          <div key={moduleIndex} className="mb-4">
-            {/* Module Title */}
-            <div className="px-4 mb-3">
+          <div key={moduleIndex} className="mb-4 relative">
+            {/* Connection line between modules (only for modules after the first one) */}
+            {moduleIndex !== 0 && (
+              <div className="absolute left-14 w-px bg-gray-300" style={{ 
+                top: "-8px", 
+                bottom: "100%",
+                height: "8px",
+                zIndex: 5
+              }}></div>
+            )}
+            
+            {/* Module Title - with light gray background */}
+            <div className="px-4 py-3 mb-1 bg-gray-100">
               <h3 className="font-bold text-gray-900 text-sm">
                 {module.title}
               </h3>
@@ -185,9 +195,16 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
             </div>
 
             {/* Module Lessons */}
-            <div className="ml-6">
+            <div className="relative">
+              {/* Vertical line for lessons - only appears within the lessons container */}
+              <div className="absolute left-14 w-px bg-gray-300" style={{ 
+                top: "0",
+                bottom: "0",
+                zIndex: 1 /* Lower z-index so it appears behind lesson content but still visible */
+              }}></div>
+              
               {module.lessons.map((lesson, lessonIndex) => (
-                <div key={lessonIndex} className="relative">
+                <div key={lessonIndex} className="relative border-b border-gray-100 last:border-b-0">
                   <button
                     onClick={() => onLessonSelect(moduleIndex, lessonIndex)}
                     className={`w-full text-left px-4 py-3 transition-colors duration-200 flex items-center hover:bg-cream ${
@@ -198,7 +215,7 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
                     }`}
                   >
                     {/* Status Circle - positioned with some left spacing */}
-                    <div className="absolute left-4 flex-shrink-0">
+                    <div className="absolute left-6 flex-shrink-0 z-20">
                       {/* Completed lesson styling with double border effect */}
                       {currentCompletedLessons.has(`${moduleIndex}-${lessonIndex}`) && !(selectedLesson?.moduleIndex === moduleIndex && 
                         selectedLesson?.lessonIndex === lessonIndex) && (
@@ -253,7 +270,7 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
                     </div>
 
                     {/* Lesson Icon */}
-                    <div className="mr-3 ml-12">
+                    <div className="mr-3 ml-14">
                       {/* Determine the icon type for the lesson */}
                       {renderLessonIcon(getLessonIconType(lesson, moduleIndex, lessonIndex), selectedLesson?.moduleIndex === moduleIndex && selectedLesson?.lessonIndex === lessonIndex)}
                     </div>

@@ -530,6 +530,10 @@ const CourseDetails = () => {
                   <FiClock className="mr-2" />
                   {course.duration}
                 </span>
+                <span className="flex items-center text-warm-gray text-base font-fitzgerald">
+                  <FaHeadphones className="mr-2" />
+                  Audio Content
+                </span>
                 {/* <span className="flex items-center text-warm-gray text-base font-fitzgerald">
                   <FaPencilAlt className="mr-2" />
                   Workbooks
@@ -551,8 +555,12 @@ const CourseDetails = () => {
                     Lifetime Access
                   </li>
                   <li className="flex items-center text-black font-fitzgerald">
+                    <FiVideo className="text-primary mr-2" />
+                    {course.id === 1 ? "8 Guided Meditations and Visualisations" : `${course.lessons} Guided Lessons`}
+                  </li>
+                  <li className="flex items-center text-black font-fitzgerald">
                     <FaHeadphones className="text-primary mr-2" />
-                    {course.id === 1 ? "8" : `${course.lessons}`} Audio Meditations
+                    Audio Meditations
                   </li>
                   <li className="flex items-center text-black font-fitzgerald">
                     <FiDownload className="text-primary mr-2" />
