@@ -114,10 +114,10 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
       case 'checkbox':
         return (
           <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-            isSelected ? 'bg-white' : 'bg-yellow-500'
+            isSelected ? 'bg-white' : 'bg-black'
           }`}>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`w-4 h-4 ${
-              isSelected ? 'text-yellow-500' : 'text-white'
+              isSelected ? 'text-black' : 'text-white'
             }`}>
               <path d="M20 6 9 17l-5-5"></path>
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
@@ -127,10 +127,10 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
       case 'speaker':
         return (
           <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-            isSelected ? 'bg-white' : 'bg-primary'
+            isSelected ? 'bg-white' : 'bg-black'
           }`}>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`w-4 h-4 ${
-              isSelected ? 'text-primary' : 'text-white'
+              isSelected ? 'text-black' : 'text-white'
             }`}>
               <path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"></path>
               <path d="M16 9a5 5 0 0 1 0 6"></path>
@@ -142,10 +142,10 @@ const CourseSidebar = ({ courseData, selectedLesson, onLessonSelect, completedLe
       default:
         return (
           <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-            isSelected ? 'bg-white' : 'bg-primary'
+            isSelected ? 'bg-white' : 'bg-black'
           }`}>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`w-4 h-4 ${
-              isSelected ? 'text-primary' : 'text-white'
+              isSelected ? 'text-black' : 'text-white'
             }`}>
               <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
               <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
