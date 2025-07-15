@@ -7,10 +7,7 @@ const rateLimit = require('express-rate-limit');
 const morgan = require('morgan');
 
 // Import routes
-const courseRoutes = require('./routes/courseRoutes');
-const userRoutes = require('./routes/userRoutes');
-const paymentRoutes = require('./routes/paymentRoutes');
-const progressRoutes = require('./routes/progressRoutes');
+
 
 // Load environment variables
 dotenv.config();
@@ -51,29 +48,10 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/course-pl
 .catch((err) => console.error('MongoDB connection error:', err));
 
 // API Routes
-app.use('/api/courses', courseRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/payments', paymentRoutes);
-app.use('/api/progress', progressRoutes);
 
-// Health check endpoint
-app.get('/api/health', (req, res) => {
-  res.status(200).json({
-    status: 'OK',
-    message: 'Course Platform API is running',
-    timestamp: new Date().toISOString()
-  });
-});
 
 // Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    success: false,
-    message: 'Internal server error',
-    error: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong'
-  });
-});
+
 
 // 404 handler
 app.use('*', (req, res) => {

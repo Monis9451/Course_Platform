@@ -1,17 +1,24 @@
 const admin = require('firebase-admin');
 const path = require('path');
+const fs = require('fs');
 
 // Initialize Firebase Admin SDK
 const initializeFirebase = () => {
   if (!admin.apps.length) {
-    const serviceAccount = require('./firebase-service-account.json.json');
+    const serviceAccount = require('./courseplatform.json');
     
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
       projectId: serviceAccount.project_id,
     });
     
-    console.log('Firebase Admin initialized successfully');
+    if (process.env.NODE_ENV === 'production') {
+      // In production, write to log file
+      fs.appendFileSync(path.join(__dirname, '..', 'app.log'), `${new Date().toISOString()} - Firebase Admin initialized successfully\n`);
+    } else {
+      // In development, log to console
+      console.log('Firebase Admin initialized successfully');
+    }
   }
   return admin;
 };
