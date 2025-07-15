@@ -37,7 +37,7 @@ function ContactUs() {
           {/* Page Title */}
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-light text-black mb-6">
-              The Mind Programme – Contact Us
+              The Mind Workshop – Contact Us
             </h1>
             <p className="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed mb-12">
               At The Mind Planner, we genuinely value your thoughts and feedback. Whether you have questions, suggestions, or need assistance, we 

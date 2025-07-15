@@ -74,7 +74,7 @@ const Footer = () => {
               </ul>
             </div>            {/* Right Column - About */}
             <div className="flex flex-col space-y-4 ml-10">
-              <h3 className="text-lg font-bold text-[#393128] mb-5 font-marcellus">About The Mind Programme</h3>
+              <h3 className="text-lg font-bold text-[#393128] mb-5 font-marcellus">About The Mind Workshop</h3>
               <ul className="space-y-3 text-sm">
                 <li><a href="/about" className="text-[#393128] hover:underline">About The Founder</a></li>
                 <li><a href="/support" className="text-[#393128] hover:underline">Contact Us</a></li>

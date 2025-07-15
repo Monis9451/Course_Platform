@@ -9,11 +9,11 @@ const dummyCoursesData = {
   1: {
     id: 1,
     title: "Unburdening Trauma",
-    subtitle: "A 6-Week Self-Paced Programme",
+    subtitle: "A 6-Week Self-Paced Workshop",
     description: "Break Emotional Cycles, Reclaim Peace & Rewire Your Response to Pain",
     tagline: "Transform Your Life from Within in Just 6 Weeks",
     additionalTagline: "Accessible, Expert-Led Guidance to Heal and Build Emotional Freedom",
-    fullDescription: "Are you ready to stop reliving your pain and start healing from it? Whether you're struggling with anxiety, emotional overwhelm, or feeling stuck in repeating patterns, this 6-week self-paced programme will guide you through deep emotional healing, body-based regulation, and practical tools for lasting change. Led by a trauma-informed psychologist, Unburdening Trauma is a powerful journey designed to help you reconnect with your body, release emotional baggage, and transform your inner world, so you can move forward with clarity, peace, and resilience.",
+    fullDescription: "Are you ready to stop reliving your pain and start healing from it? Whether you're struggling with anxiety, emotional overwhelm, or feeling stuck in repeating patterns, this 6-week self-paced Workshop will guide you through deep emotional healing, body-based regulation, and practical tools for lasting change. Led by a trauma-informed psychologist, Unburdening Trauma is a powerful journey designed to help you reconnect with your body, release emotional baggage, and transform your inner world, so you can move forward with clarity, peace, and resilience.",
     instructor: "Dr. Samina Khatun",
     duration: "6 weeks",
     lessons: 24,
@@ -91,7 +91,7 @@ const dummyCoursesData = {
       }
     ],
     bonuses: [
-      "Voice-Led Structured Programme: Be guided by Dr. Samina as she walks you through each module with clarity and compassion.",
+      "Voice-Led Structured Workshop: Be guided by Dr. Samina as she walks you through each module with clarity and compassion.",
       "Exclusive Meditations & Visualisations: Deepen your healing with supportive audio practices throughout the journey.",
       "Downloadable Materials: Access printable worksheets, reflection tools, and healing exercises to track your progress.",
       "Journal Prompts & Body-Based Practices: Build awareness and transformation with carefully designed, trauma-informed exercises."
@@ -100,7 +100,7 @@ const dummyCoursesData = {
       {
         id: 1,
         question: "Is there a refund policy for this Workshop?",
-        answer: "Due to the nature of the Workshop, refunds are not available. Once purchased, you'll receive immediate access to all content. This programme is built to create meaningful transformation — if you commit to it, the results will follow.",
+        answer: "Due to the nature of the Workshop, refunds are not available. Once purchased, you'll receive immediate access to all content. This Workshop is built to create meaningful transformation — if you commit to it, the results will follow.",
         icon: "💰"
       },
       {
@@ -124,7 +124,7 @@ const dummyCoursesData = {
       {
         id: 5,
         question: "Is there support available during the Workshop?",
-        answer: "Yes! You can contact Dr. Samina via email for any programme-related questions or clarification. Please note this is not a substitute for therapy. For clinical or personalised support, we recommend working with a licensed therapist.",
+        answer: "Yes! You can contact Dr. Samina via email for any Workshop-related questions or clarification. Please note this is not a substitute for therapy. For clinical or personalised support, we recommend working with a licensed therapist.",
         icon: "💬"
       }
     ]
@@ -136,7 +136,7 @@ const dummyCoursesData = {
     description: "Break Free from Relationship Blocks and Cultivate Healthy Love",
     tagline: "Transform Your Relationships in Just 6 Weeks",
     additionalTagline: "Affordable, Expert-Led Guidance to Heal and Thrive in Love",
-    fullDescription: "Are you ready to break free from the emotional blocks holding you back in love? Whether you're single, in a relationship, or navigating a marriage, this 6-week self-paced Workshop will help you release deep-seated barriers, heal past wounds, and cultivate healthy, lasting love. Led by an experienced psychologist, Unburdening Love is a transformative programme designed to help you uncover the roots of your relationship struggles and provide you with the tools to create healthier, more fulfilling connections with yourself and others.",
+    fullDescription: "Are you ready to break free from the emotional blocks holding you back in love? Whether you're single, in a relationship, or navigating a marriage, this 6-week self-paced Workshop will help you release deep-seated barriers, heal past wounds, and cultivate healthy, lasting love. Led by an experienced psychologist, Unburdening Love is a transformative Workshop designed to help you uncover the roots of your relationship struggles and provide you with the tools to create healthier, more fulfilling connections with yourself and others.",
     instructor: "Dr. Samina Khatun",
     duration: "6 weeks",
     lessons: 20,
@@ -212,7 +212,7 @@ const dummyCoursesData = {
       }
     ],
     bonuses: [
-      "Voice-Led Structured Programme: Follow a guided, step-by-step journey led by Dr. Samina to help you navigate each module with ease and clarity.",
+      "Voice-Led Structured Workshop: Follow a guided, step-by-step journey led by Dr. Samina to help you navigate each module with ease and clarity.",
       "Visualisation & Meditations: Access exclusive visualisations and meditations led by Dr. Samina to support your healing and transformation process.",
       "Downloadable Materials: Receive printable worksheets, assessment tools, and exercises to deepen your learning and track your progress throughout the Workshop.",
       "Exclusive Prompts & Exercises: Engage with thoughtfully designed exercises to help you reflect, heal, and create lasting change in your relationships."
@@ -221,7 +221,7 @@ const dummyCoursesData = {
       {
         id: 1,
         question: "Is there a refund policy for this Workshop?",
-        answer: "Due to the nature of the Workshop, refunds are not available. Once you purchase, you'll have immediate access to all the Workshop materials. We believe in the transformative power of this programme, and we're confident that if you commit to the process, you'll see lasting results.",
+        answer: "Due to the nature of the Workshop, refunds are not available. Once you purchase, you'll have immediate access to all the Workshop materials. We believe in the transformative power of this Workshop, and we're confident that if you commit to the process, you'll see lasting results.",
         icon: "💰"
       },
       {
@@ -244,8 +244,8 @@ const dummyCoursesData = {
       },
       {
         id: 5,
-        question: "Is there support throughout the programme?",
-        answer: "Yes! You'll have access to me via email to ask any programme-related questions, seek clarification, or get additional support as you work through the material. Please note that I am available for programme-related inquiries only. For any personal therapeutic needs or general psychological support, I recommend reaching out to a licensed therapist.",
+        question: "Is there support throughout the Workshop?",
+        answer: "Yes! You'll have access to me via email to ask any Workshop-related questions, seek clarification, or get additional support as you work through the material. Please note that I am available for Workshop-related inquiries only. For any personal therapeutic needs or general psychological support, I recommend reaching out to a licensed therapist.",
         icon: "💬"
       }
     ]
@@ -340,7 +340,7 @@ const dummyCoursesData = {
     whyDifferent: [
       {
         title: "Complete Transformation",
-        description: "Address both trauma healing and relationship patterns in one comprehensive, integrated programme."
+        description: "Address both trauma healing and relationship patterns in one comprehensive, integrated Workshop."
       },
       {
         title: "Expert-Led",
@@ -370,12 +370,12 @@ const dummyCoursesData = {
       }
     ],
     bonuses: [
-      "Unburdening Trauma (6 Weeks): A body-based healing programme focused on emotional release, nervous system regulation, and inner child healing",
+      "Unburdening Trauma (6 Weeks): A body-based healing Workshop focused on emotional release, nervous system regulation, and inner child healing",
       "Unburdening Love (6 Weeks): A relationship-focused journey into attachment, boundaries, and self-worth in love",
       "12 Voice-Led Modules guided by Dr Samina",
       "Downloadable Worksheets, Tools & Prompts to support your healing",
       "Meditations & Visualisations designed to deepen emotional transformation",
-      "Email Access to Dr Samina for programme-related support"
+      "Email Access to Dr Samina for Workshop-related support"
     ],
     faqs: [
       {
@@ -405,7 +405,7 @@ const dummyCoursesData = {
       {
         id: 5,
         question: "Is support available?",
-        answer: "Yes, you'll have email access to Dr Samina for any programme-related questions or clarifications.",
+        answer: "Yes, you'll have email access to Dr Samina for any Workshop-related questions or clarifications.",
         icon: "💬"
       }
     ]
@@ -564,7 +564,7 @@ const CourseDetails = () => {
                   </li>
                   <li className="flex items-center text-black font-fitzgerald">
                     <FiDownload className="text-primary mr-2" />
-                    All Programme Materials & Resources
+                    All Workshop Materials & Resources
                   </li>
                   <li className="flex items-center text-black font-fitzgerald">
                     <FiFileText className="text-primary mr-2" />

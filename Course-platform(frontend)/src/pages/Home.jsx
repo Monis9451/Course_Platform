@@ -40,7 +40,7 @@ const Home = () => {
     },
     {
       id: 6,
-      text: 'This programme has given me the confidence to create the relationships I\'ve always wanted but never thought I deserved.',
+      text: 'This Workshop has given me the confidence to create the relationships I\'ve always wanted but never thought I deserved.',
       subtext: '"The attachment style module opened my eyes to how my childhood experiences were still controlling my adult relationships. Learning about my avoidant attachment helped me understand why I always pushed people away when they got too close. Now I have tools to stay present and connected, even when my nervous system wants to flee. My relationship with my partner has completely transformed." - Michael, T (Graphic Designer)',
       rating: 5
     }
@@ -50,7 +50,7 @@ const Home = () => {
     {
       id: 1,
       question: "Can I cancel after purchasing? ",
-      answer: "Due to the nature of the programme (with immediate access to all materials), cancellations or refunds are not available once your purchase is complete. Please ensure you’re ready to begin before enrolling.",
+      answer: "Due to the nature of the Workshop (with immediate access to all materials), cancellations or refunds are not available once your purchase is complete. Please ensure you’re ready to begin before enrolling.",
       icon: "❌"
     },
     {
@@ -80,7 +80,7 @@ const Home = () => {
     {
       id: 6,
       question: "Is there support available?",
-      answer: "Yes. You’ll be able to email Dr. Samina with questions related to the programme content. Please note this is not a substitute for therapy.",
+      answer: "Yes. You’ll be able to email Dr. Samina with questions related to the Workshop content. Please note this is not a substitute for therapy.",
       icon: "⚙️"
     },
     {
@@ -128,7 +128,7 @@ const Home = () => {
     {
       id: 1,
       title: "Unburdening Trauma",
-      description: "A self-paced programme",
+      description: "A self-paced Workshop",
       img_src: "/1.png",
       img_alt: "Unburdening Trauma Workshop",
       category: "COURSE"
@@ -362,7 +362,7 @@ const Home = () => {
               {/* Description */}
               <div className="text-gray-700 mb-8 leading-relaxed h-20 overflow-hidden">
                 <div className="line-clamp-3">
-                  A 6-week self-paced programme designed to help you release trauma patterns, heal emotional wounds, and create lasting transformation...
+                  A 6-week self-paced Workshop designed to help you release trauma patterns, heal emotional wounds, and create lasting transformation...
                 </div>
               </div>
               
@@ -397,7 +397,7 @@ const Home = () => {
               {/* Description */}
               <div className="text-gray-700 mb-8 leading-relaxed h-20 overflow-hidden">
                 <div className="line-clamp-3">
-                  A 6-week self-paced programme focused on healing relationship patterns, breaking cycles of codependency, and creating healthy connections...
+                  A 6-week self-paced Workshop focused on healing relationship patterns, breaking cycles of codependency, and creating healthy connections...
                 </div>
               </div>
               
