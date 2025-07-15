@@ -27,6 +27,13 @@ const courseSchema = new Schema({
         required: true
     },
 
+    progress: {
+        type: Number,
+        default: 0,
+        min: 0,
+        max: 100
+    },
+
     modules: [{
         type: Schema.Types.ObjectId,
         ref: 'Module'
