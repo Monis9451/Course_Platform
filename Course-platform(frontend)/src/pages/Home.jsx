@@ -321,7 +321,7 @@ const Home = () => {
         <div className="max-w-6xl mx-auto px-8">
           <div className="text-center mb-20">
             <h2 className="text-4xl font-fitzgerald font-light mb-6 text-black leading-tight tracking-tight uppercase">
-              The Mind Programmes
+              The Mind Workshop
             </h2>
             <p className="text-xl max-w-xl mx-auto text-black/80">
               Developed by Dr. Samina Khatun based on evidence-based therapeutic approaches

@@ -257,7 +257,7 @@ const dummyCoursesData = {
     description: "Heal Emotional Wounds, Reclaim Self-Worth & Create Conscious Relationships",
     tagline: "Complete Transformation in Just 12 Weeks",
     additionalTagline: "Holistic Healing Journey for Deep, Lasting Change",
-    fullDescription: "If you're carrying pain from the past that's affecting your present, whether in love, in life, or in your relationship with yourself, this bundle is for you. The Healing Bundle combines Unburdening Love and Unburdening Trauma, two deeply complementary programmes designed by trauma-informed psychologist Dr Samina. This 12-week, self-paced journey will guide you through healing emotional wounds, understanding your patterns, and building safe, loving relationships, starting with the one you have with yourself.",
+    fullDescription: "If you're carrying pain from the past that's affecting your present, whether in love, in life, or in your relationship with yourself, this bundle is for you. The Healing Bundle combines Unburdening Love and Unburdening Trauma, two deeply complementary Workshop designed by trauma-informed psychologist Dr Samina. This 12-week, self-paced journey will guide you through healing emotional wounds, understanding your patterns, and building safe, loving relationships, starting with the one you have with yourself.",
     instructor: "Dr. Samina Khatun",
     duration: "12 weeks",
     lessons: 44,
@@ -348,7 +348,7 @@ const dummyCoursesData = {
       },
       {
         title: "Exceptional Value",
-        description: "Get both programmes for less than the cost of one therapy session - normally £150 when purchased separately."
+        description: "Get both Workshop for less than the cost of one therapy session - normally £150 when purchased separately."
       },
       {
         title: "Self-Paced",
@@ -356,7 +356,7 @@ const dummyCoursesData = {
       },
       {
         title: "Holistic Approach",
-        description: "Combining both programmes offers a complete path to healing that addresses emotional pain at the root, then helps you build healthier connections."
+        description: "Combining both Workshop offers a complete path to healing that addresses emotional pain at the root, then helps you build healthier connections."
       }
     ],
     testimonials: [
@@ -399,7 +399,7 @@ const dummyCoursesData = {
       {
         id: 4,
         question: "Is there a refund policy?",
-        answer: "Due to the digital nature of the programmes, refunds are not available. You'll have immediate, permanent access to all content upon purchase.",
+        answer: "Due to the digital nature of the Workshop, refunds are not available. You'll have immediate, permanent access to all content upon purchase.",
         icon: "💰"
       },
       {
