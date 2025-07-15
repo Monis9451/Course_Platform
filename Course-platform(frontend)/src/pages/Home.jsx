@@ -22,7 +22,7 @@ const Home = () => {
     },
     {
       id: 3,
-      text: 'This course has completely transformed my relationship with myself and others. The tools and techniques are practical and powerful.',
+      text: 'This Workshop has completely transformed my relationship with myself and others. The tools and techniques are practical and powerful.',
       subtext: '"After struggling with anxiety and self-doubt for years, I finally found the breakthrough I needed. The modules on trauma healing opened my eyes to patterns I didn\'t even realize I had. Each lesson built upon the last, creating a comprehensive healing journey that felt both gentle and transformative. I\'m now able to set boundaries, communicate my needs, and feel genuinely confident in who I am." - Sarah, K (Marketing Manager)',
       rating: 5
     },
@@ -35,7 +35,7 @@ const Home = () => {
     {
       id: 5,
       text: 'After years of therapy, this was the breakthrough I needed. The results speak for themselves - my life is completely different now.',
-      subtext: '"I\'ve been in therapy for years, but this course gave me practical tools I could use immediately. The way Dr. Samina explains complex psychological concepts in simple terms made everything click. I finally understood why I kept repeating the same patterns and learned how to break free. The inner child work was particularly powerful - I feel like I\'ve reclaimed parts of myself I lost long ago." - Rachel, M (Teacher)',
+      subtext: '"I\'ve been in therapy for years, but this Workshop gave me practical tools I could use immediately. The way Dr. Samina explains complex psychological concepts in simple terms made everything click. I finally understood why I kept repeating the same patterns and learned how to break free. The inner child work was particularly powerful - I feel like I\'ve reclaimed parts of myself I lost long ago." - Rachel, M (Teacher)',
       rating: 5
     },
     {
@@ -130,7 +130,7 @@ const Home = () => {
       title: "Unburdening Trauma",
       description: "A self-paced programme",
       img_src: "/1.png",
-      img_alt: "Unburdening Trauma Course",
+      img_alt: "Unburdening Trauma Workshop",
       category: "COURSE"
     },
     {
@@ -138,7 +138,7 @@ const Home = () => {
       title: "Unburdening Love",
       description: "A comprehensive guide",
       img_src: "/love_course.png",
-      img_alt: "Unburdening Love Course",
+      img_alt: "Unburdening Love Workshop",
       category: "COURSE"
     },
     {
@@ -146,7 +146,7 @@ const Home = () => {
       title: "Unburdening Love + Trauma Bundle",
       description: "The 12-Week Self-Paced Healing Bundle",
       img_src: "/3.png",
-      img_alt: "Course Bundle",
+      img_alt: "Workshop Bundle",
       category: "BUNDLE"
     }
   ];
@@ -189,7 +189,7 @@ const Home = () => {
               <div className="relative">
                 <img 
                   src="/hero-img.png" 
-                  alt="Course Platform" 
+                  alt="Workshop Platform" 
                   className="w-96 h-auto object-contain transform scale-125"
                 />
               </div>

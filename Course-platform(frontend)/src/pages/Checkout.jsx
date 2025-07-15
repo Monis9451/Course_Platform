@@ -8,29 +8,29 @@ import Header from "../pages/Header";
 const courseData = {
   1: {
     id: 1,
-    title: "Unburdening Trauma: A 6-Week Self-Paced Course",
+    title: "Unburdening Trauma: A 6-Week Self-Paced Workshop",
     description: "A transformative journey to heal past wounds and create lasting change",
     duration: "6 weeks",
     price: 75,
     originalPrice: 120,
     image: "/1.png",
     benefits: [
-      "Lifetime Access to Course",
-      "All Course Materials & Resources",
+      "Lifetime Access to Workshop",
+      "All Workshop Materials & Resources",
       "Email Support from Dr. Samina",
     ]
   },
   2: {
     id: 2,
-    title: "Unburdening Love: A 6-Week Self-Paced Course",
+    title: "Unburdening Love: A 6-Week Self-Paced Workshop",
     description: "Break free from relationship blocks and cultivate healthy love",
     duration: "6 weeks",
     price: 75,
     originalPrice: 120,
     image: "/love_course.png",
     benefits: [
-      "Lifetime Access to Course",
-      "All Course Materials & Resources",
+      "Lifetime Access to Workshop",
+      "All Workshop Materials & Resources",
       "Email Support from Dr. Samina",
     ]
   },
@@ -44,7 +44,7 @@ const courseData = {
     image: "/3.png",
     benefits: [
       "Lifetime Access to Both Courses",
-      "All Course Materials & Resources",
+      "All Workshop Materials & Resources",
       "Email Support from Dr. Samina",
     ]
   }
@@ -71,7 +71,7 @@ function Checkout() {
               Course Not Found
             </h1>
             <p className="text-gray-700 text-lg sm:text-xl">
-              The course you're looking for doesn't exist.
+              The Workshop you're looking for doesn't exist.
             </p>
             <Link to="/" className="mt-4 bg-[#B45B29] text-white px-6 py-3 rounded">
               Return to Homepage
@@ -100,14 +100,14 @@ function Checkout() {
           {/* Left Section */}
           <div className="bg-white p-6 sm:p-8 rounded-md flex flex-col">
             <h1 className="text-black text-2xl sm:text-3xl font-bold mb-4">
-              Your Course
+              Your Workshop
             </h1>
 
-            {/* Course Row */}
+            {/* Workshop Row */}
             <div className="grid grid-cols-[80px_1fr] sm:grid-cols-[100px_1fr_40px] gap-3 mt-4">
               <img
                 src={course.image}
-                alt="Course"
+                alt="Workshop"
                 className="w-full h-full object-contain bg-gray-300 rounded-md"
               />
 

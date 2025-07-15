@@ -21,7 +21,7 @@ const dummyCoursesData = {
     price: 75,
     featured: true,
     img_src: "/1.png",
-    img_alt: "Unburdening Trauma Course",
+    img_alt: "Unburdening Trauma Workshop",
     benefits: [
       "Understand Trauma in the Body: Learn why trauma gets stored and how to gently release it through body-based awareness.",
       "Reclaim Inner Safety: Cultivate a felt sense of safety, presence, and connection within yourself.",
@@ -77,12 +77,12 @@ const dummyCoursesData = {
       },
       {
         title: "Personal Support",
-        description: "Reach out via email for guidance and support throughout the course."
+        description: "Reach out via email for guidance and support throughout the Workshop."
       }
     ],
     testimonials: [
       {
-        text: "I didn't realise how disconnected I was from my body until this course. It taught me how to feel again — safely.",
+        text: "I didn't realise how disconnected I was from my body until this Workshop. It taught me how to feel again — safely.",
         author: "Leah T."
       },
       {
@@ -99,20 +99,20 @@ const dummyCoursesData = {
     faqs: [
       {
         id: 1,
-        question: "Is there a refund policy for this course?",
-        answer: "Due to the nature of the course, refunds are not available. Once purchased, you'll receive immediate access to all content. This programme is built to create meaningful transformation — if you commit to it, the results will follow.",
+        question: "Is there a refund policy for this Workshop?",
+        answer: "Due to the nature of the Workshop, refunds are not available. Once purchased, you'll receive immediate access to all content. This programme is built to create meaningful transformation — if you commit to it, the results will follow.",
         icon: "💰"
       },
       {
         id: 2,
-        question: "Do I need to be in therapy to take this course?",
-        answer: "Not at all. This course is designed for anyone seeking to process and heal trauma. It can also complement your work in therapy if you're currently seeing a professional.",
+        question: "Do I need to be in therapy to take this Workshop?",
+        answer: "Not at all. This Workshop is designed for anyone seeking to process and heal trauma. It can also complement your work in therapy if you're currently seeing a professional.",
         icon: "🧠"
       },
       {
         id: 3,
-        question: "Is this course suitable for people with no prior healing experience?",
-        answer: "Yes. Whether you're just beginning your healing journey or have done work before, this course provides accessible yet powerful tools for all levels.",
+        question: "Is this Workshop suitable for people with no prior healing experience?",
+        answer: "Yes. Whether you're just beginning your healing journey or have done work before, this Workshop provides accessible yet powerful tools for all levels.",
         icon: "🌱"
       },
       {
@@ -123,7 +123,7 @@ const dummyCoursesData = {
       },
       {
         id: 5,
-        question: "Is there support available during the course?",
+        question: "Is there support available during the Workshop?",
         answer: "Yes! You can contact Dr. Samina via email for any programme-related questions or clarification. Please note this is not a substitute for therapy. For clinical or personalised support, we recommend working with a licensed therapist.",
         icon: "💬"
       }
@@ -132,11 +132,11 @@ const dummyCoursesData = {
   2: {
     id: 2,
     title: "Unburdening Love",
-    subtitle: "A 6-Week Self-Paced Course",
+    subtitle: "A 6-Week Self-Paced Workshop",
     description: "Break Free from Relationship Blocks and Cultivate Healthy Love",
     tagline: "Transform Your Relationships in Just 6 Weeks",
     additionalTagline: "Affordable, Expert-Led Guidance to Heal and Thrive in Love",
-    fullDescription: "Are you ready to break free from the emotional blocks holding you back in love? Whether you're single, in a relationship, or navigating a marriage, this 6-week self-paced course will help you release deep-seated barriers, heal past wounds, and cultivate healthy, lasting love. Led by an experienced psychologist, Unburdening Love is a transformative programme designed to help you uncover the roots of your relationship struggles and provide you with the tools to create healthier, more fulfilling connections with yourself and others.",
+    fullDescription: "Are you ready to break free from the emotional blocks holding you back in love? Whether you're single, in a relationship, or navigating a marriage, this 6-week self-paced Workshop will help you release deep-seated barriers, heal past wounds, and cultivate healthy, lasting love. Led by an experienced psychologist, Unburdening Love is a transformative programme designed to help you uncover the roots of your relationship struggles and provide you with the tools to create healthier, more fulfilling connections with yourself and others.",
     instructor: "Dr. Samina Khatun",
     duration: "6 weeks",
     lessons: 20,
@@ -144,7 +144,7 @@ const dummyCoursesData = {
     price: 75,
     featured: true,
     img_src: "/love_course.png",
-    img_alt: "Unburdening Love Course",
+    img_alt: "Unburdening Love Workshop",
     benefits: [
       "Release Deep-Seated Love Blocks: Understand and heal the emotional patterns preventing you from experiencing healthy love.",
       "Heal Past Wounds: Address past hurts and traumas that continue to impact your relationships.",
@@ -186,7 +186,7 @@ const dummyCoursesData = {
     whyDifferent: [
       {
         title: "Expert-Led",
-        description: "Designed by a licensed psychologist with years of experience in relationship therapy, this course combines science-backed methods for deep healing."
+        description: "Designed by a licensed psychologist with years of experience in relationship therapy, this Workshop combines science-backed methods for deep healing."
       },
       {
         title: "Affordable",
@@ -198,12 +198,12 @@ const dummyCoursesData = {
       },
       {
         title: "Personal Support",
-        description: "Have your questions answered and get the support you need via email throughout the course."
+        description: "Have your questions answered and get the support you need via email throughout the Workshop."
       }
     ],
     testimonials: [
       {
-        text: "I had no idea how much I was carrying from my childhood and past relationships. This course helped me see it and, more importantly, let it go.",
+        text: "I had no idea how much I was carrying from my childhood and past relationships. This Workshop helped me see it and, more importantly, let it go.",
         author: "Sarah M."
       },
       {
@@ -214,32 +214,32 @@ const dummyCoursesData = {
     bonuses: [
       "Voice-Led Structured Programme: Follow a guided, step-by-step journey led by Dr. Samina to help you navigate each module with ease and clarity.",
       "Visualisation & Meditations: Access exclusive visualisations and meditations led by Dr. Samina to support your healing and transformation process.",
-      "Downloadable Materials: Receive printable worksheets, assessment tools, and exercises to deepen your learning and track your progress throughout the course.",
+      "Downloadable Materials: Receive printable worksheets, assessment tools, and exercises to deepen your learning and track your progress throughout the Workshop.",
       "Exclusive Prompts & Exercises: Engage with thoughtfully designed exercises to help you reflect, heal, and create lasting change in your relationships."
     ],
     faqs: [
       {
         id: 1,
-        question: "Is there a refund policy for this course?",
-        answer: "Due to the nature of the course, refunds are not available. Once you purchase, you'll have immediate access to all the course materials. We believe in the transformative power of this programme, and we're confident that if you commit to the process, you'll see lasting results.",
+        question: "Is there a refund policy for this Workshop?",
+        answer: "Due to the nature of the Workshop, refunds are not available. Once you purchase, you'll have immediate access to all the Workshop materials. We believe in the transformative power of this programme, and we're confident that if you commit to the process, you'll see lasting results.",
         icon: "💰"
       },
       {
         id: 2,
-        question: "Do I need to be in therapy to do this course?",
-        answer: "No, you do not need to be in therapy to take this course. It's designed for anyone looking to improve their relationships and heal emotional blocks, whether or not you're in therapy. If you're currently seeing a therapist, this course can be a great complement to that work.",
+        question: "Do I need to be in therapy to do this Workshop?",
+        answer: "No, you do not need to be in therapy to take this Workshop. It's designed for anyone looking to improve their relationships and heal emotional blocks, whether or not you're in therapy. If you're currently seeing a therapist, this Workshop can be a great complement to that work.",
         icon: "🧠"
       },
       {
         id: 3,
-        question: "Is this course for singles, people in relationships, or married couples?",
-        answer: "Yes! Whether you're single, dating, or in a committed relationship, this course is designed to help you release emotional blocks that affect how you connect with yourself and others. It's valuable for anyone looking to create stronger, healthier relationships.",
+        question: "Is this Workshop for singles, people in relationships, or married couples?",
+        answer: "Yes! Whether you're single, dating, or in a committed relationship, this Workshop is designed to help you release emotional blocks that affect how you connect with yourself and others. It's valuable for anyone looking to create stronger, healthier relationships.",
         icon: "💕"
       },
       {
         id: 4,
-        question: "How long do I have access to the course?",
-        answer: "You get lifetime access to all course materials, so you can work through the modules at your own pace whenever it fits your schedule.",
+        question: "How long do I have access to the Workshop?",
+        answer: "You get lifetime access to all Workshop materials, so you can work through the modules at your own pace whenever it fits your schedule.",
         icon: "⏰"
       },
       {
@@ -365,7 +365,7 @@ const dummyCoursesData = {
         author: "Layla R."
       },
       {
-        text: "The love course gave me the relationship tools I never got growing up, but the trauma course gave me the emotional grounding to actually use them.",
+        text: "The love Workshop gave me the relationship tools I never got growing up, but the trauma Workshop gave me the emotional grounding to actually use them.",
         author: "Ben C."
       }
     ],
@@ -450,8 +450,8 @@ const CourseDetails = () => {
       <div className="min-h-screen bg-cream">
         <Header />
         <div className="container mx-auto px-4 py-20 text-center">
-          <h1 className="text-3xl font-fitzgerald text-black mb-4">Course Not Found</h1>
-          <p className="text-gray-600 font-fitzgerald mb-8">The course you're looking for doesn't exist or has been removed.</p>
+          <h1 className="text-3xl font-fitzgerald text-black mb-4">Workshop Not Found</h1>
+          <p className="text-gray-600 font-fitzgerald mb-8">The Workshop you're looking for doesn't exist or has been removed.</p>
           <Link to="/courses" className="bg-primary text-white font-fitzgerald px-8 py-3 hover:bg-primary-dark transition-colors">
             Browse All Courses
           </Link>
@@ -655,9 +655,9 @@ const CourseDetails = () => {
                 Get Instant Access for Just £{course.price}
               </h3>
               <p className="text-warm-gray text-lg leading-relaxed font-fitzgerald">
-                This course is designed to give you lifetime access to transformative materials at an
+                This Workshop is designed to give you lifetime access to transformative materials at an
                 affordable price. Whether you're looking to heal from past wounds, improve your
-                current relationship, or build a foundation of self-love, this course will guide you every
+                current relationship, or build a foundation of self-love, this Workshop will guide you every
                 step of the way.
               </p>
             </div>

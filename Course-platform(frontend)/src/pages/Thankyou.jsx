@@ -5,14 +5,14 @@ import { useState, useEffect } from "react";
 const courseData = {
   1: {
     id: 1,
-    title: "Unburdening Trauma: A 6-Week Self-Paced Course",
+    title: "Unburdening Trauma: A 6-Week Self-Paced Workshop",
     description: "A transformative journey to heal past wounds and create lasting change",
     duration: "6 weeks",
     image: "/1.png"
   },
   2: {
     id: 2,
-    title: "Unburdening Love: A 6-Week Self-Paced Course",
+    title: "Unburdening Love: A 6-Week Self-Paced Workshop",
     description: "Break free from relationship blocks and cultivate healthy love",
     duration: "6 weeks",
     image: "/love_course.png"
@@ -50,7 +50,7 @@ function ThankYou() {
             Course Not Found
           </h1>
           <p className="text-xl text-gray-700 mb-8">
-            The course you're looking for doesn't exist.
+            The Workshop you're looking for doesn't exist.
           </p>
           <Link to="/">
             <button className="bg-[#bd6334] hover:bg-[#a65525] text-white py-3 px-6 rounded">
