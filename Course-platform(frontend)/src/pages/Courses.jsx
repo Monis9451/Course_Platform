@@ -107,7 +107,7 @@ const Courses = () => {
       <section className="bg-primary py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-fitzgerald text-white mb-6">Ready to Begin Your Journey?</h2>          <p className="text-white font-fitzgerald text-lg mb-8 max-w-2xl mx-auto">
-            Enroll in one of our transformative courses today and take the first step toward healing and growth.
+            Enroll in one of our transformative workshop today and take the first step toward healing and growth.
           </p>
           <Link to="/login">
             <button className="border border-white text-white hover:bg-white hover:text-[#bd6334] font-fitzgerald px-8 py-6 text-lg transition-colors duration-200">

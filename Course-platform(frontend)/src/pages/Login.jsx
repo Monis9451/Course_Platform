@@ -8,10 +8,12 @@ import {
   signInWithPopup, 
   signInWithRedirect,
   getRedirectResult,
-  GoogleAuthProvider 
+  GoogleAuthProvider,
+  updateProfile 
 } from 'firebase/auth'
 import { auth } from '../config/firebase'
 import Header from './Header'
+import { syncUserWithServer } from '../services/userService'
 
 
 const Login = () => {
@@ -20,7 +22,8 @@ const Login = () => {
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    role: 'user'
   });  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -46,6 +49,18 @@ const Login = () => {
         const result = await getRedirectResult(auth);
         if (result) {
           console.log('Google redirect sign in successful:', result.user);
+          
+          // Get selected role if available
+          const selectedRole = formData.role || 'user';
+          
+          // Sync user data with the server
+          await syncUserWithServer({
+            firebaseUid: result.user.uid,
+            email: result.user.email,
+            displayName: result.user.displayName || '',
+            role: selectedRole
+          }, result.user);
+          
           navigate(from, { replace: true });
         }
       } catch (error) {
@@ -55,7 +70,7 @@ const Login = () => {
     };
 
     checkRedirectResult();
-  }, [navigate, from]);
+  }, [navigate, from, formData.role]);
 
   // Handle input changes
   const handleInputChange = (e) => {
@@ -113,10 +128,35 @@ const Login = () => {
         // Sign in existing user
         const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
         console.log('User signed in:', userCredential.user);
+        
+        // Sync user data with the server including role for logged in users too
+        await syncUserWithServer({
+          firebaseUid: userCredential.user.uid,
+          email: userCredential.user.email,
+          displayName: userCredential.user.displayName || '',
+          role: formData.role
+        }, userCredential.user);
+        
         navigate(from, { replace: true }); // Redirect to intended page or home
       } else {
         // Create new user
         const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+        
+        // Update profile if name is provided
+        if (formData.name) {
+          await updateProfile(userCredential.user, {
+            displayName: formData.name
+          });
+        }
+        
+        // Sync user data with the server including role
+        await syncUserWithServer({
+          firebaseUid: userCredential.user.uid,
+          email: userCredential.user.email,
+          displayName: formData.name || '',
+          role: formData.role
+        }, userCredential.user);
+        
         console.log('User created:', userCredential.user);
         navigate(from, { replace: true }); // Redirect to intended page or home
       }
@@ -166,6 +206,18 @@ const Login = () => {
         // Try popup first
         const result = await signInWithPopup(auth, googleProvider);
         console.log('Google sign in successful:', result.user);
+        
+        // Get selected role if available
+        const selectedRole = formData.role || 'user';
+        
+        // Sync user data with the server
+        await syncUserWithServer({
+          firebaseUid: result.user.uid,
+          email: result.user.email,
+          displayName: result.user.displayName || '',
+          role: selectedRole // Use selected role for Google auth
+        }, result.user);
+        
         navigate(from, { replace: true });
       } catch (popupError) {
         console.warn('Popup failed, trying redirect:', popupError);
@@ -220,7 +272,8 @@ const Login = () => {
       name: '',
       email: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      role: 'user'
     });
     setErrors({});
   };
@@ -291,7 +344,25 @@ const Login = () => {
               {errors.email && (
                 <p className="mt-1 text-sm text-primary font-light">{errors.email}</p>
               )}
-            </div>            <div>
+            </div>
+            
+            <div>
+              <label htmlFor="role" className="block text-sm font-light text-black mb-1">
+                Role
+              </label>
+              <select
+                id="role"
+                name="role"
+                value={formData.role}
+                onChange={handleInputChange}
+                className={`w-full px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary`}
+              >
+                <option value="user">Student</option>
+                <option value="admin">Administrator</option>
+              </select>
+            </div>
+            
+            <div>
               <label htmlFor="password" className="block text-sm font-light text-black mb-1">
                 Password
               </label>

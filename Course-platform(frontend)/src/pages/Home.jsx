@@ -230,7 +230,7 @@ const Home = () => {
           <button
           onClick={() => window.location.href = "/courses"}
           className="bg-primary hover-primary text-white px-6 py-2 md:px-8 md:py-3 rounded-4xl text-base md:text-lg font-semibold transition-colors duration-200">
-            EXPLORE COURSES
+            EXPLORE WORKSHOPS
           </button>
         </div>
 
