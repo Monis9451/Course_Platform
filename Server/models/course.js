@@ -13,7 +13,7 @@ const courseSchema = new Schema({
     },
 
     price: {
-        type: Float,
+        type: Number,
         required: true
     },
 

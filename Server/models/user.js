@@ -15,6 +15,7 @@ const userSchema = new Schema({
   },
 
   displayName: String,
+  
   role: {
     type: String,
     default: "user",

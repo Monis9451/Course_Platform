@@ -7,7 +7,7 @@ const rateLimit = require('express-rate-limit');
 const morgan = require('morgan');
 
 // Import routes
-
+const userRoutes = require('./routes/userRoutes');
 
 // Load environment variables
 dotenv.config();
@@ -39,18 +39,30 @@ app.use(cors(corsOptions));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Database connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/course-platform', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('MongoDB connected successfully'))
-.catch((err) => console.error('MongoDB connection error:', err));
+// Import the connectDB function
+const connectDB = require('./config/db');
 
-// API Routes
+// Connect to MongoDB
+connectDB()
+  .then(() => console.log('MongoDB connected through connectDB function'))
+  .catch((err) => console.error('MongoDB connection error:', err));
 
+// Define routes
+app.use('/api/users', userRoutes);
 
 // Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  
+  const statusCode = err.statusCode || 500;
+  const status = err.status || 'error';
+  
+  res.status(statusCode).json({
+    status: status,
+    message: err.message,
+    error: process.env.NODE_ENV === 'development' ? err : {}
+  });
+});
 
 
 // 404 handler
