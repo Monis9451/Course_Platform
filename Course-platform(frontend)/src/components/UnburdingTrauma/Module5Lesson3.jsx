@@ -5,17 +5,7 @@ const Module5Lesson3 = () => {
     <div className="p-8">
       <h1 className="text-2xl font-bold text-black mb-6">RELEASE AS A PATH TO FREEDOM AND WHOLENESS</h1>
 
-      <div className="prose max-w-none">
-        <p className="text-lg leading-relaxed mb-6">
-          Welcome to this transformative lesson on release—an essential pathway to freedom and wholeness. Today, we explore how letting go becomes not a loss, but a sacred reclamation of your true self.
-        </p>
-
-        <h2 className="text-xl font-semibold text-[#bd6334] mt-8 mb-4">Understanding Release as Liberation</h2>
-        <p className="text-lg leading-relaxed mb-6">
-          Release is often misunderstood as giving up or losing something precious. In truth, release is the conscious choice to free yourself from what no longer serves your highest good. When you release old pain, limiting beliefs, or patterns that keep you small, you create space for your authentic self to emerge.
-        </p>
-
-        <div className="bg-blue-50 p-6 rounded-lg mb-6">
+      <div className="bg-[#f7f3e9] p-6 rounded-lg mb-6">
           <h3 className="text-xl font-semibold text-[#bd6334] mb-3">What Release Really Means:</h3>
           <ul className="list-disc list-inside space-y-2">
             <li>Letting go of what weighs you down</li>
@@ -25,6 +15,16 @@ const Module5Lesson3 = () => {
             <li>Trusting in your capacity for renewal</li>
           </ul>
         </div>
+
+      <div className="prose max-w-none">
+        <p className="text-lg leading-relaxed mb-6">
+          Welcome to this transformative lesson on release—an essential pathway to freedom and wholeness. Today, we explore how letting go becomes not a loss, but a sacred reclamation of your true self.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#bd6334] mt-8 mb-4">Understanding Release as Liberation</h2>
+        <p className="text-lg leading-relaxed mb-6">
+          Release is often misunderstood as giving up or losing something precious. In truth, release is the conscious choice to free yourself from what no longer serves your highest good. When you release old pain, limiting beliefs, or patterns that keep you small, you create space for your authentic self to emerge.
+        </p>
 
         <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">The Sacred Nature of Letting Go</h2>
         <p className="text-lg leading-relaxed mb-6">

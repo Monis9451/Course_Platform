@@ -31,6 +31,17 @@ const Module4Lesson2 = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-[#D2691E] to-[#CD853F] mx-auto rounded-full"></div>
         </div>
 
+        {/* Introduction */}
+        <div className="bg-gradient-to-r from-[#F5E6D3] to-[#F0E68C]/30 rounded-xl p-6 mb-8 border-l-4 border-[#D2691E]">
+          <h3 className="text-xl font-semibold text-[#8B4513] mb-4">The Lens of Trauma</h3>
+          <p className="text-[#5D4037] leading-relaxed mb-4">
+            Trauma doesn't just affect our emotions and bodies - it fundamentally shapes how we see ourselves, others, and the world around us. These trauma-formed beliefs act like a lens through which we interpret every experience, often without us even realising it.
+          </p>
+          <p className="text-[#5D4037] leading-relaxed">
+            Understanding these beliefs is crucial because they influence every aspect of our lives - from our relationships and career choices to our daily decisions and self-care practices. Today, we'll explore the most common trauma-related beliefs and learn to recognise them in our own thinking patterns.
+          </p>
+        </div>
+
         {/* Learning Objectives */}
         <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 mb-8 shadow-lg border border-[#DEB887]/30">
           <h3 className="text-xl font-semibold text-[#8B4513] mb-4 flex items-centre">
@@ -55,17 +66,6 @@ const Module4Lesson2 = () => {
               <span className="text-[#5D4037]">Develop awareness of your own trauma-related beliefs</span>
             </li>
           </ul>
-        </div>
-
-        {/* Introduction */}
-        <div className="bg-gradient-to-r from-[#F5E6D3] to-[#F0E68C]/30 rounded-xl p-6 mb-8 border-l-4 border-[#D2691E]">
-          <h3 className="text-xl font-semibold text-[#8B4513] mb-4">The Lens of Trauma</h3>
-          <p className="text-[#5D4037] leading-relaxed mb-4">
-            Trauma doesn't just affect our emotions and bodies - it fundamentally shapes how we see ourselves, others, and the world around us. These trauma-formed beliefs act like a lens through which we interpret every experience, often without us even realising it.
-          </p>
-          <p className="text-[#5D4037] leading-relaxed">
-            Understanding these beliefs is crucial because they influence every aspect of our lives - from our relationships and career choices to our daily decisions and self-care practices. Today, we'll explore the most common trauma-related beliefs and learn to recognise them in our own thinking patterns.
-          </p>
         </div>
 
         {/* Core Beliefs Section */}

@@ -5,6 +5,21 @@ const Module5Lesson4 = () => {
     <div className="p-8">
       <h1 className="text-2xl font-bold text-black mb-6">WRITING TO RELEASE</h1>
 
+      
+        <div className="bg-yellow-50 p-6 rounded-lg mb-6">
+          <h3 className="text-xl font-semibold text-[#bd6334] mb-3">Step-by-Step Process:</h3>
+          <ol className="list-decimal list-inside space-y-3">
+            <li><strong>Ground yourself:</strong> Take several deep breaths and connect with your body</li>
+            <li><strong>Set your intention:</strong> What emotion or experience do you want to explore?</li>
+            <li><strong>Begin writing:</strong> Start with "Right now I'm feeling..." or "What I need to release is..."</li>
+            <li><strong>Write without stopping:</strong> Don't worry about grammar, spelling, or making sense</li>
+            <li><strong>Let emotions flow:</strong> If tears or other emotions come up, let them happen</li>
+            <li><strong>Write until complete:</strong> Continue until you feel a natural stopping point</li>
+            <li><strong>Honor the process:</strong> Acknowledge yourself for doing this brave work</li>
+            <li><strong>Choose what to do with the writing:</strong> Keep it, burn it, or transform it as feels right</li>
+          </ol>
+        </div>
+
       <div className="prose max-w-none">
         <p className="text-lg leading-relaxed mb-6">
           Welcome to this powerful lesson on using writing as a tool for emotional release. Today, we explore how the simple act of putting pen to paper can become a transformative practice for healing and liberation.
@@ -78,20 +93,6 @@ const Module5Lesson4 = () => {
         <p className="text-lg leading-relaxed mb-6">
           Follow this gentle yet powerful process to maximize the healing potential of your writing:
         </p>
-
-        <div className="bg-yellow-50 p-6 rounded-lg mb-6">
-          <h3 className="text-xl font-semibold text-[#bd6334] mb-3">Step-by-Step Process:</h3>
-          <ol className="list-decimal list-inside space-y-3">
-            <li><strong>Ground yourself:</strong> Take several deep breaths and connect with your body</li>
-            <li><strong>Set your intention:</strong> What emotion or experience do you want to explore?</li>
-            <li><strong>Begin writing:</strong> Start with "Right now I'm feeling..." or "What I need to release is..."</li>
-            <li><strong>Write without stopping:</strong> Don't worry about grammar, spelling, or making sense</li>
-            <li><strong>Let emotions flow:</strong> If tears or other emotions come up, let them happen</li>
-            <li><strong>Write until complete:</strong> Continue until you feel a natural stopping point</li>
-            <li><strong>Honor the process:</strong> Acknowledge yourself for doing this brave work</li>
-            <li><strong>Choose what to do with the writing:</strong> Keep it, burn it, or transform it as feels right</li>
-          </ol>
-        </div>
 
         <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">Writing Prompts for Release</h2>
         <p className="text-lg leading-relaxed mb-6">

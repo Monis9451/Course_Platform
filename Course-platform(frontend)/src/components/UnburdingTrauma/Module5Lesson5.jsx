@@ -5,17 +5,7 @@ const Module5Lesson5 = () => {
     <div className="p-8">
       <h1 className="text-2xl font-bold text-black mb-6">DRAWING YOUR EMOTIONS</h1>
 
-      <div className="prose max-w-none">
-        <p className="text-lg leading-relaxed mb-6">
-          Welcome to this creative and liberating lesson on visual expression for emotional release. Today, we explore how drawing and other visual arts can become powerful tools for processing emotions that words cannot fully capture.
-        </p>
-
-        <h2 className="text-xl font-semibold text-[#bd6334] mt-8 mb-4">The Power of Visual Expression</h2>
-        <p className="text-lg leading-relaxed mb-6">
-          Visual expression offers a unique pathway for emotional release, especially for feelings that are difficult to articulate in words. When we engage in drawing or other visual arts as a release practice, we access different neural pathways and parts of our brain than verbal processing allows.
-        </p>
-
-        <div className="bg-blue-50 p-6 rounded-lg mb-6">
+      <div className="bg-[#f7f3e9] p-6 rounded-lg mb-6">
           <h3 className="text-xl font-semibold text-[#bd6334] mb-3">Why Drawing Works for Emotional Release:</h3>
           <ul className="list-disc list-inside space-y-2">
             <li>Bypasses analytical thinking that can block emotional processing</li>
@@ -30,6 +20,16 @@ const Module5Lesson5 = () => {
             No artistic skill is required for this practice—the focus is on authentic expression rather than creating something aesthetically pleasing.
           </p>
         </div>
+
+      <div className="prose max-w-none">
+        <p className="text-lg leading-relaxed mb-6">
+          Welcome to this creative and liberating lesson on visual expression for emotional release. Today, we explore how drawing and other visual arts can become powerful tools for processing emotions that words cannot fully capture.
+        </p>
+
+        <h2 className="text-xl font-semibold text-[#bd6334] mt-8 mb-4">The Power of Visual Expression</h2>
+        <p className="text-lg leading-relaxed mb-6">
+          Visual expression offers a unique pathway for emotional release, especially for feelings that are difficult to articulate in words. When we engage in drawing or other visual arts as a release practice, we access different neural pathways and parts of our brain than verbal processing allows.
+        </p>
 
         <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">Getting Started: Materials and Setup</h2>
         <p className="text-lg leading-relaxed mb-6">
