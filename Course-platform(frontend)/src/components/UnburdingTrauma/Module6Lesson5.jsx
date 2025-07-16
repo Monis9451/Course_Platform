@@ -44,29 +44,45 @@ const Module6Lesson5 = () => {
             <div className="space-y-3">
               <div className="bg-gray-50 p-4 rounded">
                 <p className="font-medium mb-2">One year from now, when I think about my relationship with myself, I feel...</p>
-                <div className="border-b border-gray-300 mt-2 pb-2">
-                  <span className="text-gray-500 text-sm">Your response here</span>
+                <div className="mt-2">
+                  <input 
+                    type="text"
+                    className="w-full border-b border-gray-300 pb-2 outline-none bg-transparent"
+                    placeholder="Your response here"
+                  />
                 </div>
               </div>
               
               <div className="bg-gray-50 p-4 rounded">
                 <p className="font-medium mb-2">The thing I'm most proud of about my healing journey is...</p>
-                <div className="border-b border-gray-300 mt-2 pb-2">
-                  <span className="text-gray-500 text-sm">Your response here</span>
+                <div className="mt-2">
+                  <input 
+                    type="text"
+                    className="w-full border-b border-gray-300 pb-2 outline-none bg-transparent"
+                    placeholder="Your response here"
+                  />
                 </div>
               </div>
               
               <div className="bg-gray-50 p-4 rounded">
                 <p className="font-medium mb-2">When I encounter triggers now, I respond by...</p>
-                <div className="border-b border-gray-300 mt-2 pb-2">
-                  <span className="text-gray-500 text-sm">Your response here</span>
+                <div className="mt-2">
+                  <input 
+                    type="text"
+                    className="w-full border-b border-gray-300 pb-2 outline-none bg-transparent"
+                    placeholder="Your response here"
+                  />
                 </div>
               </div>
               
               <div className="bg-gray-50 p-4 rounded">
                 <p className="font-medium mb-2">My inner voice now speaks to me with...</p>
-                <div className="border-b border-gray-300 mt-2 pb-2">
-                  <span className="text-gray-500 text-sm">Your response here</span>
+                <div className="mt-2">
+                  <input 
+                    type="text"
+                    className="w-full border-b border-gray-300 pb-2 outline-none bg-transparent"
+                    placeholder="Your response here"
+                  />
                 </div>
               </div>
             </div>
@@ -77,29 +93,45 @@ const Module6Lesson5 = () => {
             <div className="space-y-3">
               <div className="bg-gray-50 p-4 rounded">
                 <p className="font-medium mb-2">In my relationships, I now feel confident to...</p>
-                <div className="border-b border-gray-300 mt-2 pb-2">
-                  <span className="text-gray-500 text-sm">Your response here</span>
+                <div className="mt-2">
+                  <input 
+                    type="text"
+                    className="w-full border-b border-gray-300 pb-2 outline-none bg-transparent"
+                    placeholder="Your response here"
+                  />
                 </div>
               </div>
               
               <div className="bg-gray-50 p-4 rounded">
                 <p className="font-medium mb-2">When someone crosses my boundaries, I...</p>
-                <div className="border-b border-gray-300 mt-2 pb-2">
-                  <span className="text-gray-500 text-sm">Your response here</span>
+                <div className="mt-2">
+                  <input 
+                    type="text"
+                    className="w-full border-b border-gray-300 pb-2 outline-none bg-transparent"
+                    placeholder="Your response here"
+                  />
                 </div>
               </div>
               
               <div className="bg-gray-50 p-4 rounded">
                 <p className="font-medium mb-2">The way I take care of myself daily has changed because...</p>
-                <div className="border-b border-gray-300 mt-2 pb-2">
-                  <span className="text-gray-500 text-sm">Your response here</span>
+                <div className="mt-2">
+                  <input 
+                    type="text"
+                    className="w-full border-b border-gray-300 pb-2 outline-none bg-transparent"
+                    placeholder="Your response here"
+                  />
                 </div>
               </div>
               
               <div className="bg-gray-50 p-4 rounded">
                 <p className="font-medium mb-2">People notice that I'm different now because...</p>
-                <div className="border-b border-gray-300 mt-2 pb-2">
-                  <span className="text-gray-500 text-sm">Your response here</span>
+                <div className="mt-2">
+                  <input 
+                    type="text"
+                    className="w-full border-b border-gray-300 pb-2 outline-none bg-transparent"
+                    placeholder="Your response here"
+                  />
                 </div>
               </div>
             </div>
@@ -110,29 +142,45 @@ const Module6Lesson5 = () => {
             <div className="space-y-3">
               <div className="bg-gray-50 p-4 rounded">
                 <p className="font-medium mb-2">The biggest shift I've made in my healing journey is...</p>
-                <div className="border-b border-gray-300 mt-2 pb-2">
-                  <span className="text-gray-500 text-sm">Your response here</span>
+                <div className="mt-2">
+                  <input 
+                    type="text"
+                    className="w-full border-b border-gray-300 pb-2 outline-none bg-transparent"
+                    placeholder="Your response here"
+                  />
                 </div>
               </div>
               
               <div className="bg-gray-50 p-4 rounded">
                 <p className="font-medium mb-2">When I look back at my past self, I feel...</p>
-                <div className="border-b border-gray-300 mt-2 pb-2">
-                  <span className="text-gray-500 text-sm">Your response here</span>
+                <div className="mt-2">
+                  <input 
+                    type="text"
+                    className="w-full border-b border-gray-300 pb-2 outline-none bg-transparent"
+                    placeholder="Your response here"
+                  />
                 </div>
               </div>
               
               <div className="bg-gray-50 p-4 rounded">
                 <p className="font-medium mb-2">My future self would advise me to...</p>
-                <div className="border-b border-gray-300 mt-2 pb-2">
-                  <span className="text-gray-500 text-sm">Your response here</span>
+                <div className="mt-2">
+                  <input 
+                    type="text"
+                    className="w-full border-b border-gray-300 pb-2 outline-none bg-transparent"
+                    placeholder="Your response here"
+                  />
                 </div>
               </div>
               
               <div className="bg-gray-50 p-4 rounded">
                 <p className="font-medium mb-2">The trauma no longer controls me because...</p>
-                <div className="border-b border-gray-300 mt-2 pb-2">
-                  <span className="text-gray-500 text-sm">Your response here</span>
+                <div className="mt-2">
+                  <input 
+                    type="text"
+                    className="w-full border-b border-gray-300 pb-2 outline-none bg-transparent"
+                    placeholder="Your response here"
+                  />
                 </div>
               </div>
             </div>
@@ -143,29 +191,45 @@ const Module6Lesson5 = () => {
             <div className="space-y-3">
               <div className="bg-gray-50 p-4 rounded">
                 <p className="font-medium mb-2">My healing journey has taught me that I am...</p>
-                <div className="border-b border-gray-300 mt-2 pb-2">
-                  <span className="text-gray-500 text-sm">Your response here</span>
+                <div className="mt-2">
+                  <input 
+                    type="text"
+                    className="w-full border-b border-gray-300 pb-2 outline-none bg-transparent"
+                    placeholder="Your response here"
+                  />
                 </div>
               </div>
               
               <div className="bg-gray-50 p-4 rounded">
                 <p className="font-medium mb-2">The gifts that emerged from my pain are...</p>
-                <div className="border-b border-gray-300 mt-2 pb-2">
-                  <span className="text-gray-500 text-sm">Your response here</span>
+                <div className="mt-2">
+                  <input 
+                    type="text"
+                    className="w-full border-b border-gray-300 pb-2 outline-none bg-transparent"
+                    placeholder="Your response here"
+                  />
                 </div>
               </div>
               
               <div className="bg-gray-50 p-4 rounded">
                 <p className="font-medium mb-2">I want to use my experience to...</p>
-                <div className="border-b border-gray-300 mt-2 pb-2">
-                  <span className="text-gray-500 text-sm">Your response here</span>
+                <div className="mt-2">
+                  <input 
+                    type="text"
+                    className="w-full border-b border-gray-300 pb-2 outline-none bg-transparent"
+                    placeholder="Your response here"
+                  />
                 </div>
               </div>
               
               <div className="bg-gray-50 p-4 rounded">
                 <p className="font-medium mb-2">Five years from now, when I look back on this healing work, I will feel...</p>
-                <div className="border-b border-gray-300 mt-2 pb-2">
-                  <span className="text-gray-500 text-sm">Your response here</span>
+                <div className="mt-2">
+                  <input 
+                    type="text"
+                    className="w-full border-b border-gray-300 pb-2 outline-none bg-transparent"
+                    placeholder="Your response here"
+                  />
                 </div>
               </div>
             </div>

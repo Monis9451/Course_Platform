@@ -5,6 +5,17 @@ const Module1Lesson3 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-8">TRAUMA RESPONSES: FIGHT, FLIGHT, FREEZE, FAWN – HOW TRAUMA MANIFESTS IN BEHAVIOUR</h1>
       
+      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+        <h3 className="font-semibold mb-4 text-[#bd6334]">Recognizing Your Patterns</h3>
+        <p className="mb-4">Each of these responses is intelligent and protective. Each kept you alive. The work now isn't to get rid of them, but to recognise when they show up, thank them for their protection, and choose your response from a place of awareness.</p>
+        <p className="mb-2 font-medium">Reflect on these questions:</p>
+        <ul className="list-disc pl-8 space-y-2">
+          <li>Which response pattern do you recognise most clearly in yourself?</li>
+          <li>What situations tend to trigger these responses?</li>
+          <li>How has this response pattern served to protect you in the past?</li>
+        </ul>
+      </div>
+      
       <p className="mb-6">These trauma responses aren't just reactions—they're survival strategies your body learned when it didn't feel safe. They often become habits, roles, even identities.</p>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -91,17 +102,6 @@ const Module1Lesson3 = () => {
             </ul>
           </div>
         </div>
-      </div>
-      
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
-        <h3 className="font-semibold mb-4 text-[#bd6334]">Recognizing Your Patterns</h3>
-        <p className="mb-4">Each of these responses is intelligent and protective. Each kept you alive. The work now isn't to get rid of them, but to recognise when they show up, thank them for their protection, and choose your response from a place of awareness.</p>
-        <p className="mb-2 font-medium">Reflect on these questions:</p>
-        <ul className="list-disc pl-8 space-y-2">
-          <li>Which response pattern do you recognise most clearly in yourself?</li>
-          <li>What situations tend to trigger these responses?</li>
-          <li>How has this response pattern served to protect you in the past?</li>
-        </ul>
       </div>
       
       <div className="border border-gray-200 p-6 rounded-md">

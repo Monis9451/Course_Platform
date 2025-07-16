@@ -4,6 +4,15 @@ const Module1Lesson4 = () => {
   return (
     <div className="p-8">
       <h1 className="text-black text-2xl mb-8">DISSOCIATION IN TRAUMA: DEPERSONALISATION, DEREALISATION, DISSOCIATIVE AMNESIA</h1>
+
+      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+        <h3 className="font-semibold mb-4 text-[#bd6334]">Important to Remember</h3>
+        <p className="mb-4"><strong>You're not losing your mind.</strong> These are normal responses to abnormal experiences. Dissociation happens when the mind says, "It's too much, let's pause this." Healing means helping those parts feel safe enough to come back.</p>
+        
+        <div className="border-l-4 border-[#bd6334] pl-4 italic">
+          <p>Dissociation exists on a spectrum. Almost everyone dissociates to some degree - like zoning out while driving or getting lost in a book. Trauma-related dissociation is more intense and occurs as a protective mechanism.</p>
+        </div>
+      </div>
       
       <div className="bg-gradient-to-r from-purple-50 to-blue-50 p-6 rounded-lg mb-8 border border-purple-100">
         <h2 className="text-lg font-semibold mb-3 text-purple-800">What is Dissociation?</h2>
@@ -71,15 +80,6 @@ const Module1Lesson4 = () => {
           <div className="mt-4 bg-indigo-50 p-3 rounded">
             <p className="italic text-sm">"There are whole chunks of my childhood I can't remember. Traumatic events seem to have 'missing pieces'."</p>
           </div>
-        </div>
-      </div>
-      
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
-        <h3 className="font-semibold mb-4 text-[#bd6334]">Important to Remember</h3>
-        <p className="mb-4"><strong>You're not losing your mind.</strong> These are normal responses to abnormal experiences. Dissociation happens when the mind says, "It's too much, let's pause this." Healing means helping those parts feel safe enough to come back.</p>
-        
-        <div className="border-l-4 border-[#bd6334] pl-4 italic">
-          <p>Dissociation exists on a spectrum. Almost everyone dissociates to some degree - like zoning out while driving or getting lost in a book. Trauma-related dissociation is more intense and occurs as a protective mechanism.</p>
         </div>
       </div>
       

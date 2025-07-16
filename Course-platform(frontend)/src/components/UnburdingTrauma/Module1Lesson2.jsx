@@ -4,12 +4,8 @@ const Module1Lesson2 = () => {
   return (
     <div className="p-8">
       <h1 className="text-black text-2xl mb-8">THE NERVOUS SYSTEM & TRAUMA</h1>
-      
-      <p className="mb-6">Trauma doesn't just affect our emotions and thoughts—it also deeply impacts how our bodies function, especially our nervous system. To understand this better, we need to look at the nervous system and how it responds when we're faced with overwhelming experiences.</p>
-      
-      <p className="mb-6">When trauma occurs, it disrupts the delicate balance our nervous system maintains. Our body's fight-or-flight response (controlled by the sympathetic nervous system) can become stuck in overdrive, or sometimes, it can shut down entirely. This imbalance leads us into two primary states: hyperarousal and hypoarousal.</p>
-      
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-6">
+
+       <div className="bg-[#f7f1e9] p-6 rounded-md mb-6">
         <h3 className="font-semibold mb-3 text-[#bd6334]">Hyperarousal vs. Hypoarousal</h3>
         <ul className="list-disc pl-8 mb-3 space-y-2">
           <li><strong>Hyperarousal</strong> is when the nervous system is on constant alert, ready to react to perceived threats. You might feel anxious, overstimulated, or irrationally fearful, even when there's no immediate danger. It's like having an alarm system that always stays on, creating a state of restlessness or irritability.</li>
@@ -17,6 +13,10 @@ const Module1Lesson2 = () => {
         </ul>
         <p className="text-sm italic">Both states are protective responses to trauma - neither is wrong or bad.</p>
       </div>
+      
+      <p className="mb-6">Trauma doesn't just affect our emotions and thoughts—it also deeply impacts how our bodies function, especially our nervous system. To understand this better, we need to look at the nervous system and how it responds when we're faced with overwhelming experiences.</p>
+      
+      <p className="mb-6">When trauma occurs, it disrupts the delicate balance our nervous system maintains. Our body's fight-or-flight response (controlled by the sympathetic nervous system) can become stuck in overdrive, or sometimes, it can shut down entirely. This imbalance leads us into two primary states: hyperarousal and hypoarousal.</p>
       
       <h2 className="font-semibold text-xl mb-4">The Window of Tolerance</h2>
       
