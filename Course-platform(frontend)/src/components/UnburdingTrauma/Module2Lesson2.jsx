@@ -9,8 +9,8 @@ const Module2Lesson2 = () => {
       <div className="mb-8">
         <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
         
-        <div className="bg-black p-1 rounded-md">
-          <button className="flex items-center w-full px-4 py-3 bg-black text-white hover:bg-gray-900 rounded-md">
+        <div className="bg-primary p-1 rounded-md">
+          <button className="flex items-center w-full px-4 py-3 bg-primary text-white hover:bg-gray-900 rounded-md">
             <span className="flex-shrink-0 mr-3">▶</span>
             <span className="text-sm">Listen to Felt Sense Exploration [18 mins].mp3</span>
           </button>
