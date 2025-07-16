@@ -1,4 +1,16 @@
 import { useApi } from '../hooks/useApi';
+import { apiPost, apiGet } from '../utils/api';
+
+/**
+ * Direct API functions for user authentication
+ */
+export const syncUserWithServer = async (userData, user) => {
+  return await apiPost('/users/auth-sync', userData, user);
+};
+
+export const getCurrentUser = async (user) => {
+  return await apiGet('/users/me', user);
+};
 
 /**
  * User service functions using the authenticated API

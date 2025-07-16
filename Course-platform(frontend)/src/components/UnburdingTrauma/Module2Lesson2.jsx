@@ -5,25 +5,6 @@ const Module2Lesson2 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">FELT SENSE & BODY AWARENESS: LISTENING TO INNER SIGNALS</h1>
       
-      <div className="mb-8">
-        <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
-        
-        <div className="bg-black p-1 rounded-md">
-          <button className="flex items-center w-full px-4 py-3 bg-black text-white hover:bg-gray-900 rounded-md">
-            <span className="flex-shrink-0 mr-3">▶</span>
-            <span className="text-sm">Listen to Felt Sense Exploration [18 mins].mp3</span>
-          </button>
-        </div>
-      </div>
-
-      <div className="mb-8">
-        <h2 className="font-semibold text-lg mb-3">JOURNAL</h2>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Did you notice any physical sensations during the felt sense exercise?</li>
-          <li>Did any unworthiness come up when trying to connect with your body?</li>
-          <li>Where do you think you need more practice with body awareness?</li>
-        </ul>
-      </div>
       
       <div className="mb-8">
         <h2 className="font-semibold text-lg mb-3">LISTEN</h2>

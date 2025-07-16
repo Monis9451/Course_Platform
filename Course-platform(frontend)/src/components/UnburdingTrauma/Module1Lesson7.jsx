@@ -114,46 +114,7 @@ const Module1Lesson7 = () => {
           
           <div className="flex justify-center my-8">
             <div className="flex flex-col items-center">
-              <div className="relative w-80 h-96">
-                {/* Professional human body silhouette SVG */}
-                <svg width="100%" height="100%" viewBox="0 0 200 500" xmlns="http://www.w3.org/2000/svg">
-                  {/* Simpler, professional human silhouette in light beige */}
-                  <g fill="#F8D7A4">
-                    {/* Head */}
-                    <circle cx="100" cy="40" r="30" />
-                    
-                    {/* Neck */}
-                    <rect x="90" y="70" width="20" height="15" />
-                    
-                    {/* Torso */}
-                    <path d="M70 85 L130 85 L135 230 L65 230 Z" />
-                    
-                    {/* Arms */}
-                    <path d="M70 85 L40 160 L30 200 L50 215 L65 180 L70 145 Z" />
-                    <path d="M130 85 L160 160 L170 200 L150 215 L135 180 L130 145 Z" />
-                    
-                    {/* Legs */}
-                    <path d="M65 230 L60 350 L50 450 L80 450 L90 230 Z" />
-                    <path d="M135 230 L140 350 L150 450 L120 450 L110 230 Z" />
-                  </g>
-                </svg>
-                
-                {/* Example annotation points precisely positioned for this silhouette */}
-                <div className="absolute top-[40px] left-[100px] w-6 h-6 rounded-full bg-red-400 border-2 border-white shadow-sm cursor-pointer" title="Tension in head"></div>
-                <div className="absolute top-[75px] left-[100px] w-5 h-5 rounded-full bg-blue-400 border-2 border-white shadow-sm cursor-pointer" title="Pressure in neck"></div>
-                <div className="absolute top-[130px] left-[100px] w-7 h-7 rounded-full bg-blue-400 border-2 border-white shadow-sm cursor-pointer" title="Heaviness in chest"></div>
-                <div className="absolute top-[190px] left-[100px] w-7 h-7 rounded-full bg-yellow-400 border-2 border-white shadow-sm cursor-pointer" title="Anxiety in stomach"></div>
-                <div className="absolute top-[160px] left-[50px] w-5 h-5 rounded-full bg-green-400 border-2 border-white shadow-sm cursor-pointer" title="Strength in arm"></div>
-                <div className="absolute top-[350px] left-[70px] w-5 h-5 rounded-full bg-blue-300 border-2 border-white shadow-sm cursor-pointer" title="Numbness in leg"></div>
-                
-                {/* Minimalist labels for different body parts */}
-                <div className="absolute top-[20px] right-[30px] text-xs bg-white px-1 rounded shadow-sm">Head</div>
-                <div className="absolute top-[75px] right-[30px] text-xs bg-white px-1 rounded shadow-sm">Neck</div>
-                <div className="absolute top-[130px] right-[30px] text-xs bg-white px-1 rounded shadow-sm">Chest</div>
-                <div className="absolute top-[190px] right-[30px] text-xs bg-white px-1 rounded shadow-sm">Abdomen</div>
-                <div className="absolute top-[160px] left-[20px] text-xs bg-white px-1 rounded shadow-sm">Arm</div>
-                <div className="absolute top-[350px] right-[30px] text-xs bg-white px-1 rounded shadow-sm">Leg</div>
-              </div>
+                <img src="/body.png" alt="bodyImg" />
               
               <div className="mt-6 text-center">
                 <p className="text-sm text-gray-500 italic">Click on areas of your body where you feel sensations to add markers</p>
