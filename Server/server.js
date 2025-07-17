@@ -21,8 +21,8 @@ app.use(morgan('dev'));
 
 // Rate limiting
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 1000,
+  max: 100, 
   message: 'Too many requests from this IP, please try again later.'
 });
 app.use(limiter);
@@ -31,7 +31,7 @@ app.use(limiter);
 const corsOptions = {
   origin: process.env.CLIENT_URL || 'http://localhost:5173',
   credentials: true,
-  optionsSuccessStatus: 200
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
 };
 app.use(cors(corsOptions));
 
@@ -71,6 +71,10 @@ app.use('*', (req, res) => {
     success: false,
     message: 'Route not found'
   });
+});
+
+app.get('/', (req, res) => {
+  res.send('Welcome to the API');
 });
 
 app.listen(PORT, () => {
