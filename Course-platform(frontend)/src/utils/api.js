@@ -85,50 +85,7 @@ export const apiPost = (endpoint, data, user = null) => {
   }, user);
 };
 
-/**
- * PUT request
- */
-export const apiPut = (endpoint, data, user = null) => {
-  return apiRequest(endpoint, {
-    method: 'PUT',
-    body: JSON.stringify(data),
-  }, user);
-};
-
-/**
- * DELETE request
- */
-export const apiDelete = (endpoint, user = null) => {
-  return apiRequest(endpoint, { method: 'DELETE' }, user);
-};
-
-/**
- * POST request with FormData (for file uploads)
- */
-export const apiPostFormData = (endpoint, formData, user = null) => {
-  return apiRequest(endpoint, {
-    method: 'POST',
-    headers: {}, // Let the browser set Content-Type for FormData
-    body: formData,
-  }, user);
-};
-
-/**
- * PUT request with FormData (for file uploads)
- */
-export const apiPutFormData = (endpoint, formData, user = null) => {
-  return apiRequest(endpoint, {
-    method: 'PUT',
-    headers: {}, // Let the browser set Content-Type for FormData
-    body: formData,
-  }, user);
-};
-
 export default {
   get: apiGet,
   post: apiPost,
-  put: apiPut,
-  delete: apiDelete,
-  postFormData: apiPostFormData,
-  putFormData: apiPutFormData,
 };

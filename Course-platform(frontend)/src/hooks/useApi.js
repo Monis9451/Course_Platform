@@ -4,6 +4,7 @@ import api from '../utils/api';
 /**
  * Custom hook for making authenticated API calls
  * Automatically includes Firebase token in requests
+ * Only includes methods that are actually being used
  */
 export const useApi = () => {
   const { user } = useAuth();
@@ -17,26 +18,6 @@ export const useApi = () => {
     // POST request with authentication
     post: async (endpoint, data) => {
       return api.post(endpoint, data, user);
-    },
-
-    // PUT request with authentication
-    put: async (endpoint, data) => {
-      return api.put(endpoint, data, user);
-    },
-
-    // DELETE request with authentication
-    delete: async (endpoint) => {
-      return api.delete(endpoint, user);
-    },
-
-    // POST with FormData (for file uploads)
-    postFormData: async (endpoint, formData) => {
-      return api.postFormData(endpoint, formData, user);
-    },
-
-    // PUT with FormData (for file uploads)
-    putFormData: async (endpoint, formData) => {
-      return api.putFormData(endpoint, formData, user);
     },
 
     // Public GET request (no authentication)
