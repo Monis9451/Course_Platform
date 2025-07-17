@@ -5,7 +5,21 @@ const fs = require('fs');
 // Initialize Firebase Admin SDK
 const initializeFirebase = () => {
   if (!admin.apps.length) {
-    const serviceAccount = require('./courseplatform.json');
+    let serviceAccount;
+    
+    // Check if we're in Vercel production environment
+    if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+      // Use environment variable for service account in production
+      serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+    } else {
+      // Use local file for development
+      try {
+        serviceAccount = require('./courseplatform.json');
+      } catch (error) {
+        console.error('Failed to load Firebase service account file:', error);
+        throw new Error('Firebase configuration missing');
+      }
+    }
     
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),

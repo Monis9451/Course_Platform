@@ -1,8 +1,3 @@
-/**
- * Firebase Authentication Middleware
- * Verifies the Firebase ID token in the Authorization header
- * Adds the decoded token to the request object as req.user
- */
 const firebaseAdmin = require('../config/firebase');
 
 const authMiddleware = async (req, res, next) => {

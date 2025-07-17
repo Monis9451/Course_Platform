@@ -54,6 +54,9 @@ app.use((err, req, res, next) => {
   });
 });
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the API');
+});
 
 // 404 handler
 app.use('*', (req, res) => {
@@ -61,10 +64,6 @@ app.use('*', (req, res) => {
     success: false, 
     message: 'Route not found'
   });
-});
-
-app.get('/', (req, res) => {
-  res.send('Welcome to the API');
 });
 
 app.listen(PORT, () => {
