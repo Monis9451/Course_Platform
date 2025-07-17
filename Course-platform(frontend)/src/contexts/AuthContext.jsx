@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../config/firebase';
-import { syncUserWithServer } from '../services/userService';
+// Remove syncUserWithServer import as we don't need it in the context anymore
 
 const AuthContext = createContext();
 
@@ -16,30 +16,12 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [dbUser, setDbUser] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setUser(firebaseUser);
-      
-      if (firebaseUser) {
-        try {
-          // Sync user data with the server
-          const userData = {
-            firebaseUid: firebaseUser.uid,
-            email: firebaseUser.email,
-            displayName: firebaseUser.displayName || '',
-          };
-          
-          const response = await syncUserWithServer(userData, firebaseUser);
-          setDbUser(response.data.user);
-        } catch (error) {
-          console.error('Error syncing user with server:', error);
-        }
-      } else {
-        setDbUser(null);
-      }
-      
+      // We're not syncing with the server on auth state change anymore
+      // Users are only registered with the server during signup
       setLoading(false);
     });
 
@@ -66,12 +48,11 @@ export const AuthProvider = ({ children }) => {
 
   const value = {
     user,
-    dbUser,
     loading,
     logout,
     getIdToken,
     isAuthenticated: !!user,
-    role: dbUser?.role || 'user'
+    role: user?.role || 'user' // Default role, can be enhanced later if needed
   };
 
   return (

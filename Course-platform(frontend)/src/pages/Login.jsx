@@ -12,8 +12,8 @@ import {
   updateProfile 
 } from 'firebase/auth'
 import { auth } from '../config/firebase'
+import { registerUserWithServer } from '../services/userService'
 import Header from './Header'
-import { syncUserWithServer } from '../services/userService'
 
 
 const Login = () => {
@@ -44,25 +44,25 @@ const Login = () => {
 
   // Check for redirect result on component mount
   useEffect(() => {
-    const checkRedirectResult = async () => {
-      try {
-        const result = await getRedirectResult(auth);
-        if (result) {
-          console.log('Google redirect sign in successful:', result.user);
-          
-          // Get selected role if available
-          const selectedRole = formData.role || 'user';
-          
-          // Sync user data with the server
-          await syncUserWithServer({
-            firebaseUid: result.user.uid,
-            email: result.user.email,
-            displayName: result.user.displayName || '',
-            role: selectedRole
-          }, result.user);
-          
-          navigate(from, { replace: true });
-        }
+    const checkRedirectResult = async () => {        try {
+          const result = await getRedirectResult(auth);
+          if (result) {
+            console.log('Google redirect sign in successful:', result.user);
+            
+            try {
+              // Register user in database
+              await registerUserWithServer({
+                firebaseUid: result.user.uid,
+                email: result.user.email,
+                displayName: result.user.displayName || ''
+              });
+            } catch (dbError) {
+              // If database registration fails, we can still proceed
+              console.warn('Database registration after redirect had an issue:', dbError);
+            }
+            
+            navigate(from, { replace: true });
+          }
       } catch (error) {
         console.error('Google redirect auth error:', error);
         setErrors({ general: 'Google authentication failed. Please try again.' });
@@ -123,23 +123,17 @@ const Login = () => {
     if (!validateForm()) return;
 
     setLoading(true);
-    setErrors({});    try {
+    setErrors({});    
+    try {
       if (isLogin) {
-        // Sign in existing user
+        // Sign in existing user (Firebase only, no server interaction)
         const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
-        console.log('User signed in:', userCredential.user);
+        console.log('User signed in with Firebase:', userCredential.user);
         
-        // Sync user data with the server including role for logged in users too
-        await syncUserWithServer({
-          firebaseUid: userCredential.user.uid,
-          email: userCredential.user.email,
-          displayName: userCredential.user.displayName || '',
-          role: formData.role
-        }, userCredential.user);
-        
+        // No server contact needed for login, only using Firebase auth
         navigate(from, { replace: true }); // Redirect to intended page or home
       } else {
-        // Create new user
+        // Create new user in Firebase
         const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
         
         // Update profile if name is provided
@@ -149,15 +143,21 @@ const Login = () => {
           });
         }
         
-        // Sync user data with the server including role
-        await syncUserWithServer({
-          firebaseUid: userCredential.user.uid,
-          email: userCredential.user.email,
-          displayName: formData.name || '',
-          role: formData.role
-        }, userCredential.user);
+        try {
+          // After Firebase authentication success, register user in MongoDB
+          // Send only the necessary data to the server for storage
+          await registerUserWithServer({
+            firebaseUid: userCredential.user.uid,
+            email: userCredential.user.email,
+            displayName: formData.name || '',
+          });
+          console.log('User created in Firebase and registered in database');
+        } catch (dbError) {
+          // If database registration fails, but Firebase auth succeeded, 
+          // we can still proceed - just log the error
+          console.warn('Database registration error:', dbError);
+        }
         
-        console.log('User created:', userCredential.user);
         navigate(from, { replace: true }); // Redirect to intended page or home
       }
     } catch (error) {
@@ -207,16 +207,18 @@ const Login = () => {
         const result = await signInWithPopup(auth, googleProvider);
         console.log('Google sign in successful:', result.user);
         
-        // Get selected role if available
-        const selectedRole = formData.role || 'user';
-        
-        // Sync user data with the server
-        await syncUserWithServer({
-          firebaseUid: result.user.uid,
-          email: result.user.email,
-          displayName: result.user.displayName || '',
-          role: selectedRole // Use selected role for Google auth
-        }, result.user);
+        try {
+          // Register user in database (only for new users)
+          await registerUserWithServer({
+            firebaseUid: result.user.uid,
+            email: result.user.email,
+            displayName: result.user.displayName || ''
+          });
+        } catch (dbError) {
+          // If database registration fails, but Firebase auth succeeded, 
+          // we can still proceed - the user might already exist in the database
+          console.warn('Database registration after Google auth had an issue:', dbError);
+        }
         
         navigate(from, { replace: true });
       } catch (popupError) {

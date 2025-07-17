@@ -4,8 +4,15 @@ import { apiPost, apiGet } from '../utils/api';
 /**
  * Direct API functions for user authentication
  */
-export const syncUserWithServer = async (userData, user) => {
-  return await apiPost('/users/auth-sync', userData, user);
+export const registerUserWithServer = async (userData) => {
+  try {
+    // This function is called only during signup to store user data in MongoDB
+    console.log('Registering user with server:', userData);
+    return await apiPost('/users/register', userData);
+  } catch (error) {
+    console.error('Error registering user with server:', error);
+    throw error;
+  }
 };
 
 export const getCurrentUser = async (user) => {
