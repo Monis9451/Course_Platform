@@ -11,10 +11,7 @@ const Header = () => {
 
   const navigationItems = [
     { name: 'Home', path: '/' },
-    // ...(user ? [] : [{ name: 'Login', path: '/login' }]), // Hide login if user is authenticated
     { name: 'All Courses', path: '/courses' },
-    // { name: 'Unburdening Trauma', path: '/course/1' },
-    // { name: 'Unburdening Love', path: '/course/2' },
     { name: 'About The Founder', path: '/about' },
     { name: 'Contact Us', path: '/contact-us' },
     { name: 'Blogs', path: '/blogs' },

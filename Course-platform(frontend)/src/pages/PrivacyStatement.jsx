@@ -9,7 +9,6 @@ const PrivacyStatement = () => {
         {/* Privacy Statement Content Section */}
         <section className="py-20 bg-cream min-h-screen">
           <div className="container mx-auto max-w-4xl">
-            {/* Page Title */}
             <div className="text-center mb-12">
               <h1 className="text-3xl md:text-4xl font-light text-[#393128] mb-6">
                 PRIVACY STATEMENT
@@ -148,21 +147,6 @@ const PrivacyStatement = () => {
 
               </div>
 
-              {/* Contact Information */}
-              {/* <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                <h3 className="text-xl font-semibold text-[#393128] mb-4">
-                  Questions About This Privacy Statement?
-                </h3>
-                <p className="text-[#393128] mb-4">
-                  If you have any questions or concerns about how we handle your personal data, please don't hesitate to contact us.
-                </p>
-                <a 
-                  href="/contact" 
-                  className="bg-[#B45B29] text-white px-6 py-3 rounded-full font-medium hover:bg-[#A04A24] transition-colors inline-block"
-                >
-                  Contact Us
-                </a>
-              </div> */}
             </div>
           </div>
         </section>

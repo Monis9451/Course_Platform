@@ -1,39 +1,31 @@
 import React from 'react'
 
 const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSelect, completedLessons, setCompletedLessons, lessonProgress }) => {
-  // Use completedLessons from props or fallback to empty set
   const currentCompletedLessons = completedLessons || new Set([])
   const updateCompletedLessons = setCompletedLessons || (() => {})
-  // Use lessonProgress from props or fallback to empty object
   const currentLessonProgress = lessonProgress || {}
   
-  // Calculate total lessons
   const totalLessons = workshopData.modules.reduce((total, module) => total + module.lessons.length, 0)
   
-  // Calculate progress percentage - consider both completed lessons and partial progress
   const calculateOverallProgress = () => {
-    const totalPossibleProgress = totalLessons * 100; // 100% for each lesson
+    const totalPossibleProgress = totalLessons * 100;
     let totalProgress = 0;
     
-    // First count all completed lessons as 100%
     currentCompletedLessons.forEach(() => {
       totalProgress += 100;
     });
     
-    // Add partial progress for lessons not marked as fully complete
     Object.entries(currentLessonProgress).forEach(([lessonKey, progress]) => {
       if (!currentCompletedLessons.has(lessonKey)) {
         totalProgress += progress;
       }
     });
     
-    // Calculate the overall percentage
     return Math.min(100, Math.round((totalProgress / totalPossibleProgress) * 100));
   };
   
   const progressPercentage = calculateOverallProgress();
   
-  // Toggle lesson completion
   const toggleLessonCompletion = (moduleIndex, lessonIndex, event) => {
     event.stopPropagation()
     const lessonKey = `${moduleIndex}-${lessonIndex}`
@@ -48,27 +40,21 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
     })
   }
 
-  // Helper function to determine icon type based on lesson data
   const getLessonIconType = (lesson, moduleIndex, lessonIndex) => {
-    // Special case for Module 6 first lesson
     if (moduleIndex === 5 && lessonIndex === 0) {
       return 'page';
     }
     
-    // First check if lesson has an explicit icon type property
     if (lesson.iconType) {
       return lesson.iconType;
     }
     
-    // Determine icon based on the lesson title keywords
     const title = lesson.title ? lesson.title.toLowerCase() : '';
     
-    // Special cases based on exact title matches
     if (moduleIndex === 5 && title === "creating your ongoing healing practice") {
       return 'page';
     }
     
-    // Regular keyword matching
     if (title.includes('exercise') || 
         (title.includes('practice') && !title.includes('creating your ongoing healing practice')) || 
         title.includes('checklist')) {
@@ -77,7 +63,6 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
       return 'speaker';
     }
     
-    // If no match by title, use the pattern from previous implementation
     if (moduleIndex === 0) {
       if (lessonIndex <= 3) return 'page';
       if (lessonIndex >= 4 && lessonIndex <= 6) return 'checkbox';
@@ -99,16 +84,13 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
       if (lessonIndex <= 5) return 'checkbox';
       if (lessonIndex === 6) return 'speaker';
     } else if ( moduleIndex === 5) {
-      // Already handled the first lesson at the top of the function
       if (lessonIndex >= 1 && lessonIndex <= 2) return 'page';
       if (lessonIndex >= 3 && lessonIndex <= 5) return 'checkbox';
     }
     
-    // Default icon is document/page
     return 'page';
   }
 
-  // Helper function to render the appropriate icon
   const renderLessonIcon = (iconType, isSelected) => {
     switch (iconType) {
       case 'checkbox':
@@ -159,7 +141,6 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
 
   return (
     <div className="w-80 bg-white max-h-screen h-full overflow-y-auto border-r border-gray-200" style={{ paddingBottom: "60px" }}>
-      {/* Progress Section */}
       <div className="p-4 border-b border-gray-200">
         <div className="text-sm font-semibold text-gray-600 mb-1">Workshop Content</div>
         <div className="text-xl font-bold text-primary mb-1">{progressPercentage}% COMPLETE</div>
@@ -171,11 +152,9 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
         </div>
       </div>
 
-      {/* Content List */}
       <div className="py-4">
         {workshopData.modules.map((module, moduleIndex) => (
           <div key={moduleIndex} className="mb-4 relative">
-            {/* Connection line between modules (only for modules after the first one) */}
             {moduleIndex !== 0 && (
               <div className="absolute left-14 w-px bg-gray-300" style={{ 
                 top: "-8px", 
@@ -185,7 +164,6 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
               }}></div>
             )}
             
-            {/* Module Title - with light gray background */}
             <div className="px-4 py-3 mb-1 bg-gray-100">
               <h3 className="font-bold text-gray-900 text-sm">
                 {module.title}
@@ -193,13 +171,11 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
               <p className="text-xs text-gray-600 mt-1">{module.description}</p>
             </div>
 
-            {/* Module Lessons */}
             <div className="relative">
-              {/* Vertical line for lessons - only appears within the lessons container */}
               <div className="absolute left-14 w-px bg-gray-300" style={{ 
                 top: "0",
                 bottom: "0",
-                zIndex: 1 /* Lower z-index so it appears behind lesson content but still visible */
+                zIndex: 1
               }}></div>
               
               {module.lessons.map((lesson, lessonIndex) => (
@@ -213,9 +189,7 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
                         : 'text-gray-700'
                     }`}
                   >
-                    {/* Status Circle - positioned with some left spacing */}
                     <div className="absolute left-6 flex-shrink-0 z-20">
-                      {/* Completed lesson styling with double border effect */}
                       {currentCompletedLessons.has(`${moduleIndex}-${lessonIndex}`) && !(selectedLesson?.moduleIndex === moduleIndex && 
                         selectedLesson?.lessonIndex === lessonIndex) && (
                         <div className="absolute inset-0 rounded-full border-2 border-primary">
@@ -223,7 +197,6 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
                         </div>
                       )}
                       
-                      {/* White fill for completed and selected lesson - completely white with no inner border */}
                       {currentCompletedLessons.has(`${moduleIndex}-${lessonIndex}`) && (selectedLesson?.moduleIndex === moduleIndex && 
                         selectedLesson?.lessonIndex === lessonIndex) && (
                         <div className="absolute inset-0 rounded-full bg-white border-2 border-white">
@@ -244,7 +217,6 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
                             : 'border-2 border-[#B45B29]'
                         }`}
                       >
-                        {/* For partial progress, show a progress fill */}
                         {currentLessonProgress[`${moduleIndex}-${lessonIndex}`] > 0 && !currentCompletedLessons.has(`${moduleIndex}-${lessonIndex}`) && (
                           <div 
                             className="absolute inset-0 rounded-full transition-all duration-300 overflow-hidden"
@@ -257,8 +229,8 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
                               style={{
                                 backgroundColor: selectedLesson?.moduleIndex === moduleIndex && 
                                     selectedLesson?.lessonIndex === lessonIndex
-                                    ? '#FFFFFF' // White for selected
-                                    : '#B45B29', // Brownish-orange for unselected
+                                    ? '#FFFFFF' 
+                                    : '#B45B29', 
                                 clipPath: `inset(0 ${100 - currentLessonProgress[`${moduleIndex}-${lessonIndex}`]}% 0 0)`,
                                 opacity: 1
                               }}
@@ -268,13 +240,10 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
                       </button>
                     </div>
 
-                    {/* Lesson Icon */}
                     <div className="mr-3 ml-14">
-                      {/* Determine the icon type for the lesson */}
                       {renderLessonIcon(getLessonIconType(lesson, moduleIndex, lessonIndex), selectedLesson?.moduleIndex === moduleIndex && selectedLesson?.lessonIndex === lessonIndex)}
                     </div>
 
-                    {/* Lesson Info */}
                     <div className="flex-1 min-w-0">
                       <div className={`text-sm font-medium ${
                         selectedLesson?.moduleIndex === moduleIndex && 

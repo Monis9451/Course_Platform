@@ -1,11 +1,5 @@
 import { useAuth } from '../contexts/AuthContext';
 import api from '../utils/api';
-
-/**
- * Custom hook for making authenticated API calls
- * Automatically includes Firebase token in requests
- * Only includes methods that are actually being used
- */
 export const useApi = () => {
   const { user } = useAuth();
 

@@ -9,12 +9,10 @@ const About = () => {
         <Header />
         <section className="py-20 bg-cream min-h-screen">
           <div className="container mx-auto max-w-4xl">
-            {/* Page Title */}
             <div className="mb-12">
               <h1 className=" text-center text-3xl md:text-4xl font-light text-[#393128] mb-6">
                 About the Founder
               </h1>
-              {/* Content */}
               <div className="prose prose-lg max-w-none text-[#393128] leading-relaxed space-y-8">
                   <p className="text-md">
                   Dr. Samina Khatun is a highly trained Counselling Psychologist with 15 years of clinical experience in the mental health field. Registered with the Health and Care Professions Council (HCPC) and the British Psychological Society (BPS), she specialises in the assessment, diagnosis, and treatment of complex PTSD, trauma, depression, anxiety disorders, low self-esteem, self-confidence issues, and relationship difficulties. Throughout her career, Dr. Samina has worked in both the NHS and private practice settings, including at the prestigious Priory in London Harley Street, where she has developed a deep expertise in supporting individuals through their most challenging emotional experiences.
@@ -44,7 +42,6 @@ const About = () => {
                   Dr. Samina is honoured to offer this journal to those ready for change. She invites readers to embrace their potential and embark on a transformative journey, confident that this tool will serve as a trusted guide on the path to personal mastery, helping them navigate life with renewed confidence and purpose.
                 </p>
               </div>
-
 
             </div>
           </div>

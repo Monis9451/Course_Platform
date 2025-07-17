@@ -40,10 +40,7 @@ const Disclaimer = () => {
 
           </div>
         </section>
-
-        {/* White space separator */}
         <div className="bg-white py-8"></div>
-
         <Footer />
     </div>
   )

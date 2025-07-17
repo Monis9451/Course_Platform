@@ -16,7 +16,6 @@ const Error = () => {
                 style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
             />
             
-            {/* Go to Home button at bottom */}
             <button
                 onClick={handleGoHome}
                 style={{

@@ -534,10 +534,6 @@ const CourseDetails = () => {
                   <FaHeadphones className="mr-2" />
                   Audio Content
                 </span>
-                {/* <span className="flex items-center text-warm-gray text-base font-fitzgerald">
-                  <FaPencilAlt className="mr-2" />
-                  Workbooks
-                </span> */}
                 <span className="flex items-center text-warm-gray text-base font-fitzgerald">
                   <FaRegLightbulb className="mr-2" />
                   Exercises

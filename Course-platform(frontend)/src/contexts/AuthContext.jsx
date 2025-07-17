@@ -20,8 +20,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setUser(firebaseUser);
-      // We're not syncing with the server on auth state change anymore
-      // Users are only registered with the server during signup
       setLoading(false);
     });
 
@@ -52,7 +50,7 @@ export const AuthProvider = ({ children }) => {
     logout,
     getIdToken,
     isAuthenticated: !!user,
-    role: user?.role || 'user' // Default role, can be enhanced later if needed
+    role: user?.role || 'user'
   };
 
   return (

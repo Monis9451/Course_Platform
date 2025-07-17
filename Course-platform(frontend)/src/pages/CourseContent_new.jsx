@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import WorkshopSidebar from '../components/CourseSidebar'
 
-// Import Marcellus font for this page only
 const fontStyle = `
   @import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
   
@@ -14,7 +13,6 @@ const fontStyle = `
   }
 `;
 
-// Import all lesson components
 import Module1Lesson1 from '../components/UnburdingTrauma/Module1Lesson1'
 import Module1Lesson2 from '../components/UnburdingTrauma/Module1Lesson2'
 import Module1Lesson3 from '../components/UnburdingTrauma/Module1Lesson3'
@@ -67,13 +65,11 @@ import Module6Lesson7 from '../components/UnburdingTrauma/Module6Lesson7'
 
 const CourseContent_new = () => {
   const [selectedLesson, setSelectedLesson] = useState({ moduleIndex: 0, lessonIndex: 0 })
-  const [completedLessons, setCompletedLessons] = useState(new Set([])) // Initialize with no lessons completed
-  const [lessonProgress, setLessonProgress] = useState({}) // Track scroll progress for each lesson
+  const [completedLessons, setCompletedLessons] = useState(new Set([])) 
+  const [lessonProgress, setLessonProgress] = useState({}) 
   
-  // Reference to the lesson content container
   const lessonContentRef = useRef(null)
   
-  // Workshop data with all modules and lessons
   const courseData = {
     title: "Unburdening Trauma: A 6-Week Self Paced Workshop",
     description: "Why We Get Stuck in Pain – and How Awareness Sets Us Free",
@@ -162,31 +158,25 @@ const CourseContent_new = () => {
   }
 
   const handleLessonSelect = (moduleIndex, lessonIndex) => {
-    // Check if this is a different lesson than the current one
     if (selectedLesson.moduleIndex !== moduleIndex || selectedLesson.lessonIndex !== lessonIndex) {
       setSelectedLesson({ moduleIndex, lessonIndex });
       
-      // Reset scroll position when changing lessons
       if (lessonContentRef.current) {
         lessonContentRef.current.scrollTop = 0;
       }
     }
   }
 
-  // Navigation functions
   const goToPreviousLesson = () => {
     const { moduleIndex, lessonIndex } = selectedLesson
     
     if (lessonIndex > 0) {
-      // Go to previous lesson in same module
       setSelectedLesson({ moduleIndex, lessonIndex: lessonIndex - 1 })
     } else if (moduleIndex > 0) {
-      // Go to last lesson of previous module
       const prevModule = courseData.modules[moduleIndex - 1]
       setSelectedLesson({ moduleIndex: moduleIndex - 1, lessonIndex: prevModule.lessons.length - 1 })
     }
     
-    // Reset scroll position
     if (lessonContentRef.current) {
       lessonContentRef.current.scrollTop = 0;
     }
@@ -196,37 +186,29 @@ const CourseContent_new = () => {
     const { moduleIndex, lessonIndex } = selectedLesson
     const lessonKey = `${moduleIndex}-${lessonIndex}`
     
-    // Mark current lesson as completed
     setCompletedLessons(prev => new Set([...prev, lessonKey]))
     
-    // Set progress to 100% for this lesson
     setLessonProgress(prev => ({
       ...prev,
       [lessonKey]: 100
     }));
     
-    // Navigate to next lesson
     const currentModule = courseData.modules[moduleIndex]
     if (lessonIndex < currentModule.lessons.length - 1) {
-      // Go to next lesson in same module
       setSelectedLesson({ moduleIndex, lessonIndex: lessonIndex + 1 })
     } else if (moduleIndex < courseData.modules.length - 1) {
-      // Go to first lesson of next module
       setSelectedLesson({ moduleIndex: moduleIndex + 1, lessonIndex: 0 })
     }
     
-    // Reset scroll position
     if (lessonContentRef.current) {
       lessonContentRef.current.scrollTop = 0;
     }
   }
 
-  // Check if navigation buttons should be disabled
   const isFirstLesson = selectedLesson.moduleIndex === 0 && selectedLesson.lessonIndex === 0
   const isLastLesson = selectedLesson.moduleIndex === courseData.modules.length - 1 && 
                       selectedLesson.lessonIndex === courseData.modules[courseData.modules.length - 1].lessons.length - 1
 
-  // Get the current lesson component
   const getCurrentLessonComponent = () => {
     const currentModule = courseData.modules[selectedLesson.moduleIndex]
     const currentLesson = currentModule?.lessons[selectedLesson.lessonIndex]
@@ -234,7 +216,6 @@ const CourseContent_new = () => {
     
     return (
       <div className="flex flex-col h-full">
-        {/* Navigation Buttons */}
         <div className="flex justify-between items-center p-4 bg-white border-b border-gray-200">
           <button
             onClick={goToPreviousLesson}
@@ -267,7 +248,6 @@ const CourseContent_new = () => {
           </button>
         </div>
 
-        {/* Lesson Content */}
         <div className="flex-1 overflow-y-auto" ref={lessonContentRef}>
           <div className="pb-48 px-8 md:px-16 lg:px-24">
             {LessonComponent ? <LessonComponent /> : (
@@ -286,33 +266,25 @@ const CourseContent_new = () => {
     )
   }
 
-  // Effect to track scroll progress for the current lesson
   useEffect(() => {
     if (!lessonContentRef.current) return;
     
     const lessonKey = `${selectedLesson.moduleIndex}-${selectedLesson.lessonIndex}`;
     const scrollContainer = lessonContentRef.current;
     
-    // Function to calculate scroll percentage
     const calculateScrollProgress = () => {
       const { scrollTop, scrollHeight, clientHeight } = scrollContainer;
-      
-      // Calculate how far we've scrolled as a percentage
-      // scrollHeight - clientHeight = total scrollable distance
       const scrollableDistance = scrollHeight - clientHeight;
-      if (scrollableDistance <= 0) return 0; // If no scrollable content, don't mark it as complete automatically
+      if (scrollableDistance <= 0) return 0;
       
       const scrollPercentage = Math.min(100, Math.ceil((scrollTop / scrollableDistance) * 100));
       
-      // Only update if the new progress is higher than the previous
       setLessonProgress(prev => {
         const currentProgress = prev[lessonKey] || 0;
         if (scrollPercentage > currentProgress) {
-          // If progress is more than 95%, consider lesson as fully completed
           if (scrollPercentage > 95) {
-            // Add to completed lessons
             setCompletedLessons(prevCompleted => new Set([...prevCompleted, lessonKey]));
-            return { ...prev, [lessonKey]: 100 }; // Set to 100% for visual completeness
+            return { ...prev, [lessonKey]: 100 };
           }
           
           return { ...prev, [lessonKey]: scrollPercentage };
@@ -321,13 +293,8 @@ const CourseContent_new = () => {
       });
     };
     
-    // Attach scroll event listener
     scrollContainer.addEventListener('scroll', calculateScrollProgress);
     
-    // We'll skip the initial calculation to prevent auto-completing lessons
-    // when they first load, user needs to scroll to show progress
-    
-    // Cleanup
     return () => {
       scrollContainer.removeEventListener('scroll', calculateScrollProgress);
     };
@@ -335,11 +302,9 @@ const CourseContent_new = () => {
 
   return (
     <>
-      {/* Add Marcellus font styles */}
       <style>{fontStyle}</style>
       
       <div className="flex flex-col h-screen bg-gray-50 marcellus-font">
-        {/* Course Header - Full Width */}
         <div className="bg-primary text-white px-6 py-8 w-full">
           <div className="flex items-center justify-between">
             <button 
@@ -354,21 +319,17 @@ const CourseContent_new = () => {
             
             <h1 className="text-xl font-semibold absolute left-1/2 transform -translate-x-1/2">{courseData.title}</h1>
             
-            {/* Empty div for balance */}
             <div></div>
           </div>
         </div>
 
-        {/* Add custom CSS for scrolling */}
         <style>{`
           .custom-scrollbar::-webkit-scrollbar-track {
             margin-bottom: 80px;
           }
         `}</style>
         
-        {/* Content Area with Sidebar and Main Content */}
         <div className="flex flex-1 overflow-hidden">
-          {/* Sidebar */}
           <div className="sidebar-container h-full" style={{ minHeight: "calc(100vh - 120px)" }}>
             <WorkshopSidebar 
               courseData={courseData}
@@ -380,7 +341,6 @@ const CourseContent_new = () => {
             />
           </div>
           
-          {/* Main Content Area */}
           <div className="flex-1 overflow-y-auto">
             {getCurrentLessonComponent()}
           </div>

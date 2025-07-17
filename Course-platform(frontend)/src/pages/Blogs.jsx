@@ -6,21 +6,14 @@ const Blogs = () => {
   return (
     <div>
         <Header />
-        
-        {/* Blog Section */}
         <section className="py-16 bg-cream">
           <div className="container mx-auto px-8 md:px-12 max-w-7xl">
-            {/* Section Title */}
             <div className="text-center mb-16">
               <h1 className="text-4xl md:text-5xl font-light text-[#393128] mb-4">
                 FIND YOUR POWER
               </h1>
             </div>
-
-            {/* Blog Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              
-              {/* Blog Post 1 */}
               <article className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                 <div className="h-64">
                   <img 
@@ -42,8 +35,6 @@ const Blogs = () => {
                   </p>
                 </div>
               </article>
-
-              {/* Blog Post 2 */}
               <article className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                 <div className="h-64">
                   <img 
@@ -65,8 +56,6 @@ const Blogs = () => {
                   </p>
                 </div>
               </article>
-
-              {/* Blog Post 3 */}
               <article className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                 <div className="h-64">
                   <img 
@@ -88,10 +77,7 @@ const Blogs = () => {
                   </p>
                 </div>
               </article>
-
             </div>
-
-            {/* Load More Button */}
             <div className="text-center mt-12">
               <button className="bg-primary text-white px-8 py-3 rounded-full font-medium hover:bg-primary-dark transition-colors">
                 Load More Articles
@@ -99,10 +85,7 @@ const Blogs = () => {
             </div>
           </div>
         </section>
-        
-        {/* White space separator */}
         <div className="bg-white py-8"></div>
-            
         <Footer />
     </div>
   )
