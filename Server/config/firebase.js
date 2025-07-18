@@ -5,7 +5,6 @@ const fs = require('fs');
 // Initialize Firebase Admin SDK
 const initializeFirebase = () => {
   if (!admin.apps.length) {
-    // const serviceAccount = require('./courseplatform.json');
     const serviceAccount = {
       type: process.env.FIREBASE_TYPE,
       project_id: process.env.FIREBASE_PROJECT_ID,
