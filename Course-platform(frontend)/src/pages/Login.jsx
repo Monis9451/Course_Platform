@@ -2,19 +2,9 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { FiEye, FiEyeOff } from 'react-icons/fi'
-import { 
-  createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword, 
-  signInWithPopup, 
-  signInWithRedirect,
-  getRedirectResult,
-  GoogleAuthProvider,
-  updateProfile 
-} from 'firebase/auth'
-import { auth } from '../config/firebase'
-import { registerUserWithServer } from '../services/userService'
 import Header from './Header'
-
+import { createNewUser, signInUser, signInWithGoogle } from '../firebase/auth'
+import { useAuth } from '../context/authContext'
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -22,55 +12,25 @@ const Login = () => {
     name: '',
     email: '',
     password: '',
-    confirmPassword: '',
-    role: 'user'
-  });  const [errors, setErrors] = useState({});
+    confirmPassword: ''
+  });
+  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { currentUser } = useAuth();
 
   // Get the intended destination from location state
   const from = location.state?.from?.pathname || '/';
 
-  // Google Auth Provider with proper configuration
-  const googleProvider = new GoogleAuthProvider();
-  
-  // Configure Google provider for better production compatibility
-  googleProvider.setCustomParameters({
-    prompt: 'select_account'
-  });
-
-  // Check for redirect result on component mount
+  // Redirect if user is already logged in
   useEffect(() => {
-    const checkRedirectResult = async () => {        try {
-          const result = await getRedirectResult(auth);
-          if (result) {
-            console.log('Google redirect sign in successful:', result.user);
-            
-            try {
-              // Register user in database
-              await registerUserWithServer({
-                firebaseUid: result.user.uid,
-                email: result.user.email,
-                displayName: result.user.displayName || ''
-              });
-            } catch (dbError) {
-              // If database registration fails, we can still proceed
-              console.warn('Database registration after redirect had an issue:', dbError);
-            }
-            
-            navigate(from, { replace: true });
-          }
-      } catch (error) {
-        console.error('Google redirect auth error:', error);
-        setErrors({ general: 'Google authentication failed. Please try again.' });
-      }
-    };
-
-    checkRedirectResult();
-  }, [navigate, from, formData.role]);
+    if (currentUser) {
+      navigate(from);
+    }
+  }, [currentUser, navigate, from]);
 
   // Handle input changes
   const handleInputChange = (e) => {
@@ -116,166 +76,52 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Handle email/password authentication
+  // Handle form submit for login/signup
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!validateForm()) return;
-
     setLoading(true);
-    setErrors({});    
+    setErrors({});
+    
+    if (!validateForm()) {
+      setLoading(false);
+      return;
+    }
+    
     try {
       if (isLogin) {
-        // Sign in existing user (Firebase only, no server interaction)
-        const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
-        console.log('User signed in with Firebase:', userCredential.user);
-        
-        // No server contact needed for login, only using Firebase auth
-        navigate(from, { replace: true }); // Redirect to intended page or home
+        // Login
+        await signInUser(formData.email, formData.password);
       } else {
-        // Create new user in Firebase
-        const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-        
-        // Update profile if name is provided
-        if (formData.name) {
-          await updateProfile(userCredential.user, {
-            displayName: formData.name
-          });
-        }
-        
-        try {
-          // After Firebase authentication success, register user in MongoDB
-          // Send only the necessary data to the server for storage
-          await registerUserWithServer({
-            firebaseUid: userCredential.user.uid,
-            email: userCredential.user.email,
-            displayName: formData.name || '',
-          });
-          console.log('User created in Firebase and registered in database');
-        } catch (dbError) {
-          // If database registration fails, but Firebase auth succeeded, 
-          // we can still proceed - just log the error
-          console.warn('Database registration error:', dbError);
-        }
-        
-        navigate(from, { replace: true }); // Redirect to intended page or home
+        // Signup
+        await createNewUser(formData.email, formData.password);
       }
+      navigate(from); // Redirect after login/signup
     } catch (error) {
-      console.error('Authentication error:', error);
-      let errorMessage = 'An error occurred. Please try again.';
-      
-      switch (error.code) {
-        case 'auth/email-already-in-use':
-          errorMessage = 'This email is already registered.';
-          break;
-        case 'auth/invalid-email':
-          errorMessage = 'Invalid email address.';
-          break;
-        case 'auth/weak-password':
-          errorMessage = 'Password should be at least 6 characters.';
-          break;
-        case 'auth/user-not-found':
-          errorMessage = 'No account found with this email.';
-          break;
-        case 'auth/wrong-password':
-          errorMessage = 'Incorrect password.';
-          break;
-        case 'auth/invalid-credential':
-          errorMessage = 'Invalid email or password.';
-          break;
-        default:
-          errorMessage = error.message;
-      }
-      
-      setErrors({ general: errorMessage });
-    } finally {
-      setLoading(false);
+      setErrors({ general: error.message });
     }
+    setLoading(false);
   };
 
-  // Handle Google authentication
+  // Handle Google login
   const handleGoogleAuth = async () => {
     setLoading(true);
     setErrors({});
-
     try {
-      // Clear any existing auth state
-      await auth.signOut().catch(() => {});
-      
-      try {
-        // Try popup first
-        const result = await signInWithPopup(auth, googleProvider);
-        console.log('Google sign in successful:', result.user);
-        
-        try {
-          // Register user in database (only for new users)
-          await registerUserWithServer({
-            firebaseUid: result.user.uid,
-            email: result.user.email,
-            displayName: result.user.displayName || ''
-          });
-        } catch (dbError) {
-          // If database registration fails, but Firebase auth succeeded, 
-          // we can still proceed - the user might already exist in the database
-          console.warn('Database registration after Google auth had an issue:', dbError);
-        }
-        
-        navigate(from, { replace: true });
-      } catch (popupError) {
-        console.warn('Popup failed, trying redirect:', popupError);
-        
-        // If popup fails (common in production), use redirect
-        if (popupError.code === 'auth/popup-blocked' || 
-            popupError.code === 'auth/cancelled-popup-request' ||
-            popupError.code === 'auth/popup-closed-by-user') {
-          
-          await signInWithRedirect(auth, googleProvider);
-          return; // signInWithRedirect doesn't return a promise result
-        }
-        
-        throw popupError; // Re-throw if it's not a popup-related error
-      }
+      await signInWithGoogle();
+      navigate(from);
     } catch (error) {
-      console.error('Google auth error:', error);
-      let errorMessage = 'Google authentication failed. Please try again.';
-      
-      switch (error.code) {
-        case 'auth/popup-closed-by-user':
-          errorMessage = 'Google sign-in was cancelled.';
-          break;
-        case 'auth/popup-blocked':
-          errorMessage = 'Popup was blocked. Redirecting to Google...';
-          break;
-        case 'auth/cancelled-popup-request':
-          errorMessage = 'Another popup is already open. Please try again.';
-          break;
-        case 'auth/network-request-failed':
-          errorMessage = 'Network error. Please check your connection and try again.';
-          break;
-        case 'auth/invalid-api-key':
-          errorMessage = 'Configuration error. Please contact support.';
-          break;
-        case 'auth/unauthorized-domain':
-          errorMessage = 'This domain is not authorized for Google sign-in.';
-          break;
-        default:
-          errorMessage = error.message || 'An unexpected error occurred.';
-      }
-      
-      setErrors({ general: errorMessage });
-      setLoading(false);
+      setErrors({ general: error.message });
     }
+    setLoading(false);
   };
 
-  // Reset form when switching between login/signup
   const handleModeSwitch = (loginMode) => {
     setIsLogin(loginMode);
     setFormData({
       name: '',
       email: '',
       password: '',
-      confirmPassword: '',
-      role: 'user'
+      confirmPassword: ''
     });
     setErrors({});
   };
@@ -346,22 +192,6 @@ const Login = () => {
               {errors.email && (
                 <p className="mt-1 text-sm text-primary font-light">{errors.email}</p>
               )}
-            </div>
-            
-            <div>
-              <label htmlFor="role" className="block text-sm font-light text-black mb-1">
-                Role
-              </label>
-              <select
-                id="role"
-                name="role"
-                value={formData.role}
-                onChange={handleInputChange}
-                className={`w-full px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary`}
-              >
-                <option value="user">Student</option>
-                <option value="admin">Administrator</option>
-              </select>
             </div>
             
             <div>

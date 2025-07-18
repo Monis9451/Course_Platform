@@ -1,11 +1,10 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { AuthProvider } from './contexts/AuthContext'
+import { AuthProvider } from './context/authContext'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Courses from './pages/Courses'
 import CourseDetails from './pages/CourseDetails'
-// import CourseLanding from './pages/CourseLanding'
 import About from './pages/About'
 import CourseContentNew from './pages/CourseContent_new'
 import ContactUs from "./pages/ContactUs";

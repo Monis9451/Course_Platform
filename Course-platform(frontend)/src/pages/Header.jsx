@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FiUser, FiSearch, FiShoppingCart, FiMenu, FiX, FiLogOut, FiChevronDown } from 'react-icons/fi'
-import { useAuth } from '../contexts/AuthContext'
+import { useAuth } from '../context/authContext'
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = React.useState(false);
-  const { user, logout } = useAuth();
+  const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
   const navigationItems = [
@@ -78,15 +78,15 @@ const Header = () => {
           </div>          {/* Right - Icons */}
           <div className="flex items-center space-x-2 md:space-x-6.5">
             {/* User Profile */}
-            {user ? (
+            {currentUser ? (
               <div className="relative profile-dropdown">
                 <button 
                   onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
                   className="flex items-center text-white hover:text-gray-200 transition-colors duration-200 space-x-1"
                 >
-                  {user.photoURL ? (
+                  {currentUser.photoURL ? (
                     <img 
-                      src={user.photoURL} 
+                      src={currentUser.photoURL} 
                       alt="Profile" 
                       className="h-6 w-6 rounded-full"
                     />
@@ -109,7 +109,7 @@ const Header = () => {
                   <div className="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2 z-50 border">
                     <div className="px-4 py-3 border-b border-gray-200">
                       <p className="text-sm text-gray-900 font-medium">Signed in as</p>
-                      <p className="text-sm text-gray-600 truncate">{user.email}</p>
+                      <p className="text-sm text-gray-600 truncate">{currentUser.email}</p>
                     </div>
                     <button
                       onClick={handleLogout}
@@ -195,12 +195,12 @@ const Header = () => {
           </div>          {/* Menu Items */}
           <div className="flex-1 px-6 py-4">
             {/* User info in mobile menu */}
-            {user && (
+            {currentUser && (
               <div className="mb-6 pb-4 border-b border-gray-200">
                 <div className="flex items-center space-x-3 mb-3">
-                  {user.photoURL ? (
+                  {currentUser.photoURL ? (
                     <img 
-                      src={user.photoURL} 
+                      src={currentUser.photoURL} 
                       alt="Profile" 
                       className="h-10 w-10 rounded-full"
                     />
@@ -211,7 +211,7 @@ const Header = () => {
                   )}
                   <div>
                     <p className="text-sm font-medium text-black">Signed in as</p>
-                    <p className="text-xs text-gray-600 truncate">{user.email}</p>
+                    <p className="text-xs text-gray-600 truncate">{currentUser.email}</p>
                   </div>
                 </div>
                 <button
