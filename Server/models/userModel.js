@@ -1,13 +1,15 @@
 const supabase = require("../config/supabase");
 
-const createUser = async (userID, username, email) => {
+const createUser = async ({ userID, username, email }) => {
   const { data, error } = await supabase.from("user").insert([
     {
-      id: userID,
+      userID,
       username,
       email,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
     },
-  ]);
+  ]).select();
 
   if (error) {
     throw new Error(`Error creating user: ${error.message}`);
@@ -21,6 +23,7 @@ const getAllUsers = async () => {
     if(error){
         throw new Error(`Error in fetching all users: ${error.message}`);
     }
+    return data;
 };
 
 const getUserById = async (userID) => {

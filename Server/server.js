@@ -1,31 +1,31 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-
-// Import routes
-
-// Load environment variables
-dotenv.config();
+const supabase = require('./config/supabase');
+const morgan = require('morgan');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Security middleware
-
+// Middleware
+app.use(morgan('dev'));
+app.use(express.urlencoded({ extended: true }));  
+app.use(express.json());
 
 // CORS configuration
-const corsOptions = {
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-};
-app.use(cors(corsOptions));
+app.use(cors ({
+  origin: process.env.CLIENT_URL,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
-// Import the connectDB function
+// Load environment variables
+dotenv.config();
 
-// Connect to MongoDB
+// Import routes
+app.use('/api/users', userRoutes);
 
-// Define routes
 
 // Error handling middleware
 app.use((err, req, res, next) => {
