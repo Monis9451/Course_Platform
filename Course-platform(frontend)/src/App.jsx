@@ -1,8 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/authContext'
-import { Toaster } from 'react-hot-toast'
-import ProtectedRoute from './components/ProtectedRoute'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Courses from './pages/Courses'
@@ -23,63 +21,6 @@ const App = () => {
   return (
     <AuthProvider>
       <div className="font-fitzgerald font-thin bg-white text-black min-h-screen">
-        <Toaster 
-          position="top-right"
-          toastOptions={{
-            duration: 5000,
-            dismissible: true,
-            style: {
-              background: '#f5f5dc',
-              color: '#bd6334',
-              border: '1px solid #bd6334',
-              fontSize: '14px',
-              fontWeight: '500',
-              borderRadius: '8px',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-              maxWidth: '400px',
-              position: 'relative',
-              padding: '12px 40px 12px 16px',
-            },
-            success: {
-              duration: 4000,
-              dismissible: true,
-              iconTheme: {
-                primary: '#bd6334',
-                secondary: '#f5f5dc',
-              },
-              style: {
-                background: '#f0f9f0',
-                color: '#2e7d32',
-                border: '1px solid #4caf50',
-                position: 'relative',
-                padding: '12px 40px 12px 16px',
-              }
-            },
-            error: {
-              duration: 7000,
-              dismissible: true,
-              iconTheme: {
-                primary: '#dc2626',
-                secondary: '#fef2f2',
-              },
-              style: {
-                background: '#fef2f2',
-                color: '#dc2626',
-                border: '1px solid #ef4444',
-                fontWeight: '600',
-                position: 'relative',
-                padding: '12px 40px 12px 16px',
-              }
-            },
-            loading: {
-              dismissible: false,
-              iconTheme: {
-                primary: '#bd6334',
-                secondary: '#f5f5dc',
-              },
-            },
-          }}
-        />
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -87,28 +28,12 @@ const App = () => {
             <Route path="/courses" element={<Courses />} />
             <Route path="/course/:id" element={<CourseDetails />} />
             <Route path="/about" element={<About />} />
-            <Route path="/course-content/:id" element={
-              <ProtectedRoute>
-                <CourseContentNew />
-              </ProtectedRoute>
-            } />
+            <Route path="/course-content/:id" element={<CourseContentNew />} />
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/support" element={<ContactUs />} />
-            <Route path="/checkout/:id" element={
-              <ProtectedRoute>
-                <Checkout />
-              </ProtectedRoute>
-            } />
-            <Route path="/thankyou/:id" element={
-              <ProtectedRoute>
-                <ThankYou />
-              </ProtectedRoute>
-            } />
-            <Route path="/thankyou" element={
-              <ProtectedRoute>
-                <ThankYou />
-              </ProtectedRoute>
-            } />
+            <Route path="/checkout/:id" element={<Checkout />} />
+            <Route path="/thankyou/:id" element={<ThankYou />} />
+            <Route path="/thankyou" element={<ThankYou />} />
             <Route path="/privacy-statement" element={<PrivacyStatement />} />
             <Route path="/Blogs" element={<Blogs />} />
             <Route path="/mental-health" element={<MentalHealth />} />

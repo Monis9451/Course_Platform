@@ -16,12 +16,11 @@ const Login = () => {
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const [retryAttempts, setRetryAttempts] = useState(0);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { currentUser, markAsNewUser, authError, clearAuthError } = useAuth();
+  const { currentUser } = useAuth();
 
   // Get the intended destination from location state
   const from = location.state?.from?.pathname || '/';
@@ -32,15 +31,6 @@ const Login = () => {
       navigate(from);
     }
   }, [currentUser, navigate, from]);
-
-  // Handle auth errors from context
-  useEffect(() => {
-    if (authError) {
-      setErrors({ general: authError });
-      setLoading(false);
-      clearAuthError();
-    }
-  }, [authError, clearAuthError]);
 
   // Handle input changes
   const handleInputChange = (e) => {
@@ -86,7 +76,7 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Handle form submit for login/signup with retry logic
+  // Handle form submit for login/signup
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -101,42 +91,15 @@ const Login = () => {
       if (isLogin) {
         // Login
         await signInUser(formData.email, formData.password);
-        setRetryAttempts(0); // Reset retry attempts on success
-        // Navigation will be handled by auth context after successful backend sync
       } else {
-        markAsNewUser();
+        // Signup
         await createNewUser(formData.email, formData.password);
-        setRetryAttempts(0); // Reset retry attempts on success
-        // Navigation will be handled by auth context after successful backend sync
       }
+      navigate(from); // Redirect after login/signup
     } catch (error) {
-      console.error('Firebase auth error:', error);
-      let errorMessage = 'Authentication failed. Please try again.';
-      
-      if (error.code === 'auth/user-not-found') {
-        errorMessage = 'No account found with this email.';
-      } else if (error.code === 'auth/wrong-password') {
-        errorMessage = 'Incorrect password.';
-      } else if (error.code === 'auth/email-already-in-use') {
-        errorMessage = 'An account with this email already exists.';
-      } else if (error.code === 'auth/weak-password') {
-        errorMessage = 'Password is too weak.';
-      } else if (error.code === 'auth/invalid-email') {
-        errorMessage = 'Invalid email address.';
-      } else if (error.code === 'auth/network-request-failed') {
-        errorMessage = 'Network error. Please check your connection and try again.';
-      }
-      
-      setErrors({ general: errorMessage });
-      setRetryAttempts(prev => prev + 1);
-      setLoading(false);
+      setErrors({ general: error.message });
     }
-  };
-
-  // Retry function for failed requests
-  const handleRetry = () => {
-    setErrors({});
-    handleSubmit({ preventDefault: () => {} });
+    setLoading(false);
   };
 
   // Handle Google login
@@ -144,16 +107,12 @@ const Login = () => {
     setLoading(true);
     setErrors({});
     try {
-      const result = await signInWithGoogle();
-      if (result.user.metadata.creationTime === result.user.metadata.lastSignInTime) {
-        markAsNewUser();
-      }
-      // Navigation will be handled by auth context after successful backend sync
+      await signInWithGoogle();
+      navigate(from);
     } catch (error) {
-      console.error('Google auth error:', error);
-      setErrors({ general: 'Google authentication failed. Please try again.' });
-      setLoading(false);
+      setErrors({ general: error.message });
     }
+    setLoading(false);
   };
 
   const handleModeSwitch = (loginMode) => {
@@ -168,8 +127,7 @@ const Login = () => {
   };
   return (
     <div>
-        <Header />
-        <div className="container mx-auto px-4 py-20">
+        <Header />        <div className="container mx-auto px-4 py-20">
         <div className="max-w-md mx-auto bg-cream p-8 shadow-md">
           <h1 className="text-3xl font-fitzgerald font-light text-center text-black mb-8">
             {isLogin ? "Log In to Your Account" : "Create an Account"}
@@ -192,28 +150,8 @@ const Login = () => {
           </div>
 
           {errors.general && (
-            <div className="mb-4 p-4 bg-red-50 border border-red-200 text-red-700 text-sm font-light rounded">
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <p className="font-medium mb-1">Authentication Error</p>
-                  <p>{errors.general}</p>
-                  {retryAttempts > 0 && retryAttempts < 3 && (
-                    <p className="text-xs mt-2 text-red-600">
-                      Attempt {retryAttempts} of 3
-                    </p>
-                  )}
-                </div>
-                {(errors.general.includes('Server') || errors.general.includes('Network')) && retryAttempts < 3 && (
-                  <button
-                    type="button"
-                    onClick={handleRetry}
-                    disabled={loading}
-                    className="ml-3 px-3 py-1 text-xs bg-red-100 hover:bg-red-200 text-red-700 rounded transition-colors"
-                  >
-                    Retry
-                  </button>
-                )}
-              </div>
+            <div className="mb-4 p-3 bg-cream border border-primary text-textColor text-sm font-light">
+              {errors.general}
             </div>
           )}
           

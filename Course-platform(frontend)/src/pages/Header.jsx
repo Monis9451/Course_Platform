@@ -1,8 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { FiUser, FiSearch, FiShoppingCart, FiMenu, FiX, FiLogOut, FiChevronDown, FiWifi, FiWifiOff } from 'react-icons/fi'
+import { FiUser, FiSearch, FiShoppingCart, FiMenu, FiX, FiLogOut, FiChevronDown } from 'react-icons/fi'
 import { useAuth } from '../context/authContext'
-import toast from 'react-hot-toast'
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -20,14 +19,11 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
-      toast.loading('Signing out...', { id: 'logout' });
       await logout();
       setIsProfileDropdownOpen(false);
-      toast.success('Signed out successfully!', { id: 'logout' });
       navigate('/');
     } catch (error) {
       console.error('Error logging out:', error);
-      toast.error('Error signing out. Please try again.', { id: 'logout' });
     }
   };
 
