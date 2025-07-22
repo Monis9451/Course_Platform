@@ -1,8 +1,9 @@
 const express = require('express');
-const { createUser, getAllUsers, getUserById, updateUser, deleteUser } = require('../models/userModel');
+const { createUser, getAllUsers, getUserById, getUserByEmail, updateUser, deleteUser } = require('../models/userModel');
+const verifyFirebaseToken = require('../middleware/authMiddleware');
 const router = express.Router();
 
-router.get('/me', async (req, res) => {
+router.get('/me', verifyFirebaseToken, async (req, res) => {
     const user = req.user;
     try {
         const userData = await getUserById(user.uid);
@@ -12,13 +13,95 @@ router.get('/me', async (req, res) => {
     }
 });
 
-router.post('/create', async (req, res) => {
+router.post('/me', verifyFirebaseToken, async (req, res) => {
+    const user = req.user;
+    
+    try {
+        // Check if user exists in database
+        const userData = await getUserById(user.uid);
+        
+        if (!userData) {
+            // User doesn't exist, return 404
+            return res.status(404).json({
+                error: 'User not found in database',
+                success: false
+            });
+        }
+        
+        res.status(200).json({
+            message: 'User authenticated', 
+            userData,
+            success: true
+        });
+    } catch (error) {
+        console.error('Error in POST /me:', error);
+        res.status(500).json({ 
+            error: 'Failed to fetch user data',
+            success: false 
+        });
+    }
+});
+
+router.get('/email/:email', async (req, res) => {
+    const { email } = req.params;
+    try {
+        const user = await getUserByEmail(email);
+        if (user) {
+            res.status(200).json({ user });
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching user by email:', error);
+        res.status(500).json({ error: 'Failed to fetch user by email' });
+    }
+});
+
+router.post('/create', verifyFirebaseToken, async (req, res) => {
     const { userID, username, email } = req.body;
     try {
-        const newUser = await createUser({ userID, username, email });
-        res.status(201).json({ message: 'User created successfully', user: newUser });
+        // First check if user already exists
+        const existingUser = await getUserById(userID);
+        if (existingUser) {
+            return res.status(200).json({ 
+                message: 'User already exists', 
+                user: existingUser,
+                success: true 
+            });
+        }
+
+        const newUserData = await createUser({ userID, username, email });
+        // createUser returns an array, get the first element
+        const newUser = Array.isArray(newUserData) ? newUserData[0] : newUserData;
+        res.status(201).json({ 
+            message: 'User created successfully', 
+            user: newUser,
+            success: true 
+        });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to create user' });
+        console.error('Error creating user:', error);
+        
+        // Check if this is a duplicate key error
+        if (error.message && error.message.includes('duplicate key')) {
+            // User was created in the meantime, try to fetch and return them
+            try {
+                const existingUser = await getUserById(userID);
+                if (existingUser) {
+                    return res.status(200).json({ 
+                        message: 'User already exists', 
+                        user: existingUser,
+                        success: true 
+                    });
+                }
+            } catch (fetchError) {
+                console.error('Error fetching existing user:', fetchError);
+            }
+        }
+        
+        res.status(500).json({ 
+            error: 'Failed to create user',
+            success: false 
+        });
     }
 })
 

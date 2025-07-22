@@ -6,8 +6,7 @@ const createUser = async ({ userID, username, email }) => {
       userID,
       username,
       email,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      createdAt: new Date().toISOString()
     },
   ]).select();
 
@@ -29,10 +28,26 @@ const getAllUsers = async () => {
 const getUserById = async (userID) => {
     const {data, error} = await supabase.from("user").select("*").eq("userID", userID).single();
     if (error) {
+        if (error.code === 'PGRST116') {
+            // No rows returned
+            return null;
+        }
         throw new Error(`Error fetching user by ID: ${error.message}`);
     }
     return data;
 };
+
+const getUserByEmail = async (email) => {
+    const {data, error} = await supabase.from("user").select("*").eq("email", email).single();
+    if (error) {
+        if (error.code === 'PGRST116') {
+            // No rows returned
+            return null;
+        }
+        throw new Error(`Error fetching user by email: ${error.message}`);
+    }
+    return data;
+}
 
 const updateUser = async (userID, updates) => {
     const {data, error} = await supabase.from("user").update(updates).eq("userID", userID);
@@ -50,4 +65,4 @@ const deleteUser = async (userID) => {
     return data;
 };
 
-module.exports = { createUser, getAllUsers, getUserById, updateUser, deleteUser };
+module.exports = { createUser, getAllUsers, getUserById, getUserByEmail, updateUser, deleteUser };
