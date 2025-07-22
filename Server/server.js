@@ -18,9 +18,7 @@ app.use(express.json());
 
 // CORS configuration
 app.use(cors ({
-  origin: "*",
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  origin: "*"
 }));
 
 // Import routes
