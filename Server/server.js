@@ -1,6 +1,9 @@
+// Load environment variables first
+const dotenv = require('dotenv');
+dotenv.config();
+
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const supabase = require('./config/supabase');
 const morgan = require('morgan');
 const userRoutes = require('./routes/userRoutes');
@@ -19,9 +22,6 @@ app.use(cors ({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
-
-// Load environment variables
-dotenv.config();
 
 // Import routes
 app.use('/api/users', userRoutes);

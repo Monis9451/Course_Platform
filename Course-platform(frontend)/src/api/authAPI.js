@@ -39,8 +39,8 @@ export const loginUserAPI = async (userInfo) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
       body: JSON.stringify({
-        uid: userInfo.uid,
-        displayName: userInfo.displayName,
+        userID: userInfo.uid,
+        username: userInfo.displayName,
         email: userInfo.email,
       }),
     });
