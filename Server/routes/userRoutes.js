@@ -17,11 +17,9 @@ router.post('/me', verifyFirebaseToken, async (req, res) => {
     const user = req.user;
     
     try {
-        // Check if user exists in database
         const userData = await getUserById(user.uid);
         
         if (!userData) {
-            // User doesn't exist, return 404
             return res.status(404).json({
                 error: 'User not found in database',
                 success: false
@@ -60,7 +58,6 @@ router.get('/email/:email', async (req, res) => {
 router.post('/create', verifyFirebaseToken, async (req, res) => {
     const { userID, username, email } = req.body;
     try {
-        // First check if user already exists
         const existingUser = await getUserById(userID);
         if (existingUser) {
             return res.status(200).json({ 
@@ -71,7 +68,6 @@ router.post('/create', verifyFirebaseToken, async (req, res) => {
         }
 
         const newUserData = await createUser({ userID, username, email });
-        // createUser returns an array, get the first element
         const newUser = Array.isArray(newUserData) ? newUserData[0] : newUserData;
         res.status(201).json({ 
             message: 'User created successfully', 
@@ -81,9 +77,7 @@ router.post('/create', verifyFirebaseToken, async (req, res) => {
     } catch (error) {
         console.error('Error creating user:', error);
         
-        // Check if this is a duplicate key error
         if (error.message && error.message.includes('duplicate key')) {
-            // User was created in the meantime, try to fetch and return them
             try {
                 const existingUser = await getUserById(userID);
                 if (existingUser) {

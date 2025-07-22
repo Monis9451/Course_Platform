@@ -29,7 +29,6 @@ const getUserById = async (userID) => {
     const {data, error} = await supabase.from("user").select("*").eq("userID", userID).single();
     if (error) {
         if (error.code === 'PGRST116') {
-            // No rows returned
             return null;
         }
         throw new Error(`Error fetching user by ID: ${error.message}`);
@@ -41,7 +40,6 @@ const getUserByEmail = async (email) => {
     const {data, error} = await supabase.from("user").select("*").eq("email", email).single();
     if (error) {
         if (error.code === 'PGRST116') {
-            // No rows returned
             return null;
         }
         throw new Error(`Error fetching user by email: ${error.message}`);

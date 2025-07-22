@@ -1,9 +1,7 @@
 const admin = require('firebase-admin');
 
-// Check if Firebase Admin is already initialized
 if (!admin.apps.length) {
     try {
-        // Use individual environment variables from .env file
         const serviceAccount = {
             type: "service_account",
             project_id: process.env.FIREBASE_PROJECT_ID,
@@ -17,7 +15,6 @@ if (!admin.apps.length) {
             client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL
         };
 
-        // Validate required fields
         if (!serviceAccount.project_id || !serviceAccount.private_key || !serviceAccount.client_email) {
             throw new Error('Missing required Firebase configuration. Please check your environment variables.');
         }
