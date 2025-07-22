@@ -2,7 +2,7 @@ import toast from 'react-hot-toast';
 
 export const apiCall = async (url, options = {}, retries = 2) => {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     try {
         const response = await fetch(url, {

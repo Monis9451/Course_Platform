@@ -19,18 +19,15 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  
+
   const navigate = useNavigate();
   const location = useLocation();
   const { currentUser, completeAuthFlow, loading: authLoading } = useAuth();
 
-  // Get the intended destination from location state
   const from = location.state?.from?.pathname || '/';
 
-  // Redirect if user is already logged in
   useEffect(() => {
     if (currentUser) {
-      // Add a small delay to show a loading message
       const toastId = toast.loading('Redirecting...');
       setTimeout(() => {
         toast.dismiss(toastId);
@@ -39,7 +36,6 @@ const Login = () => {
     }
   }, [currentUser, navigate, from]);
 
-  // Function to check if user exists in database
   const checkUserInDatabase = async (email) => {
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/users/email/${email}`);
@@ -54,25 +50,19 @@ const Login = () => {
     }
   };
 
-  // Handle Google authentication
   const handleGoogleAuth = async () => {
     setLoading(true);
     setErrors({});
-    
+
     try {
-      // First, sign in with Google to get Firebase user
       const result = await signInWithGoogle();
       const firebaseUser = result.user;
       const email = firebaseUser.email;
 
-      // Check if user exists in database
       const { exists } = await checkUserInDatabase(email);
-
-      // Show loading toast
       const toastId = toast.loading(exists ? 'Logging you in...' : 'Creating your account...');
 
       try {
-        // Complete the authentication flow through authContext
         await completeAuthFlow(firebaseUser, !exists, {
           name: firebaseUser.displayName || '',
           photoURL: firebaseUser.photoURL || null
@@ -81,10 +71,8 @@ const Login = () => {
         toast.success(exists ? 'Welcome back!' : 'Account created successfully!', { id: toastId });
         navigate(from);
       } catch (backendError) {
-        // Backend failed, dismiss loading toast and show error
         toast.error(backendError.message || 'Server error occurred. Please try again.', { id: toastId });
         setErrors({ general: backendError.message || 'Server error occurred' });
-        // User should remain on login page, Firebase user was already signed out by authContext
       }
     } catch (error) {
       console.error('Google auth error:', error);
@@ -94,81 +82,68 @@ const Login = () => {
     setLoading(false);
   };
 
-  // Handle form submit for login/signup
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setErrors({});
-    
+
     if (!validateForm()) {
       setLoading(false);
       return;
     }
-    
+
     try {
       const email = formData.email;
-      
-      // Check if user exists in database
+
       const { exists } = await checkUserInDatabase(email);
-      
+
       if (isLogin) {
-        // Login flow
+        
         if (!exists) {
           setErrors({ general: 'User not found. Please sign up first.' });
           toast.error('User not found. Please sign up first.');
           setLoading(false);
           return;
         }
-        
-        // Show loading toast
+
         const toastId = toast.loading('Logging you in...');
-        
+
         try {
-          // User exists, proceed with Firebase login
           const result = await signInUser(email, formData.password);
           const firebaseUser = result.user;
-          
-          // Complete the authentication flow through authContext
+
           await completeAuthFlow(firebaseUser, false);
-          
+
           toast.success('Welcome back!', { id: toastId });
           navigate(from);
         } catch (backendError) {
-          // Backend failed, dismiss loading toast and show error
           toast.error(backendError.message || 'Server error occurred. Please try again.', { id: toastId });
           setErrors({ general: backendError.message || 'Server error occurred' });
-          // User should remain on login page, Firebase user was already signed out by authContext
         }
-        
+
       } else {
-        // Signup flow
         if (exists) {
           setErrors({ general: 'User already exists. Please log in instead.' });
           toast.error('User already exists. Please log in instead.');
           setLoading(false);
           return;
         }
-        
-        // Show loading toast
+
         const toastId = toast.loading('Creating your account...');
-        
+
         try {
-          // New user, proceed with Firebase signup
           const result = await createNewUser(email, formData.password);
           const firebaseUser = result.user;
-          
-          // Complete the authentication flow through authContext
+
           await completeAuthFlow(firebaseUser, true, {
             name: formData.name
           });
-          
+
           toast.success('Account created successfully!', { id: toastId });
           navigate(from);
         } catch (backendError) {
-          // Backend failed, dismiss loading toast and show error
           toast.error(backendError.message || 'Server error occurred. Please try again.', { id: toastId });
           setErrors({ general: backendError.message || 'Server error occurred' });
-          // User should remain on login page, Firebase user was already signed out by authContext
         }
       }
     } catch (error) {
@@ -179,14 +154,13 @@ const Login = () => {
     setLoading(false);
   };
 
-  // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
-    // Clear error when user starts typing
+    
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -195,7 +169,6 @@ const Login = () => {
     }
   };
 
-  // Validate form
   const validateForm = () => {
     const newErrors = {};
 
@@ -234,7 +207,6 @@ const Login = () => {
     setErrors({});
   };
 
-  // Show loading screen while auth is being checked
   if (authLoading) {
     return (
       <div>
@@ -253,20 +225,20 @@ const Login = () => {
 
   return (
     <div>
-        <Header />        <div className="container mx-auto px-4 py-20">
+      <Header />        <div className="container mx-auto px-4 py-20">
         <div className="max-w-md mx-auto bg-cream p-8 shadow-md">
           <h1 className="text-3xl font-fitzgerald font-light text-center text-black mb-8">
             {isLogin ? "Log In to Your Account" : "Create an Account"}
           </h1>
-            <div className="flex mb-8">
-            <button 
+          <div className="flex mb-8">
+            <button
               type="button"
               className={`flex-1 py-2 text-center font-light ${isLogin ? 'bg-primary text-white' : 'bg-white text-black'}`}
               onClick={() => handleModeSwitch(true)}
             >
               Log In
             </button>
-            <button 
+            <button
               type="button"
               className={`flex-1 py-2 text-center font-light ${!isLogin ? 'bg-primary text-white' : 'bg-white text-black'}`}
               onClick={() => handleModeSwitch(false)}
@@ -280,29 +252,29 @@ const Login = () => {
               {errors.general}
             </div>
           )}
-          
+
           <form className="space-y-6" onSubmit={handleSubmit}>            {!isLogin && (
-              <>
-                <div>
-                  <label htmlFor="name" className="block text-sm font-light text-black mb-1">
-                    Full Name
-                  </label>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className={`w-full px-4 py-2 border ${errors.name ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-primary`}
-                    placeholder="Enter your full name"
-                  />
-                  {errors.name && (
-                    <p className="mt-1 text-sm text-primary font-light">{errors.name}</p>
-                  )}
-                </div>
-              </>
-            )}
+            <>
               <div>
+                <label htmlFor="name" className="block text-sm font-light text-black mb-1">
+                  Full Name
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className={`w-full px-4 py-2 border ${errors.name ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-primary`}
+                  placeholder="Enter your full name"
+                />
+                {errors.name && (
+                  <p className="mt-1 text-sm text-primary font-light">{errors.name}</p>
+                )}
+              </div>
+            </>
+          )}
+            <div>
               <label htmlFor="email" className="block text-sm font-light text-black mb-1">
                 Email Address
               </label>
@@ -319,7 +291,7 @@ const Login = () => {
                 <p className="mt-1 text-sm text-primary font-light">{errors.email}</p>
               )}
             </div>
-            
+
             <div>
               <label htmlFor="password" className="block text-sm font-light text-black mb-1">
                 Password
@@ -350,12 +322,12 @@ const Login = () => {
                 <p className="mt-1 text-sm text-primary font-light">{errors.password}</p>
               )}
             </div>
-            
+
             {isLogin ? (
               <div className="text-right">
                 <a href="#" className="text-sm text-primary hover:underline font-light">
                   Forgot password?
-                </a>              </div>            ) : (
+                </a>              </div>) : (
               <div>
                 <label htmlFor="confirmPassword" className="block text-sm font-light text-black mb-1">
                   Confirm Password
@@ -387,14 +359,13 @@ const Login = () => {
                 )}
               </div>
             )}
-              <button 
-              type="submit" 
+            <button
+              type="submit"
               disabled={loading}
-              className={`w-full py-3 rounded-none text-white font-light ${
-                loading 
-                  ? 'bg-gray-400 cursor-not-allowed' 
+              className={`w-full py-3 rounded-none text-white font-light ${loading
+                  ? 'bg-gray-400 cursor-not-allowed'
                   : 'bg-primary hover:bg-primary-dark'
-              }`}
+                }`}
             >
               {loading ? (
                 <div className="flex items-center justify-center">
@@ -406,18 +377,17 @@ const Login = () => {
               )}
             </button>
           </form>
-          
+
           <div className="mt-8 text-center text-sm">
             <span className="text-black font-light">Or log in with</span>
           </div>
-            <div className="mt-4 flex justify-center">
-            <button 
+          <div className="mt-4 flex justify-center">
+            <button
               type="button"
               onClick={handleGoogleAuth}
               disabled={loading}
-              className={`py-2 px-8 flex items-center justify-center text-white font-light ${
-                loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#4285F4] hover:bg-[#3367d6]'
-              }`}
+              className={`py-2 px-8 flex items-center justify-center text-white font-light ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#4285F4] hover:bg-[#3367d6]'
+                }`}
             >
               {loading ? (
                 <div className="flex items-center">
@@ -429,10 +399,10 @@ const Login = () => {
               )}
             </button>
           </div>
-            <div className="mt-6 text-center text-sm">
+          <div className="mt-6 text-center text-sm">
             <p className="text-black font-light">
               {isLogin ? "Don't have an account? " : "Already have an account? "}
-              <button 
+              <button
                 type="button"
                 className="text-primary hover:underline font-light"
                 onClick={() => handleModeSwitch(!isLogin)}

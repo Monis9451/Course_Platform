@@ -28,28 +28,21 @@ export function AuthProvider({ children }) {
 
     async function initializeUser(user) {
         if (user) {
-            // Only set the Firebase user initially
             setCurrentUser({ ...user });
-            
-            // Try to get/verify user from backend
+
             try {
                 const token = await user.getIdToken();
                 setAuthToken(token);
                 
-                // Try to get user from backend first
                 const userData = await getUserFromBackend(user);
                 setUserData(userData);
                 setUserLogin(true);
             } catch (error) {
                 console.error('Backend verification failed during initialization:', error);
                 
-                // If this is during a login flow (completeAuthFlow will handle backend operations)
-                // Don't sign out the user immediately, let the login flow handle it
                 if (error.message && error.message.includes('user not found')) {
-                    // User doesn't exist in backend yet, this is normal for new users
                     console.log('User not found in backend during initialization - likely a new user');
                 } else {
-                    // For other backend errors, sign out the user
                     await signOutUser();
                     setCurrentUser(null);
                     setUserData(null);
@@ -67,7 +60,6 @@ export function AuthProvider({ children }) {
         setLoading(false);
     }
 
-    // Function to create new user in backend
     const createUserInBackend = async (firebaseUser, additionalData = {}) => {
         try {
             const token = await firebaseUser.getIdToken();
@@ -103,13 +95,11 @@ export function AuthProvider({ children }) {
             return result.user;
         } catch (error) {
             console.error('Error creating user in backend:', error);
-            // Sign out the user from Firebase if backend fails
             await signOutUser();
             throw new Error(error.message || 'Server error: Failed to create user account');
         }
     };
 
-    // Function to get user data from backend
     const getUserFromBackend = async (firebaseUser) => {
         try {
             const token = await firebaseUser.getIdToken();
@@ -130,7 +120,6 @@ export function AuthProvider({ children }) {
             if (!response.ok) {
                 const errorData = await response.json();
                 
-                // If user not found, throw a specific error
                 if (response.status === 404 || errorData.error?.includes('not found')) {
                     throw new Error('user not found');
                 }
@@ -149,9 +138,7 @@ export function AuthProvider({ children }) {
         } catch (error) {
             console.error('Error getting user from backend:', error);
             
-            // Don't sign out for "user not found" errors during initialization
             if (error.message !== 'user not found') {
-                // Sign out the user from Firebase if backend fails
                 await signOutUser();
             }
             
@@ -159,22 +146,18 @@ export function AuthProvider({ children }) {
         }
     };
 
-    // Function to handle complete authentication flow
     const completeAuthFlow = async (firebaseUser, isNewUser = false, additionalData = {}) => {
         try {
             let userData;
 
             if (isNewUser) {
-                // First try to get user in case they already exist (race condition)
                 try {
                     userData = await getUserFromBackend(firebaseUser);
                     console.log('User already exists in backend, skipping creation');
                 } catch (error) {
                     if (error.message === 'user not found') {
-                        // User doesn't exist, create them
                         userData = await createUserInBackend(firebaseUser, additionalData);
                     } else {
-                        // Other error, re-throw
                         throw error;
                     }
                 }
@@ -182,20 +165,17 @@ export function AuthProvider({ children }) {
                 userData = await getUserFromBackend(firebaseUser);
             }
 
-            // Only set user as logged in if backend operation succeeds
             setCurrentUser({ ...firebaseUser });
             setUserData(userData);
             setUserLogin(true);
 
             return userData;
         } catch (error) {
-            // Reset all auth states if backend fails
             setCurrentUser(null);
             setUserData(null);
             setUserLogin(false);
             setAuthToken(null);
             
-            // Re-throw the error so the login component can handle it
             throw error;
         }
     };
