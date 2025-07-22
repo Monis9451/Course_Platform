@@ -18,11 +18,14 @@ app.use(express.json());
 
 // CORS configuration
 app.use(cors ({
-  origin: "*"
+  origin: "*",
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 // Import routes
 app.use('/api/users', userRoutes);
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {
