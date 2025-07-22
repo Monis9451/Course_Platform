@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { FiEye, FiEyeOff } from 'react-icons/fi'
+import toast from 'react-hot-toast'
 import Header from './Header'
 import { createNewUser, signInUser, signInWithGoogle } from '../firebase/auth'
 import { useAuth } from '../context/authContext'
@@ -18,9 +19,10 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
   const navigate = useNavigate();
   const location = useLocation();
-  const { currentUser } = useAuth();
+  const { currentUser, completeAuthFlow, loading: authLoading } = useAuth();
 
   // Get the intended destination from location state
   const from = location.state?.from?.pathname || '/';
@@ -28,9 +30,154 @@ const Login = () => {
   // Redirect if user is already logged in
   useEffect(() => {
     if (currentUser) {
-      navigate(from);
+      // Add a small delay to show a loading message
+      const toastId = toast.loading('Redirecting...');
+      setTimeout(() => {
+        toast.dismiss(toastId);
+        navigate(from);
+      }, 800);
     }
   }, [currentUser, navigate, from]);
+
+  // Function to check if user exists in database
+  const checkUserInDatabase = async (email) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/email/${email}`);
+      const data = await response.json();
+      return {
+        exists: response.ok,
+        userData: data
+      };
+    } catch (error) {
+      console.error('Error checking user in database:', error);
+      return { exists: false, userData: null };
+    }
+  };
+
+  // Handle Google authentication
+  const handleGoogleAuth = async () => {
+    setLoading(true);
+    setErrors({});
+    
+    try {
+      // First, sign in with Google to get Firebase user
+      const result = await signInWithGoogle();
+      const firebaseUser = result.user;
+      const email = firebaseUser.email;
+
+      // Check if user exists in database
+      const { exists } = await checkUserInDatabase(email);
+
+      // Show loading toast
+      const toastId = toast.loading(exists ? 'Logging you in...' : 'Creating your account...');
+
+      try {
+        // Complete the authentication flow through authContext
+        await completeAuthFlow(firebaseUser, !exists, {
+          name: firebaseUser.displayName || '',
+          photoURL: firebaseUser.photoURL || null
+        });
+
+        toast.success(exists ? 'Welcome back!' : 'Account created successfully!', { id: toastId });
+        navigate(from);
+      } catch (backendError) {
+        // Backend failed, dismiss loading toast and show error
+        toast.error(backendError.message || 'Server error occurred. Please try again.', { id: toastId });
+        setErrors({ general: backendError.message || 'Server error occurred' });
+        // User should remain on login page, Firebase user was already signed out by authContext
+      }
+    } catch (error) {
+      console.error('Google auth error:', error);
+      toast.error(error.message || 'Authentication failed. Please try again.');
+      setErrors({ general: error.message });
+    }
+    setLoading(false);
+  };
+
+  // Handle form submit for login/signup
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrors({});
+    
+    if (!validateForm()) {
+      setLoading(false);
+      return;
+    }
+    
+    try {
+      const email = formData.email;
+      
+      // Check if user exists in database
+      const { exists } = await checkUserInDatabase(email);
+      
+      if (isLogin) {
+        // Login flow
+        if (!exists) {
+          setErrors({ general: 'User not found. Please sign up first.' });
+          toast.error('User not found. Please sign up first.');
+          setLoading(false);
+          return;
+        }
+        
+        // Show loading toast
+        const toastId = toast.loading('Logging you in...');
+        
+        try {
+          // User exists, proceed with Firebase login
+          const result = await signInUser(email, formData.password);
+          const firebaseUser = result.user;
+          
+          // Complete the authentication flow through authContext
+          await completeAuthFlow(firebaseUser, false);
+          
+          toast.success('Welcome back!', { id: toastId });
+          navigate(from);
+        } catch (backendError) {
+          // Backend failed, dismiss loading toast and show error
+          toast.error(backendError.message || 'Server error occurred. Please try again.', { id: toastId });
+          setErrors({ general: backendError.message || 'Server error occurred' });
+          // User should remain on login page, Firebase user was already signed out by authContext
+        }
+        
+      } else {
+        // Signup flow
+        if (exists) {
+          setErrors({ general: 'User already exists. Please log in instead.' });
+          toast.error('User already exists. Please log in instead.');
+          setLoading(false);
+          return;
+        }
+        
+        // Show loading toast
+        const toastId = toast.loading('Creating your account...');
+        
+        try {
+          // New user, proceed with Firebase signup
+          const result = await createNewUser(email, formData.password);
+          const firebaseUser = result.user;
+          
+          // Complete the authentication flow through authContext
+          await completeAuthFlow(firebaseUser, true, {
+            name: formData.name
+          });
+          
+          toast.success('Account created successfully!', { id: toastId });
+          navigate(from);
+        } catch (backendError) {
+          // Backend failed, dismiss loading toast and show error
+          toast.error(backendError.message || 'Server error occurred. Please try again.', { id: toastId });
+          setErrors({ general: backendError.message || 'Server error occurred' });
+          // User should remain on login page, Firebase user was already signed out by authContext
+        }
+      }
+    } catch (error) {
+      console.error('Auth error:', error);
+      toast.error(error.message || 'Authentication failed. Please try again.');
+      setErrors({ general: error.message });
+    }
+    setLoading(false);
+  };
 
   // Handle input changes
   const handleInputChange = (e) => {
@@ -76,45 +223,6 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Handle form submit for login/signup
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setErrors({});
-    
-    if (!validateForm()) {
-      setLoading(false);
-      return;
-    }
-    
-    try {
-      if (isLogin) {
-        // Login
-        await signInUser(formData.email, formData.password);
-      } else {
-        // Signup
-        await createNewUser(formData.email, formData.password);
-      }
-      navigate(from); // Redirect after login/signup
-    } catch (error) {
-      setErrors({ general: error.message });
-    }
-    setLoading(false);
-  };
-
-  // Handle Google login
-  const handleGoogleAuth = async () => {
-    setLoading(true);
-    setErrors({});
-    try {
-      await signInWithGoogle();
-      navigate(from);
-    } catch (error) {
-      setErrors({ general: error.message });
-    }
-    setLoading(false);
-  };
-
   const handleModeSwitch = (loginMode) => {
     setIsLogin(loginMode);
     setFormData({
@@ -125,6 +233,24 @@ const Login = () => {
     });
     setErrors({});
   };
+
+  // Show loading screen while auth is being checked
+  if (authLoading) {
+    return (
+      <div>
+        <Header />
+        <div className="container mx-auto px-4 py-20">
+          <div className="max-w-md mx-auto bg-cream p-8 shadow-md">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+              <p className="text-black font-light">Checking authentication...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
         <Header />        <div className="container mx-auto px-4 py-20">
@@ -270,7 +396,14 @@ const Login = () => {
                   : 'bg-primary hover:bg-primary-dark'
               }`}
             >
-              {loading ? 'Please wait...' : (isLogin ? "Log In" : "Create Account")}
+              {loading ? (
+                <div className="flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                  Please wait...
+                </div>
+              ) : (
+                isLogin ? "Log In" : "Create Account"
+              )}
             </button>
           </form>
           
@@ -286,7 +419,14 @@ const Login = () => {
                 loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#4285F4] hover:bg-[#3367d6]'
               }`}
             >
-              {loading ? 'Loading...' : 'Google'}
+              {loading ? (
+                <div className="flex items-center">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                  Signing in...
+                </div>
+              ) : (
+                'Continue with Google'
+              )}
             </button>
           </div>
             <div className="mt-6 text-center text-sm">

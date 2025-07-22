@@ -2,11 +2,12 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FiUser, FiSearch, FiShoppingCart, FiMenu, FiX, FiLogOut, FiChevronDown } from 'react-icons/fi'
 import { useAuth } from '../context/authContext'
+import toast from 'react-hot-toast'
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = React.useState(false);
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout, isLoggingOut } = useAuth();
   const navigate = useNavigate();
 
   const navigationItems = [
@@ -18,12 +19,20 @@ const Header = () => {
   ];
 
   const handleLogout = async () => {
+    const toastId = toast.loading('Signing you out...');
     try {
-      await logout();
+      const result = await logout();
       setIsProfileDropdownOpen(false);
-      navigate('/');
+      
+      if (result.success) {
+        toast.success('Signed out successfully!', { id: toastId });
+        navigate('/');
+      } else {
+        toast.error(result.error || 'Failed to sign out. Please try again.', { id: toastId });
+      }
     } catch (error) {
       console.error('Error logging out:', error);
+      toast.error('Failed to sign out. Please try again.', { id: toastId });
     }
   };
 
@@ -113,10 +122,15 @@ const Header = () => {
                     </div>
                     <button
                       onClick={handleLogout}
-                      className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200"
+                      disabled={isLoggingOut}
+                      className={`flex items-center w-full px-4 py-2 text-sm transition-colors duration-200 ${
+                        isLoggingOut 
+                          ? 'text-gray-400 cursor-not-allowed bg-gray-50' 
+                          : 'text-gray-700 hover:bg-gray-100'
+                      }`}
                     >
                       <FiLogOut className="h-4 w-4 mr-3" />
-                      Sign out
+                      {isLoggingOut ? 'Signing out...' : 'Sign out'}
                     </button>
                   </div>
                 )}
@@ -216,10 +230,15 @@ const Header = () => {
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="flex items-center w-full text-left text-black hover:text-gray-700 text-sm py-2 transition-colors duration-200"
+                  disabled={isLoggingOut}
+                  className={`flex items-center w-full text-left text-sm py-2 transition-colors duration-200 ${
+                    isLoggingOut 
+                      ? 'text-gray-400 cursor-not-allowed' 
+                      : 'text-black hover:text-gray-700'
+                  }`}
                 >
                   <FiLogOut className="h-4 w-4 mr-3" />
-                  Sign out
+                  {isLoggingOut ? 'Signing out...' : 'Sign out'}
                 </button>
               </div>
             )}

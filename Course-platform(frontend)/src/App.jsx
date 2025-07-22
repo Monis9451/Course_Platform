@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './context/authContext'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -41,6 +42,30 @@ const App = () => {
             <Route path="*" element={<Error />} />
           </Routes>
         </Router>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: '#fff',
+              color: '#333',
+              borderRadius: '0px',
+              border: '1px solid #ddd',
+            },
+            success: {
+              style: {
+                border: '1px solid #10b981',
+                color: '#10b981',
+              },
+            },
+            error: {
+              style: {
+                border: '1px solid #ef4444',
+                color: '#ef4444',
+              },
+            },
+          }}
+        />
       </div>
     </AuthProvider>
   )
