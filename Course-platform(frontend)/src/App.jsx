@@ -1,13 +1,14 @@
-import React from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { Toaster } from 'react-hot-toast'
-import { AuthProvider } from './context/authContext'
-import Home from './pages/Home'
-import Login from './pages/Login'
-import Courses from './pages/Courses'
-import CourseDetails from './pages/CourseDetails'
-import About from './pages/About'
-import CourseContentNew from './pages/CourseContent_new'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import { AuthProvider } from './context/authContext';
+import ProtectedRoute from './components/protectedRoutes';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Courses from './pages/Courses';
+import CourseDetails from './pages/CourseDetails';
+import About from './pages/About';
+import CourseContentNew from './pages/CourseContent_new';
 import ContactUs from "./pages/ContactUs";
 import Checkout from "./pages/Checkout";
 import ThankYou from "./pages/Thankyou";
@@ -27,14 +28,19 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/courses" element={<Courses />} />
+
+            {/* Protected Routes */}
+            <Route element={<ProtectedRoute />}>
             <Route path="/course/:id" element={<CourseDetails />} />
-            <Route path="/about" element={<About />} />
             <Route path="/course-content/:id" element={<CourseContentNew />} />
-            <Route path="/contact-us" element={<ContactUs />} />
-            <Route path="/support" element={<ContactUs />} />
             <Route path="/checkout/:id" element={<Checkout />} />
             <Route path="/thankyou/:id" element={<ThankYou />} />
             <Route path="/thankyou" element={<ThankYou />} />
+            </Route>
+
+            <Route path="/about" element={<About />} />
+            <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/support" element={<ContactUs />} />
             <Route path="/privacy-statement" element={<PrivacyStatement />} />
             <Route path="/Blogs" element={<Blogs />} />
             <Route path="/mental-health" element={<MentalHealth />} />
