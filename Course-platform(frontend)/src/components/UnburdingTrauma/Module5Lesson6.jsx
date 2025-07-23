@@ -6,7 +6,7 @@ const Module5Lesson6 = () => {
       <h1 className="text-2xl font-bold text-black mb-6">BREATHWORK FOR EMOTIONAL CLEARING</h1>
 
       <div className="bg-[#f7f3e9] p-6 rounded-lg mb-6">
-          <h3 className="text-xl font-semibold text-[#bd6334] mb-3">Why Breathwork Works for Emotional Release:</h3>
+          <h3 className="text-xl font-semibold text-primary mb-3">Why Breathwork Works for Emotional Release:</h3>
           <ul className="list-disc list-inside space-y-2">
             <li>Activates the parasympathetic nervous system for deeper relaxation</li>
             <li>Increases energy flow to areas of physical/emotional holding</li>
@@ -22,20 +22,20 @@ const Module5Lesson6 = () => {
           Welcome to this transformative lesson on breathwork for emotional clearing. Today, we explore how conscious breathing can become your most accessible and powerful tool for releasing stored emotions and healing trauma patterns.
         </p>
 
-        <h2 className="text-xl font-semibold text-[#bd6334] mt-8 mb-4">The Power of Conscious Breathing</h2>
+        <h2 className="text-xl font-semibold text-primary mt-8 mb-4">The Power of Conscious Breathing</h2>
         <p className="text-lg leading-relaxed mb-6">
           Your breath is one of the most powerful tools available for emotional release and clearing. Conscious breathing practices create direct access to your autonomic nervous system, allowing you to release stored tension patterns and facilitate the movement of stuck emotional energy.
         </p>
 
 
-        <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">Understanding the Breath-Emotion Connection</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-8 mb-4">Understanding the Breath-Emotion Connection</h2>
         <p className="text-lg leading-relaxed mb-6">
           When emotions are suppressed, our breathing patterns often become restricted as part of containing those feelings. By changing how we breathe, we can reverse this process and create space for emotional energy to move and release.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-yellow-50 p-6 rounded-lg">
-            <h3 className="text-xl font-semibold text-[#bd6334] mb-3">How Emotions Affect Breathing</h3>
+          <div className="bg-gray-100 p-6 rounded-lg">
+            <h3 className="text-xl font-semibold text-primary mb-3">How Emotions Affect Breathing</h3>
             <ul className="list-disc list-inside space-y-2">
               <li><strong>Anxiety:</strong> Shallow, rapid breathing in the chest</li>
               <li><strong>Anger:</strong> Forceful exhales, clenched breath</li>
@@ -45,8 +45,8 @@ const Module5Lesson6 = () => {
             </ul>
           </div>
           
-          <div className="bg-green-50 p-6 rounded-lg">
-            <h3 className="text-xl font-semibold text-[#bd6334] mb-3">How Conscious Breathing Helps</h3>
+          <div className="bg-gray-100 p-6 rounded-lg">
+            <h3 className="text-xl font-semibold text-primary mb-3">How Conscious Breathing Helps</h3>
             <ul className="list-disc list-inside space-y-2">
               <li>Deepens breathing to activate calm response</li>
               <li>Releases physical tension patterns</li>
@@ -57,14 +57,14 @@ const Module5Lesson6 = () => {
           </div>
         </div>
 
-        <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">Breathwork Techniques for Emotional Clearing</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-8 mb-4">Breathwork Techniques for Emotional Clearing</h2>
         <p className="text-lg leading-relaxed mb-6">
           These techniques are specifically designed to help you process and release stored emotions safely:
         </p>
 
         <div className="space-y-6 mb-8">
           <div className="bg-purple-50 p-6 rounded-lg">
-            <h3 className="text-xl font-semibold text-[#bd6334] mb-3">1. Three-Part Breath (Dirga Pranayama)</h3>
+            <h3 className="text-xl font-semibold text-primary mb-3">1. Three-Part Breath (Dirga Pranayama)</h3>
             <p className="mb-3">A gentle foundation practice that promotes deep relaxation and emotional regulation.</p>
             
             <h4 className="font-semibold mb-2">Instructions:</h4>
@@ -80,8 +80,8 @@ const Module5Lesson6 = () => {
             <p className="text-sm italic">Best for: Anxiety, overwhelm, establishing breath awareness, daily regulation</p>
           </div>
 
-          <div className="bg-orange-50 p-6 rounded-lg">
-            <h3 className="text-xl font-semibold text-[#bd6334] mb-3">2. 4-7-8 Breathing for Emotional Regulation</h3>
+          <div className="bg-gray-100 p-6 rounded-lg">
+            <h3 className="text-xl font-semibold text-primary mb-3">2. 4-7-8 Breathing for Emotional Regulation</h3>
             <p className="mb-3">Activates the parasympathetic nervous system to calm intense emotions.</p>
             
             <h4 className="font-semibold mb-2">Instructions:</h4>
@@ -96,8 +96,8 @@ const Module5Lesson6 = () => {
             <p className="text-sm italic">Best for: Panic, anger, insomnia, acute stress, emotional overwhelm</p>
           </div>
 
-          <div className="bg-blue-50 p-6 rounded-lg">
-            <h3 className="text-xl font-semibold text-[#bd6334] mb-3">3. Cleansing Breath (Kapalabhati)</h3>
+          <div className="bg-gray-100 p-6 rounded-lg">
+            <h3 className="text-xl font-semibold text-primary mb-3">3. Cleansing Breath (Kapalabhati)</h3>
             <p className="mb-3">An energizing practice that helps move stagnant emotions and increase vitality.</p>
             
             <h4 className="font-semibold mb-2">Instructions:</h4>
@@ -114,8 +114,8 @@ const Module5Lesson6 = () => {
             <p className="text-sm text-red-600 mt-2"><strong>Caution:</strong> Avoid if pregnant, with heart conditions, or high blood pressure</p>
           </div>
 
-          <div className="bg-green-50 p-6 rounded-lg">
-            <h3 className="text-xl font-semibold text-[#bd6334] mb-3">4. Box Breathing for Stability</h3>
+          <div className="bg-gray-100 p-6 rounded-lg">
+            <h3 className="text-xl font-semibold text-primary mb-3">4. Box Breathing for Stability</h3>
             <p className="mb-3">Creates emotional stability and mental clarity through rhythmic breathing.</p>
             
             <h4 className="font-semibold mb-2">Instructions:</h4>
@@ -132,8 +132,8 @@ const Module5Lesson6 = () => {
             <p className="text-sm italic">Best for: Anxiety, scattered thoughts, emotional reactivity, focus issues</p>
           </div>
 
-          <div className="bg-pink-50 p-6 rounded-lg">
-            <h3 className="text-xl font-semibold text-[#bd6334] mb-3">5. Emotional Release Breathing</h3>
+          <div className="bg-gray-100 p-6 rounded-lg">
+            <h3 className="text-xl font-semibold text-primary mb-3">5. Emotional Release Breathing</h3>
             <p className="mb-3">A more intensive practice for processing and releasing deeper emotional material.</p>
             
             <h4 className="font-semibold mb-2">Instructions:</h4>
@@ -152,13 +152,13 @@ const Module5Lesson6 = () => {
           </div>
         </div>
 
-        <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">Safety Guidelines for Breathwork</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-8 mb-4">Safety Guidelines for Breathwork</h2>
         <p className="text-lg leading-relaxed mb-6">
           While breathwork is generally safe, certain considerations are important, especially for trauma survivors:
         </p>
 
-        <div className="bg-red-50 p-6 rounded-lg mb-6">
-          <h3 className="text-xl font-semibold text-[#bd6334] mb-3">Important Safety Considerations:</h3>
+        <div className="bg-gray-100 p-6 rounded-lg mb-6">
+          <h3 className="text-xl font-semibold text-primary mb-3">Important Safety Considerations:</h3>
           <ul className="list-disc list-inside space-y-2">
             <li><strong>Start slowly:</strong> Begin with gentle techniques before trying intensive practices</li>
             <li><strong>Stop if overwhelmed:</strong> Return to natural breathing if you feel dizzy or panicked</li>
@@ -170,14 +170,14 @@ const Module5Lesson6 = () => {
           </ul>
         </div>
 
-        <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">Creating Your Breathwork Practice</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-8 mb-4">Creating Your Breathwork Practice</h2>
         <p className="text-lg leading-relaxed mb-6">
           Building a consistent breathwork practice can transform your relationship with emotions and stress:
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div className="bg-white border border-gray-200 p-5 rounded-lg">
-            <h4 className="font-medium mb-3 text-[#bd6334]">Daily Maintenance Practice</h4>
+            <h4 className="font-medium mb-3 text-primary">Daily Maintenance Practice</h4>
             <ul className="space-y-2 pl-6 list-disc text-sm">
               <li>5-10 minutes of three-part breathing upon waking</li>
               <li>Box breathing during stressful moments</li>
@@ -187,7 +187,7 @@ const Module5Lesson6 = () => {
           </div>
           
           <div className="bg-white border border-gray-200 p-5 rounded-lg">
-            <h4 className="font-medium mb-3 text-[#bd6334]">Weekly Deeper Practice</h4>
+            <h4 className="font-medium mb-3 text-primary">Weekly Deeper Practice</h4>
             <ul className="space-y-2 pl-6 list-disc text-sm">
               <li>20-30 minute session with chosen technique</li>
               <li>Focus on one specific emotional theme</li>
@@ -197,7 +197,7 @@ const Module5Lesson6 = () => {
           </div>
           
           <div className="bg-white border border-gray-200 p-5 rounded-lg">
-            <h4 className="font-medium mb-3 text-[#bd6334]">Emergency Emotional Tools</h4>
+            <h4 className="font-medium mb-3 text-primary">Emergency Emotional Tools</h4>
             <ul className="space-y-2 pl-6 list-disc text-sm">
               <li>Quick 4-7-8 sequence for panic</li>
               <li>Box breathing for overwhelm</li>
@@ -207,7 +207,7 @@ const Module5Lesson6 = () => {
           </div>
           
           <div className="bg-white border border-gray-200 p-5 rounded-lg">
-            <h4 className="font-medium mb-3 text-[#bd6334]">Monthly Intensive</h4>
+            <h4 className="font-medium mb-3 text-primary">Monthly Intensive</h4>
             <ul className="space-y-2 pl-6 list-disc text-sm">
               <li>Longer emotional release session</li>
               <li>Work with facilitator if needed</li>
@@ -217,13 +217,13 @@ const Module5Lesson6 = () => {
           </div>
         </div>
 
-        <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">Working with Emotional Releases</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-8 mb-4">Working with Emotional Releases</h2>
         <p className="text-lg leading-relaxed mb-6">
           Breathwork can bring up emotions. Here's how to work skillfully with whatever arises:
         </p>
 
         <div className="bg-yellow-50 p-6 rounded-lg mb-6">
-          <h3 className="text-xl font-semibold text-[#bd6334] mb-3">When Emotions Arise During Breathwork:</h3>
+          <h3 className="text-xl font-semibold text-primary mb-3">When Emotions Arise During Breathwork:</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <h4 className="font-semibold mb-2">If You Feel Overwhelmed:</h4>
@@ -249,7 +249,7 @@ const Module5Lesson6 = () => {
           </div>
         </div>
 
-        <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">Breathwork for Specific Emotions</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-8 mb-4">Breathwork for Specific Emotions</h2>
         <p className="text-lg leading-relaxed mb-6">
           Different emotions may benefit from specific breathing approaches:
         </p>
@@ -323,13 +323,13 @@ const Module5Lesson6 = () => {
           </table>
         </div>
 
-        <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">Integration and Aftercare</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-8 mb-4">Integration and Aftercare</h2>
         <p className="text-lg leading-relaxed mb-6">
           What you do after breathwork is as important as the practice itself:
         </p>
 
-        <div className="bg-green-50 p-6 rounded-lg mb-6">
-          <h3 className="text-xl font-semibold text-[#bd6334] mb-3">Post-Breathwork Integration:</h3>
+        <div className="bg-gray-100 p-6 rounded-lg mb-6">
+          <h3 className="text-xl font-semibold text-primary mb-3">Post-Breathwork Integration:</h3>
           <ul className="list-disc list-inside space-y-2">
             <li><strong>Rest quietly:</strong> Allow 5-10 minutes of stillness after practice</li>
             <li><strong>Stay hydrated:</strong> Drink water to support the body's natural detox process</li>
@@ -340,8 +340,8 @@ const Module5Lesson6 = () => {
           </ul>
         </div>
 
-        <div className="bg-blue-50 p-6 rounded-lg">
-          <h3 className="text-xl font-semibold text-[#bd6334] mb-3">Today's Practice:</h3>
+        <div className="bg-gray-100 p-6 rounded-lg">
+          <h3 className="text-xl font-semibold text-primary mb-3">Today's Practice:</h3>
           <p className="text-lg leading-relaxed mb-4">
             Choose one breathwork technique from this lesson and practice it for 10-15 minutes. Start with three-part breathing if you're new to breathwork, or select the technique that most appeals to your current emotional state.
           </p>
@@ -352,14 +352,14 @@ const Module5Lesson6 = () => {
       </div>
       
       <div className="flex justify-center mt-8 gap-4">
-        <button className="inline-flex items-center bg-[#bd6334] text-white rounded-full px-6 py-3 font-medium">
+        <button className="inline-flex items-center bg-primary text-white rounded-full px-6 py-3 font-medium">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
             <path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586l-1.293-1.293zM9 4a1 1 0 012 0v2H9V4z" />
           </svg>
           SAVE YOUR WORK
         </button>
         
-        <button className="inline-flex items-center border-2 border-[#bd6334] text-[#bd6334] rounded-full px-6 py-2 font-medium">
+        <button className="inline-flex items-center border-2 border-primary text-primary rounded-full px-6 py-2 font-medium">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
           DOWNLOAD WORKSHEET
         </button>

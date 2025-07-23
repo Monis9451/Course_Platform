@@ -31,7 +31,7 @@ const Module6Lesson1 = () => {
       
       <div className="border border-gray-200 rounded-lg p-6 mb-8">
         <div className="flex justify-between mb-3">
-          <h3 className="text-xl font-semibold text-[#bd6334]">Exercise: Creating Your Healing Plan</h3>
+          <h3 className="text-xl font-semibold text-primary">Exercise: Creating Your Healing Plan</h3>
           <button className="h-8 px-3 rounded-full text-sm flex items-center bg-gray-100 text-gray-600">
             Mark Complete
           </button>
@@ -43,7 +43,7 @@ const Module6Lesson1 = () => {
         
         <div className="space-y-6 mb-6">
           <div>
-            <h4 className="font-medium mb-3 text-[#bd6334]">Step 1: Core Practices</h4>
+            <h4 className="font-medium mb-3 text-primary">Step 1: Core Practices</h4>
             <p className="text-gray-700 mb-2">
               Identify 3-5 practices from this course that have been most helpful for you and that you want to continue:
             </p>
@@ -97,7 +97,7 @@ const Module6Lesson1 = () => {
           </div>
           
           <div>
-            <h4 className="font-medium mb-3 text-[#bd6334]">Step 2: Realistic Integration</h4>
+            <h4 className="font-medium mb-3 text-primary">Step 2: Realistic Integration</h4>
             <p className="text-gray-700 mb-2">
               For each practice, decide how you'll realistically integrate it into your life:
             </p>
@@ -189,7 +189,7 @@ const Module6Lesson1 = () => {
           </div>
           
           <div>
-            <h4 className="font-medium mb-3 text-[#bd6334]">Step 3: Support System</h4>
+            <h4 className="font-medium mb-3 text-primary">Step 3: Support System</h4>
             <p className="text-gray-700 mb-2">
               Identify people, resources, and professional support that can help you on your journey:
             </p>
@@ -234,7 +234,7 @@ const Module6Lesson1 = () => {
           </div>
           
           <div>
-            <h4 className="font-medium mb-3 text-[#bd6334]">Step 4: Potential Challenges & Solutions</h4>
+            <h4 className="font-medium mb-3 text-primary">Step 4: Potential Challenges & Solutions</h4>
             <p className="text-gray-700 mb-2">
               Anticipate possible obstacles and plan how you'll address them:
             </p>
@@ -303,7 +303,7 @@ const Module6Lesson1 = () => {
           </div>
           
           <div>
-            <h4 className="font-medium mb-3 text-[#bd6334]">Step 5: Self-Compassion Plan</h4>
+            <h4 className="font-medium mb-3 text-primary">Step 5: Self-Compassion Plan</h4>
             <p className="text-gray-700 mb-2">
               How will you respond to yourself when setbacks or difficulties arise?
             </p>
@@ -314,7 +314,7 @@ const Module6Lesson1 = () => {
               placeholder="When I struggle with my healing plan or experience setbacks, I will..."
             ></textarea>
             
-            <button className="bg-[#bd6334] hover:bg-[#a85629] text-white px-6 py-2 rounded-md font-medium transition-colors">
+            <button className="bg-primary hover:bg-[#a85629] text-white px-6 py-2 rounded-md font-medium transition-colors">
               Save Healing Plan
             </button>
           </div>
@@ -322,7 +322,7 @@ const Module6Lesson1 = () => {
       </div>
       
       <div className="mb-8">
-        <h3 className="text-xl font-semibold text-[#bd6334] mb-4">
+        <h3 className="text-xl font-semibold text-primary mb-4">
           Elements of a Sustainable Healing Plan
         </h3>
         
@@ -332,7 +332,7 @@ const Module6Lesson1 = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div className="bg-white border border-gray-200 p-5 rounded-lg">
-            <h4 className="font-medium mb-3 text-[#bd6334]">Balance</h4>
+            <h4 className="font-medium mb-3 text-primary">Balance</h4>
             
             <p className="text-gray-700 mb-3">
               A sustainable plan balances different types of practices and needs.
@@ -348,7 +348,7 @@ const Module6Lesson1 = () => {
           </div>
           
           <div className="bg-white border border-gray-200 p-5 rounded-lg">
-            <h4 className="font-medium mb-3 text-[#bd6334]">Realistic Scope</h4>
+            <h4 className="font-medium mb-3 text-primary">Realistic Scope</h4>
             
             <p className="text-gray-700 mb-3">
               An effective plan is realistic about what you can consistently maintain.
@@ -364,7 +364,7 @@ const Module6Lesson1 = () => {
           </div>
           
           <div className="bg-white border border-gray-200 p-5 rounded-lg">
-            <h4 className="font-medium mb-3 text-[#bd6334]">Meaningful Rituals</h4>
+            <h4 className="font-medium mb-3 text-primary">Meaningful Rituals</h4>
             
             <p className="text-gray-700 mb-3">
               Creating rituals around healing practices helps them become sustaining habits.
@@ -380,7 +380,7 @@ const Module6Lesson1 = () => {
           </div>
           
           <div className="bg-white border border-gray-200 p-5 rounded-lg">
-            <h4 className="font-medium mb-3 text-[#bd6334]">Flexible Adaptation</h4>
+            <h4 className="font-medium mb-3 text-primary">Flexible Adaptation</h4>
             
             <p className="text-gray-700 mb-3">
               A resilient plan includes the ability to adapt to changing circumstances.
@@ -397,8 +397,8 @@ const Module6Lesson1 = () => {
         </div>
       </div>
       
-      <div className="bg-gradient-to-r from-[#fdf5e6] to-[#f8f0e6] p-6 rounded-lg mb-8 border border-[#e6d5c1]">
-        <h3 className="text-xl font-semibold text-[#bd6334] mb-4">
+      <div className="bg-gray-100 p-6 rounded-lg mb-8 border border-[#e6d5c1]">
+        <h3 className="text-xl font-semibold text-primary mb-4">
           Monitoring Progress Without Judgment
         </h3>
         
@@ -438,7 +438,7 @@ const Module6Lesson1 = () => {
       </div>
       
       <div className="border border-gray-200 rounded-lg p-6">
-        <h3 className="text-xl font-semibold text-[#bd6334] mb-4">
+        <h3 className="text-xl font-semibold text-primary mb-4">
           This Week's Practice
         </h3>
         
@@ -446,7 +446,7 @@ const Module6Lesson1 = () => {
           To establish your ongoing healing journey:
         </p>
         
-        <div className="bg-[#f8f0e6] p-5 rounded-lg mb-6">
+        <div className="bg-gray-100 p-5 rounded-lg mb-6">
           <h4 className="font-medium mb-3">Daily Practices</h4>
           <ul className="space-y-2 pl-6 list-disc text-gray-700">
             <li>Complete the "Creating Your Healing Plan" exercise</li>
@@ -458,7 +458,7 @@ const Module6Lesson1 = () => {
         
         <div className="flex justify-between items-center">
           <h4 className="font-medium">Your Commitment:</h4>
-          <button className="bg-[#bd6334] hover:bg-[#a85629] text-white px-6 py-2 rounded-md font-medium transition-colors">
+          <button className="bg-primary hover:bg-[#a85629] text-white px-6 py-2 rounded-md font-medium transition-colors">
             I Commit to This Practice
           </button>
         </div>

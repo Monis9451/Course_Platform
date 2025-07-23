@@ -34,9 +34,9 @@ const Module5Lesson7 = () => {
             Welcome to a deeply transformative practice designed to support your healing journey. This guided release meditation will help you gently let go of stored emotional energy and trauma while creating space for peace and renewal within your body and mind.
           </p>
           
-          <div className="bg-blue-50 border-l-4 border-blue-400 p-6 rounded-lg mb-6">
-            <h3 className="text-lg font-semibold text-blue-800 mb-2">🧘‍♀️ Meditation Preparation</h3>
-            <p className="text-blue-700">
+          <div className="bg-gray-100 border-l-4 border-primary p-6 rounded-lg mb-6">
+            <h3 className="text-lg font-semibold text-primary mb-2">🧘‍♀️ Meditation Preparation</h3>
+            <p className="text-black">
               Find a quiet, comfortable space where you won't be disturbed. This meditation is approximately 15-20 minutes long. Have a blanket nearby and ensure you feel safe and supported in your environment.
             </p>
           </div>
@@ -44,25 +44,25 @@ const Module5Lesson7 = () => {
 
         {/* Pre-Meditation Setup */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold text-[#bd6334] mb-4">
+          <h2 className="text-xl font-semibold text-primary mb-4">
             Before We Begin
           </h2>
           
           <div className="space-y-4">
             <div className="flex items-start space-x-3">
-              <span className="text-[#bd6334] font-bold text-xl">•</span>
+              <span className="text-primary font-bold text-xl">•</span>
               <p>Choose a comfortable position - seated or lying down</p>
             </div>
             <div className="flex items-start space-x-3">
-              <span className="text-[#bd6334] font-bold text-xl">•</span>
+              <span className="text-primary font-bold text-xl">•</span>
               <p>Close your eyes or soften your gaze</p>
             </div>
             <div className="flex items-start space-x-3">
-              <span className="text-[#bd6334] font-bold text-xl">•</span>
+              <span className="text-primary font-bold text-xl">•</span>
               <p>Take three deep breaths to center yourself</p>
             </div>
             <div className="flex items-start space-x-3">
-              <span className="text-[#bd6334] font-bold text-xl">•</span>
+              <span className="text-primary font-bold text-xl">•</span>
               <p>Set an intention to release with love and compassion</p>
             </div>
           </div>
@@ -70,13 +70,13 @@ const Module5Lesson7 = () => {
 
         {/* Guided Meditation Script */}
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-[#bd6334] mb-6">
+          <h2 className="text-2xl font-semibold text-primary mb-6">
             Guided Release Meditation
           </h2>
           
-          <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
-            <h3 className="text-xl font-semibold text-green-800 mb-4">Beginning - Grounding and Connection</h3>
-            <div className="space-y-4 text-green-700">
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6 mb-6">
+            <h3 className="text-xl font-semibold text-primary mb-4">Beginning - Grounding and Connection</h3>
+            <div className="space-y-4 text-black">
               <p className="italic">
                 "Begin by feeling your body where it touches the surface beneath you. Notice the weight of your body, the temperature of the air around you, the sounds in your environment. You are safe in this moment."
               </p>
@@ -89,9 +89,9 @@ const Module5Lesson7 = () => {
             </div>
           </div>
 
-          <div className="bg-purple-50 border border-purple-200 rounded-lg p-6 mb-6">
-            <h3 className="text-xl font-semibold text-purple-800 mb-4">Body Awareness and Invitation</h3>
-            <div className="space-y-4 text-purple-700">
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6 mb-6">
+            <h3 className="text-xl font-semibold text-primary mb-4">Body Awareness and Invitation</h3>
+            <div className="space-y-4 text-black">
               <p className="italic">
                 "Gently scan your body from the top of your head down to your toes. Notice any areas that feel tight, heavy, or uncomfortable. There's no need to change anything - simply notice with compassion."
               </p>
@@ -104,9 +104,9 @@ const Module5Lesson7 = () => {
             </div>
           </div>
 
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-6">
-            <h3 className="text-xl font-semibold text-yellow-800 mb-4">The Release Process</h3>
-            <div className="space-y-4 text-yellow-700">
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6 mb-6">
+            <h3 className="text-xl font-semibold text-primary mb-4">The Release Process</h3>
+            <div className="space-y-4 text-black">
               <p className="italic">
                 "Imagine that with each exhale, you're releasing what no longer serves you. See this release as a gentle stream of light leaving your body - old pain, old stories, old patterns flowing out with love and gratitude for how they once protected you."
               </p>
@@ -119,9 +119,9 @@ const Module5Lesson7 = () => {
             </div>
           </div>
 
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
-            <h3 className="text-xl font-semibold text-blue-800 mb-4">Integration and Gratitude</h3>
-            <div className="space-y-4 text-blue-700">
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6 mb-6">
+            <h3 className="text-xl font-semibold text-primary mb-4">Integration and Gratitude</h3>
+            <div className="space-y-4 text-black">
               <p className="italic">
                 "Now, place both hands on your heart. Feel the love and appreciation you have for yourself - for your courage, your resilience, your willingness to heal."
               </p>
@@ -134,9 +134,9 @@ const Module5Lesson7 = () => {
             </div>
           </div>
 
-          <div className="bg-pink-50 border border-pink-200 rounded-lg p-6">
-            <h3 className="text-xl font-semibold text-pink-800 mb-4">Gentle Return</h3>
-            <div className="space-y-4 text-pink-700">
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+            <h3 className="text-xl font-semibold text-primary mb-4">Gentle Return</h3>
+            <div className="space-y-4 text-black">
               <p className="italic">
                 "When you're ready, begin to wiggle your fingers and toes. Take a few deeper breaths, allowing yourself to slowly return to your physical surroundings."
               </p>
@@ -152,13 +152,13 @@ const Module5Lesson7 = () => {
 
         {/* After-Meditation Integration */}
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-[#bd6334] mb-6">
+          <h2 className="text-2xl font-semibold text-primary mb-6">
             After Your Meditation
           </h2>
           
-          <div className="bg-orange-50 border-l-4 border-orange-400 p-6 rounded-lg mb-6">
-            <h3 className="text-lg font-semibold text-orange-800 mb-2">🌟 Integration Suggestions</h3>
-            <ul className="text-orange-700 space-y-2">
+          <div className="bg-gray-100 border-l-4 border-primary p-6 rounded-lg mb-6">
+            <h3 className="text-lg font-semibold text-primary mb-2">🌟 Integration Suggestions</h3>
+            <ul className="text-black space-y-2">
               <li>• Journal about any insights, sensations, or emotions that arose</li>
               <li>• Drink water to support your body's natural detox process</li>
               <li>• Move gently - stretch, walk, or dance as feels good</li>
@@ -170,7 +170,7 @@ const Module5Lesson7 = () => {
 
         {/* Reflection Questions */}
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-[#bd6334] mb-6">
+          <h2 className="text-2xl font-semibold text-primary mb-6">
             Reflection Questions
           </h2>
           
@@ -211,35 +211,35 @@ const Module5Lesson7 = () => {
 
         {/* Key Takeaways */}
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-[#bd6334] mb-6">
+          <h2 className="text-2xl font-semibold text-primary mb-6">
             Key Takeaways
           </h2>
           
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-indigo-800 mb-3">🕊️ Release is a Practice</h3>
-              <p className="text-indigo-700">
+            <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-primary mb-3">🕊️ Release is a Practice</h3>
+              <p className="text-black">
                 Letting go doesn't happen all at once. It's a gentle, ongoing process that unfolds in layers over time.
               </p>
             </div>
             
-            <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-green-800 mb-3">💚 Trust Your Body's Wisdom</h3>
-              <p className="text-green-700">
+            <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-primary mb-3">💚 Trust Your Body's Wisdom</h3>
+              <p className="text-black">
                 Your body knows what it's ready to release and what it needs to hold onto for now. Honor this innate intelligence.
               </p>
             </div>
             
-            <div className="bg-purple-50 border border-purple-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-purple-800 mb-3">✨ Space Creates Possibility</h3>
-              <p className="text-purple-700">
+            <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-primary mb-3">✨ Space Creates Possibility</h3>
+              <p className="text-black">
                 When we release what no longer serves us, we create space for new experiences, emotions, and ways of being.
               </p>
             </div>
             
-            <div className="bg-pink-50 border border-pink-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-pink-800 mb-3">🌸 Healing is Natural</h3>
-              <p className="text-pink-700">
+            <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-primary mb-3">🌸 Healing is Natural</h3>
+              <p className="text-black">
                 Your capacity for healing and renewal is inherent. Meditation simply creates the conditions for this natural process to unfold.
               </p>
             </div>
@@ -248,15 +248,15 @@ const Module5Lesson7 = () => {
 
         {/* Daily Practice */}
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-[#bd6334] mb-6">
+          <h2 className="text-2xl font-semibold text-primary mb-6">
             Making This a Daily Practice
           </h2>
           
-          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-lg">
-            <p className="text-yellow-800 mb-4">
+          <div className="bg-gray-100 border-l-4 border-primary p-6 rounded-lg">
+            <p className="text-primary mb-4">
               Consider incorporating elements of this meditation into your daily routine:
             </p>
-            <ul className="text-yellow-700 space-y-2">
+            <ul className="text-black space-y-2">
               <li>• Start or end your day with 5 minutes of conscious breathing</li>
               <li>• Practice the body scan technique when you feel overwhelmed</li>
               <li>• Use the release visualization during moments of stress</li>
@@ -267,7 +267,7 @@ const Module5Lesson7 = () => {
         </div>
 
         {/* Closing Message */}
-        <div className="text-center bg-gradient-to-r from-purple-100 to-pink-100 rounded-lg p-8">
+        <div className="text-center bg-gray-100 rounded-lg p-8">
           <h3 className="text-xl font-semibold text-gray-800 mb-4">
             Honoring Your Journey
           </h3>

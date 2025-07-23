@@ -8,8 +8,8 @@ const Module6Lesson2 = () => {
       </h1>
       
       <div className="space-y-8">
-        <section className="bg-[#f7f3e9] p-6 rounded-lg">
-          <h2 className="text-2xl font-semibold text-[#bd6334] mb-4">
+        <section className="bg-gray-100 p-6 rounded-lg">
+          <h2 className="text-2xl font-semibold text-primary mb-4">
             Introduction: The Power of Rituals in Trauma Recovery
           </h2>
           <p className="text-gray-700 leading-relaxed mb-4">
@@ -22,8 +22,8 @@ const Module6Lesson2 = () => {
           </p>
         </section>
 
-        <section className="bg-white p-6 rounded-lg border-l-4 border-[#bd6334]">
-          <h2 className="text-2xl font-semibold text-[#bd6334] mb-4">
+        <section className="bg-white p-6 rounded-lg border-l-4 border-primary">
+          <h2 className="text-2xl font-semibold text-primary mb-4">
             Understanding Healing Rhythms
           </h2>
           <p className="text-gray-700 leading-relaxed mb-4">
@@ -32,26 +32,26 @@ const Module6Lesson2 = () => {
           </p>
           <ul className="space-y-2 text-gray-700 ml-6">
             <li className="flex items-start">
-              <span className="text-[#bd6334] mr-2">•</span>
+              <span className="text-primary mr-2">•</span>
               <span><strong>Rest and reflection</strong> - Creating space to process and integrate</span>
             </li>
             <li className="flex items-start">
-              <span className="text-[#bd6334] mr-2">•</span>
+              <span className="text-primary mr-2">•</span>
               <span><strong>Gentle challenge and growth</strong> - Stepping into your healing edge</span>
             </li>
             <li className="flex items-start">
-              <span className="text-[#bd6334] mr-2">•</span>
+              <span className="text-primary mr-2">•</span>
               <span><strong>Connection and celebration</strong> - Honoring your progress</span>
             </li>
             <li className="flex items-start">
-              <span className="text-[#bd6334] mr-2">•</span>
+              <span className="text-primary mr-2">•</span>
               <span><strong>Nourishment and play</strong> - Feeding your body and spirit</span>
             </li>
           </ul>
         </section>
 
-        <section className="bg-[#f7f3e9] p-6 rounded-lg">
-          <h2 className="text-2xl font-semibold text-[#bd6334] mb-4">
+        <section className="bg-gray-100 p-6 rounded-lg">
+          <h2 className="text-2xl font-semibold text-primary mb-4">
             Daily Rituals for Nervous System Regulation
           </h2>
           <p className="text-gray-700 leading-relaxed mb-4">
@@ -60,8 +60,8 @@ const Module6Lesson2 = () => {
           </p>
           
           <div className="space-y-4">
-            <div className="bg-white p-4 rounded border-l-2 border-[#bd6334]">
-              <h3 className="text-lg font-medium text-[#bd6334] mb-2">Morning Grounding Ritual (5-10 minutes)</h3>
+            <div className="bg-white p-4 rounded border-l-2 border-primary">
+              <h3 className="text-lg font-medium text-primary mb-2">Morning Grounding Ritual (5-10 minutes)</h3>
               <ul className="space-y-1 text-gray-700 ml-4">
                 <li>• Three deep breaths while placing hands on heart</li>
                 <li>• Set an intention of kindness toward yourself for the day</li>
@@ -70,8 +70,8 @@ const Module6Lesson2 = () => {
               </ul>
             </div>
             
-            <div className="bg-white p-4 rounded border-l-2 border-[#bd6334]">
-              <h3 className="text-lg font-medium text-[#bd6334] mb-2">Midday Check-In Ritual (2-5 minutes)</h3>
+            <div className="bg-white p-4 rounded border-l-2 border-primary">
+              <h3 className="text-lg font-medium text-primary mb-2">Midday Check-In Ritual (2-5 minutes)</h3>
               <ul className="space-y-1 text-gray-700 ml-4">
                 <li>• Pause and notice: How am I feeling right now?</li>
                 <li>• What does my body need? (water, movement, rest, nourishment)</li>
@@ -80,8 +80,8 @@ const Module6Lesson2 = () => {
               </ul>
             </div>
             
-            <div className="bg-white p-4 rounded border-l-2 border-[#bd6334]">
-              <h3 className="text-lg font-medium text-[#bd6334] mb-2">Evening Integration Ritual (10-15 minutes)</h3>
+            <div className="bg-white p-4 rounded border-l-2 border-primary">
+              <h3 className="text-lg font-medium text-primary mb-2">Evening Integration Ritual (10-15 minutes)</h3>
               <ul className="space-y-1 text-gray-700 ml-4">
                 <li>• Reflect on one moment of growth or self-compassion from the day</li>
                 <li>• Journal three feelings you experienced and honor them</li>
@@ -92,8 +92,8 @@ const Module6Lesson2 = () => {
           </div>
         </section>
 
-        <section className="bg-white p-6 rounded-lg border-l-4 border-[#bd6334]">
-          <h2 className="text-2xl font-semibold text-[#bd6334] mb-4">
+        <section className="bg-white p-6 rounded-lg border-l-4 border-primary">
+          <h2 className="text-2xl font-semibold text-primary mb-4">
             Weekly Rituals for Deeper Healing
           </h2>
           <p className="text-gray-700 leading-relaxed mb-4">
@@ -102,8 +102,8 @@ const Module6Lesson2 = () => {
           </p>
           
           <div className="space-y-4">
-            <div className="bg-[#f7f3e9] p-4 rounded">
-              <h3 className="text-lg font-medium text-[#bd6334] mb-2">Weekly Reflection & Planning</h3>
+            <div className="bg-gray-100 p-4 rounded">
+              <h3 className="text-lg font-medium text-primary mb-2">Weekly Reflection & Planning</h3>
               <p className="text-gray-700 mb-2">
                 Dedicate 30-60 minutes each week to reflect on your healing journey:
               </p>
@@ -115,8 +115,8 @@ const Module6Lesson2 = () => {
               </ul>
             </div>
             
-            <div className="bg-[#f7f3e9] p-4 rounded">
-              <h3 className="text-lg font-medium text-[#bd6334] mb-2">Connection Ritual</h3>
+            <div className="bg-gray-100 p-4 rounded">
+              <h3 className="text-lg font-medium text-primary mb-2">Connection Ritual</h3>
               <p className="text-gray-700 mb-2">
                 Choose one way to connect authentically each week:
               </p>
@@ -128,8 +128,8 @@ const Module6Lesson2 = () => {
               </ul>
             </div>
             
-            <div className="bg-[#f7f3e9] p-4 rounded">
-              <h3 className="text-lg font-medium text-[#bd6334] mb-2">Creative Expression Ritual</h3>
+            <div className="bg-gray-100 p-4 rounded">
+              <h3 className="text-lg font-medium text-primary mb-2">Creative Expression Ritual</h3>
               <p className="text-gray-700 mb-2">
                 Engage in creative expression as a form of emotional release and self-discovery:
               </p>
@@ -143,8 +143,8 @@ const Module6Lesson2 = () => {
           </div>
         </section>
 
-        <section className="bg-[#f7f3e9] p-6 rounded-lg">
-          <h2 className="text-2xl font-semibold text-[#bd6334] mb-4">
+        <section className="bg-gray-100 p-6 rounded-lg">
+          <h2 className="text-2xl font-semibold text-primary mb-4">
             Creating Your Personal Ritual Practice
           </h2>
           <p className="text-gray-700 leading-relaxed mb-4">
@@ -154,26 +154,26 @@ const Module6Lesson2 = () => {
           
           <div className="space-y-3">
             <div className="flex items-start">
-              <span className="text-[#bd6334] font-medium mr-3">Simplicity:</span>
+              <span className="text-primary font-medium mr-3">Simplicity:</span>
               <span className="text-gray-700">Start small and build gradually. Consistency matters more than complexity.</span>
             </div>
             <div className="flex items-start">
-              <span className="text-[#bd6334] font-medium mr-3">Flexibility:</span>
+              <span className="text-primary font-medium mr-3">Flexibility:</span>
               <span className="text-gray-700">Adapt your rituals to your energy and circumstances without judgment.</span>
             </div>
             <div className="flex items-start">
-              <span className="text-[#bd6334] font-medium mr-3">Meaning:</span>
+              <span className="text-primary font-medium mr-3">Meaning:</span>
               <span className="text-gray-700">Choose elements that feel sacred and significant to your healing.</span>
             </div>
             <div className="flex items-start">
-              <span className="text-[#bd6334] font-medium mr-3">Compassion:</span>
+              <span className="text-primary font-medium mr-3">Compassion:</span>
               <span className="text-gray-700">Approach your practice with kindness, especially when you miss a day.</span>
             </div>
           </div>
         </section>
 
-        <section className="bg-white p-6 rounded-lg border-l-4 border-[#bd6334]">
-          <h2 className="text-2xl font-semibold text-[#bd6334] mb-4">
+        <section className="bg-white p-6 rounded-lg border-l-4 border-primary">
+          <h2 className="text-2xl font-semibold text-primary mb-4">
             Ritual Design Exercise
           </h2>
           <p className="text-gray-700 leading-relaxed mb-4">
@@ -181,8 +181,8 @@ const Module6Lesson2 = () => {
           </p>
           
           <div className="space-y-4">
-            <div className="bg-[#f7f3e9] p-4 rounded">
-              <h3 className="text-lg font-medium text-[#bd6334] mb-2">Daily Ritual Design</h3>
+            <div className="bg-gray-100 p-4 rounded">
+              <h3 className="text-lg font-medium text-primary mb-2">Daily Ritual Design</h3>
               <p className="text-gray-700 mb-2">Choose one simple daily ritual you'd like to try:</p>
               <div className="space-y-2 text-gray-700">
                 <p>Morning intention: _________________________</p>
@@ -191,8 +191,8 @@ const Module6Lesson2 = () => {
               </div>
             </div>
             
-            <div className="bg-[#f7f3e9] p-4 rounded">
-              <h3 className="text-lg font-medium text-[#bd6334] mb-2">Weekly Ritual Design</h3>
+            <div className="bg-gray-100 p-4 rounded">
+              <h3 className="text-lg font-medium text-primary mb-2">Weekly Ritual Design</h3>
               <p className="text-gray-700 mb-2">Choose one weekly practice that calls to you:</p>
               <div className="space-y-2 text-gray-700">
                 <p>Day of the week: _________________________</p>
@@ -204,8 +204,8 @@ const Module6Lesson2 = () => {
           </div>
         </section>
 
-        <section className="bg-[#f7f3e9] p-6 rounded-lg">
-          <h2 className="text-2xl font-semibold text-[#bd6334] mb-4">
+        <section className="bg-gray-100 p-6 rounded-lg">
+          <h2 className="text-2xl font-semibold text-primary mb-4">
             Reflection Questions
           </h2>
           <div className="space-y-3 text-gray-700">
@@ -217,8 +217,8 @@ const Module6Lesson2 = () => {
           </div>
         </section>
 
-        <section className="bg-white p-6 rounded-lg border-l-4 border-[#bd6334]">
-          <h2 className="text-2xl font-semibold text-[#bd6334] mb-4">
+        <section className="bg-white p-6 rounded-lg border-l-4 border-primary">
+          <h2 className="text-2xl font-semibold text-primary mb-4">
             Moving Forward with Rhythm and Resilience
           </h2>
           <p className="text-gray-700 leading-relaxed mb-4">
