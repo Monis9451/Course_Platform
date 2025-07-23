@@ -5,7 +5,22 @@ const Module2Lesson2 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">FELT SENSE & BODY AWARENESS: LISTENING TO INNER SIGNALS</h1>
       
-      
+      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+        <p className="mb-4">Your body is constantly communicating with you through physical sensations that carry important information about your needs, emotions, and safety.</p>
+        
+        <p className="mb-4">Felt sense is your body's internal knowing—the physical way your body communicates with you about your experience, often before your conscious mind can put it into words.</p>
+        
+        <p className="mb-3">This inner wisdom shows up as:</p>
+        <ul className="list-disc pl-6 mb-4 space-y-1">
+          <li>Gut feelings about situations or people</li>
+          <li>Physical tension that signals stress before you consciously recognise it</li>
+          <li>Sensations of expansion, lightness, or warmth when something resonates with you</li>
+          <li>Contraction, heaviness, or discomfort when something doesn't feel right</li>
+        </ul>
+        
+        <p className="font-medium italic">Learning to listen to these subtle signals is a powerful way to reconnect with your body after trauma has disrupted this vital communication system.</p>
+      </div>
+
       <div className="mb-8">
         <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
         
@@ -24,22 +39,6 @@ const Module2Lesson2 = () => {
           <li>Did any unworthiness come up when trying to connect with your body?</li>
           <li>Where do you think you need more practice with body awareness?</li>
         </ul>
-      </div>
-      
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
-        <p className="mb-4">Your body is constantly communicating with you through physical sensations that carry important information about your needs, emotions, and safety.</p>
-        
-        <p className="mb-4">Felt sense is your body's internal knowing—the physical way your body communicates with you about your experience, often before your conscious mind can put it into words.</p>
-        
-        <p className="mb-3">This inner wisdom shows up as:</p>
-        <ul className="list-disc pl-6 mb-4 space-y-1">
-          <li>Gut feelings about situations or people</li>
-          <li>Physical tension that signals stress before you consciously recognise it</li>
-          <li>Sensations of expansion, lightness, or warmth when something resonates with you</li>
-          <li>Contraction, heaviness, or discomfort when something doesn't feel right</li>
-        </ul>
-        
-        <p className="font-medium italic">Learning to listen to these subtle signals is a powerful way to reconnect with your body after trauma has disrupted this vital communication system.</p>
       </div>
       
       <div className="mb-6">

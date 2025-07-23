@@ -7,26 +7,6 @@ const Module1Lesson8 = () => {
         GUIDED VISUALISATION - GROUNDING & NERVOUS SYSTEM REGULATION
       </h1>
       
-      <div className="mb-8">
-        <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
-        
-        <div className="bg-primary p-1 rounded-md">
-          <button className="flex items-center w-full px-4 py-3 bg-primary text-white hover:bg-gray-900 rounded-md">
-            <span className="flex-shrink-0 mr-3">▶</span>
-            <span className="text-sm">Listen to Grounding Visualization [18 mins].mp3</span>
-          </button>
-        </div>
-      </div>
-
-      <div className="mb-8">
-        <h2 className="font-semibold text-lg mb-3">JOURNAL</h2>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Did you have any Expander relationships?</li>
-          <li>Did any unworthiness come up as to why you couldn't have the same relationship as your Expanders?</li>
-          <li>Where do you think you need more Expanders?</li>
-        </ul>
-      </div>
-      
       <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
         <h3 className="font-semibold mb-3 text-[#bd6334]">What is Grounding?</h3>
         <p className="mb-4">Grounding is a powerful technique that helps you reconnect to the present moment—particularly helpful when you're feeling anxious, disconnected, or overwhelmed. It's about gently anchoring back into your body and your current environment, using your senses and breath.</p>
@@ -88,66 +68,14 @@ const Module1Lesson8 = () => {
         </div>
       </div>
 
-      <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-8">
-        <h3 className="font-semibold mb-4 text-[#bd6334] border-b pb-2">Audio Guided Visualization</h3>
-        <p className="mb-6">Follow along with this guided grounding exercise. You can pause at any time if you need a break.</p>
+      <div className="mb-8">
+        <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
         
-        <div className="flex justify-center my-8">
-          <div className="bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg p-6 w-full max-w-md">
-            <div className="flex items-center justify-between mb-4">
-              <h4 className="text-white font-medium">Grounding Visualization</h4>
-              <span className="text-gray-300 text-sm">12:45</span>
-            </div>
-            
-            <div className="bg-gray-700 h-2 rounded-full mb-4">
-              <div className="bg-[#bd6334] h-2 rounded-full w-1/3"></div>
-            </div>
-            
-            <div className="flex items-center justify-center space-x-4">
-              <button className="text-white hover:text-[#bd6334] transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12.066 11.2a1 1 0 000 1.6l5.334 4A1 1 0 0019 16V8a1 1 0 00-1.6-.8l-5.334 4zM4.066 11.2a1 1 0 000 1.6l5.334 4A1 1 0 0011 16V8a1 1 0 00-1.6-.8l-5.334 4z" />
-                </svg>
-              </button>
-              
-              <button className="bg-[#bd6334] hover:bg-[#a55429] text-white rounded-full p-3 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293H15M9 10V9a2 2 0 012-2h2a2 2 0 012 2v1M9 10H7a2 2 0 00-2 2v1a2 2 0 002 2h1m0-6h4" />
-                </svg>
-              </button>
-              
-              <button className="text-white hover:text-[#bd6334] transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.933 12.8a1 1 0 000-1.6L6.6 7.2A1 1 0 005 8v8a1 1 0 001.6.8l5.333-4zM19.933 12.8a1 1 0 000-1.6l-5.333-4A1 1 0 0013 8v8a1 1 0 001.6.8l5.333-4z" />
-                </svg>
-              </button>
-            </div>
-            
-            <div className="mt-4 flex justify-center">
-              <div className="flex space-x-1">
-                <div className="h-3 w-0.5 bg-white"></div>
-                <div className="h-5 w-0.5 bg-white"></div>
-                <div className="h-2 w-0.5 bg-white"></div>
-                <div className="h-6 w-0.5 bg-[#bd6334]"></div>
-                <div className="h-4 w-0.5 bg-white"></div>
-                <div className="h-1 w-0.5 bg-white"></div>
-                <div className="h-3 w-0.5 bg-white"></div>
-                <div className="h-5 w-0.5 bg-white"></div>
-                <div className="h-2 w-0.5 bg-white"></div>
-                <div className="h-4 w-0.5 bg-white"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-gray-50 p-4 rounded-md">
-          <p className="text-sm text-gray-600 mb-2"><strong>What you'll experience:</strong></p>
-          <ul className="text-sm text-gray-600 space-y-1">
-            <li>• Gentle breathing exercises to calm your nervous system</li>
-            <li>• Body awareness techniques to reconnect with physical sensations</li>
-            <li>• Visualization of roots growing from your body into the earth</li>
-            <li>• Safe space imagery to enhance feelings of security</li>
-          </ul>
+        <div className="bg-primary p-1 rounded-md">
+          <button className="flex items-center w-full px-4 py-3 bg-primary text-white hover:bg-gray-900 rounded-md">
+            <span className="flex-shrink-0 mr-3">▶</span>
+            <span className="text-sm">Listen to Grounding Visualization [18 mins].mp3</span>
+          </button>
         </div>
       </div>
 

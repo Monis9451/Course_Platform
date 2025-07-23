@@ -8,66 +8,6 @@ const Module5Lesson7 = () => {
           GUIDED RELEASE MEDITATION
         </h1>
 
-        <div className="mb-8">
-          <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
-          
-          <div className="bg-primary p-1 rounded-md">
-            <button className="flex items-center w-full px-4 py-3 bg-primary text-white hover:bg-gray-900 rounded-md">
-              <span className="flex-shrink-0 mr-3">▶</span>
-              <span className="text-sm">Listen to Guided Release Meditation [18 mins].mp3</span>
-            </button>
-          </div>
-        </div>
-
-        <div className="mb-8">
-          <h2 className="font-semibold text-lg mb-3">JOURNAL</h2>
-          <ul className="list-disc pl-6 space-y-2">
-            <li>What emotions or sensations came up during the release practice?</li>
-            <li>Did you notice any areas of your body holding tension or resistance?</li>
-            <li>How do you feel after completing this practice?</li>
-          </ul>
-        </div>
-
-        {/* Introduction */}
-        <div className="mb-8">
-          <p className="text-md leading-relaxed mb-6">
-            Welcome to a deeply transformative practice designed to support your healing journey. This guided release meditation will help you gently let go of stored emotional energy and trauma while creating space for peace and renewal within your body and mind.
-          </p>
-          
-          <div className="bg-gray-100 border-l-4 border-primary p-6 rounded-lg mb-6">
-            <h3 className="text-lg font-semibold text-primary mb-2">🧘‍♀️ Meditation Preparation</h3>
-            <p className="text-black">
-              Find a quiet, comfortable space where you won't be disturbed. This meditation is approximately 15-20 minutes long. Have a blanket nearby and ensure you feel safe and supported in your environment.
-            </p>
-          </div>
-        </div>
-
-        {/* Pre-Meditation Setup */}
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold text-primary mb-4">
-            Before We Begin
-          </h2>
-          
-          <div className="space-y-4">
-            <div className="flex items-start space-x-3">
-              <span className="text-primary font-bold text-xl">•</span>
-              <p>Choose a comfortable position - seated or lying down</p>
-            </div>
-            <div className="flex items-start space-x-3">
-              <span className="text-primary font-bold text-xl">•</span>
-              <p>Close your eyes or soften your gaze</p>
-            </div>
-            <div className="flex items-start space-x-3">
-              <span className="text-primary font-bold text-xl">•</span>
-              <p>Take three deep breaths to center yourself</p>
-            </div>
-            <div className="flex items-start space-x-3">
-              <span className="text-primary font-bold text-xl">•</span>
-              <p>Set an intention to release with love and compassion</p>
-            </div>
-          </div>
-        </div>
-
         {/* Guided Meditation Script */}
         <div className="mb-8">
           <h2 className="text-2xl font-semibold text-primary mb-6">
@@ -146,6 +86,66 @@ const Module5Lesson7 = () => {
               <p className="italic">
                 "Open your eyes when it feels right, carrying this sense of peace and release with you into your day."
               </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-8">
+          <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
+          
+          <div className="bg-primary p-1 rounded-md">
+            <button className="flex items-center w-full px-4 py-3 bg-primary text-white hover:bg-gray-900 rounded-md">
+              <span className="flex-shrink-0 mr-3">▶</span>
+              <span className="text-sm">Listen to Guided Release Meditation [18 mins].mp3</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="mb-8">
+          <h2 className="font-semibold text-lg mb-3">JOURNAL</h2>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>What emotions or sensations came up during the release practice?</li>
+            <li>Did you notice any areas of your body holding tension or resistance?</li>
+            <li>How do you feel after completing this practice?</li>
+          </ul>
+        </div>
+
+        {/* Introduction */}
+        <div className="mb-8">
+          <p className="text-md leading-relaxed mb-6">
+            Welcome to a deeply transformative practice designed to support your healing journey. This guided release meditation will help you gently let go of stored emotional energy and trauma while creating space for peace and renewal within your body and mind.
+          </p>
+          
+          <div className="bg-gray-100 border-l-4 border-primary p-6 rounded-lg mb-6">
+            <h3 className="text-lg font-semibold text-primary mb-2">🧘‍♀️ Meditation Preparation</h3>
+            <p className="text-black">
+              Find a quiet, comfortable space where you won't be disturbed. This meditation is approximately 15-20 minutes long. Have a blanket nearby and ensure you feel safe and supported in your environment.
+            </p>
+          </div>
+        </div>
+
+        {/* Pre-Meditation Setup */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold text-primary mb-4">
+            Before We Begin
+          </h2>
+          
+          <div className="space-y-4">
+            <div className="flex items-start space-x-3">
+              <span className="text-primary font-bold text-xl">•</span>
+              <p>Choose a comfortable position - seated or lying down</p>
+            </div>
+            <div className="flex items-start space-x-3">
+              <span className="text-primary font-bold text-xl">•</span>
+              <p>Close your eyes or soften your gaze</p>
+            </div>
+            <div className="flex items-start space-x-3">
+              <span className="text-primary font-bold text-xl">•</span>
+              <p>Take three deep breaths to center yourself</p>
+            </div>
+            <div className="flex items-start space-x-3">
+              <span className="text-primary font-bold text-xl">•</span>
+              <p>Set an intention to release with love and compassion</p>
             </div>
           </div>
         </div>

@@ -4,17 +4,6 @@ const Module3Lesson4 = () => {
   return (
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">MEET YOUR INNER CHILD</h1>
-      
-      <div className="mb-8">
-        <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
-        
-        <div className="bg-primary p-1 rounded-md">
-          <button className="flex items-center w-full px-4 py-3 bg-primary text-white hover:bg-gray-900 rounded-md">
-            <span className="flex-shrink-0 mr-3">▶</span>
-            <span className="text-sm">Listen to Inner Child Connection [18 mins].mp3</span>
-          </button>
-        </div>
-      </div>
 
       <div className="mb-8">
         <h2 className="font-semibold text-lg mb-3">JOURNAL</h2>
@@ -44,11 +33,16 @@ const Module3Lesson4 = () => {
       <div className="aspect-w-16 aspect-h-9 mb-8">
         <div className="bg-[#f8f0e6] rounded-lg flex items-center justify-center">
           <div className="text-center p-8">
-            <button className="h-16 w-16 bg-[#bd6334] rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-              </svg>
-            </button>
+            <div className="mb-8">
+        <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
+        
+        <div className="bg-primary p-1 rounded-md">
+          <button className="flex items-center w-full px-4 py-3 bg-primary text-white hover:bg-gray-900 rounded-md">
+            <span className="flex-shrink-0 mr-3">▶</span>
+            <span className="text-sm">Listen to Inner Child Connection [18 mins].mp3</span>
+          </button>
+        </div>
+      </div>
             <p className="text-lg font-medium">Meet Your Inner Child Meditation</p>
             <p className="text-sm text-gray-500">18:30 • Guided Audio Visualisation</p>
           </div>
