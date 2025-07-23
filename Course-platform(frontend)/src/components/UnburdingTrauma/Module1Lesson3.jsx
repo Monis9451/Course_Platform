@@ -20,15 +20,15 @@ const Module1Lesson3 = () => {
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Fight Response Card */}
-        <div className="bg-red-50 rounded-lg p-6 border-l-4 border-red-400">
-          <h3 className="font-bold text-xl mb-3 text-red-700 flex items-center">
+        <div className="bg-gray-100 rounded-lg p-6 border-l-4 border-primary">
+          <h3 className="font-bold text-xl mb-3 text-primary flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             Fight Response
           </h3>
           <p className="mb-3">Looks like defensiveness, anger, controlling behaviour.</p>
-          <p className="italic text-red-700">"I must overpower the threat to survive."</p>
+          <p className="italic text-primary">"I must overpower the threat to survive."</p>
           <div className="mt-4 text-sm">
             <strong>Common signs:</strong>
             <ul className="list-disc ml-5 mt-1">
@@ -41,8 +41,8 @@ const Module1Lesson3 = () => {
         </div>
         
         {/* Flight Response Card */}
-        <div className="bg-yellow-50 rounded-lg p-6 border-l-4 border-yellow-400">
-          <h3 className="font-bold text-xl mb-3 text-yellow-700 flex items-center">
+        <div className="bg-gray-100 rounded-lg p-6 border-l-4 border-primary">
+          <h3 className="font-bold text-xl mb-3 text-primary flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
@@ -62,15 +62,15 @@ const Module1Lesson3 = () => {
         </div>
         
         {/* Freeze Response Card */}
-        <div className="bg-blue-50 rounded-lg p-6 border-l-4 border-blue-400">
-          <h3 className="font-bold text-xl mb-3 text-blue-700 flex items-center">
+        <div className="bg-gray-100 rounded-lg p-6 border-l-4 border-primary">
+          <h3 className="font-bold text-xl mb-3 text-primary flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
             Freeze Response
           </h3>
           <p className="mb-3">Creates feeling numb, shutting down, dissociating.</p>
-          <p className="italic text-blue-700">"If I don't move, I can't be seen."</p>
+          <p className="italic text-primary">"If I don't move, I can't be seen."</p>
           <div className="mt-4 text-sm">
             <strong>Common signs:</strong>
             <ul className="list-disc ml-5 mt-1">
@@ -83,15 +83,15 @@ const Module1Lesson3 = () => {
         </div>
         
         {/* Fawn Response Card */}
-        <div className="bg-green-50 rounded-lg p-6 border-l-4 border-green-400">
-          <h3 className="font-bold text-xl mb-3 text-green-700 flex items-center">
+        <div className="bg-gray-100 rounded-lg p-6 border-l-4 border-primary">
+          <h3 className="font-bold text-xl mb-3 text-primary flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
             Fawn Response
           </h3>
           <p className="mb-3">Shows up as people-pleasing, self-abandonment, over-accommodation.</p>
-          <p className="italic text-green-700">"If I make everyone happy, maybe I'll be safe."</p>
+          <p className="italic text-primary">"If I make everyone happy, maybe I'll be safe."</p>
           <div className="mt-4 text-sm">
             <strong>Common signs:</strong>
             <ul className="list-disc ml-5 mt-1">

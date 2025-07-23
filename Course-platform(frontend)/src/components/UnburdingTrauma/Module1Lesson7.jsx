@@ -60,16 +60,16 @@ const Module1Lesson7 = () => {
           <h3 className="font-semibold mb-4 text-[#bd6334] border-b pb-2">Body Scan Guide</h3>
           <p className="mb-4">Begin to scan your body from head to toe and notice:</p>
           <div className="space-y-3">
-            <div className="flex items-center border-l-4 border-red-400 pl-3 py-1 bg-red-50">
+            <div className="flex items-center border-l-4 border-primary pl-3 py-1 bg-gray-50">
               <p>Where do I feel <strong>heaviness</strong> or pressure?</p>
             </div>
-            <div className="flex items-center border-l-4 border-blue-400 pl-3 py-1 bg-blue-50">
+            <div className="flex items-center border-l-4 border-primary pl-3 py-1 bg-gray-50">
               <p>Where do I feel <strong>numb</strong> or disconnected?</p>
             </div>
-            <div className="flex items-center border-l-4 border-yellow-400 pl-3 py-1 bg-yellow-50">
+            <div className="flex items-center border-l-4 border-primary pl-3 py-1 bg-gray-50">
               <p>Where do I feel <strong>tingling</strong>, pain, or heat?</p>
             </div>
-            <div className="flex items-center border-l-4 border-green-400 pl-3 py-1 bg-green-50">
+            <div className="flex items-center border-l-4 border-primary pl-3 py-1 bg-gray-50">
               <p>Where do I feel <strong>aliveness</strong>, ease, or warmth?</p>
             </div>
           </div>
@@ -81,20 +81,20 @@ const Module1Lesson7 = () => {
         <h3 className="font-semibold mb-4 text-[#bd6334] border-b pb-2">Mapping Your Sensations</h3>
         <p className="mb-4">Mark these areas on your body map using colours, symbols, or words that feel right to you:</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-red-50 p-3 rounded-md border border-red-200">
-            <p className="font-medium text-red-700 mb-1">Tension/Heaviness</p>
+          <div className="bg-gray-50 p-3 rounded-md border border-gray-200">
+            <p className="font-medium text-primary mb-1">Tension/Heaviness</p>
             <p className="text-sm">A tight chest might be red with the word "guarded" or "constricted"</p>
           </div>
-          <div className="bg-blue-50 p-3 rounded-md border border-blue-200">
-            <p className="font-medium text-blue-700 mb-1">Numbness</p>
+          <div className="bg-gray-50 p-3 rounded-md border border-gray-200">
+            <p className="font-medium text-primary mb-1">Numbness</p>
             <p className="text-sm">A numb leg might be blue with the word "invisible" or "frozen"</p>
           </div>
-          <div className="bg-yellow-50 p-3 rounded-md border border-yellow-200">
-            <p className="font-medium text-yellow-700 mb-1">Activation</p>
+          <div className="bg-gray-50 p-3 rounded-md border border-gray-200">
+            <p className="font-medium text-primary mb-1">Activation</p>
             <p className="text-sm">A buzzing arm might be yellow with the word "electric" or "anxious"</p>
           </div>
-          <div className="bg-green-50 p-3 rounded-md border border-green-200">
-            <p className="font-medium text-green-700 mb-1">Comfort/Safety</p>
+          <div className="bg-gray-50 p-3 rounded-md border border-gray-200">
+            <p className="font-medium text-primary mb-1">Comfort/Safety</p>
             <p className="text-sm">Areas of ease might be green with words like "peaceful" or "open"</p>
           </div>
         </div>
@@ -120,19 +120,19 @@ const Module1Lesson7 = () => {
                 <p className="text-sm text-gray-500 italic">Click on areas of your body where you feel sensations to add markers</p>
                 <div className="flex justify-center mt-4 space-x-4">
                   <div className="flex items-center">
-                    <div className="w-4 h-4 rounded-full bg-red-400 mr-1"></div>
+                    <div className="w-4 h-4 rounded-full bg-primary mr-1"></div>
                     <span className="text-xs">Tension/Pain</span>
                   </div>
                   <div className="flex items-center">
-                    <div className="w-4 h-4 rounded-full bg-blue-400 mr-1"></div>
+                    <div className="w-4 h-4 rounded-full bg-primary mr-1"></div>
                     <span className="text-xs">Heaviness</span>
                   </div>
                   <div className="flex items-center">
-                    <div className="w-4 h-4 rounded-full bg-yellow-400 mr-1"></div>
+                    <div className="w-4 h-4 rounded-full bg-primary mr-1"></div>
                     <span className="text-xs">Anxiety</span>
                   </div>
                   <div className="flex items-center">
-                    <div className="w-4 h-4 rounded-full bg-green-400 mr-1"></div>
+                    <div className="w-4 h-4 rounded-full bg-primary mr-1"></div>
                     <span className="text-xs">Ease/Comfort</span>
                   </div>
                 </div>
