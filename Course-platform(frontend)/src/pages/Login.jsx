@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { FiEye, FiEyeOff } from 'react-icons/fi'
 import toast from 'react-hot-toast'
@@ -19,12 +19,18 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const hasShownToast = useRef(false);
+  const previousUser = useRef(null);
 
   const navigate = useNavigate();
   const location = useLocation();
   const { currentUser, completeAuthFlow, loading: authLoading } = useAuth();
 
   const from = location.state?.from?.pathname || '/';
+  
+  const shouldShowToast = useMemo(() => {
+    return !!(location.state?.from && !currentUser);
+  }, [location.state?.from, currentUser]);
 
   useEffect(() => {
     if (currentUser) {
@@ -34,7 +40,20 @@ const Login = () => {
         navigate(from);
       }, 800);
     }
+    
+    if (previousUser.current && !currentUser) {
+      hasShownToast.current = false;
+    }
+    
+    previousUser.current = currentUser;
   }, [currentUser, navigate, from]);
+
+  useEffect(() => {
+    if (shouldShowToast && !hasShownToast.current) {
+      toast.error('⚠️ You must be logged in to access this page.');
+      hasShownToast.current = true;
+    }
+  }, [shouldShowToast]);
 
   const checkUserInDatabase = async (email) => {
     try {
