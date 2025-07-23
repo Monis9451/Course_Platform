@@ -2,6 +2,11 @@ const express = require('express');
 const { createUser, getAllUsers, getUserById, getUserByEmail, updateUser, deleteUser } = require('../models/userModel');
 const verifyFirebaseToken = require('../middleware/authMiddleware');
 const router = express.Router();
+const { isAdmin } = require('../middleware/isAdminMiddleware');
+
+router.get('/admin/dashboard', verifyFirebaseToken, isAdmin, (req, res) => {
+    res.status(200).json({ message: 'Welcome to the admin dashboard' });
+});
 
 router.get('/me', verifyFirebaseToken, async (req, res) => {
     const user = req.user;
