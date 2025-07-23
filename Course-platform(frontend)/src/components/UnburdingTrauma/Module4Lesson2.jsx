@@ -77,78 +77,78 @@ const Module4Lesson2 = () => {
           
           <div className="grid md:grid-cols-3 gap-6">
             {/* Safety Beliefs */}
-            <div className="bg-gradient-to-br from-[#FFE4E1] to-[#FFF0F5] p-5 rounded-lg border border-[#DDA0DD]/30">
-              <h4 className="text-lg font-semibold text-[#8B4513] mb-3 flex items-centre">
-                <span className="w-8 h-8 bg-[#CD5C5C] text-white rounded-full flex items-centre justify-centre text-sm mr-3">🛡️</span>
+            <div className="bg-gray-100 p-5 rounded-lg border border-[#DDA0DD]/30">
+              <h4 className="text-lg font-semibold text-primary mb-3 flex items-centre">
+                <span className="w-8 h-8 bg-primary text-white rounded-full flex items-centre justify-centre text-sm mr-3">🛡️</span>
                 Safety & Trust
               </h4>
-              <ul className="space-y-2 text-sm text-[#5D4037]">
+              <ul className="space-y-2 text-sm text-primary">
                 <li className="flex items-start">
-                  <span className="text-[#CD5C5C] mr-2">•</span>
+                  <span className="text-primary mr-2">•</span>
                   "The world is dangerous"
                 </li>
                 <li className="flex items-start">
-                  <span className="text-[#CD5C5C] mr-2">•</span>
+                  <span className="text-primary mr-2">•</span>
                   "People can't be trusted"
                 </li>
                 <li className="flex items-start">
-                  <span className="text-[#CD5C5C] mr-2">•</span>
+                  <span className="text-primary mr-2">•</span>
                   "I must stay alert to survive"
                 </li>
                 <li className="flex items-start">
-                  <span className="text-[#CD5C5C] mr-2">•</span>
+                  <span className="text-primary mr-2">•</span>
                   "Nowhere is truly safe"
                 </li>
               </ul>
             </div>
 
             {/* Self-Worth Beliefs */}
-            <div className="bg-gradient-to-br from-[#F0F8FF] to-[#E6F3FF] p-5 rounded-lg border border-[#87CEEB]/30">
-              <h4 className="text-lg font-semibold text-[#8B4513] mb-3 flex items-centre">
-                <span className="w-8 h-8 bg-[#4682B4] text-white rounded-full flex items-centre justify-centre text-sm mr-3">💫</span>
+            <div className="bg-gray-100 p-5 rounded-lg border border-[#DDA0DD]/30">
+              <h4 className="text-lg font-semibold text-primary mb-3 flex items-centre">
+                <span className="w-8 h-8 bg-primary text-white rounded-full flex items-centre justify-centre text-sm mr-3">💫</span>
                 Self-Worth
               </h4>
-              <ul className="space-y-2 text-sm text-[#5D4037]">
+              <ul className="space-y-2 text-sm text-primary">
                 <li className="flex items-start">
-                  <span className="text-[#4682B4] mr-2">•</span>
+                  <span className="text-primary mr-2">•</span>
                   "I am fundamentally flawed"
                 </li>
                 <li className="flex items-start">
-                  <span className="text-[#4682B4] mr-2">•</span>
+                  <span className="text-primary mr-2">•</span>
                   "It was my fault"
                 </li>
                 <li className="flex items-start">
-                  <span className="text-[#4682B4] mr-2">•</span>
+                  <span className="text-primary mr-2">•</span>
                   "I am not worthy of love"
                 </li>
                 <li className="flex items-start">
-                  <span className="text-[#4682B4] mr-2">•</span>
+                  <span className="text-primary mr-2">•</span>
                   "I am powerless"
                 </li>
               </ul>
             </div>
 
             {/* Control Beliefs */}
-            <div className="bg-gradient-to-br from-[#F0FFF0] to-[#F5FFFA] p-5 rounded-lg border border-[#90EE90]/30">
+            <div className="bg-gray-100 p-5 rounded-lg border border-[#DDA0DD]/30">
               <h4 className="text-lg font-semibold text-[#8B4513] mb-3 flex items-centre">
-                <span className="w-8 h-8 bg-[#228B22] text-white rounded-full flex items-centre justify-centre text-sm mr-3">⚖️</span>
+                <span className="w-8 h-8 bg-primary text-white rounded-full flex items-centre justify-centre text-sm mr-3">⚖️</span>
                 Control & Power
               </h4>
-              <ul className="space-y-2 text-sm text-[#5D4037]">
+              <ul className="space-y-2 text-sm text-primary">
                 <li className="flex items-start">
-                  <span className="text-[#228B22] mr-2">•</span>
+                  <span className="text-primary mr-2">•</span>
                   "I have no control"
                 </li>
                 <li className="flex items-start">
-                  <span className="text-[#228B22] mr-2">•</span>
+                  <span className="text-primary mr-2">•</span>
                   "I must control everything"
                 </li>
                 <li className="flex items-start">
-                  <span className="text-[#228B22] mr-2">•</span>
+                  <span className="text-primary mr-2">•</span>
                   "Bad things always happen"
                 </li>
                 <li className="flex items-start">
-                  <span className="text-[#228B22] mr-2">•</span>
+                  <span className="text-primary mr-2">•</span>
                   "I can't depend on anyone"
                 </li>
               </ul>
@@ -277,13 +277,13 @@ const Module4Lesson2 = () => {
         {/* Personal Reflection Exercise */}
         <div className="bg-gradient-to-br from-[#FFF8DC] to-[#F0E68C]/20 rounded-xl p-6 mb-8 border border-[#DEB887]/40">
           <h3 className="text-2xl font-semibold text-[#8B4513] mb-6 flex items-centre">
-            <span className="w-10 h-10 bg-gradient-to-r from-[#DAA520] to-[#B8860B] text-white rounded-full flex items-centre justify-centre text-lg mr-4">📝</span>
+            <span className="w-10 h-10 bg-primary text-white rounded-full flex items-centre justify-centre text-lg mr-4">📝</span>
             Personal Belief Identification
           </h3>
           
           <div className="space-y-6">
             <div className="bg-white/80 p-5 rounded-lg">
-              <h4 className="text-lg font-semibold text-[#8B4513] mb-3">Reflection Questions</h4>
+              <h4 className="text-lg font-semibold text-primary mb-3">Reflection Questions</h4>
               <p className="text-[#5D4037] mb-4">
                 Take time to reflect on these questions. There are no right or wrong answers - this is about building self-awareness.
               </p>
@@ -328,38 +328,38 @@ const Module4Lesson2 = () => {
         {/* How Beliefs Form Section */}
         <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 mb-8 shadow-lg">
           <h3 className="text-2xl font-semibold text-[#8B4513] mb-6 flex items-centre">
-            <span className="w-10 h-10 bg-gradient-to-r from-[#D2691E] to-[#CD853F] text-white rounded-full flex items-centre justify-centre text-lg mr-4">🔄</span>
+            <span className="w-10 h-10 bg-primary text-white rounded-full flex items-centre justify-centre text-lg mr-4">🔄</span>
             How Trauma Beliefs Form
           </h3>
           
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-4">
-              <div className="bg-gradient-to-r from-[#F5E6D3] to-[#F0E68C]/30 p-5 rounded-lg">
-                <h4 className="text-lg font-semibold text-[#8B4513] mb-3">The Survival Function</h4>
-                <p className="text-[#5D4037] leading-relaxed">
+              <div className="bg-gray-100 p-5 rounded-lg">
+                <h4 className="text-lg font-semibold text-primary mb-3">The Survival Function</h4>
+                <p className="text-black leading-relaxed">
                   Trauma beliefs form as our mind's attempt to make sense of overwhelming experiences and prevent future harm. They serve an important survival function by helping us detect and avoid potential threats.
                 </p>
               </div>
               
-              <div className="bg-gradient-to-r from-[#F0F8FF] to-[#E6F3FF] p-5 rounded-lg">
-                <h4 className="text-lg font-semibold text-[#8B4513] mb-3">Pattern Recognition</h4>
-                <p className="text-[#5D4037] leading-relaxed">
+              <div className="bg-gray-100 p-5 rounded-lg">
+                <h4 className="text-lg font-semibold text-primary mb-3">Pattern Recognition</h4>
+                <p className="text-black leading-relaxed">
                   Our brains naturally look for patterns to predict and prevent future trauma. These patterns become beliefs that guide our behaviour, even when the original threat is no longer present.
                 </p>
               </div>
             </div>
             
             <div className="space-y-4">
-              <div className="bg-gradient-to-r from-[#F0FFF0] to-[#F5FFFA] p-5 rounded-lg">
-                <h4 className="text-lg font-semibold text-[#8B4513] mb-3">Generalisation</h4>
-                <p className="text-[#5D4037] leading-relaxed">
+              <div className="bg-gray-100 p-5 rounded-lg">
+                <h4 className="text-lg font-semibold text-primary mb-3">Generalisation</h4>
+                <p className="text-black leading-relaxed">
                   Trauma beliefs often generalise beyond the original situation. A belief formed from one harmful relationship might apply to all relationships, or danger in one context might extend to feeling unsafe everywhere.
                 </p>
               </div>
               
-              <div className="bg-gradient-to-r from-[#FFF0F5] to-[#FFE4E1] p-5 rounded-lg">
-                <h4 className="text-lg font-semibold text-[#8B4513] mb-3">Reinforcement</h4>
-                <p className="text-[#5D4037] leading-relaxed">
+              <div className="bg-gray-100 p-5 rounded-lg">
+                <h4 className="text-lg font-semibold text-primary mb-3">Reinforcement</h4>
+                <p className="text-black leading-relaxed">
                   These beliefs become stronger when our behaviour based on them seems to keep us safe. Avoiding situations reinforces the belief that they were dangerous, creating a cycle that maintains the belief.
                 </p>
               </div>
@@ -368,9 +368,9 @@ const Module4Lesson2 = () => {
         </div>
 
         {/* Impact Assessment */}
-        <div className="bg-gradient-to-br from-[#E6E6FA] to-[#F0F8FF] rounded-xl p-6 mb-8 border border-[#DDA0DD]/30">
-          <h3 className="text-2xl font-semibold text-[#8B4513] mb-6 flex items-centre">
-            <span className="w-10 h-10 bg-gradient-to-r from-[#9370DB] to-[#8A2BE2] text-white rounded-full flex items-centre justify-centre text-lg mr-4">📊</span>
+        <div className="bg-gray-100 rounded-xl p-6 mb-8 border border-[#DDA0DD]/30">
+          <h3 className="text-2xl font-semibold text-primary mb-6 flex items-centre">
+            <span className="w-10 h-10 bg-primary text-white rounded-full flex items-centre justify-centre text-lg mr-4">📊</span>
             Assessing the Impact of Your Beliefs
           </h3>
           
@@ -381,7 +381,7 @@ const Module4Lesson2 = () => {
             
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-[#8B4513]">Potential Protective Benefits:</h4>
+                <h4 className="text-lg font-semibold text-primary">Potential Protective Benefits:</h4>
                 <ul className="space-y-2 text-[#5D4037]">
                   <li className="flex items-start">
                     <span className="text-green-600 mr-2">✓</span>
@@ -428,24 +428,24 @@ const Module4Lesson2 = () => {
         </div>
 
         {/* Key Takeaways */}
-        <div className="bg-gradient-to-r from-[#F0E68C]/20 to-[#F5E6D3] rounded-xl p-6 mb-8 border-l-4 border-[#DAA520]">
-          <h3 className="text-2xl font-semibold text-[#8B4513] mb-6 flex items-centre">
-            <span className="w-10 h-10 bg-gradient-to-r from-[#DAA520] to-[#B8860B] text-white rounded-full flex items-centre justify-centre text-lg mr-4">💡</span>
+        <div className="bg-gray-100 rounded-xl p-6 mb-8 border-l-4 border-primary">
+          <h3 className="text-2xl font-semibold text-primary mb-6 flex items-centre">
+            <span className="w-10 h-10 bg-primary text-white rounded-full flex items-centre justify-centre text-lg mr-4">💡</span>
             Key Takeaways
           </h3>
           
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div className="bg-white/80 p-4 rounded-lg">
-                <h4 className="font-semibold text-[#8B4513] mb-2">Beliefs Are Protective</h4>
-                <p className="text-[#5D4037] text-sm">
+                <h4 className="font-semibold text-primary mb-2">Beliefs Are Protective</h4>
+                <p className="text-black text-sm">
                   Your trauma-related beliefs developed to keep you safe. They made sense given what you experienced and shouldn't be dismissed or judged.
                 </p>
               </div>
               
               <div className="bg-white/80 p-4 rounded-lg">
-                <h4 className="font-semibold text-[#8B4513] mb-2">Beliefs Can Limit</h4>
-                <p className="text-[#5D4037] text-sm">
+                <h4 className="font-semibold text-primary mb-2">Beliefs Can Limit</h4>
+                <p className="text-black text-sm">
                   While protective, these beliefs may now limit your ability to fully engage with life, relationships, and opportunities for growth and healing.
                 </p>
               </div>
@@ -453,15 +453,15 @@ const Module4Lesson2 = () => {
             
             <div className="space-y-4">
               <div className="bg-white/80 p-4 rounded-lg">
-                <h4 className="font-semibold text-[#8B4513] mb-2">Awareness Is the First Step</h4>
-                <p className="text-[#5D4037] text-sm">
+                <h4 className="font-semibold text-primary mb-2">Awareness Is the First Step</h4>
+                <p className="text-black text-sm">
                   Simply becoming aware of these belief patterns is the first step toward having more choice about how they influence your life.
                 </p>
               </div>
               
               <div className="bg-white/80 p-4 rounded-lg">
-                <h4 className="font-semibold text-[#8B4513] mb-2">Change Is Possible</h4>
-                <p className="text-[#5D4037] text-sm">
+                <h4 className="font-semibold text-primary mb-2">Change Is Possible</h4>
+                <p className="text-black text-sm">
                   These beliefs aren't permanent fixtures. With awareness, patience, and practice, you can develop more balanced and helpful ways of thinking.
                 </p>
               </div>
@@ -477,21 +477,21 @@ const Module4Lesson2 = () => {
           </h3>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-centre p-4 bg-gradient-to-br from-[#F5E6D3] to-[#F0E68C]/30 rounded-lg">
-              <div className="text-2xl font-bold text-[#8B4513]">3</div>
-              <div className="text-sm text-[#5D4037]">Belief Categories</div>
+            <div className="text-centre p-4 bg-gray-100 rounded-lg">
+              <div className="text-2xl font-bold text-primary">3</div>
+              <div className="text-sm text-primary">Belief Categories</div>
             </div>
-            <div className="text-centre p-4 bg-gradient-to-br from-[#E6F3FF] to-[#F0F8FF] rounded-lg">
-              <div className="text-2xl font-bold text-[#8B4513]">{Object.keys(answers).length}</div>
-              <div className="text-sm text-[#5D4037]">Reflections</div>
+            <div className="text-centre p-4 bg-gray-100 rounded-lg">
+              <div className="text-2xl font-bold text-primary">{Object.keys(answers).length}</div>
+              <div className="text-sm text-primary">Reflections</div>
             </div>
-            <div className="text-centre p-4 bg-gradient-to-br from-[#F0FFF0] to-[#F5FFFA] rounded-lg">
-              <div className="text-2xl font-bold text-[#8B4513]">{completedReflections.size}</div>
-              <div className="text-sm text-[#5D4037]">Completed</div>
+            <div className="text-centre p-4 bg-gray-100 rounded-lg">
+              <div className="text-2xl font-bold text-primary">{completedReflections.size}</div>
+              <div className="text-sm text-primary">Completed</div>
             </div>
-            <div className="text-centre p-4 bg-gradient-to-br from-[#FFF0F5] to-[#FFE4E1] rounded-lg">
-              <div className="text-2xl font-bold text-[#8B4513]">100%</div>
-              <div className="text-sm text-[#5D4037]">Understanding</div>
+            <div className="text-centre p-4 bg-gray-100 rounded-lg">
+              <div className="text-2xl font-bold text-primary">100%</div>
+              <div className="text-sm text-primary">Understanding</div>
             </div>
           </div>
         </div>

@@ -6,7 +6,7 @@ const Module5Lesson3 = () => {
       <h1 className="text-2xl font-bold text-black mb-6">RELEASE AS A PATH TO FREEDOM AND WHOLENESS</h1>
 
       <div className="bg-[#f7f3e9] p-6 rounded-lg mb-6">
-          <h3 className="text-xl font-semibold text-[#bd6334] mb-3">What Release Really Means:</h3>
+          <h3 className="text-xl font-semibold text-primary mb-3">What Release Really Means:</h3>
           <ul className="list-disc list-inside space-y-2">
             <li>Letting go of what weighs you down</li>
             <li>Creating space for new possibilities</li>
@@ -21,27 +21,27 @@ const Module5Lesson3 = () => {
           Welcome to this transformative lesson on release—an essential pathway to freedom and wholeness. Today, we explore how letting go becomes not a loss, but a sacred reclamation of your true self.
         </p>
 
-        <h2 className="text-xl font-semibold text-[#bd6334] mt-8 mb-4">Understanding Release as Liberation</h2>
+        <h2 className="text-xl font-semibold text-primary mt-8 mb-4">Understanding Release as Liberation</h2>
         <p className="text-lg leading-relaxed mb-6">
           Release is often misunderstood as giving up or losing something precious. In truth, release is the conscious choice to free yourself from what no longer serves your highest good. When you release old pain, limiting beliefs, or patterns that keep you small, you create space for your authentic self to emerge.
         </p>
 
-        <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">The Sacred Nature of Letting Go</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-8 mb-4">The Sacred Nature of Letting Go</h2>
         <p className="text-lg leading-relaxed mb-6">
           In many spiritual traditions, release is considered sacred work—a return to essence. When you let go of what isn't truly yours to carry, you align with the natural flow of life. This isn't about forcing or pushing away; it's about relaxing your grip and allowing natural healing to occur.
         </p>
 
-        <blockquote className="border-l-4 border-[#bd6334] pl-6 italic text-lg my-6">
+        <blockquote className="border-l-4 border-primary pl-6 italic text-lg my-6">
           "What the caterpillar calls the end of the world, the master calls a butterfly." —Richard Bach
         </blockquote>
 
-        <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">The Freedom That Follows Release</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-8 mb-4">The Freedom That Follows Release</h2>
         <p className="text-lg leading-relaxed mb-6">
           True freedom comes not from acquiring more, but from releasing what no longer fits. When you let go of old stories, resentments, or fears, you discover that beneath it all is an unshakeable sense of wholeness that was always there.
         </p>
 
-        <div className="bg-green-50 p-6 rounded-lg mb-6">
-          <h3 className="text-xl font-semibold text-[#bd6334] mb-3">Signs of Emerging Freedom:</h3>
+        <div className="bg-gray-100 p-6 rounded-lg mb-6">
+          <h3 className="text-xl font-semibold text-primary mb-3">Signs of Emerging Freedom:</h3>
           <ul className="list-disc list-inside space-y-2">
             <li>Increased emotional lightness and joy</li>
             <li>Greater capacity for presence and peace</li>
@@ -52,7 +52,7 @@ const Module5Lesson3 = () => {
           </ul>
         </div>
 
-        <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">Wholeness Through Integration</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-8 mb-4">Wholeness Through Integration</h2>
         <p className="text-lg leading-relaxed mb-6">
           Wholeness doesn't mean perfection—it means integration. As you release old wounds and patterns, you're not erasing your history; you're integrating it in a way that serves your growth. Your past becomes a source of wisdom rather than a burden.
         </p>
@@ -69,10 +69,10 @@ const Module5Lesson3 = () => {
           <li>Access the full spectrum of your emotional range</li>
         </ul>
 
-        <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">Practical Release Techniques</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-8 mb-4">Practical Release Techniques</h2>
         
-        <div className="bg-yellow-50 p-6 rounded-lg mb-6">
-          <h3 className="text-xl font-semibold text-[#bd6334] mb-3">The Conscious Release Practice:</h3>
+        <div className="bg-gray-100 p-6 rounded-lg mb-6">
+          <h3 className="text-xl font-semibold text-primary mb-3">The Conscious Release Practice:</h3>
           <ol className="list-decimal list-inside space-y-3">
             <li><strong>Identify:</strong> What are you ready to release? (emotion, belief, pattern, relationship dynamic)</li>
             <li><strong>Acknowledge:</strong> Honor how this served you in the past—even if it was protective</li>
@@ -84,13 +84,13 @@ const Module5Lesson3 = () => {
           </ol>
         </div>
 
-        <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">Movement and Release</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-8 mb-4">Movement and Release</h2>
         <p className="text-lg leading-relaxed mb-6">
           Your body holds onto patterns and emotions. Movement can be one of the most effective ways to facilitate release. Whether through dance, shaking, stretching, or mindful walking, allow your body to move energy and facilitate letting go.
         </p>
 
-        <div className="bg-purple-50 p-6 rounded-lg mb-6">
-          <h3 className="text-xl font-semibold text-[#bd6334] mb-3">Movement for Release:</h3>
+        <div className="bg-gray-100 p-6 rounded-lg mb-6">
+          <h3 className="text-xl font-semibold text-primary mb-3">Movement for Release:</h3>
           <ul className="list-disc list-inside space-y-2">
             <li><strong>Shaking:</strong> Let your whole body shake for 2-3 minutes to release stored energy</li>
             <li><strong>Dancing:</strong> Put on music and let your body move however it wants</li>
@@ -100,19 +100,19 @@ const Module5Lesson3 = () => {
           </ul>
         </div>
 
-        <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">The Paradox of Letting Go</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-8 mb-4">The Paradox of Letting Go</h2>
         <p className="text-lg leading-relaxed mb-6">
           There's a beautiful paradox in release work: the more you try to force letting go, the more you hold on. True release happens through acceptance and gentleness with yourself. It's about creating conditions where natural healing can occur rather than forcing an outcome.
         </p>
 
-        <blockquote className="border-l-4 border-[#bd6334] pl-6 italic text-lg my-6">
+        <blockquote className="border-l-4 border-primary pl-6 italic text-lg my-6">
           "The cave you fear to enter holds the treasure you seek." —Joseph Campbell
         </blockquote>
 
-        <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">Daily Release Practices</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-8 mb-4">Daily Release Practices</h2>
         
-        <div className="bg-blue-50 p-6 rounded-lg mb-6">
-          <h3 className="text-xl font-semibold text-[#bd6334] mb-3">Simple Daily Practices:</h3>
+        <div className="bg-gray-100 p-6 rounded-lg mb-6">
+          <h3 className="text-xl font-semibold text-primary mb-3">Simple Daily Practices:</h3>
           <ul className="list-disc list-inside space-y-2">
             <li><strong>Morning Release:</strong> Start each day by releasing yesterday's energy</li>
             <li><strong>Emotional Check-ins:</strong> Regularly ask "What am I holding onto that I could release?"</li>
@@ -122,13 +122,13 @@ const Module5Lesson3 = () => {
           </ul>
         </div>
 
-        <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">Creating Your Personal Release Ritual</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-8 mb-4">Creating Your Personal Release Ritual</h2>
         <p className="text-lg leading-relaxed mb-6">
           Develop a personal ritual around release that feels meaningful to you. This might involve writing and burning letters, creating art that represents what you're letting go of, or having ceremonies in nature. The key is making the process conscious and intentional.
         </p>
 
-        <div className="bg-green-50 p-6 rounded-lg mb-6">
-          <h3 className="text-xl font-semibold text-[#bd6334] mb-3">Elements of Effective Release Rituals:</h3>
+        <div className="bg-gray-100 p-6 rounded-lg mb-6">
+          <h3 className="text-xl font-semibold text-primary mb-3">Elements of Effective Release Rituals:</h3>
           <ul className="list-disc list-inside space-y-2">
             <li>Clear intention setting</li>
             <li>Physical or symbolic representation of what you're releasing</li>
@@ -139,7 +139,7 @@ const Module5Lesson3 = () => {
           </ul>
         </div>
 
-        <h2 className="text-2xl font-semibold text-[#bd6334] mt-8 mb-4">The Ongoing Journey</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-8 mb-4">The Ongoing Journey</h2>
         <p className="text-lg leading-relaxed mb-6">
           Release is not a one-time event but an ongoing practice. As you grow and evolve, you'll naturally outgrow old patterns, beliefs, and ways of being. Embrace this as a sign of your continued healing and expansion rather than something to resist.
         </p>
@@ -148,8 +148,8 @@ const Module5Lesson3 = () => {
           Remember: Every time you choose to release what no longer serves you, you choose freedom. Every time you let go, you create space for wholeness to emerge. Trust in your innate capacity for renewal and transformation.
         </p>
 
-        <div className="bg-yellow-50 p-6 rounded-lg">
-          <h3 className="text-xl font-semibold text-[#bd6334] mb-3">Today's Reflection:</h3>
+        <div className="bg-gray-100 p-6 rounded-lg">
+          <h3 className="text-xl font-semibold text-primary mb-3">Today's Reflection:</h3>
           <p className="text-lg leading-relaxed">
             "What would I release if I knew that letting go would lead me to exactly where I need to be? How would it feel to move through life with the lightness that comes from carrying only what truly serves my highest good?"
           </p>

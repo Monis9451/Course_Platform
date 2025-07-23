@@ -71,16 +71,16 @@ const Module1Lesson8 = () => {
         <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
           <h3 className="font-semibold mb-4 text-[#bd6334] border-b pb-2">Benefits of This Practice</h3>
           <div className="space-y-3">
-            <div className="flex items-center border-l-4 border-green-400 pl-3 py-1 bg-green-50">
+            <div className="flex items-center border-l-4 border-primary pl-3 py-1 bg-green-50">
               <p>Calms an overactive nervous system</p>
             </div>
-            <div className="flex items-center border-l-4 border-blue-400 pl-3 py-1 bg-blue-50">
+            <div className="flex items-center border-l-4 border-primary pl-3 py-1 bg-blue-50">
               <p>Reduces anxiety and overwhelm</p>
             </div>
-            <div className="flex items-center border-l-4 border-purple-400 pl-3 py-1 bg-purple-50">
+            <div className="flex items-center border-l-4 border-primary pl-3 py-1 bg-purple-50">
               <p>Brings you back to the present moment</p>
             </div>
-            <div className="flex items-center border-l-4 border-yellow-400 pl-3 py-1 bg-yellow-50">
+            <div className="flex items-center border-l-4 border-primary pl-3 py-1 bg-yellow-50">
               <p>Helps you feel more embodied and connected</p>
             </div>
           </div>
