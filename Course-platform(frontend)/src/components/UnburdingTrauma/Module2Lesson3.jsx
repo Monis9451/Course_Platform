@@ -5,7 +5,7 @@ const Module2Lesson3 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">GROUNDING THROUGH THE SENSES: TOUCH, MOVEMENT, BREATH</h1>
       
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+      <div className="bg-yellow-100 p-6 rounded-md mb-8">
         <p className="mb-4">When trauma triggers your nervous system, you may find yourself disconnected from the present moment—either hypervigilant and anxious, or numb and shut down.</p>
         
         <p className="mb-4">Grounding techniques use your five senses to bring you back to the here and now. By intentionally connecting with what you can see, hear, touch, smell, and taste, you provide your brain with clear evidence that you're safe in the present moment, not trapped in the past.</p>

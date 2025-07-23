@@ -5,7 +5,7 @@ const Module3Lesson3 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">REPARENTING: OFFERING COMPASSION TO THE SELF WITHIN</h1>
       
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+      <div className="bg-yellow-100 p-6 rounded-md mb-8">
         <p className="mb-4">Reparenting is one of the most profound gifts you can give yourself on your healing journey. It's the practise of becoming the loving, attuned parent your inner child needed—and perhaps didn't fully receive.</p>
         
         <p className="mb-4">When we experience childhood wounds or trauma, parts of us remain stuck at those developmental stages, waiting for the nurturing, protection, or validation they needed. Through reparenting, you learn to offer those unmet needs to yourself.</p>

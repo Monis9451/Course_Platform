@@ -5,7 +5,7 @@ const Module3Lesson2 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">HOW CHILDHOOD PAIN SHAPES ADULT PATTERNS</h1>
       
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+      <div className="bg-yellow-100 p-6 rounded-md mb-8">
         <p className="mb-4">The coping mechanisms that helped you survive childhood difficulties often become the very patterns that limit you as an adult. What once protected you may now be preventing authentic connection, joy, and freedom.</p>
         
         <p className="mb-4">Understanding the link between your early experiences and current struggles removes shame and creates clarity. When you see how your patterns made perfect sense given what you went through, self-compassion naturally emerges.</p>

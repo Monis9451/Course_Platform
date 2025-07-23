@@ -7,7 +7,7 @@ const Module6Lesson1 = () => {
         CREATING YOUR ONGOING HEALING PRACTICE
       </h1>
       
-      <div className="bg-[#f7f3e9] p-6 rounded-lg mb-8">
+      <div className="bg-yellow-100 p-6 rounded-lg mb-8">
         <p className="text-gray-700 leading-relaxed mb-4">
           As you near the end of this course, it's time to create a personalised healing plan that will support your continued growth. This plan serves as a bridge between the structured learning environment of the course and your ongoing independent journey.
         </p>

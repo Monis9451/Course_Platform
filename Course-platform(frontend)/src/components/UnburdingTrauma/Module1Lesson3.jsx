@@ -5,7 +5,7 @@ const Module1Lesson3 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-8">TRAUMA RESPONSES: FIGHT, FLIGHT, FREEZE, FAWN – HOW TRAUMA MANIFESTS IN BEHAVIOUR</h1>
       
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+      <div className="bg-yellow-100 p-6 rounded-md mb-8">
         <h3 className="font-semibold mb-4 text-[#bd6334]">Recognizing Your Patterns</h3>
         <p className="mb-4">Each of these responses is intelligent and protective. Each kept you alive. The work now isn't to get rid of them, but to recognise when they show up, thank them for their protection, and choose your response from a place of awareness.</p>
         <p className="mb-2 font-medium">Reflect on these questions:</p>

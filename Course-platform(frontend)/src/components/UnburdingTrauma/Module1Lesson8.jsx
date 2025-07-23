@@ -7,7 +7,7 @@ const Module1Lesson8 = () => {
         GUIDED VISUALISATION - GROUNDING & NERVOUS SYSTEM REGULATION
       </h1>
       
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+      <div className="bg-yellow-100 p-6 rounded-md mb-8">
         <h3 className="font-semibold mb-3 text-[#bd6334]">What is Grounding?</h3>
         <p className="mb-4">Grounding is a powerful technique that helps you reconnect to the present moment—particularly helpful when you're feeling anxious, disconnected, or overwhelmed. It's about gently anchoring back into your body and your current environment, using your senses and breath.</p>
         <div className="flex items-center">

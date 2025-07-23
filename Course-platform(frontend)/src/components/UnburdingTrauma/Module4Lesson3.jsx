@@ -5,7 +5,7 @@ const Module4Lesson3 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">REFRAMING STUCK POINTS</h1>
       
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+      <div className="bg-yellow-100 p-6 rounded-md mb-8">
         <p className="mb-4">Once you've identified your stuck points—those thoughts and beliefs that keep you trapped in trauma responses—the next step is learning to reframe them. Reframing doesn't mean denying your experience or forcing positivity; it means developing more balanced, compassionate, and accurate ways of understanding what happened to you.</p>
         
         <p className="mb-4">Effective reframing acknowledges the reality of your experience while opening possibilities for healing and growth. It helps you move from rigid, trauma-influenced thinking patterns to more flexible, empowering perspectives that support your recovery.</p>

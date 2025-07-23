@@ -5,9 +5,13 @@ const Module4Lesson7 = () => {
     <div>
       <h1 className="text-black text-2xl mb-6">EMPOWERMENT MEDITATION</h1>
       
+      {/* Content will be added later */}
+      <div className="bg-yellow-100 p-6 rounded-md mb-8">
+        <p className="mb-4">Content for this lesson will be added soon.</p>
+      </div>
+
       <div className="mb-8">
         <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
-        
         <div className="bg-primary p-1 rounded-md">
           <button className="flex items-center w-full px-4 py-3 bg-primary text-white hover:bg-gray-900 rounded-md">
             <span className="flex-shrink-0 mr-3">▶</span>
@@ -25,10 +29,7 @@ const Module4Lesson7 = () => {
         </ul>
       </div>
       
-      {/* Content will be added later */}
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
-        <p className="mb-4">Content for this lesson will be added soon.</p>
-      </div>
+      
     </div>
   )
 }

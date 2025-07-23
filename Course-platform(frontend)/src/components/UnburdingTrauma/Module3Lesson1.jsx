@@ -5,7 +5,7 @@ const Module3Lesson1 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">UNDERSTANDING THE INNER CHILD AND EMOTIONAL WOUNDS</h1>
       
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+      <div className="bg-yellow-100 p-6 rounded-md mb-8">
         <p className="mb-4">We all carry a child within us – the part that experienced the world with wonder, vulnerability, and raw emotion. This inner child still lives inside, influencing how we react, what we fear, and what we deeply desire.</p>
         
         <p className="mb-4">When this child part of ourselves experienced hurt, rejection, or neglect (even in small ways), emotional wounds formed. These wounds don't simply disappear with time – they shape our adult behaviors, relationships, and self-beliefs.</p>

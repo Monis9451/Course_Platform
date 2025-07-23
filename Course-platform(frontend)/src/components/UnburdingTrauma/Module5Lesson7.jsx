@@ -14,7 +14,7 @@ const Module5Lesson7 = () => {
             Guided Release Meditation
           </h2>
           
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6 mb-6">
+          <div className="bg-yellow-100 border border-gray-200 rounded-lg p-6 mb-6">
             <h3 className="text-xl font-semibold text-primary mb-4">Beginning - Grounding and Connection</h3>
             <div className="space-y-4 text-black">
               <p className="italic">

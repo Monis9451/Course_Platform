@@ -5,7 +5,7 @@ const Module5Lesson3 = () => {
     <div className="p-8">
       <h1 className="text-2xl font-bold text-black mb-6">RELEASE AS A PATH TO FREEDOM AND WHOLENESS</h1>
 
-      <div className="bg-[#f7f3e9] p-6 rounded-lg mb-6">
+      <div className="bg-yellow-100 p-6 rounded-lg mb-6">
           <h3 className="text-xl font-semibold text-primary mb-3">What Release Really Means:</h3>
           <ul className="list-disc list-inside space-y-2">
             <li>Letting go of what weighs you down</li>

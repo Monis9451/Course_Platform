@@ -31,7 +31,7 @@ const Module2Lesson7 = () => {
       </div>
       
       <div className="aspect-w-16 aspect-h-9 mb-8">
-        <div className="bg-[#f8f0e6] rounded-lg flex items-center justify-center">
+        <div className="bg-yellow-100 rounded-lg flex items-center justify-center">
           <div className="text-center p-8">
             <div className="mb-8">
         <h2 className="font-semibold text-lg mb-3">LISTEN</h2>

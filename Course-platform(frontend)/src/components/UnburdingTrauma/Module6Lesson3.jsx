@@ -5,7 +5,7 @@ const Module6Lesson3 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">VISIONING THE HEALED SELF & EMBRACING POST-TRAUMA GROWTH</h1>
       
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+      <div className="bg-yellow-100 p-6 rounded-md mb-8">
         <p className="mb-4">In trauma recovery, we often focus intensely on what needs healing, sometimes overlooking the remarkable strengths and progress we've already developed. Taking time to acknowledge and celebrate your journey is not just a pleasant addition—it's an essential component of healing.</p>
         
         <p className="mb-4">Intentional celebration helps rewire your brain to recognise positive changes, countering the negativity bias that can keep you focused only on what's still difficult. It also reinforces neural pathways associated with resilience, growth, and possibility.</p>

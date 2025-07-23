@@ -5,7 +5,7 @@ const Module2Lesson5 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">SOMATIC REFLECTION – WHEN DO I FEEL PRESENT?</h1>
       
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+      <div className="bg-yellow-100 p-6 rounded-md mb-8">
         <p className="mb-4">Somatic reflection is a powerful practise of turning inward to observe your bodily experience with curiosity and compassion. It helps you recognise what circumstances, relationships, and environments support your sense of safety and presence.</p>
         
         <p className="mb-4">By identifying when you naturally feel present in your body, you can intentionally create more of these conditions in your life, strengthening your capacity for embodiment.</p>

@@ -5,7 +5,7 @@ const Module2Lesson1 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">WHY TRAUMA DISCONNECTS US FROM THE BODY</h1>
       
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+      <div className="bg-yellow-100 p-6 rounded-md mb-8">
         <p className="mb-4">Trauma isn't just something that happens in the mind—it lives in the body.</p>
         
         <p className="mb-4">When we experience overwhelming events, the nervous system goes into survival mode: fight, flight, freeze, or fawn. To protect us, the body may numb sensations, shut down emotions, or create a sense of disconnection—as if we're outside our bodies.</p>

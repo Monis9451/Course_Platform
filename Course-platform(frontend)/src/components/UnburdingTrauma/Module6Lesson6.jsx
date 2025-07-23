@@ -5,7 +5,7 @@ const Module6Lesson6 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">BUILDING YOUR COMMUNITY – SUPPORT AND CONNECTION (PRACTICAL STEPS)</h1>
       
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+      <div className="bg-yellow-100 p-6 rounded-md mb-8">
         <p className="mb-4">Healing doesn't happen in isolation. One of the most powerful steps you can take in your recovery journey is building a supportive community around you. This isn't about having loads of friends—it's about cultivating meaningful connections that nurture your growth and wellbeing.</p>
         
         <p className="mb-4">For many trauma survivors, connecting with others can feel overwhelming or even unsafe. That's completely understandable. We'll approach this gently, at your own pace, with practical steps that honour where you are right now.</p>

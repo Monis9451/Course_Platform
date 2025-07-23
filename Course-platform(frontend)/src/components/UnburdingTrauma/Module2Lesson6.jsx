@@ -5,7 +5,7 @@ const Module2Lesson6 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">MINDFUL MOVEMENT PRACTICE</h1>
       
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+      <div className="bg-yellow-100 p-6 rounded-md mb-8">
         <p className="mb-4">Mindful movement provides a gentle yet powerful way to reconnect with your body after trauma. By combining physical movement with present-moment awareness, you create new neural pathways that support embodied presence.</p>
         
         <p className="mb-4">Unlike high-intensity exercise which can sometimes be triggering, mindful movement practices emphasise awareness, gentle exploration, and respecting your body's limits.</p>

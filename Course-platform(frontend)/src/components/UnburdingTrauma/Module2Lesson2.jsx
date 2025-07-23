@@ -5,7 +5,7 @@ const Module2Lesson2 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">FELT SENSE & BODY AWARENESS: LISTENING TO INNER SIGNALS</h1>
       
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+      <div className="bg-yellow-100 p-6 rounded-md mb-8">
         <p className="mb-4">Your body is constantly communicating with you through physical sensations that carry important information about your needs, emotions, and safety.</p>
         
         <p className="mb-4">Felt sense is your body's internal knowing—the physical way your body communicates with you about your experience, often before your conscious mind can put it into words.</p>

@@ -4,17 +4,8 @@ const Module3Lesson8 = () => {
   return (
     <div>
       <h1 className="text-black text-2xl mb-6">INNER CHILD HEALING MEDITATION</h1>
-
-      <div className="mb-8">
-        <h2 className="font-semibold text-lg mb-3">JOURNAL</h2>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>What messages did your inner child need to hear from you?</li>
-          <li>Were there any difficult emotions that came up during this meditation?</li>
-          <li>How can you continue to nurture your inner child in daily life?</li>
-        </ul>
-      </div>
       
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
+      <div className="bg-yellow-100 p-6 rounded-md mb-8">
         <p className="mb-4">This guided meditation creates a sacred space for you to connect with your inner child. Through visualisation and compassionate dialogue, you'll begin the process of healing old wounds and establishing a nurturing relationship with this vulnerable part of yourself.</p>
         
         <p className="mb-4">Regular practise of this meditation helps rebuild trust between your adult self and your inner child, allowing for deeper integration and healing.</p>

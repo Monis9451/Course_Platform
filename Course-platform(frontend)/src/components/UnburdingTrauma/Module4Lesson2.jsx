@@ -32,7 +32,7 @@ const Module4Lesson2 = () => {
         </div>
 
         {/* Introduction */}
-        <div className="bg-gradient-to-r from-[#F5E6D3] to-[#F0E68C]/30 rounded-xl p-6 mb-8 border-l-4 border-[#D2691E]">
+        <div className="bg-yellow-100 rounded-xl p-6 mb-8 border-l-4 border-[#D2691E]">
           <h3 className="text-xl font-semibold text-[#8B4513] mb-4">The Lens of Trauma</h3>
           <p className="text-[#5D4037] leading-relaxed mb-4">
             Trauma doesn't just affect our emotions and bodies - it fundamentally shapes how we see ourselves, others, and the world around us. These trauma-formed beliefs act like a lens through which we interpret every experience, often without us even realising it.
