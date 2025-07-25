@@ -1,4 +1,7 @@
 import React from 'react'
+import { HiSpeakerWave } from "react-icons/hi2"
+import { FaFileAlt } from "react-icons/fa"
+import { BsPencilFill } from "react-icons/bs";
 
 const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSelect, completedLessons, setCompletedLessons, lessonProgress }) => {
   const currentCompletedLessons = completedLessons || new Set([])
@@ -56,7 +59,7 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
     }
     
     if (title.includes('exercise') || 
-        (title.includes('practice') && !title.includes('creating your ongoing healing practice')) || 
+        (title.includes('practice') && !title.includes('creating your ongoing healing practice') && !title.includes('mindful movement practice')) || 
         title.includes('checklist')) {
       return 'checkbox';
     } else if (title.includes('audio') || title.includes('listen') || title.includes('podcast')) {
@@ -68,9 +71,9 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
       if (lessonIndex >= 4 && lessonIndex <= 6) return 'checkbox';
       if (lessonIndex === 7) return 'speaker';
     } else if ( moduleIndex === 1) {
-      if (lessonIndex <= 2) return 'page';
-      if (lessonIndex === 3 || lessonIndex === 6) return 'speaker';
-      if (lessonIndex >= 4 && lessonIndex <= 5 ) return 'checkbox';
+      if (lessonIndex === 0 || lessonIndex === 2) return 'page';
+      if (lessonIndex === 1 || lessonIndex === 3 || lessonIndex === 5 || lessonIndex === 6) return 'speaker';
+      if (lessonIndex === 4) return 'checkbox';
     } else if ( moduleIndex === 2) {
       if (lessonIndex <= 2) return 'page';
       if (lessonIndex === 3 || lessonIndex === 7) return 'speaker';
@@ -98,11 +101,9 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
           <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
             isSelected ? 'bg-primary' : 'bg-white'
           }`}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className={`w-4 h-4 ${
+            <BsPencilFill className={`w-4 h-4 ${
               isSelected ? 'text-black' : 'text-black'
-            }`}>
-              <path d="M0 64C0 28.7 28.7 0 64 0L224 0l0 128c0 17.7 14.3 32 32 32l128 0 0 125.7-86.8 86.8c-10.3 10.3-17.5 23.1-21 37.2l-18.7 74.9c-2.3 9.2-1.8 18.8 1.3 27.5L64 512c-35.3 0-64-28.7-64-64L0 64zm384 64l-128 0L256 0 384 128zM549.8 235.7l14.4 14.4c15.6 15.6 15.6 40.9 0 56.6l-29.4 29.4-71-71 29.4-29.4c15.6-15.6 40.9-15.6 56.6 0zM311.9 417L441.1 287.8l71 71L382.9 487.9c-4.1 4.1-9.2 7-14.9 8.4l-60.1 15c-5.5 1.4-11.2-.2-15.2-4.2s-5.6-9.7-4.2-15.2l15-60.1c1.4-5.6 4.3-10.8 8.4-14.9z"/>
-            </svg>
+            }`} />
           </div>
         );
       case 'speaker':
@@ -110,13 +111,9 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
           <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
             isSelected ? 'bg-primary' : 'bg-white'
           }`}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`w-4 h-4 ${
+            <HiSpeakerWave className={`w-4 h-4 ${
               isSelected ? 'text-black' : 'text-black'
-            }`}>
-              <path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"></path>
-              <path d="M16 9a5 5 0 0 1 0 6"></path>
-              <path d="M19.364 18.364a9 9 0 0 0 0-12.728"></path>
-            </svg>
+            }`} />
           </div>
         );
       case 'page':
@@ -125,15 +122,9 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
           <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
             isSelected ? 'bg-primary' : 'bg-white'
           }`}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`w-4 h-4 ${
+            <FaFileAlt className={`w-4 h-4 ${
               isSelected ? 'text-black' : 'text-black'
-            }`}>
-              <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
-              <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
-              <path d="M10 9H8"></path>
-              <path d="M16 13H8"></path>
-              <path d="M16 17H8"></path>
-            </svg>
+            }`} />
           </div>
         );
     }
