@@ -16,6 +16,7 @@ import Blogs from './pages/Blogs';
 import MentalHealth from './pages/MentalHealth';
 import PrivacyStatement from './pages/PrivacyStatement'
 import Disclaimer from './pages/Disclaimer';
+import Welcome from './pages/Welcome';
 import Error from './pages/404';
 import './styles/standardColors.css'
 
@@ -28,6 +29,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/courses" element={<Courses />} />
+            <Route path="/welcome" element={<Welcome />} />
 
             {/* Protected Routes */}
             <Route element={<ProtectedRoute />}>
