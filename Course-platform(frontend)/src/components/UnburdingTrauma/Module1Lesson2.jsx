@@ -22,14 +22,14 @@ const Module1Lesson2 = () => {
       
       <p className="mb-6">The Window of Tolerance is the optimal zone where our nervous system feels safe and regulated. When we are within this window—we can handle life's stresses, experience emotions without becoming overwhelmed, and respond to challenges with resilience. However, when we go outside this window—whether into hyperarousal or hypoarousal—we can lose our ability to think clearly, make decisions, or connect with others.</p>
       
-      <div className="relative h-40 bg-gradient-to-b from-red-100 via-green-100 to-blue-100 rounded-lg mb-8 overflow-hidden">
-        <div className="absolute w-full h-1/3 top-0 flex items-center justify-center bg-red-100/80">
+      <div className="relative h-40 bg-gray-100 rounded-lg mb-8 overflow-hidden">
+        <div className="absolute w-full h-1/3 top-0 flex items-center justify-center bg-gray-100">
           <span className="font-medium">Hyperarousal - Fight/Flight</span>
         </div>
-        <div className="absolute w-full h-1/3 top-1/3 flex items-center justify-center bg-green-100/80 border-y-2 border-[#bd6334]">
+        <div className="absolute w-full h-1/3 top-1/3 flex items-center justify-center bg-gray-100 border-y-2 border-[#bd6334]">
           <span className="font-medium text-[#bd6334]">WINDOW OF TOLERANCE</span>
         </div>
-        <div className="absolute w-full h-1/3 top-2/3 flex items-center justify-center bg-blue-100/80">
+        <div className="absolute w-full h-1/3 top-2/3 flex items-center justify-center bg-gray-100">
           <span className="font-medium">Hypoarousal - Freeze/Collapse</span>
         </div>
       </div>

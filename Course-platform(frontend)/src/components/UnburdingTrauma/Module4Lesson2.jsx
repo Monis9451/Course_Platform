@@ -28,7 +28,7 @@ const Module4Lesson2 = () => {
           <h2 className="text-xl md:text-2xl text-black mb-6">
             HOW TRAUMA SHAPES BELIEFS ABOUT SELF AND OTHERS
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-[#D2691E] to-[#CD853F] mx-auto rounded-full"></div>
+          {/* <div className="w-24 h-1 bg-gradient-to-r from-[#D2691E] to-[#CD853F] mx-auto rounded-full"></div> */}
         </div>
 
         {/* Introduction */}
