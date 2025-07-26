@@ -81,7 +81,6 @@ return (
                     </div>
                 </div>
             </section>
-            <div className="bg-white py-8"></div>
     </div>
 )
 }
