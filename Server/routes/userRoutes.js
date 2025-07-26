@@ -5,7 +5,22 @@ const router = express.Router();
 const { isAdmin } = require('../middleware/isAdminMiddleware');
 
 router.get('/admin/dashboard', verifyFirebaseToken, isAdmin, (req, res) => {
-    res.status(200).json({ message: 'Welcome to the admin dashboard' });
+    res.status(200).json({ 
+        message: 'Welcome to the admin dashboard',
+        success: true,
+        user: req.user 
+    });
+});
+
+router.get('/admin/check', verifyFirebaseToken, (req, res) => {
+    const adminEmail = process.env.ADMIN_EMAIL;
+    const isAdminUser = req.user?.email === adminEmail;
+    
+    res.status(200).json({
+        isAdmin: isAdminUser,
+        success: true,
+        email: req.user?.email
+    });
 });
 
 router.get('/me', verifyFirebaseToken, async (req, res) => {
