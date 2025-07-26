@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/authContext';
 import ProtectedRoute from './components/protectedRoutes';
+import AdminProtectedRoute from './components/AdminProtectedRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Courses from './pages/Courses';
@@ -16,6 +17,7 @@ import Blogs from './pages/Blogs';
 import MentalHealth from './pages/MentalHealth';
 import PrivacyStatement from './pages/PrivacyStatement'
 import Disclaimer from './pages/Disclaimer';
+import AdminDashboard from './pages/AdminDashboard';
 import Error from './pages/404';
 import './styles/standardColors.css'
 
@@ -36,6 +38,11 @@ const App = () => {
             <Route path="/checkout/:id" element={<Checkout />} />
             <Route path="/thankyou/:id" element={<ThankYou />} />
             <Route path="/thankyou" element={<ThankYou />} />
+            </Route>
+
+            {/* Admin Protected Routes */}
+            <Route element={<AdminProtectedRoute />}>
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
             </Route>
 
             <Route path="/about" element={<About />} />

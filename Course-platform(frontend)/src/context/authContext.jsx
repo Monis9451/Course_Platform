@@ -17,6 +17,7 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
     const [authToken, setAuthToken] = useState(null);
     const [isLoggingOut, setIsLoggingOut] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, initializeUser);
@@ -37,6 +38,9 @@ export function AuthProvider({ children }) {
                 const userData = await getUserFromBackend(user);
                 setUserData(userData);
                 setUserLogin(true);
+                
+                // Check if user is admin
+                await checkAdminStatus(token);
             } catch (error) {
                 console.error('Backend verification failed during initialization:', error);
                 
@@ -48,6 +52,7 @@ export function AuthProvider({ children }) {
                     setUserData(null);
                     setUserLogin(false);
                     setAuthToken(null);
+                    setIsAdmin(false);
                 }
             }
         }
@@ -56,9 +61,37 @@ export function AuthProvider({ children }) {
             setUserData(null);
             setUserLogin(false);
             setAuthToken(null);
+            setIsAdmin(false);
         }
         setLoading(false);
     }
+
+    const checkAdminStatus = async (token) => {
+        try {
+            const response = await apiCall(`${import.meta.env.VITE_API_URL}/users/admin/check`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                setIsAdmin(result.isAdmin || false);
+            } else {
+                setIsAdmin(false);
+            }
+        } catch (error) {
+            console.error('Error checking admin status:', error);
+            setIsAdmin(false);
+        }
+    };
+
+    const checkIsAdminEmail = (email) => {
+        const adminEmail = import.meta.env.VITE_ADMIN_EMAIL;
+        return email === adminEmail;
+    };
 
     const createUserInBackend = async (firebaseUser, additionalData = {}) => {
         try {
@@ -149,6 +182,7 @@ export function AuthProvider({ children }) {
     const completeAuthFlow = async (firebaseUser, isNewUser = false, additionalData = {}) => {
         try {
             let userData;
+            const token = await firebaseUser.getIdToken();
 
             if (isNewUser) {
                 try {
@@ -168,6 +202,8 @@ export function AuthProvider({ children }) {
             setCurrentUser({ ...firebaseUser });
             setUserData(userData);
             setUserLogin(true);
+            
+            await checkAdminStatus(token);
 
             return userData;
         } catch (error) {
@@ -175,6 +211,7 @@ export function AuthProvider({ children }) {
             setUserData(null);
             setUserLogin(false);
             setAuthToken(null);
+            setIsAdmin(false);
             
             throw error;
         }
@@ -188,6 +225,7 @@ export function AuthProvider({ children }) {
             setUserData(null);
             setUserLogin(false);
             setAuthToken(null);
+            setIsAdmin(false);
             setIsLoggingOut(false);
             return { success: true };
         } catch (error) {
@@ -204,10 +242,13 @@ export function AuthProvider({ children }) {
         loading,
         authToken,
         isLoggingOut,
+        isAdmin,
         logout,
         createUserInBackend,
         getUserFromBackend,
         completeAuthFlow,
+        checkAdminStatus,
+        checkIsAdminEmail,
     };
 
     return (
