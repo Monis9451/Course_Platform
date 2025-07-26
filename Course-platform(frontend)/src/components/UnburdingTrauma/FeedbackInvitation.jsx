@@ -4,10 +4,10 @@ const FeedbackInvitation = () => {
   return (
     <div>
       {/* Welcome Content Section */}
-      <section className="py-20 bg-cream min-h-screen">
+      <section className="py-20 bg-cream min-h-screen px-6">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-12">
-            <h1 className="text-3xl md:text-4xl font-light text-[#393128] mb-6">
+            <h1 className="text-2xl md:text-3xl font-light text-[#393128] mb-6">
               REFLECTING ON YOUR EXPERIENCE
             </h1>
           </div>
@@ -17,7 +17,7 @@ const FeedbackInvitation = () => {
             
             {/* Overview Section */}
             <div>
-              <p className="text-xl">
+              <p className="text-md">
                 If this workshop supported you in any meaningful way, I would be grateful to hear your 
                 reflections. As the creator and clinician behind this work, your experience helps me continue 
                 to develop safe, supportive, and effective resources for those navigating trauma. 
@@ -25,14 +25,14 @@ const FeedbackInvitation = () => {
             </div>
 
             <div>
-              <p className="text-xl">
+              <p className="text-md">
                 You're welcome to share as much or as little as you feel comfortable. All feedback is treated 
                 with care and confidentiality. 
               </p>
             </div>
 
             <div>
-              <p className="text-xl">
+              <p className="text-md">
                 Here are some questions to guide you, if helpful: 
               </p>
 
@@ -42,13 +42,13 @@ const FeedbackInvitation = () => {
                 <li className="text-md">What do you feel has changed or begun to shift since starting? </li>
               </ul>
 
-              <p className="text-xl">
+              <p className="text-md">
                 You may submit anonymously if you prefer. I truly appreciate your time and trust.
               </p>
             </div>
 
             <div>
-              <p className="text-xl">
+              <p className="text-md">
                 Healing doesn't mean the past disappears. It means that what once held power over you 
                 begins to soften. It means your nervous system learns that it's allowed to rest. It means your 
                 story no longer has to stay frozen in the body. 
@@ -56,7 +56,7 @@ const FeedbackInvitation = () => {
             </div>
 
             <div>
-              <h2 className="text-2xl !font-bold text-[#393128] mb-4">With appreciation, <br />Dr. Samina</h2>
+              <h2 className="text-xl !font-bold text-[#393128] mb-4">With appreciation, <br />Dr. Samina</h2>
             </div>
 
             {/* Feedback Form Section */}

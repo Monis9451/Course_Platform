@@ -4,10 +4,10 @@ const FurtherReport = () => {
     return (
         <div>
             {/* Welcome Content Section */}
-            <section className="py-20 bg-cream min-h-screen">
+            <section className="py-20 bg-cream min-h-screen px-6">
                 <div className="container mx-auto max-w-4xl">
                     <div className="text-center mb-12">
-                        <h1 className="text-3xl md:text-4xl font-light text-[#393128] mb-6">
+                        <h1 className="text-2xl md:text-3xl font-light text-[#393128] mb-6">
                             ONGOING SUPPORT
                         </h1>
                     </div>
@@ -17,14 +17,14 @@ const FurtherReport = () => {
 
                         {/* Overview Section */}
                         <div>
-                            <p className="text-xl">
+                            <p className="text-md">
                                 Healing often continues beyond the final lesson. If you find yourself in need of continued
                                 care whether practical, emotional, or therapeutic - please consider the resources below.
                             </p>
                         </div>
 
                         <div>
-                            <h2 className="text-2xl !font-bold text-[#393128] mb-4">UK Crisis & Immediate Support </h2>
+                            <h2 className="text-xl !font-bold text-[#393128] mb-4">UK Crisis & Immediate Support </h2>
 
                             <ul className="list-disc list-inside space-y-2 ml-4">
                                 <li className="text-md"><span className="!font-bold">Samaritans</span> – 24/7 free emotional support {<br />} 116 123 | <a href="https://www.samaritans.org/">www.samaritans.org</a></li>
@@ -35,7 +35,7 @@ const FurtherReport = () => {
                         </div>
 
                         <div>
-                            <h2 className="text-2xl !font-bold text-[#393128] mb-4">Professional Therapy (UK)</h2>
+                            <h2 className="text-xl !font-bold text-[#393128] mb-4">Professional Therapy (UK)</h2>
 
                             <ul className="list-disc list-inside space-y-2 ml-4">
                                 <li className="text-md"><span className="!font-bold">BACP</span> – British Association for Counselling and Psychotherapy {<br />} <a href="https://www.bacp.co.uk/">www.bacp.co.uk</a></li>
@@ -46,7 +46,7 @@ const FurtherReport = () => {
                         </div>
 
                         <div>
-                            <h2 className="text-2xl !font-bold text-[#393128] mb-4">Books on Trauma and Recovery </h2>
+                            <h2 className="text-xl !font-bold text-[#393128] mb-4">Books on Trauma and Recovery </h2>
 
                             <ul className="list-disc list-inside space-y-2 ml-4">
                                 <li className="text-md"><i>The Body Keeps the Score</i> – Bessel van der Kolk </li>
@@ -58,7 +58,7 @@ const FurtherReport = () => {
                         </div>
 
                         <div>
-                            <h2 className="text-2xl !font-bold text-[#393128] mb-4">Somatic & Mindfulness Tools</h2>
+                            <h2 className="text-xl !font-bold text-[#393128] mb-4">Somatic & Mindfulness Tools</h2>
 
                             <ul className="list-disc list-inside space-y-2 ml-4">
                                 <li className="text-md"><span className="!font-bold">Insight Timer</span> – Free meditations and trauma-sensitive teachers </li>
