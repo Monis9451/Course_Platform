@@ -63,6 +63,11 @@ import Module6Lesson5 from '../components/UnburdingTrauma/Module6Lesson5'
 import Module6Lesson6 from '../components/UnburdingTrauma/Module6Lesson6'
 import Module6Lesson7 from '../components/UnburdingTrauma/Module6Lesson7'
 
+import Welcome from '../components/UnburdingTrauma/Welcome'
+import LetterCompletion from '../components/UnburdingTrauma/LetterCompletion'
+import FeedbackInvitation from '../components/UnburdingTrauma/FeedbackInvitation'
+import FurtherReport from '../components/UnburdingTrauma/FurtherReport'
+
 const CourseContent_new = () => {
   const [selectedLesson, setSelectedLesson] = useState({ moduleIndex: 0, lessonIndex: 0 })
   const [completedLessons, setCompletedLessons] = useState(new Set([])) 
@@ -76,6 +81,13 @@ const CourseContent_new = () => {
     title: "Unburdening Trauma: A 6-Week Self Paced Workshop",
     description: "Why We Get Stuck in Pain – and How Awareness Sets Us Free",
     modules: [
+      {
+        title: "Welcome",
+        description: "A Note Before We Begin",
+        lessons: [
+          { title: "A Note Before We Begin", component: Welcome }
+        ]
+      },
       {
         title: "Understanding Trauma & the Body",
         description: "Why We Get Stuck in Pain – and How Awareness Sets Us Free",
@@ -154,6 +166,27 @@ const CourseContent_new = () => {
           { title: "Future-Self Reflection (Sentence Completion)", component: Module6Lesson5 },
           { title: "Building Your Community – Support and Connection", component: Module6Lesson6 },
           { title: "Integration Meditation", component: Module6Lesson7 }
+        ]
+      },
+      {
+        title: "Closing Reflections",
+        description: "Reaching this point means something important",
+        lessons: [
+          { title: "Closing Reflections", component: LetterCompletion }
+        ]
+      },
+      {
+        title: "Your Experience",
+        description: "Reflecting on Your Journey",
+        lessons: [
+          { title: "Reflecting on Your Experience", component: FeedbackInvitation }
+        ]
+      },
+      {
+        title: "Support Resources",
+        description: "Continued Care and Resources",
+        lessons: [
+          { title: "Ongoing Support", component: FurtherReport }
         ]
       }
     ]
