@@ -27,9 +27,9 @@ const FurtherReport = () => {
                             <h2 className="text-2xl !font-bold text-[#393128] mb-4">UK Crisis & Immediate Support </h2>
 
                             <ul className="list-disc list-inside space-y-2 ml-4">
-                                <li className="text-md">Samaritans – 24/7 free emotional support {<br />} 116 123 | <a href="https://www.samaritans.org/">www.samaritans.org</a></li>
-                                <li className="text-md">Shout - 24/7 crisis text line {<br />} Text SHOUT to 85258 | <a href="https://www.giveusashout.org/">www.giveusashout.org</a></li>
-                                <li className="text-md">NHS 111 - Urgent mental health support {<br />} Call 111 and ask for the local crisis team </li>
+                                <li className="text-md"><span className="!font-bold">Samaritans</span> – 24/7 free emotional support {<br />} 116 123 | <a href="https://www.samaritans.org/">www.samaritans.org</a></li>
+                                <li className="text-md"><span className="!font-bold">Shout</span> - 24/7 crisis text line {<br />} Text SHOUT to 85258 | <a href="https://www.giveusashout.org/">www.giveusashout.org</a></li>
+                                <li className="text-md"><span className="!font-bold">NHS 111</span> - Urgent mental health support {<br />} Call 111 and ask for the local crisis team </li>
                             </ul>
 
                         </div>
@@ -38,9 +38,9 @@ const FurtherReport = () => {
                             <h2 className="text-2xl !font-bold text-[#393128] mb-4">Professional Therapy (UK)</h2>
 
                             <ul className="list-disc list-inside space-y-2 ml-4">
-                                <li className="text-md">BACP – British Association for Counselling and Psychotherapy {<br />} <a href="https://www.bacp.co.uk/">www.bacp.co.uk</a></li>
-                                <li className="text-md">Counselling Directory {<br />} <a href="https://www.counselling-directory.org.uk/">www.counselling-directory.org.uk</a></li>
-                                <li className="text-md">Black Minds Matter UK {<br />} <a href="https://www.blackmindsmatteruk.com/">www.blackmindsmatteruk.com</a></li>
+                                <li className="text-md"><span className="!font-bold">BACP</span> – British Association for Counselling and Psychotherapy {<br />} <a href="https://www.bacp.co.uk/">www.bacp.co.uk</a></li>
+                                <li className="text-md"><span className="!font-bold">Counselling Directory</span> {<br />} <a href="https://www.counselling-directory.org.uk/">www.counselling-directory.org.uk</a></li>
+                                <li className="text-md"><span className="!font-bold">Black Minds Matter UK</span> {<br />} <a href="https://www.blackmindsmatteruk.com/">www.blackmindsmatteruk.com</a></li>
                             </ul>
 
                         </div>
@@ -58,7 +58,13 @@ const FurtherReport = () => {
                         </div>
 
                         <div>
-                            <h2 className="text-xl !font-bold text-[#393128] mb-4">Somatic & Mindfulness Tools </h2>
+                            <h2 className="text-2xl !font-bold text-[#393128] mb-4">Somatic & Mindfulness Tools</h2>
+
+                            <ul className="list-disc list-inside space-y-2 ml-4">
+                                <li className="text-md"><span className="!font-bold">Insight Timer</span> – Free meditations and trauma-sensitive teachers </li>
+                                <li className="text-md"><span className="!font-bold">Yoga with Adriene (YouTube)</span> – “Yoga for PTSD” and grounding practices </li>
+                            </ul>
+
                         </div>
 
                     </div>
