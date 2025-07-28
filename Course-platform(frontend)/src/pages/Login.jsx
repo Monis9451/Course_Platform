@@ -24,7 +24,7 @@ const Login = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { currentUser, completeAuthFlow, loading: authLoading } = useAuth();
+  const { currentUser, completeAuthFlow, isAdmin, loading: authLoading } = useAuth();
 
   const from = location.state?.from?.pathname || '/';
   
@@ -33,12 +33,16 @@ const Login = () => {
   }, [location.state?.from, currentUser]);
 
   useEffect(() => {
-    if (currentUser) {
-      const toastId = toast.loading('Redirecting...');
-      setTimeout(() => {
-        toast.dismiss(toastId);
-        navigate(from);
-      }, 800);
+    // Only handle redirect for non-admin users who weren't already redirected
+    if (currentUser && !isAdmin) {
+      // Add a small delay to ensure admin status is properly set
+      const timeoutId = setTimeout(() => {
+        if (!isAdmin) {
+          navigate(from);
+        }
+      }, 100);
+      
+      return () => clearTimeout(timeoutId);
     }
     
     if (previousUser.current && !currentUser) {
@@ -46,7 +50,7 @@ const Login = () => {
     }
     
     previousUser.current = currentUser;
-  }, [currentUser, navigate, from]);
+  }, [currentUser, navigate, from, isAdmin]);
 
   useEffect(() => {
     if (shouldShowToast && !hasShownToast.current) {
@@ -82,13 +86,23 @@ const Login = () => {
       const toastId = toast.loading(exists ? 'Logging you in...' : 'Creating your account...');
 
       try {
+        let adminRedirected = false;
+        
         await completeAuthFlow(firebaseUser, !exists, {
           name: firebaseUser.displayName || '',
           photoURL: firebaseUser.photoURL || null
+        }, (redirectPath) => {
+          // Handle admin redirect immediately
+          adminRedirected = true;
+          navigate(redirectPath);
         });
 
-        toast.success(exists ? 'Welcome back!' : 'Account created successfully!', { id: toastId });
-        navigate(from);
+        // Only show success toast if user wasn't redirected as admin
+        if (!adminRedirected) {
+          toast.success(exists ? 'Welcome back!' : 'Account created successfully!', { id: toastId });
+        } else {
+          toast.dismiss(toastId);
+        }
       } catch (backendError) {
         toast.error(backendError.message || 'Server error occurred. Please try again.', { id: toastId });
         setErrors({ general: backendError.message || 'Server error occurred' });
@@ -131,10 +145,20 @@ const Login = () => {
           const result = await signInUser(email, formData.password);
           const firebaseUser = result.user;
 
-          await completeAuthFlow(firebaseUser, false);
+          let adminRedirected = false;
+          
+          await completeAuthFlow(firebaseUser, false, {}, (redirectPath) => {
+            // Handle admin redirect immediately
+            adminRedirected = true;
+            navigate(redirectPath);
+          });
 
-          toast.success('Welcome back!', { id: toastId });
-          navigate(from);
+          // Only show success toast if user wasn't redirected as admin
+          if (!adminRedirected) {
+            toast.success('Welcome back!', { id: toastId });
+          } else {
+            toast.dismiss(toastId);
+          }
         } catch (backendError) {
           toast.error(backendError.message || 'Server error occurred. Please try again.', { id: toastId });
           setErrors({ general: backendError.message || 'Server error occurred' });
@@ -154,12 +178,22 @@ const Login = () => {
           const result = await createNewUser(email, formData.password);
           const firebaseUser = result.user;
 
+          let adminRedirected = false;
+          
           await completeAuthFlow(firebaseUser, true, {
             name: formData.name
+          }, (redirectPath) => {
+            // Handle admin redirect immediately
+            adminRedirected = true;
+            navigate(redirectPath);
           });
 
-          toast.success('Account created successfully!', { id: toastId });
-          navigate(from);
+          // Only show success toast if user wasn't redirected as admin
+          if (!adminRedirected) {
+            toast.success('Account created successfully!', { id: toastId });
+          } else {
+            toast.dismiss(toastId);
+          }
         } catch (backendError) {
           toast.error(backendError.message || 'Server error occurred. Please try again.', { id: toastId });
           setErrors({ general: backendError.message || 'Server error occurred' });

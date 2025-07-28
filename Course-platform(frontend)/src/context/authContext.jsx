@@ -18,16 +18,9 @@ export function AuthProvider({ children }) {
     const [authToken, setAuthToken] = useState(null);
     const [isLoggingOut, setIsLoggingOut] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [isCheckingAdmin, setIsCheckingAdmin] = useState(false);
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, initializeUser);
-        return () => {
-            unsubscribe();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    async function initializeUser(user) {
+    const initializeUser = async (user) => {
         if (user) {
             setCurrentUser({ ...user });
 
@@ -64,10 +57,21 @@ export function AuthProvider({ children }) {
             setIsAdmin(false);
         }
         setLoading(false);
-    }
+    };
 
-    const checkAdminStatus = async (token) => {
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, initializeUser);
+        return () => {
+            unsubscribe();
+        };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const checkAdminStatus = async (token, redirectCallback = null) => {
+        if (isCheckingAdmin) return false; // Prevent duplicate admin checks
+        
         try {
+            setIsCheckingAdmin(true);
             const response = await apiCall(`${import.meta.env.VITE_API_URL}/users/admin/check`, {
                 method: 'GET',
                 headers: {
@@ -78,13 +82,25 @@ export function AuthProvider({ children }) {
 
             if (response.ok) {
                 const result = await response.json();
-                setIsAdmin(result.isAdmin || false);
+                const isAdminUser = result.isAdmin || false;
+                setIsAdmin(isAdminUser);
+                
+                // If user is admin and we have a redirect callback, call it
+                if (isAdminUser && redirectCallback) {
+                    redirectCallback('/admin/dashboard');
+                }
+                
+                return isAdminUser;
             } else {
                 setIsAdmin(false);
+                return false;
             }
         } catch (error) {
             console.error('Error checking admin status:', error);
             setIsAdmin(false);
+            return false;
+        } finally {
+            setIsCheckingAdmin(false);
         }
     };
 
@@ -179,7 +195,7 @@ export function AuthProvider({ children }) {
         }
     };
 
-    const completeAuthFlow = async (firebaseUser, isNewUser = false, additionalData = {}) => {
+    const completeAuthFlow = async (firebaseUser, isNewUser = false, additionalData = {}, redirectCallback = null) => {
         try {
             let userData;
             const token = await firebaseUser.getIdToken();
@@ -203,7 +219,8 @@ export function AuthProvider({ children }) {
             setUserData(userData);
             setUserLogin(true);
             
-            await checkAdminStatus(token);
+            // Check admin status and handle redirect
+            await checkAdminStatus(token, redirectCallback);
 
             return userData;
         } catch (error) {
@@ -226,6 +243,7 @@ export function AuthProvider({ children }) {
             setUserLogin(false);
             setAuthToken(null);
             setIsAdmin(false);
+            setIsCheckingAdmin(false);
             setIsLoggingOut(false);
             return { success: true };
         } catch (error) {
