@@ -19,6 +19,7 @@ import PrivacyStatement from './pages/PrivacyStatement'
 import Disclaimer from './pages/Disclaimer';
 import AdminDashboard from './pages/AdminDashboard';
 import UserAnalytics from './pages/UserAnalytics';
+import AddCourse from './pages/AddCourse';
 import Error from './pages/404';
 import './styles/standardColors.css'
 
@@ -43,8 +44,9 @@ const App = () => {
 
             {/* Admin Protected Routes */}
             <Route element={<AdminProtectedRoute />}>
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
-            <Route path="/admin/analytics" element={<UserAnalytics />} />
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              <Route path="/admin/analytics" element={<UserAnalytics />} />
+              <Route path="/admin/add-course" element={<AddCourse />} />
             </Route>
 
             <Route path="/about" element={<About />} />

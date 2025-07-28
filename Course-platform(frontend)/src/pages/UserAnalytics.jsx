@@ -4,6 +4,7 @@ import Header from './Header';
 import Footer from './Footer';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import CountUp from 'react-countup';
 
 const UserAnalytics = () => {
   const { authToken } = useAuth();
@@ -122,25 +123,25 @@ const UserAnalytics = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div className="bg-primary p-6 rounded-lg text-white">
               <h3 className="text-lg font-semibold mb-2">Total Users</h3>
-              <p className="text-3xl font-bold">{analytics.totalUsers}</p>
+              <p className="text-3xl font-bold"><CountUp end={analytics.totalUsers} duration={1} /></p>
               <p className="text-white text-sm mt-2">All registered users</p>
             </div>
             
             <div className="bg-primary p-6 rounded-lg text-white">
               <h3 className="text-lg font-semibold mb-2">Recent Signups</h3>
-              <p className="text-3xl font-bold">{analytics.recentSignups}</p>
+              <p className="text-3xl font-bold"><CountUp end={analytics.recentSignups} duration={1} /></p>
               <p className="text-green-100 text-sm mt-2">Last 7 days</p>
             </div>
             
             <div className="bg-primary p-6 rounded-lg text-white">
               <h3 className="text-lg font-semibold mb-2">Active Users</h3>
-              <p className="text-3xl font-bold">{analytics.activeUsers}</p>
+              <p className="text-3xl font-bold"><CountUp end={analytics.activeUsers} duration={1} /></p>
               <p className="text-purple-100 text-sm mt-2">Currently active</p>
             </div>
             
             <div className="bg-primary p-6 rounded-lg text-white">
               <h3 className="text-lg font-semibold mb-2">Monthly Growth</h3>
-              <p className="text-3xl font-bold">{analytics.monthlyGrowth}</p>
+              <p className="text-3xl font-bold"><CountUp end={analytics.monthlyGrowth} duration={1} />  </p>
               <p className="text-orange-100 text-sm mt-2">Last 30 days</p>
             </div>
           </div>
