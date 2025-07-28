@@ -1,12 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/authContext';
 import Header from './Header';
 import Footer from './Footer';
 import toast from 'react-hot-toast';
 
+
 const AdminDashboard = () => {
-  const { currentUser } = useAuth();
+  const { authToken } = useAuth();
   const [loading] = useState(false);
+  const [totalUsers, setTotalUsers] = useState(0);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await fetch(import.meta.env.VITE_API_URL + '/users/all', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
+          }
+        });
+        if (!res.ok) {
+          throw new Error('Failed to fetch users');
+        }
+        const response = await res.json();
+        const users = response.users;
+        setTotalUsers(Array.isArray(users) ? users.length : 0);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+        toast.error('Failed to fetch users');
+      }
+    };
+    if (authToken) {
+      fetchUsers();
+    }
+  }, [authToken]);
 
   if (loading) {
     return (
@@ -35,7 +63,7 @@ const AdminDashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-gray-100 p-6 rounded-lg border border-primary">
                 <h3 className="text-lg font-semibold text-primary mb-2">Total Users</h3>
-                <p className="text-3xl font-bold text-primary">0</p>
+                <p className="text-3xl font-bold text-primary">{totalUsers}</p>
                 <p className="text-sm text-primary mt-2">Registered users</p>
               </div>
               

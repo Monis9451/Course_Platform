@@ -32,7 +32,6 @@ export function AuthProvider({ children }) {
                 setUserData(userData);
                 setUserLogin(true);
                 
-                // Check if user is admin
                 await checkAdminStatus(token);
             } catch (error) {
                 console.error('Backend verification failed during initialization:', error);
@@ -68,7 +67,7 @@ export function AuthProvider({ children }) {
     }, []);
 
     const checkAdminStatus = async (token, redirectCallback = null) => {
-        if (isCheckingAdmin) return false; // Prevent duplicate admin checks
+        if (isCheckingAdmin) return false;
         
         try {
             setIsCheckingAdmin(true);

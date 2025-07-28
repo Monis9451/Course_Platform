@@ -119,7 +119,7 @@ router.post('/create', verifyFirebaseToken, async (req, res) => {
     }
 })
 
-router.get('/all', async (req, res) => {
+router.get('/all', verifyFirebaseToken, isAdmin, async (req, res) => {
     try {
         const users = await getAllUsers();
         res.status(200).json({ users });
