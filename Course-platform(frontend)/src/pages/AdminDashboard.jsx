@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/authContext';
+import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import toast from 'react-hot-toast';
@@ -7,6 +8,7 @@ import toast from 'react-hot-toast';
 
 const AdminDashboard = () => {
   const { authToken } = useAuth();
+  const navigate = useNavigate();
   const [loading] = useState(false);
   const [totalUsers, setTotalUsers] = useState(0);
 
@@ -77,7 +79,7 @@ const AdminDashboard = () => {
             <div className="mt-6">
               <button 
                 className="bg-primary text-white px-6 py-3 rounded-lg cursor-pointer transition-colors"
-                onClick={() => toast.info('User analytics feature coming soon')}
+                onClick={() => navigate('/admin/analytics')}
               >
                 View Detailed Analytics
               </button>
@@ -90,7 +92,7 @@ const AdminDashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div className="bg-gray-100 p-6 rounded-lg border border-primary">
                 <h3 className="text-lg font-semibold text-primary mb-2">Total Courses</h3>
-                <p className="text-3xl font-bold text-primary">0</p>
+                <p className="text-3xl font-bold text-primary">1</p>
                 <p className="text-sm text-primary mt-2">Published courses</p>
               </div>
             </div>
