@@ -27,7 +27,9 @@ const AdminDashboard = () => {
         }
         const response = await res.json();
         const users = response.users;
-        setTotalUsers(Array.isArray(users) ? users.length : 0);
+        const adminEmail = import.meta.env.VITE_ADMIN_EMAIL;
+        const filteredUsers = users.filter(user => user.email !== adminEmail);
+        setTotalUsers(Array.isArray(filteredUsers) ? filteredUsers.length : 0);
       } catch (error) {
         console.error('Error fetching users:', error);
         toast.error('Failed to fetch users');

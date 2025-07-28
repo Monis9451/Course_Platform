@@ -35,26 +35,28 @@ const UserAnalytics = () => {
         
         const response = await res.json();
         const usersData = response.users;
-        setUsers(usersData || []);
+        const adminEmail = import.meta.env.VITE_ADMIN_EMAIL;
+        const filteredUsers = usersData.filter(user => user.email !== adminEmail);
+        setUsers(filteredUsers || []);
         
         // Calculate analytics
-        if (usersData && Array.isArray(usersData)) {
+        if (filteredUsers && Array.isArray(filteredUsers)) {
           const now = new Date();
           const lastWeek = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
           const lastMonth = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-          
-          const recentSignups = usersData.filter(user => 
+
+          const recentSignups = filteredUsers.filter(user =>
             new Date(user.createdAt) >= lastWeek
           ).length;
-          
-          const monthlyUsers = usersData.filter(user => 
+
+          const monthlyUsers = filteredUsers.filter(user =>
             new Date(user.createdAt) >= lastMonth
           ).length;
           
           setAnalytics({
-            totalUsers: usersData.length,
+            totalUsers: filteredUsers.length,
             recentSignups,
-            activeUsers: usersData.length,
+            activeUsers: filteredUsers.length,
             monthlyGrowth: monthlyUsers
           });
         }
