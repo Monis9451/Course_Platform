@@ -1,29 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
 import Header from './Header';
 import Footer from './Footer';
 import toast from 'react-hot-toast';
 
 const AdminDashboard = () => {
-  const { currentUser, isAdmin, authToken } = useAuth();
+  const { currentUser, authToken } = useAuth();
   const [loading, setLoading] = useState(true);
   const [adminData, setAdminData] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!currentUser) {
-      toast.error('Please login to access this page');
-      navigate('/login');
-      return;
-    }
-
-    if (!isAdmin) {
-      toast.error('Access denied. Admin privileges required.');
-      navigate('/');
-      return;
-    }
-
     const fetchAdminDashboard = async () => {
       try {
         setLoading(true);
@@ -38,23 +24,22 @@ const AdminDashboard = () => {
         if (response.ok) {
           const data = await response.json();
           setAdminData(data);
-          toast.success('Welcome to Admin Dashboard!');
         } else {
           const errorData = await response.json();
           toast.error(errorData.message || 'Failed to access admin dashboard');
-          navigate('/');
         }
       } catch (error) {
         console.error('Error fetching admin dashboard:', error);
         toast.error('Failed to load admin dashboard');
-        navigate('/');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchAdminDashboard();
-  }, [currentUser, isAdmin, navigate, authToken]);
+    if (authToken) {
+      fetchAdminDashboard();
+    }
+  }, [authToken]);
 
   if (loading) {
     return (

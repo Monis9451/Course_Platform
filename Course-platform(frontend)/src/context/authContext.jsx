@@ -87,7 +87,10 @@ export function AuthProvider({ children }) {
                 
                 // If user is admin and we have a redirect callback, call it
                 if (isAdminUser && redirectCallback) {
-                    redirectCallback('/admin/dashboard');
+                    // Show welcome toast for admin login before redirect
+                    setTimeout(() => {
+                        redirectCallback('/admin/dashboard');
+                    }, 100);
                 }
                 
                 return isAdminUser;
@@ -237,6 +240,9 @@ export function AuthProvider({ children }) {
     const logout = async () => {
         setIsLoggingOut(true);
         try {
+            // Small delay to allow components to respond to isLoggingOut state
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
             await signOutUser();
             setCurrentUser(null);
             setUserData(null);
@@ -244,7 +250,11 @@ export function AuthProvider({ children }) {
             setAuthToken(null);
             setIsAdmin(false);
             setIsCheckingAdmin(false);
+            
+            // Small delay before clearing isLoggingOut to prevent flash of error states
+            await new Promise(resolve => setTimeout(resolve, 100));
             setIsLoggingOut(false);
+            
             return { success: true };
         } catch (error) {
             console.error('Error logging out:', error);
@@ -261,6 +271,7 @@ export function AuthProvider({ children }) {
         authToken,
         isLoggingOut,
         isAdmin,
+        isCheckingAdmin,
         logout,
         createUserInBackend,
         getUserFromBackend,

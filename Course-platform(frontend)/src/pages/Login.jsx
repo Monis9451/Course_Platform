@@ -92,9 +92,9 @@ const Login = () => {
           name: firebaseUser.displayName || '',
           photoURL: firebaseUser.photoURL || null
         }, (redirectPath) => {
-          // Handle admin redirect immediately
-          adminRedirected = true;
-          navigate(redirectPath);
+          // Handle admin redirect immediately and show welcome toast
+          toast.success('Welcome to Admin Dashboard!', { id: toastId });
+          setTimeout(() => navigate(redirectPath), 100);
         });
 
         // Only show success toast if user wasn't redirected as admin
@@ -148,9 +148,10 @@ const Login = () => {
           let adminRedirected = false;
           
           await completeAuthFlow(firebaseUser, false, {}, (redirectPath) => {
-            // Handle admin redirect immediately
+            // Handle admin redirect immediately and show welcome toast
             adminRedirected = true;
-            navigate(redirectPath);
+            toast.success('Welcome to Admin Dashboard!', { id: toastId });
+            setTimeout(() => navigate(redirectPath), 100);
           });
 
           // Only show success toast if user wasn't redirected as admin
@@ -183,9 +184,10 @@ const Login = () => {
           await completeAuthFlow(firebaseUser, true, {
             name: formData.name
           }, (redirectPath) => {
-            // Handle admin redirect immediately
+            // Handle admin redirect immediately and show welcome toast
             adminRedirected = true;
-            navigate(redirectPath);
+            toast.success('Welcome to Admin Dashboard!', { id: toastId });
+            setTimeout(() => navigate(redirectPath), 100);
           });
 
           // Only show success toast if user wasn't redirected as admin
