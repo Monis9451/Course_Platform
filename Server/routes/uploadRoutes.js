@@ -5,6 +5,6 @@ const { isAdmin } = require('../middleware/isAdminMiddleware');
 
 const router = Router();
 
-router.post("/upload", isAdmin, upload.single("file"), uploadHandler);
+router.post("/cloudinary", isAdmin, upload.single("file"), uploadHandler);
 
 export default router;

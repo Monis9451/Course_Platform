@@ -1,159 +1,171 @@
-const express = require('express');
 const { createUser,
         getAllUsers,
         getUserById, 
         getUserByEmail, 
         updateUser, 
         deleteUser } = require('../models/userModel');
-const router = express.Router();
+const { catchAsync } = require('../utils/catchAsync');
+const { AppError } = require('../utils/appError');
 
-const adminDashboardHandler = async (req, res) => {
+const adminDashboardHandler = catchAsync(async (req, res, next) => {
     res.status(200).json({ 
+        status: 'success',
         message: 'Welcome to the admin dashboard',
-        success: true,
         user: req.user 
     });
-}
+});
 
-const adminCheckHandler =  async (req, res) => {
+const adminCheckHandler = catchAsync(async (req, res, next) => {
     const adminEmail = process.env.ADMIN_EMAIL;
     const isAdminUser = req.user?.email === adminEmail;
     
     res.status(200).json({
+        status: 'success',
         isAdmin: isAdminUser,
-        success: true,
         email: req.user?.email
     });
-}
+});
 
-const getUserProfile =  async (req, res) => {
-    const user = req.user;
-    try {
-        const userData = await getUserById(user.uid);
-        res.status(200).json({message:'User authenticated', userData});
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch user data' });
-    }
-}
-
-const registerUserHandler = async (req, res) => {
+const getUserProfile = catchAsync(async (req, res, next) => {
     const user = req.user;
     
-    try {
-        const userData = await getUserById(user.uid);
-        
-        if (!userData) {
-            return res.status(404).json({
-                error: 'User not found in database',
-                success: false
-            });
-        }
-        
-        res.status(200).json({
-            message: 'User authenticated', 
-            userData,
-            success: true
-        });
-    } catch (error) {
-        console.error('Error in POST /me:', error);
-        res.status(500).json({ 
-            error: 'Failed to fetch user data',
-            success: false 
-        });
+    if (!user) {
+        return next(new AppError('User not authenticated', 401));
     }
-}
 
-const getUserByEmailHandler = async (req, res) => {
+    const userData = await getUserById(user.uid);
+    
+    if (!userData) {
+        return next(new AppError('User not found', 404));
+    }
+
+    res.status(200).json({
+        status: 'success',
+        message: 'User authenticated', 
+        data: { userData }
+    });
+});
+
+const registerUserHandler = catchAsync(async (req, res, next) => {
+    const user = req.user;
+    
+    if (!user) {
+        return next(new AppError('User not authenticated', 401));
+    }
+    
+    const userData = await getUserById(user.uid);
+    
+    if (!userData) {
+        return next(new AppError('User not found in database', 404));
+    }
+    
+    res.status(200).json({
+        status: 'success',
+        message: 'User authenticated', 
+        data: { userData }
+    });
+});
+
+const getUserByEmailHandler = catchAsync(async (req, res, next) => {
     const { email } = req.params;
-    try {
-        const user = await getUserByEmail(email);
-        if (user) {
-            res.status(200).json({ user });
-        } else {
-            res.status(404).json({ message: 'User not found' });
-        }
-    } catch (error) {
-        console.error('Error fetching user by email:', error);
-        res.status(500).json({ error: 'Failed to fetch user by email' });
+    
+    if (!email) {
+        return next(new AppError('Email parameter is required', 400));
     }
-}
 
-const createUserHandler = async (req, res) => {
+    const user = await getUserByEmail(email);
+    
+    if (!user) {
+        return next(new AppError('User not found', 404));
+    }
+
+    res.status(200).json({ 
+        status: 'success',
+        data: { user }
+    });
+});
+
+const createUserHandler = catchAsync(async (req, res, next) => {
     const { userID, username, email } = req.body;
-    try {
-        const existingUser = await getUserById(userID);
-        if (existingUser) {
-            return res.status(200).json({ 
-                message: 'User already exists', 
-                user: existingUser,
-                success: true 
-            });
-        }
+    
+    if (!userID || !username || !email) {
+        return next(new AppError('UserID, username, and email are required', 400));
+    }
 
-        const newUserData = await createUser({ userID, username, email });
-        const newUser = Array.isArray(newUserData) ? newUserData[0] : newUserData;
-        res.status(201).json({ 
-            message: 'User created successfully', 
-            user: newUser,
-            success: true 
-        });
-    } catch (error) {
-        console.error('Error creating user:', error);
-        
-        if (error.message && error.message.includes('duplicate key')) {
-            try {
-                const existingUser = await getUserById(userID);
-                if (existingUser) {
-                    return res.status(200).json({ 
-                        message: 'User already exists', 
-                        user: existingUser,
-                        success: true 
-                    });
-                }
-            } catch (fetchError) {
-                console.error('Error fetching existing user:', fetchError);
-            }
-        }
-        
-        res.status(500).json({ 
-            error: 'Failed to create user',
-            success: false 
+    const existingUser = await getUserById(userID);
+    if (existingUser) {
+        return res.status(200).json({ 
+            status: 'success',
+            message: 'User already exists', 
+            data: { user: existingUser }
         });
     }
-}
 
-const getAllUsersHandler = async (req, res) => {
-    try {
-        const users = await getAllUsers();
-        res.status(200).json({ users });
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch users' });
-    }
-}
+    const newUserData = await createUser({ userID, username, email });
+    const newUser = Array.isArray(newUserData) ? newUserData[0] : newUserData;
+    
+    res.status(201).json({ 
+        status: 'success',
+        message: 'User created successfully', 
+        data: { user: newUser }
+    });
+});
 
-const updateUserHandler = async (req, res) => {
+const getAllUsersHandler = catchAsync(async (req, res, next) => {
+    const users = await getAllUsers();
+    
+    res.status(200).json({ 
+        status: 'success',
+        results: users.length,
+        data: { users }
+    });
+});
+
+const updateUserHandler = catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const { username, email } = req.body;
 
-    try {
-        const updatedUser = await updateUser(id, { username, email });
-        res.status(200).json({ message: 'User updated successfully', user: updatedUser });
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to update user' });
+    if (!id) {
+        return next(new AppError('User ID is required', 400));
     }
-}
 
-const deleteUserHandler = async (req, res) => {
+    if (!username && !email) {
+        return next(new AppError('At least one field (username or email) is required for update', 400));
+    }
+
+    const updatedUser = await updateUser(id, { username, email });
+    
+    if (!updatedUser) {
+        return next(new AppError('User not found', 404));
+    }
+
+    res.status(200).json({ 
+        status: 'success',
+        message: 'User updated successfully', 
+        data: { user: updatedUser }
+    });
+});
+
+const deleteUserHandler = catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    try {
-        await deleteUser(id);
-        res.status(200).json({ message: 'User deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to delete user' });
+    
+    if (!id) {
+        return next(new AppError('User ID is required', 400));
     }
-}
 
-exports = {
+    const deletedUser = await deleteUser(id);
+    
+    if (!deletedUser) {
+        return next(new AppError('User not found', 404));
+    }
+
+    res.status(204).json({
+        status: 'success',
+        data: null
+    });
+});
+
+module.exports = {
     adminDashboardHandler,
     adminCheckHandler,
     getUserProfile,
