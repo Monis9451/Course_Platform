@@ -1,4 +1,3 @@
-// Load environment variables first
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -7,6 +6,7 @@ const cors = require('cors');
 const supabase = require('./config/supabase');
 const morgan = require('morgan');
 const userRoutes = require('./routes/userRoutes');
+const uploadRouter = require('./routes/uploadRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -25,6 +25,7 @@ app.use(cors ({
 
 // Import routes
 app.use('/api/users', userRoutes);
+app.use('/api/upload', uploadRouter);
 
 
 // Error handling middleware
