@@ -4,7 +4,6 @@ const createLesson = async (moduleID, title, contentType, content, order) => {
     const {data, error} = await supabase.from('lesson').insert([{
         moduleId,
         title,
-        contentType,
         content,
         order
     }]);
