@@ -25,7 +25,7 @@ app.use(cors ({
 
 // Import routes
 app.use('/api/users', userRoutes);
-app.use('/api/upload', uploadRouter);
+app.use('/api/v1', uploadRouter);
 
 
 // Error handling middleware
