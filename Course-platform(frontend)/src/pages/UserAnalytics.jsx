@@ -35,7 +35,7 @@ const UserAnalytics = () => {
         }
         
         const response = await res.json();
-        const usersData = response.users;
+        const usersData = response.data?.users || [];
         const adminEmail = import.meta.env.VITE_ADMIN_EMAIL;
         const filteredUsers = usersData.filter(user => user.email !== adminEmail);
         setUsers(filteredUsers || []);

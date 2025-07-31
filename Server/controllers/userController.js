@@ -135,12 +135,23 @@ const createUserHandler = catchAsync(async (req, res, next) => {
 });
 
 const getAllUsersHandler = catchAsync(async (req, res, next) => {
-    const users = await getAllUsers();
-    res.status(200).json({ 
-        status: 'success',
-        results: users.length,
-        data: { users }
-    });
+    try {
+        const users = await getAllUsers();
+        
+        // Check if users is null, undefined, or not an array
+        if (!users || !Array.isArray(users)) {
+            return next(new AppError('Failed to fetch users - invalid data', 500));
+        }
+        
+        res.status(200).json({ 
+            status: 'success',
+            results: users.length,
+            data: { users }
+        });
+    } catch (error) {
+        console.error('Error in getAllUsersHandler:', error);
+        return next(new AppError(`Failed to fetch users: ${error.message}`, 500));
+    }
 });
 
 const updateUserHandler = catchAsync(async (req, res, next) => {

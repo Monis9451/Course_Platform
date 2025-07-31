@@ -17,12 +17,19 @@ const createUser = async ({ userID, username, email }) => {
 };
 
 const getAllUsers = async () => {
-    const {data, error} = await supabase.from("user").select("*");
+    try {
+        const {data, error} = await supabase.from("user").select("*");
 
-    if(error){
-        throw new Error(`Error in fetching all users: ${error.message}`);
+        if(error){
+            console.error('Supabase error in getAllUsers:', error);
+            throw new Error(`Error in fetching all users: ${error.message}`);
+        }
+        
+        return data || [];
+    } catch (err) {
+        console.error('Exception in getAllUsers:', err);
+        throw err;
     }
-    return data;
 };
 
 const getUserById = async (userID) => {
@@ -48,19 +55,19 @@ const getUserByEmail = async (email) => {
 }
 
 const updateUser = async (userID, updates) => {
-    const {data, error} = await supabase.from("user").update(updates).eq("userID", userID);
+    const {data, error} = await supabase.from("user").update(updates).eq("userID", userID).select();
     if (error) {
         throw new Error(`Error updating user: ${error.message}`);
     }
-    return data;
+    return data && data.length > 0 ? data[0] : null;
 };
 
 const deleteUser = async (userID) => {
-    const {data, error} = await supabase.from("user").delete().eq("userID", userID);
+    const {data, error} = await supabase.from("user").delete().eq("userID", userID).select();
     if (error) {
         throw new Error(`Error deleting user: ${error.message}`);
     }
-    return data;
+    return data && data.length > 0 ? data[0] : null;
 };
 
 module.exports = { createUser, getAllUsers, getUserById, getUserByEmail, updateUser, deleteUser };

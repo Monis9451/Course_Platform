@@ -27,7 +27,7 @@ const AdminDashboard = () => {
           throw new Error('Failed to fetch users');
         }
         const response = await res.json();
-        const users = response.users;
+        const users = response.data?.users || [];
         const adminEmail = import.meta.env.VITE_ADMIN_EMAIL;
         const filteredUsers = users.filter(user => user.email !== adminEmail);
         setTotalUsers(Array.isArray(filteredUsers) ? filteredUsers.length : 0);
