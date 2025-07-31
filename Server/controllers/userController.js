@@ -48,20 +48,43 @@ const getUserProfile = catchAsync(async (req, res, next) => {
 
 const registerUserHandler = catchAsync(async (req, res, next) => {
     const user = req.user;
+    const { uid, displayName, email } = req.body;
     
     if (!user) {
         return next(new AppError('User not authenticated', 401));
     }
     
-    const userData = await getUserById(user.uid);
+    console.log('Registering user:', {
+        firebaseUser: {
+            uid: user.uid,
+            email: user.email
+        },
+        requestBody: {
+            uid,
+            displayName,
+            email
+        }
+    });
+    
+    // Use Firebase user's UID as the primary identifier
+    const userID = user.uid;
+    
+    let userData = await getUserById(userID);
     
     if (!userData) {
-        return next(new AppError('User not found in database', 404));
+        console.log('User not found in database, creating new user');
+        // Create user if they don't exist
+        const newUserData = await createUser({
+            userID: userID,
+            username: displayName || user.name || email?.split('@')[0] || 'User',
+            email: email || user.email
+        });
+        userData = Array.isArray(newUserData) ? newUserData[0] : newUserData;
     }
     
     res.status(200).json({
         status: 'success',
-        message: 'User authenticated', 
+        message: 'User authenticated successfully', 
         data: { userData }
     });
 });
@@ -113,7 +136,6 @@ const createUserHandler = catchAsync(async (req, res, next) => {
 
 const getAllUsersHandler = catchAsync(async (req, res, next) => {
     const users = await getAllUsers();
-    
     res.status(200).json({ 
         status: 'success',
         results: users.length,

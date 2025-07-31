@@ -4,7 +4,10 @@ const verifyFirebaseToken = async (req, res, next) => {
     const token = req.headers.authorization?.split(' ')[1];
 
     if (!token) {
-        return res.status(403).json({ error: 'Token is required' });
+        return res.status(401).json({ 
+            status: 'fail',
+            message: 'Authorization token is required' 
+        });
     }
 
     try {
@@ -14,7 +17,11 @@ const verifyFirebaseToken = async (req, res, next) => {
     }
 
     catch (error) {
-        return res.status(403).json({ error: 'Invalid token' });
+        console.error('Token verification error:', error.message);
+        return res.status(401).json({ 
+            status: 'fail',
+            message: 'Invalid or expired token' 
+        });
     }
 }
 

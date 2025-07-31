@@ -1,6 +1,6 @@
-import { uploadOnCloudinary } from "../config/cloudinary.js";
-import { catchAsync } from "../utils/catchAsync.js";
-import { AppError } from "../utils/appError.js";
+const { uploadOnCloudinary } = require("../config/cloudinary.js");
+const { catchAsync } = require("../utils/catchAsync.js");
+const { AppError } = require("../utils/appError.js");
 
 const uploadHandler = catchAsync(async (req, res, next) => {
   const localFilePath = req.file?.path;
@@ -25,4 +25,4 @@ const uploadHandler = catchAsync(async (req, res, next) => {
   });
 });
 
-export { uploadHandler };
+module.exports = { uploadHandler };
