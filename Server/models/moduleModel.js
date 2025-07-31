@@ -1,11 +1,12 @@
 const supabase = require('../config/supabase');
 
-const createModule = async (courseID, title, description, order) => {
+const createModule = async (courseID, title, description, order, lessonNumber) => {
     const {data, error} = await supabase.from('module').insert([{
         courseID,
         title,
         description,
-        order
+        order,
+        lessonNumber
     }]);
 
     if (error) {

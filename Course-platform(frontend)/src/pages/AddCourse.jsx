@@ -1,9 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
 import Header from './Header';
 import Footer from './Footer';
-import { useAuth } from '../context/authContext';
 
 
 const AddCourse = () => {
@@ -14,6 +10,6 @@ const AddCourse = () => {
       <Footer />
     </div>
     )
-}
+};
 
 export default AddCourse;
