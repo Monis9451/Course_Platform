@@ -1,14 +1,22 @@
 const supabase = require('../config/supabase');
 
-const createLesson = async (moduleID, title, contentType, content, order) => {
+const createLessonWithoutContent = async (moduleID, title, order) => {
     const {data, error} = await supabase.from('lesson').insert([{
-        moduleId,
+        moduleID,
         title,
-        content,
+        content: '',
         order
     }]);
     if (error) {
         throw new Error(`Error creating lesson: ${error.message}`);
+    }
+    return data;
+}
+
+const addingContentToLesson = async (lessonID, content) => {
+    const {data, error} = await supabase.from('lesson').update({content}).eq('lessonID', lessonID);
+    if (error) {
+        throw new Error(`Error adding content to lesson: ${error.message}`);
     }
     return data;
 }
@@ -62,7 +70,8 @@ const deleteLesson = async (lessonID) => {
 }
 
 module.exports = {
-    createLesson,
+    createLessonWithoutContent,
+    addingContentToLesson,
     getAllLessons,
     getLessonById,
     getLessonsByModuleId,
