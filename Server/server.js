@@ -21,9 +21,12 @@ app.use(express.json());
 
 // CORS configuration
 app.use(cors ({
-  origin: "*",
+  origin: process.env.NODE_ENV === 'production' 
+    ? [process.env.FRONTEND_URL] 
+    : ["http://localhost:3000", "http://localhost:5173", "http://127.0.0.1:5173"],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 // Import routes
@@ -36,15 +39,22 @@ app.use('/api/lessons', lessonRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error('Error occurred:', {
+    message: err.message,
+    stack: err.stack,
+    url: req.originalUrl,
+    method: req.method,
+    body: req.body,
+    headers: req.headers
+  });
   
   const statusCode = err.statusCode || 500;
   const status = err.status || 'error';
   
   res.status(statusCode).json({
     status: status,
-    message: err.message,
-    error: process.env.NODE_ENV === 'development' ? err : {}
+    message: err.message || 'Internal server error',
+    ...(process.env.NODE_ENV === 'development' && { error: err, stack: err.stack })
   });
 });
 

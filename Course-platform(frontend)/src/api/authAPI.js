@@ -9,19 +9,20 @@ export const signupUserAPI = async (userInfo) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
       body: JSON.stringify({
-        UserID: userInfo.uid,
+        userID: userInfo.uid,
         username: userInfo.displayName,
         email: userInfo.email,
       }),
     });
 
     if (!response.ok) {
-      throw new Error(`Signup API request failed: ${response.status}`);
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || `Signup API request failed: ${response.status}`);
     }
 
     const data = await response.json();
     console.log("New user created successfully:", data);
-    return data;
+    return { success: true, ...data };
   } catch (error) {
     console.error("Error creating new user:", error);
     throw error;
@@ -46,12 +47,13 @@ export const loginUserAPI = async (userInfo) => {
     });
 
     if (!response.ok) {
-      throw new Error(`Login API request failed: ${response.status}`);
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || `Login API request failed: ${response.status}`);
     }
 
     const data = await response.json();
     console.log("User login successful:", data);
-    return data;
+    return { success: true, ...data };
   } catch (error) {
     console.error("Error logging in user:", error);
     throw error;

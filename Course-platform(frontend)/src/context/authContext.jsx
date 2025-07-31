@@ -132,18 +132,19 @@ export function AuthProvider({ children }) {
             });
 
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || errorData.message || 'Failed to create user in backend');
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || 'Failed to create user in backend');
             }
 
             const result = await response.json();
-            if (!result.success) {
-                throw new Error(result.error || 'Failed to create user in backend');
+            if (result.status !== 'success') {
+                throw new Error(result.message || 'Failed to create user in backend');
             }
 
-            setUserData(result.user);
+            const userData = result.data?.user || result.user;
+            setUserData(userData);
             setAuthToken(token);
-            return result.user;
+            return userData;
         } catch (error) {
             console.error('Error creating user in backend:', error);
             await signOutUser();
@@ -169,25 +170,39 @@ export function AuthProvider({ children }) {
             });
 
             if (!response.ok) {
-                const errorData = await response.json();
+                const errorData = await response.json().catch(() => ({}));
+                console.error('Backend response error:', {
+                    status: response.status,
+                    statusText: response.statusText,
+                    errorData
+                });
                 
-                if (response.status === 404 || errorData.error?.includes('not found')) {
+                if (response.status === 404 || errorData.message?.includes('not found')) {
                     throw new Error('user not found');
                 }
                 
-                throw new Error(errorData.error || errorData.message || 'Failed to get user data from backend');
+                throw new Error(errorData.message || `Backend error: ${response.status} ${response.statusText}`);
             }
 
             const result = await response.json();
-            if (!result.success) {
-                throw new Error(result.error || 'Failed to get user data from backend');
+            if (result.status !== 'success') {
+                throw new Error(result.message || 'Failed to get user data from backend');
             }
 
-            setUserData(result.userData);
+            const userData = result.data?.userData || result.userData;
+            setUserData(userData);
             setAuthToken(token);
-            return result.userData;
+            return userData;
         } catch (error) {
-            console.error('Error getting user from backend:', error);
+            console.error('Error getting user from backend:', {
+                message: error.message,
+                firebaseUser: {
+                    uid: firebaseUser.uid,
+                    email: firebaseUser.email,
+                    displayName: firebaseUser.displayName
+                },
+                apiUrl: import.meta.env.VITE_API_URL
+            });
             
             if (error.message !== 'user not found') {
                 await signOutUser();
