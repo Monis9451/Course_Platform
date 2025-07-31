@@ -1,12 +1,12 @@
-import { createCourse,
+const { createCourse,
         getAllCourses,
         getCourseById,
         updateCourse,
-        deleteCourse } from '../models/courseModel.js';
-import { catchAsync } from '../utils/catchAsync.js';
-import { AppError } from '../utils/appError.js';
+        deleteCourse } = require('../models/courseModel.js');
+const { catchAsync } = require('../utils/catchAsync.js');
+const { AppError } = require('../utils/appError.js');
 
-export const createCourseHandler = catchAsync(async (req, res, next) => {
+const createCourseHandler = catchAsync(async (req, res, next) => {
   const { title, description, imageURL, moduleNumbers } = req.body;
 
   if (!title) {
@@ -24,7 +24,7 @@ export const createCourseHandler = catchAsync(async (req, res, next) => {
   });
 });
 
-export const getAllCoursesHandler = catchAsync(async (req, res, next) => {
+const getAllCoursesHandler = catchAsync(async (req, res, next) => {
   const courses = await getAllCourses();
 
   res.status(200).json({
@@ -36,7 +36,7 @@ export const getAllCoursesHandler = catchAsync(async (req, res, next) => {
   });
 });
 
-export const getCourseByIdHandler = catchAsync(async (req, res, next) => {
+const getCourseByIdHandler = catchAsync(async (req, res, next) => {
   const { id } = req.params;
 
   if (!id) {
@@ -57,7 +57,7 @@ export const getCourseByIdHandler = catchAsync(async (req, res, next) => {
   });
 });
 
-export const updateCourseHandler = catchAsync(async (req, res, next) => {
+const updateCourseHandler = catchAsync(async (req, res, next) => {
   const { id } = req.params;
   const { title, description, imageURL, moduleNumbers } = req.body;
 
@@ -80,7 +80,7 @@ export const updateCourseHandler = catchAsync(async (req, res, next) => {
   });
 });
 
-export const deleteCourseHandler = catchAsync(async (req, res, next) => {
+const deleteCourseHandler = catchAsync(async (req, res, next) => {
   const { id } = req.params;
 
   if (!id) {
@@ -98,3 +98,11 @@ export const deleteCourseHandler = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
+
+module.exports = {
+  createCourseHandler,
+  getAllCoursesHandler,
+  getCourseByIdHandler,
+  updateCourseHandler,
+  deleteCourseHandler
+};

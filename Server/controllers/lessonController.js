@@ -1,4 +1,4 @@
-import {
+const {
     createLessonWithoutContent,
     addingContentToLesson,
     getAllLessons,
@@ -7,11 +7,11 @@ import {
     getLessonsByCourseId,
     updateLesson,
     deleteLesson
-} from '../models/moduleModel.js';
-import catchAsync from '../utils/catchAsync.js';
-import AppError from '../utils/appError.js';
+} = require('../models/lessonModel.js');
+const { catchAsync } = require('../utils/catchAsync.js');
+const { AppError } = require('../utils/appError.js');
 
-export const lessonWithoutContentHandler = catchAsync(async (req, res, next) => {
+const lessonWithoutContentHandler = catchAsync(async (req, res, next) => {
     const { moduleID, title, order } = req.body;
 
     if (!moduleID || !title || !order) {
@@ -27,7 +27,7 @@ export const lessonWithoutContentHandler = catchAsync(async (req, res, next) => 
     });
 });
 
-export const addContentToLessonHandler = catchAsync(async (req, res, next) => {
+const addContentToLessonHandler = catchAsync(async (req, res, next) => {
     const { lessonID, content } = req.body;
 
     if (!lessonID || !content) {
@@ -42,3 +42,8 @@ export const addContentToLessonHandler = catchAsync(async (req, res, next) => {
         }
     });
 });
+
+module.exports = {
+    createLessonWithoutContent: lessonWithoutContentHandler,
+    addingContentToLesson: addContentToLessonHandler
+};
