@@ -10,7 +10,7 @@ const { adminDashboardHandler,
         createUserHandler,
         getAllUsersHandler,
         updateUserHandler,
-        deleteUserHandler } = require('../controllers/adminController');
+        deleteUserHandler } = require('../controllers/userController');
 
 router.get('/admin/dashboard', verifyFirebaseToken, isAdmin, adminDashboardHandler);
 
@@ -20,14 +20,15 @@ router.get('/me', verifyFirebaseToken, getUserProfile);
 
 router.post('/me', verifyFirebaseToken, registerUserHandler);
 
+// This route should not require authentication as it's used for checking user existence
 router.get('/email/:email', getUserByEmailHandler);
 
-router.post('/create', verifyFirebaseToken, createUserHandler)
+router.post('/create', verifyFirebaseToken, createUserHandler);
 
 router.get('/all', verifyFirebaseToken, isAdmin, getAllUsersHandler);
 
-router.put('/update/:id', updateUserHandler);
+router.put('/update/:id', verifyFirebaseToken, updateUserHandler);
 
-router.delete('/delete/:id', deleteUserHandler);
+router.delete('/delete/:id', verifyFirebaseToken, deleteUserHandler);
 
 module.exports = router;

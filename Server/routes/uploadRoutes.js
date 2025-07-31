@@ -1,10 +1,10 @@
-import { Router } from "express";
-import { upload } from "../middleware/multer.js";
-import { uploadHandler } from "../controllers/uploadController.js";
-const { isAdmin } = require('../middleware/isAdminMiddleware');
+const express = require('express');
+const upload = require('../middleware/multer.js');
+const { uploadHandler } = require('../controllers/uploadController.js');
+const { isAdmin } = require('../middleware/isAdminMiddleware.js');
 
-const router = Router();
+const router = express.Router();
 
 router.post("/cloudinary", isAdmin, upload.single("file"), uploadHandler);
 
-export default router;
+module.exports = router;

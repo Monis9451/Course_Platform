@@ -1,9 +1,9 @@
-import { Router } from 'express';
-import { isAdmin } from '../middleware/isAdminMiddleware.js';
-import { createCourseHandler } from '../controllers/courseController.js';
+const express = require('express');
+const { isAdmin } = require('../middleware/isAdminMiddleware.js');
+const { createCourseHandler } = require('../controllers/courseController.js');
 
-const router = Router();
+const router = express.Router();
 
 router.post('/create', isAdmin, createCourseHandler);
 
-export default router;
+module.exports = router;

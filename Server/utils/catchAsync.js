@@ -4,5 +4,4 @@ const catchAsync = fn => {
   };
 };
 
-export { catchAsync };
 module.exports = { catchAsync };

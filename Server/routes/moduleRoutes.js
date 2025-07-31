@@ -1,10 +1,9 @@
-import { Router } from 'express';
-import { createModuleHandler } from '../controllers/moduleController.js';
-import { isAdmin } from '../middleware/isAdminMiddleware.js';
+const express = require('express');
+const { createModuleHandler } = require('../controllers/moduleController.js');
+const { isAdmin } = require('../middleware/isAdminMiddleware.js');
 
-
-const router = Router();
+const router = express.Router();
 
 router.post('/create', isAdmin, createModuleHandler);
 
-export default router;
+module.exports = router;
