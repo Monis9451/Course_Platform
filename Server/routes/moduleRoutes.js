@@ -1,9 +1,10 @@
 import { Router } from 'express';
+import { createModuleHandler } from '../controllers/moduleController.js';
 import { isAdmin } from '../middleware/isAdminMiddleware.js';
-import { createCourseHandler } from '../controllers/courseController.js';
+
 
 const router = Router();
 
-router.post('/create', isAdmin, createCourseHandler);
+router.post('/create', isAdmin, createModuleHandler);
 
 export default router;
