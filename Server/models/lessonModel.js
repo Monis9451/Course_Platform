@@ -6,15 +6,19 @@ const createLessonWithoutContent = async (moduleID, title, order) => {
         title,
         content: '',
         order
-    }]);
+    }]).select();
     if (error) {
         throw new Error(`Error creating lesson: ${error.message}`);
+    }
+    // Transform the response to include lessonID field for frontend compatibility
+    if (data && data.length > 0 && data[0].id) {
+        data[0].lessonID = data[0].id;
     }
     return data;
 }
 
 const addingContentToLesson = async (lessonID, content) => {
-    const {data, error} = await supabase.from('lesson').update({content}).eq('lessonID', lessonID);
+    const {data, error} = await supabase.from('lesson').update({content}).eq('id', lessonID).select();
     if (error) {
         throw new Error(`Error adding content to lesson: ${error.message}`);
     }
@@ -30,7 +34,7 @@ const getAllLessons = async () => {
 }
 
 const getLessonById = async (lessonID) => {
-    const {data, error} = await supabase.from('lesson').select('*').eq('lessonID', lessonID).single();
+    const {data, error} = await supabase.from('lesson').select('*').eq('id', lessonID).single();
     if (error) {
         throw new Error(`Error fetching lesson by ID: ${error.message}`);
     }
@@ -54,7 +58,7 @@ const getLessonsByCourseId = async (courseID) => {
 }
 
 const updateLesson = async (lessonID, updates) => {
-    const {data, error} = await supabase.from('lesson').update(updates).eq('lessonID', lessonID);
+    const {data, error} = await supabase.from('lesson').update(updates).eq('id', lessonID).select();
     if (error) {
         throw new Error(`Error updating lesson: ${error.message}`);
     }
@@ -62,7 +66,7 @@ const updateLesson = async (lessonID, updates) => {
 }
 
 const deleteLesson = async (lessonID) => {
-    const {data, error} = await supabase.from('lesson').delete().eq('lessonID', lessonID);
+    const {data, error} = await supabase.from('lesson').delete().eq('id', lessonID);
     if (error) {
         throw new Error(`Error deleting lesson: ${error.message}`);
     }

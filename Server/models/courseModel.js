@@ -6,7 +6,7 @@ const createCourse = async (title, description, imageURL, moduleNumbers) => {
         description,
         imageURL,
         moduleNumbers
-    }])
+    }]).select()
 
     if (error) {
         throw new Error(`Error creating course: ${error.message}`);
@@ -33,7 +33,7 @@ const getCourseById = async (courseID) => {
 }
 
 const updateCourse = async (courseID, updates) => {
-    const {data, error} = await supabase.from('course').update(updates).eq('courseID', courseID);
+    const {data, error} = await supabase.from('course').update(updates).eq('courseID', courseID).select();
     if (error) {
         throw new Error(`Error updating course: ${error.message}`);
     }
@@ -41,7 +41,7 @@ const updateCourse = async (courseID, updates) => {
 }
 
 const deleteCourse = async (courseID) => {
-    const {data, error} = await supabase.from('course').delete().eq('courseID', courseID);
+    const {data, error} = await supabase.from('course').delete().eq('courseID', courseID).select();
     if (error) {
         throw new Error(`Error deleting course: ${error.message}`);
     }

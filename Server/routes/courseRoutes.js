@@ -1,4 +1,5 @@
 const express = require('express');
+const verifyFirebaseToken = require('../middleware/authMiddleware');
 const { isAdmin } = require('../middleware/isAdminMiddleware.js');
 const { 
   createCourseHandler,
@@ -9,11 +10,10 @@ const {
 } = require('../controllers/courseController.js');
 
 const router = express.Router();
-console.log("Course routes loaded");
-router.post('/create', isAdmin, createCourseHandler);
+router.post('/create', verifyFirebaseToken, isAdmin, createCourseHandler);
 router.get('/all', getAllCoursesHandler);
 router.get('/:id', getCourseByIdHandler);
-router.put('/:id', isAdmin, updateCourseHandler);
-router.delete('/:id', isAdmin, deleteCourseHandler);
+router.put('/:id', verifyFirebaseToken, isAdmin, updateCourseHandler);
+router.delete('/:id', verifyFirebaseToken, isAdmin, deleteCourseHandler);
 
 module.exports = router;
