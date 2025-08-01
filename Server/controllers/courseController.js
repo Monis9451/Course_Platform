@@ -7,7 +7,13 @@ const { catchAsync } = require('../utils/catchAsync.js');
 const { AppError } = require('../utils/appError.js');
 
 const createCourseHandler = catchAsync(async (req, res, next) => {
+  console.log("create ma to a gya hu");
+  console.log("Request body:", req.body);
   const { title, description, imageURL, moduleNumbers } = req.body;
+  console.log("Title:", title);
+  console.log("Description:", description);
+  console.log("Image URL:", imageURL);
+  console.log("Module Numbers:", moduleNumbers);
 
   if (!title) {
     return next(new AppError('Course title is required', 400));

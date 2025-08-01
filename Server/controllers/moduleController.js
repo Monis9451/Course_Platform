@@ -16,7 +16,7 @@ const createModuleHandler = catchAsync(async (req, res, next) => {
         return next(new AppError('Missing required fields', 400));
     }
 
-    const newModule = await createModule({  courseID, title, description, order, lessonNumber });
+    const newModule = await createModule({ courseID, title, description, order, lessonNumber });
 
     return res.status(201).json({
         status: 'success',
