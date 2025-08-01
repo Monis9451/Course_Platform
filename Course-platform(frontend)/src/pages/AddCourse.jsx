@@ -66,6 +66,8 @@ const AddCourse = () => {
 
     setLoading(true);
     try {
+      console.log('Creating course with data:', courseData);
+      
       const response = await fetch(`${import.meta.env.VITE_API_URL}/courses/create`, {
         method: 'POST',
         headers: {
@@ -76,20 +78,27 @@ const AddCourse = () => {
       });
 
       if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Course creation error:', errorData);
         throw new Error('Failed to create course');
       }
 
       const result = await response.json();
-      setCourseId(result.data.course[0]?.courseID || result.data.course?.courseID);
+      console.log('Course creation response:', result);
+      
+      // The course model returns data as an array, so we need to access the first element
+      const createdCourse = result.data.course[0];
+      setCourseId(createdCourse.courseID);
+      console.log('Course created with ID:', createdCourse.courseID);
       toast.success('Course created successfully!');
       setCurrentStep(2);
 
-      // Initialize modules array
+      // Initialize modules array with proper validation
       const moduleArray = Array.from({ length: courseData.moduleNumbers }, (_, index) => ({
         title: '',
         description: '',
-        order: index + 1,
-        lessonNumber: 0
+        order: index + 1, // Sequential order starting from 1
+        lessonNumber: 1 // Default to at least 1 lesson per module
       }));
       setModules(moduleArray);
 
@@ -103,15 +112,36 @@ const AddCourse = () => {
 
   // Step 2: Modules Form
   const handleModulesSubmit = async () => {
-    const incompleteModules = modules.filter(module => !module.title || !module.description || !module.lessonNumber);
+    // Ensure all modules have proper data and at least 1 lesson
+    const incompleteModules = modules.filter(module => 
+      !module.title || 
+      !module.description || 
+      module.lessonNumber === undefined || 
+      module.lessonNumber === null ||
+      module.lessonNumber < 1
+    );
+    
     if (incompleteModules.length > 0) {
-      toast.error('Please fill in all module details');
+      toast.error('Please fill in all module details and ensure each module has at least 1 lesson');
+      return;
+    }
+
+    if (!courseId) {
+      toast.error('Course ID is missing. Please create course first.');
       return;
     }
 
     setLoading(true);
     try {
       const modulePromises = modules.map(async (module) => {
+        console.log('Creating module with data:', {
+          courseID: courseId,
+          title: module.title,
+          description: module.description,
+          order: module.order,
+          lessonNumber: module.lessonNumber
+        });
+
         const response = await fetch(`${import.meta.env.VITE_API_URL}/modules/create`, {
           method: 'POST',
           headers: {
@@ -120,19 +150,26 @@ const AddCourse = () => {
           },
           body: JSON.stringify({
             courseID: courseId,
-            ...module
+            title: module.title,
+            description: module.description,
+            order: module.order,
+            lessonNumber: module.lessonNumber
           })
         });
 
         if (!response.ok) {
-          throw new Error(`Failed to create module: ${module.title}`);
+          const errorData = await response.json();
+          console.error('Module creation error:', errorData);
+          throw new Error(`Failed to create module: ${module.title} - ${errorData.message || 'Unknown error'}`);
         }
         
         const result = await response.json();
+        console.log('Module created:', result);
         return result.data.module[0] || result.data.module;
       });
 
       const createdModules = await Promise.all(modulePromises);
+      console.log('All modules created successfully:', createdModules);
       setModules(createdModules);
       
       // Initialize lessons array
@@ -155,7 +192,7 @@ const AddCourse = () => {
 
     } catch (error) {
       console.error('Error creating modules:', error);
-      toast.error('Failed to create modules');
+      toast.error(error.message || 'Failed to create modules');
     } finally {
       setLoading(false);
     }
@@ -1044,7 +1081,7 @@ const AddCourse = () => {
                     min="1"
                     max="20"
                     value={courseData.moduleNumbers}
-                    onChange={(e) => setCourseData(prev => ({ ...prev, moduleNumbers: parseInt(e.target.value) || 0 }))}
+                    onChange={(e) => setCourseData(prev => ({ ...prev, moduleNumbers: parseInt(e.target.value) }))}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter number of modules"
                     required
@@ -1098,11 +1135,13 @@ const AddCourse = () => {
                           value={module.lessonNumber}
                           onChange={(e) => {
                             const newModules = [...modules];
-                            newModules[index].lessonNumber = parseInt(e.target.value) || 0;
+                            const value = parseInt(e.target.value) || 1; // Ensure minimum 1
+                            newModules[index].lessonNumber = Math.max(1, value);
                             setModules(newModules);
                           }}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                           placeholder="Number of lessons"
+                          required
                         />
                       </div>
                     </div>

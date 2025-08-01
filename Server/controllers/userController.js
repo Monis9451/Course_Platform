@@ -54,26 +54,12 @@ const registerUserHandler = catchAsync(async (req, res, next) => {
         return next(new AppError('User not authenticated', 401));
     }
     
-    console.log('Registering user:', {
-        firebaseUser: {
-            uid: user.uid,
-            email: user.email
-        },
-        requestBody: {
-            uid,
-            displayName,
-            email
-        }
-    });
-    
     // Use Firebase user's UID as the primary identifier
     const userID = user.uid;
     
     let userData = await getUserById(userID);
     
     if (!userData) {
-        console.log('User not found in database, creating new user');
-        // Create user if they don't exist
         const newUserData = await createUser({
             userID: userID,
             username: displayName || user.name || email?.split('@')[0] || 'User',
