@@ -49,6 +49,11 @@ const AddCourse = () => {
   const [loading, setLoading] = useState(false);
   const [uploadingFile, setUploadingFile] = useState(false);
 
+  // Incomplete course detection
+  const [incompleteCourses, setIncompleteCourses] = useState([]);
+  const [showIncompleteModal, setShowIncompleteModal] = useState(false);
+  const [checkingIncomplete, setCheckingIncomplete] = useState(true);
+
   const steps = [
     { id: 1, title: 'Course Details', description: 'Basic course information' },
     { id: 2, title: 'Course Modules', description: 'Define course modules' },
@@ -107,6 +112,26 @@ const AddCourse = () => {
       toast.error('Failed to create course');
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Function to update course progress timestamp
+  const updateCourseProgress = async () => {
+    if (!courseId) return;
+    
+    try {
+      await fetch(`${import.meta.env.VITE_API_URL}/courses/${courseId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authToken}`
+        },
+        body: JSON.stringify({
+          lastModified: new Date().toISOString()
+        })
+      });
+    } catch (error) {
+      console.error('Error updating course progress:', error);
     }
   };
 
@@ -188,6 +213,7 @@ const AddCourse = () => {
       setLessons(allLessons);
 
       toast.success('Modules created successfully!');
+      await updateCourseProgress(); // Update progress timestamp
       setCurrentStep(3);
 
     } catch (error) {
@@ -238,6 +264,7 @@ const AddCourse = () => {
       setLessons(createdLessons);
 
       toast.success('Lesson structure created successfully!');
+      await updateCourseProgress(); // Update progress timestamp
       setIsEditorMode(true);
       setCurrentStep(4);
 
@@ -377,6 +404,7 @@ const AddCourse = () => {
       setLessons(updatedLessons);
 
       toast.success('Lesson content saved successfully!');
+      await updateCourseProgress(); // Update progress timestamp
 
     } catch (error) {
       console.error('Error saving lesson content:', error);
@@ -406,6 +434,167 @@ const AddCourse = () => {
       setComponentData({});
     }
   };
+
+  // Incomplete course detection functions
+  const resumeCourse = async (course) => {
+    try {
+      setLoading(true);
+      
+      // Set course data
+      setCourseData({
+        title: course.title,
+        description: course.description,
+        imageURL: course.imageURL,
+        moduleNumbers: course.moduleNumbers
+      });
+      setCourseId(course.courseID);
+
+      // If course has modules, set them directly from the detailed response
+      if (course.modules && course.modules.length > 0) {
+        setModules(course.modules);
+        
+        // Extract all lessons from modules
+        const allLessons = [];
+        course.modules.forEach((module) => {
+          if (module.lessons && module.lessons.length > 0) {
+            module.lessons.forEach(lesson => {
+              allLessons.push({
+                ...lesson,
+                moduleID: module.moduleID,
+                moduleTitle: module.title,
+                content: lesson.content ? JSON.parse(lesson.content) : []
+              });
+            });
+          }
+        });
+        
+        if (allLessons.length > 0) {
+          setLessons(allLessons);
+          
+          // Determine which step to resume at based on available data
+          const hasLessonsWithContent = allLessons.some(lesson => 
+            lesson.content && lesson.content.length > 0
+          );
+          
+          if (hasLessonsWithContent) {
+            // If there are lessons with content, go to editor mode
+            setCurrentStep(4);
+            setIsEditorMode(true);
+            toast.success('Resumed course creation from where you left off!');
+          } else {
+            // If lessons exist but no content, go to lesson creation step
+            setCurrentStep(3);
+            toast.success('Resumed course creation at lesson creation step!');
+          }
+        } else {
+          // If modules exist but no lessons, go to lesson creation step
+          setCurrentStep(3);
+          toast.success('Resumed course creation at lesson creation step!');
+        }
+      } else {
+        // If no modules, go to modules step
+        setCurrentStep(2);
+        toast.success('Resumed course creation at modules step!');
+      }
+    } catch (error) {
+      console.error('Error resuming course:', error);
+      toast.error('Failed to resume course');
+    } finally {
+      setLoading(false);
+      setShowIncompleteModal(false);
+    }
+  };
+
+  const deleteIncompleteCourse = async (courseId) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/courses/${courseId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${authToken}`
+        }
+      });
+
+      if (response.ok) {
+        setIncompleteCourses(prev => prev.filter(course => course.courseID !== courseId));
+        toast.success('Incomplete course deleted successfully!');
+      } else {
+        throw new Error('Failed to delete course');
+      }
+    } catch (error) {
+      console.error('Error deleting incomplete course:', error);
+      toast.error('Failed to delete incomplete course');
+    }
+  };
+
+  const startNewCourse = () => {
+    setShowIncompleteModal(false);
+    // Reset all states to start fresh
+    setCourseData({
+      title: '',
+      description: '',
+      imageURL: '',
+      moduleNumbers: 0
+    });
+    setModules([]);
+    setLessons([]);
+    setCourseId(null);
+    setCurrentStep(1);
+    setIsEditorMode(false);
+    toast.success('Starting a new course!');
+  };
+
+  // Mark course as completed
+  const completeCourse = async () => {
+    if (!courseId) return;
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/courses/${courseId}/complete`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${authToken}`
+        }
+      });
+
+      if (response.ok) {
+        toast.success('Course completed successfully!');
+        navigate('/admin-dashboard');
+      } else {
+        throw new Error('Failed to mark course as completed');
+      }
+    } catch (error) {
+      console.error('Error completing course:', error);
+      toast.error('Failed to complete course');
+    }
+  };
+
+  // Check for incomplete courses on component mount
+  useEffect(() => {
+    const checkForIncompleteCourses = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/courses/incomplete/details`, {
+          headers: {
+            'Authorization': `Bearer ${authToken}`
+          }
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          if (result.data.courses.length > 0) {
+            setIncompleteCourses(result.data.courses);
+            setShowIncompleteModal(true);
+          }
+        }
+      } catch (error) {
+        console.error('Error checking for incomplete courses:', error);
+      } finally {
+        setCheckingIncomplete(false);
+      }
+    };
+
+    if (authToken) {
+      checkForIncompleteCourses();
+    }
+  }, [authToken]);
 
   // Load lesson content when lesson changes
   useEffect(() => {
@@ -957,14 +1146,14 @@ const AddCourse = () => {
           {/* Complete Course Button */}
           <div className="mt-8 text-center">
             <button
-              onClick={() => {
-                saveLessonContent();
-                toast.success('Course created successfully!');
-                navigate('/admin/dashboard');
+              onClick={async () => {
+                await saveLessonContent();
+                await completeCourse();
               }}
-              className="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold"
+              disabled={loading}
+              className="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 font-semibold"
             >
-              Complete Course Creation
+              {loading ? 'Completing Course...' : 'Complete Course Creation'}
             </button>
           </div>
         </div>
@@ -1228,6 +1417,113 @@ const AddCourse = () => {
         </div>
       </div>
       <Footer />
+
+      {/* Incomplete Course Modal */}
+      {showIncompleteModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <FiEdit3 className="w-8 h-8 text-yellow-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                Incomplete Course Found
+              </h3>
+              <p className="text-gray-600">
+                You have {incompleteCourses.length} incomplete course{incompleteCourses.length > 1 ? 's' : ''} in progress. 
+                Would you like to continue where you left off?
+              </p>
+            </div>
+
+            <div className="space-y-3 mb-6">
+              {incompleteCourses.map((course) => {
+                // Determine progress status
+                const hasModules = course.modules && course.modules.length > 0;
+                const hasLessons = hasModules && course.modules.some(m => m.lessons && m.lessons.length > 0);
+                const hasContent = hasLessons && course.modules.some(m => 
+                  m.lessons.some(l => l.content && l.content.length > 0)
+                );
+                
+                let progressStatus = 'Basic Info';
+                let progressPercent = 25;
+                
+                if (hasContent) {
+                  progressStatus = 'Adding Content';
+                  progressPercent = 90;
+                } else if (hasLessons) {
+                  progressStatus = 'Lesson Structure';
+                  progressPercent = 75;
+                } else if (hasModules) {
+                  progressStatus = 'Module Setup';
+                  progressPercent = 50;
+                }
+
+                return (
+                  <div key={course.courseID} className="border border-gray-200 rounded-lg p-3">
+                    <h4 className="font-medium text-gray-900">{course.title}</h4>
+                    <p className="text-sm text-gray-600 truncate">{course.description}</p>
+                    
+                    {/* Progress Bar */}
+                    <div className="mt-2 mb-3">
+                      <div className="flex justify-between text-xs text-gray-600 mb-1">
+                        <span>Progress: {progressStatus}</span>
+                        <span>{progressPercent}%</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                          className="bg-blue-600 h-2 rounded-full" 
+                          style={{ width: `${progressPercent}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-between items-center">
+                      <button
+                        onClick={() => resumeCourse(course)}
+                        disabled={loading}
+                        className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 disabled:opacity-50"
+                      >
+                        {loading ? 'Resuming...' : 'Resume'}
+                      </button>
+                      <button
+                        onClick={() => deleteIncompleteCourse(course.courseID)}
+                        className="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="flex space-x-3">
+              <button
+                onClick={startNewCourse}
+                className="flex-1 px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700"
+              >
+                Start New Course
+              </button>
+              <button
+                onClick={() => setShowIncompleteModal(false)}
+                className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Loading Overlay */}
+      {checkingIncomplete && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
+          <div className="bg-white rounded-lg p-6 text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Checking for incomplete courses...</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

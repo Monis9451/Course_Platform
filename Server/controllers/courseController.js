@@ -2,7 +2,10 @@ const { createCourse,
         getAllCourses,
         getCourseById,
         updateCourse,
-        deleteCourse } = require('../models/courseModel.js');
+        deleteCourse,
+        getIncompleteCourses,
+        getIncompleteCoursesWithDetails,
+        markCourseAsCompleted } = require('../models/courseModel.js');
 const { catchAsync } = require('../utils/catchAsync.js');
 const { AppError } = require('../utils/appError.js');
 
@@ -99,10 +102,59 @@ const deleteCourseHandler = catchAsync(async (req, res, next) => {
   });
 });
 
+const getIncompleteCoursesHandler = catchAsync(async (req, res, next) => {
+  const incompleteCourses = await getIncompleteCourses();
+
+  res.status(200).json({
+    status: 'success',
+    results: incompleteCourses.length,
+    data: {
+      courses: incompleteCourses,
+    },
+  });
+});
+
+const getIncompleteCoursesWithDetailsHandler = catchAsync(async (req, res, next) => {
+  const incompleteCoursesWithDetails = await getIncompleteCoursesWithDetails();
+
+  res.status(200).json({
+    status: 'success',
+    results: incompleteCoursesWithDetails.length,
+    data: {
+      courses: incompleteCoursesWithDetails,
+    },
+  });
+});
+
+const markCourseAsCompletedHandler = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return next(new AppError('Course ID is required', 400));
+  }
+
+  const completedCourse = await markCourseAsCompleted(id);
+
+  if (!completedCourse) {
+    return next(new AppError('Course not found', 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Course marked as completed successfully!',
+    data: {
+      course: completedCourse,
+    },
+  });
+});
+
 module.exports = {
   createCourseHandler,
   getAllCoursesHandler,
   getCourseByIdHandler,
   updateCourseHandler,
-  deleteCourseHandler
+  deleteCourseHandler,
+  getIncompleteCoursesHandler,
+  getIncompleteCoursesWithDetailsHandler,
+  markCourseAsCompletedHandler
 };
