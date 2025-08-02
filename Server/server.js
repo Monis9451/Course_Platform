@@ -22,8 +22,8 @@ app.use(express.json());
 // CORS configuration
 app.use(cors ({
   origin: process.env.NODE_ENV === 'production' 
-    ? [process.env.FRONTEND_URL] 
-    : ["http://localhost:3000", "http://localhost:5173", "http://127.0.0.1:5173"],
+    ? [process.env.CLIENT_URL]
+    : ["http://localhost:5173"],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
