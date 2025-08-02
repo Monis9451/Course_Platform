@@ -17,7 +17,9 @@ import {
   FiMusic,
   FiEye,
   FiCheck,
-  FiX
+  FiX,
+  FiArrowUp,
+  FiArrowDown
 } from 'react-icons/fi';
 import { componentLibrary, componentTypes } from '../components/course-components';
 
@@ -43,7 +45,6 @@ const AddCourse = () => {
   const [currentLessonContent, setCurrentLessonContent] = useState([]);
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [componentData, setComponentData] = useState({});
-  const [previewMode, setPreviewMode] = useState(false);
 
   // Loading states
   const [loading, setLoading] = useState(false);
@@ -102,8 +103,8 @@ const AddCourse = () => {
       const moduleArray = Array.from({ length: courseData.moduleNumbers }, (_, index) => ({
         title: '',
         description: '',
-        order: index + 1, // Sequential order starting from 1
-        lessonNumber: 1 // Default to at least 1 lesson per module
+        order: index + 1,
+        lessonNumber: 1
       }));
       setModules(moduleArray);
 
@@ -115,7 +116,6 @@ const AddCourse = () => {
     }
   };
 
-  // Function to update course progress timestamp
   const updateCourseProgress = async () => {
     if (!courseId) return;
     
@@ -364,13 +364,6 @@ const AddCourse = () => {
   const selectComponent = (component) => {
     setSelectedComponent(component);
     setComponentData(component.data);
-  };
-
-  const moveComponent = (fromIndex, toIndex) => {
-    const newContent = [...currentLessonContent];
-    const [movedItem] = newContent.splice(fromIndex, 1);
-    newContent.splice(toIndex, 0, movedItem);
-    setCurrentLessonContent(newContent);
   };
 
   // Save lesson content
@@ -629,8 +622,9 @@ const AddCourse = () => {
   const renderComponentForm = () => {
     if (!selectedComponent) {
       return (
-        <div className="text-center text-gray-500 py-8">
-          Select a component to edit its properties
+        <div className="text-center text-gray-500 py-6">
+          <FiEdit3 className="mx-auto w-8 h-8 mb-2 text-gray-400" />
+          <p className="text-sm">Select a component to edit its properties</p>
         </div>
       );
     }
@@ -640,23 +634,25 @@ const AddCourse = () => {
     switch (type) {
       case componentTypes.TEXT:
         return (
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div>
-              <label className="block text-sm font-medium mb-2">Title</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Title</label>
               <input
                 type="text"
                 value={componentData.title || ''}
                 onChange={(e) => handleComponentDataChange('title', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Section title"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Content</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Content</label>
               <textarea
                 value={componentData.content || ''}
                 onChange={(e) => handleComponentDataChange('content', e.target.value)}
-                rows={8}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                rows={4}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Enter your text content..."
               />
             </div>
           </div>
@@ -664,34 +660,36 @@ const AddCourse = () => {
 
       case componentTypes.VIDEO:
         return (
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div>
-              <label className="block text-sm font-medium mb-2">Title</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Title</label>
               <input
                 type="text"
                 value={componentData.title || ''}
                 onChange={(e) => handleComponentDataChange('title', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Video title"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Upload Video</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Upload Video</label>
               <input
                 type="file"
                 accept="video/*"
                 onChange={(e) => handleComponentFileUpload(e, 'videoUrl')}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-blue-50 file:text-blue-700"
                 disabled={uploadingFile}
               />
-              {uploadingFile && <p className="text-sm text-blue-600">Uploading...</p>}
+              {uploadingFile && <p className="text-xs text-blue-600 mt-1">Uploading...</p>}
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Description</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Description</label>
               <textarea
                 value={componentData.description || ''}
                 onChange={(e) => handleComponentDataChange('description', e.target.value)}
-                rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                rows={2}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Video description..."
               />
             </div>
           </div>
@@ -699,43 +697,46 @@ const AddCourse = () => {
 
       case componentTypes.IMAGE:
         return (
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div>
-              <label className="block text-sm font-medium mb-2">Title</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Title</label>
               <input
                 type="text"
                 value={componentData.title || ''}
                 onChange={(e) => handleComponentDataChange('title', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Image title"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Upload Image</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Upload Image</label>
               <input
                 type="file"
                 accept="image/*"
                 onChange={(e) => handleComponentFileUpload(e, 'imageUrl')}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-blue-50 file:text-blue-700"
                 disabled={uploadingFile}
               />
-              {uploadingFile && <p className="text-sm text-blue-600">Uploading...</p>}
+              {uploadingFile && <p className="text-xs text-blue-600 mt-1">Uploading...</p>}
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Alt Text</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Alt Text</label>
               <input
                 type="text"
                 value={componentData.alt || ''}
                 onChange={(e) => handleComponentDataChange('alt', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Alternative text"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Caption</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Caption</label>
               <input
                 type="text"
                 value={componentData.caption || ''}
                 onChange={(e) => handleComponentDataChange('caption', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Image caption"
               />
             </div>
           </div>
@@ -743,34 +744,36 @@ const AddCourse = () => {
 
       case componentTypes.AUDIO:
         return (
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div>
-              <label className="block text-sm font-medium mb-2">Title</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Title</label>
               <input
                 type="text"
                 value={componentData.title || ''}
                 onChange={(e) => handleComponentDataChange('title', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Audio title"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Upload Audio</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Upload Audio</label>
               <input
                 type="file"
                 accept="audio/*"
                 onChange={(e) => handleComponentFileUpload(e, 'audioUrl')}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-blue-50 file:text-blue-700"
                 disabled={uploadingFile}
               />
-              {uploadingFile && <p className="text-sm text-blue-600">Uploading...</p>}
+              {uploadingFile && <p className="text-xs text-blue-600 mt-1">Uploading...</p>}
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Description</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Description</label>
               <textarea
                 value={componentData.description || ''}
                 onChange={(e) => handleComponentDataChange('description', e.target.value)}
-                rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                rows={2}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Audio description..."
               />
             </div>
           </div>
@@ -778,41 +781,43 @@ const AddCourse = () => {
 
       case componentTypes.QUIZ:
         return (
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div>
-              <label className="block text-sm font-medium mb-2">Title</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Title</label>
               <input
                 type="text"
                 value={componentData.title || ''}
                 onChange={(e) => handleComponentDataChange('title', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Quiz title"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Question</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Question</label>
               <textarea
                 value={componentData.question || ''}
                 onChange={(e) => handleComponentDataChange('question', e.target.value)}
-                rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                rows={2}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Enter your question..."
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Options</label>
-              {(componentData.options || []).map((option, index) => (
-                <div key={index} className="flex items-center space-x-2 mb-2">
-                  <input
-                    type="text"
-                    value={option.text}
-                    onChange={(e) => {
-                      const newOptions = [...(componentData.options || [])];
-                      newOptions[index] = { ...option, text: e.target.value };
-                      handleComponentDataChange('options', newOptions);
-                    }}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder={`Option ${String.fromCharCode(65 + index)}`}
-                  />
-                  <label className="flex items-center space-x-1">
+              <label className="block text-xs font-medium mb-1 text-gray-700">Options</label>
+              <div className="space-y-2">
+                {(componentData.options || []).map((option, index) => (
+                  <div key={index} className="flex items-center space-x-2">
+                    <input
+                      type="text"
+                      value={option.text}
+                      onChange={(e) => {
+                        const newOptions = [...(componentData.options || [])];
+                        newOptions[index] = { ...option, text: e.target.value };
+                        handleComponentDataChange('options', newOptions);
+                      }}
+                      className="flex-1 px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      placeholder={`Option ${String.fromCharCode(65 + index)}`}
+                    />
                     <input
                       type="radio"
                       name="correctAnswer"
@@ -824,40 +829,41 @@ const AddCourse = () => {
                         }));
                         handleComponentDataChange('options', newOptions);
                       }}
+                      className="text-blue-600"
                     />
-                    <span className="text-sm">Correct</span>
-                  </label>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const newOptions = (componentData.options || []).filter((_, idx) => idx !== index);
-                      handleComponentDataChange('options', newOptions);
-                    }}
-                    className="p-1 text-red-600 hover:text-red-800"
-                  >
-                    <FiTrash2 className="w-4 h-4" />
-                  </button>
-                </div>
-              ))}
-              <button
-                type="button"
-                onClick={() => {
-                  const newOptions = [...(componentData.options || []), { text: '', isCorrect: false }];
-                  handleComponentDataChange('options', newOptions);
-                }}
-                className="flex items-center space-x-1 text-sm text-blue-600 hover:text-blue-800"
-              >
-                <FiPlus className="w-4 h-4" />
-                <span>Add Option</span>
-              </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newOptions = (componentData.options || []).filter((_, idx) => idx !== index);
+                        handleComponentDataChange('options', newOptions);
+                      }}
+                      className="p-1 text-red-600 hover:text-red-800"
+                    >
+                      <FiTrash2 className="w-3 h-3" />
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newOptions = [...(componentData.options || []), { text: '', isCorrect: false }];
+                    handleComponentDataChange('options', newOptions);
+                  }}
+                  className="flex items-center space-x-1 text-xs text-blue-600 hover:text-blue-800"
+                >
+                  <FiPlus className="w-3 h-3" />
+                  <span>Add Option</span>
+                </button>
+              </div>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Explanation</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Explanation</label>
               <textarea
                 value={componentData.explanation || ''}
                 onChange={(e) => handleComponentDataChange('explanation', e.target.value)}
-                rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                rows={2}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Explain the answer..."
               />
             </div>
           </div>
@@ -865,22 +871,23 @@ const AddCourse = () => {
 
       case componentTypes.INFO_BOX:
         return (
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div>
-              <label className="block text-sm font-medium mb-2">Title</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Title</label>
               <input
                 type="text"
                 value={componentData.title || ''}
                 onChange={(e) => handleComponentDataChange('title', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Info box title"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Type</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Type</label>
               <select
                 value={componentData.type || 'info'}
                 onChange={(e) => handleComponentDataChange('type', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
               >
                 <option value="info">Info</option>
                 <option value="warning">Warning</option>
@@ -890,19 +897,101 @@ const AddCourse = () => {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Content</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Content</label>
               <textarea
                 value={componentData.content || ''}
                 onChange={(e) => handleComponentDataChange('content', e.target.value)}
-                rows={4}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                rows={3}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Important information..."
               />
             </div>
           </div>
         );
 
+      case componentTypes.CUSTOM:
+        return (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Title</label>
+              <input
+                type="text"
+                value={componentData.title || ''}
+                onChange={(e) => handleComponentDataChange('title', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Custom component title"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Content</label>
+              <textarea
+                value={componentData.content || ''}
+                onChange={(e) => handleComponentDataChange('content', e.target.value)}
+                rows={3}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Your custom content..."
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Style</label>
+              <select
+                value={componentData.customStyle || 'default'}
+                onChange={(e) => handleComponentDataChange('customStyle', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+              >
+                <option value="default">Default</option>
+                <option value="gradient">Gradient</option>
+                <option value="shadow">Shadow</option>
+                <option value="bordered">Bordered</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Background Color</label>
+              <input
+                type="color"
+                value={componentData.backgroundColor || '#f3f4f6'}
+                onChange={(e) => handleComponentDataChange('backgroundColor', e.target.value)}
+                className="w-full h-8 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Text Color</label>
+              <input
+                type="color"
+                value={componentData.textColor || '#1f2937'}
+                onChange={(e) => handleComponentDataChange('textColor', e.target.value)}
+                className="w-full h-8 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Border Radius (px)</label>
+              <input
+                type="range"
+                min="0"
+                max="50"
+                value={parseInt(componentData.borderRadius) || 8}
+                onChange={(e) => handleComponentDataChange('borderRadius', `${e.target.value}px`)}
+                className="w-full"
+              />
+              <span className="text-xs text-gray-500">{componentData.borderRadius || '8px'}</span>
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Padding (px)</label>
+              <input
+                type="range"
+                min="8"
+                max="64"
+                value={parseInt(componentData.padding) || 16}
+                onChange={(e) => handleComponentDataChange('padding', `${e.target.value}px`)}
+                className="w-full"
+              />
+              <span className="text-xs text-gray-500">{componentData.padding || '16px'}</span>
+            </div>
+          </div>
+        );
+
       default:
-        return <div>Unknown component type</div>;
+        return <div className="text-xs text-gray-500">Unknown component type</div>;
     }
   };
 
@@ -959,180 +1048,186 @@ const AddCourse = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-12 gap-6">
-            {/* Component Library Sidebar */}
-            <div className="col-span-3">
-              <div className="bg-white rounded-lg shadow-md p-4 sticky top-4">
-                <h3 className="text-lg font-semibold mb-4">Component Library</h3>
-                <div className="space-y-2">
-                  {Object.entries(componentLibrary).map(([type, config]) => (
-                    <button
-                      key={type}
-                      onClick={() => addComponent(type)}
-                      className="w-full flex items-center space-x-3 p-3 text-left border border-gray-200 rounded-md hover:bg-gray-50 hover:border-blue-300 transition-colors"
-                    >
-                      <span className="text-2xl">{config.icon}</span>
-                      <span className="font-medium">{config.name}</span>
-                    </button>
-                  ))}
+          <div className="flex gap-6">
+            {/* Comprehensive Sidebar */}
+            <div className="w-80 flex-shrink-0">
+              <div className="bg-white rounded-lg shadow-md sticky top-4 max-h-[calc(100vh-8rem)] overflow-hidden flex flex-col">
+                
+                {/* Sidebar Header */}
+                <div className="p-4 border-b border-gray-200">
+                  <h3 className="text-lg font-semibold text-gray-900">Editor Toolkit</h3>
+                  <p className="text-sm text-gray-600">Drag & drop or click to add components</p>
                 </div>
 
-                {/* Quick File Upload Section */}
-                <div className="mt-6">
-                  <h3 className="text-lg font-semibold mb-4">Quick Upload</h3>
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
-                    <div className="text-center">
-                      <FiUpload className="mx-auto w-8 h-8 text-gray-400 mb-2" />
-                      <p className="text-sm text-gray-600 mb-3">Upload media files</p>
-                      <input
-                        type="file"
-                        accept="image/*,video/*,audio/*"
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (!file) return;
-                          
-                          let componentType = componentTypes.IMAGE;
-                          let fieldName = 'imageUrl';
-                          if (file.type.startsWith('video/')) {
-                            componentType = componentTypes.VIDEO;
-                            fieldName = 'videoUrl';
-                          } else if (file.type.startsWith('audio/')) {
-                            componentType = componentTypes.AUDIO;
-                            fieldName = 'audioUrl';
-                          }
-                          
-                          const url = await handleFileUpload(file);
-                          if (url) {
-                            const newComponent = {
-                              id: Date.now(),
-                              type: componentType,
-                              data: {
-                                ...componentLibrary[componentType].defaultData,
-                                title: file.name.split('.')[0],
-                                [fieldName]: url
-                              }
-                            };
-                            setCurrentLessonContent(prev => [...prev, newComponent]);
-                            toast.success('File uploaded and component added!');
-                          }
-                        }}
-                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                      />
+                <div className="flex-1 overflow-y-auto">
+                  {/* Component Library */}
+                  <div className="p-4 border-b border-gray-200">
+                    <h4 className="text-md font-semibold mb-3 text-gray-800">Add Components</h4>
+                    <div className="grid grid-cols-2 gap-2">
+                      {Object.entries(componentLibrary).map(([type, config]) => (
+                        <button
+                          key={type}
+                          onClick={() => addComponent(type)}
+                          className="flex flex-col items-center p-3 text-center border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 group"
+                        >
+                          <span className="text-2xl mb-1 group-hover:scale-110 transition-transform">{config.icon}</span>
+                          <span className="text-xs font-medium text-gray-700">{config.name}</span>
+                        </button>
+                      ))}
                     </div>
                   </div>
-                </div>
 
-                {/* Component Properties Panel */}
-                <div className="mt-6">
-                  <h3 className="text-lg font-semibold mb-4">Component Properties</h3>
-                  <div className="border border-gray-200 rounded-md p-4 max-h-96 overflow-y-auto">
-                    {renderComponentForm()}
+                  {/* Quick Upload */}
+                  <div className="p-4 border-b border-gray-200">
+                    <h4 className="text-md font-semibold mb-3 text-gray-800">Quick Upload</h4>
+                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-3 hover:border-blue-400 transition-colors">
+                      <div className="text-center">
+                        <FiUpload className="mx-auto w-6 h-6 text-gray-400 mb-2" />
+                        <p className="text-xs text-gray-600 mb-2">Drop files or click to upload</p>
+                        <input
+                          type="file"
+                          accept="image/*,video/*,audio/*"
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (!file) return;
+                            
+                            let componentType = componentTypes.IMAGE;
+                            let fieldName = 'imageUrl';
+                            if (file.type.startsWith('video/')) {
+                              componentType = componentTypes.VIDEO;
+                              fieldName = 'videoUrl';
+                            } else if (file.type.startsWith('audio/')) {
+                              componentType = componentTypes.AUDIO;
+                              fieldName = 'audioUrl';
+                            }
+                            
+                            const url = await handleFileUpload(file);
+                            if (url) {
+                              const newComponent = {
+                                id: Date.now(),
+                                type: componentType,
+                                data: {
+                                  ...componentLibrary[componentType].defaultData,
+                                  title: file.name.split('.')[0],
+                                  [fieldName]: url
+                                }
+                              };
+                              setCurrentLessonContent(prev => [...prev, newComponent]);
+                              toast.success('File uploaded and component added!');
+                            }
+                          }}
+                          className="block w-full text-xs text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Content Structure */}
+                  <div className="p-4 border-b border-gray-200">
+                    <h4 className="text-md font-semibold mb-3 text-gray-800">Content Structure</h4>
+                    <div className="space-y-2">
+                      {currentLessonContent.length === 0 ? (
+                        <p className="text-xs text-gray-500 italic">No components added yet</p>
+                      ) : (
+                        currentLessonContent.map((component) => {
+                          const config = componentLibrary[component.type];
+                          return (
+                            <div
+                              key={component.id}
+                              onClick={() => selectComponent(component)}
+                              className={`flex items-center justify-between p-2 rounded border cursor-pointer transition-all ${
+                                selectedComponent?.id === component.id 
+                                  ? 'border-blue-500 bg-blue-50' 
+                                  : 'border-gray-200 hover:border-gray-300'
+                              }`}
+                            >
+                              <div className="flex items-center space-x-2">
+                                <span className="text-sm">{config?.icon}</span>
+                                <div>
+                                  <p className="text-xs font-medium truncate max-w-32">
+                                    {component.data.title || config?.name}
+                                  </p>
+                                  <p className="text-xs text-gray-500">{config?.name}</p>
+                                </div>
+                              </div>
+                              <div className="flex space-x-1">
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    deleteComponent(component.id);
+                                  }}
+                                  className="p-1 hover:bg-red-100 rounded"
+                                  title="Delete"
+                                >
+                                  <FiTrash2 className="w-3 h-3 text-red-600" />
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        })
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Component Properties */}
+                  <div className="p-4">
+                    <h4 className="text-md font-semibold mb-3 text-gray-800">Properties</h4>
+                    <div className="space-y-3">
+                      {renderComponentForm()}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Main Content Area */}
-            <div className="col-span-9">
-              <div className="bg-white rounded-lg shadow-md">
-                {/* Preview Toggle */}
+            {/* Main Preview Area */}
+            <div className="flex-1">
+              <div className="bg-white rounded-lg shadow-md min-h-[600px]">
+                {/* Preview Header */}
                 <div className="border-b border-gray-200 p-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold">Lesson Content</h3>
-                    <button
-                      onClick={() => setPreviewMode(!previewMode)}
-                      className={`flex items-center space-x-2 px-4 py-2 rounded-md transition-colors ${
-                        previewMode 
-                          ? 'bg-gray-600 text-white hover:bg-gray-700' 
-                          : 'bg-blue-600 text-white hover:bg-blue-700'
-                      }`}
-                    >
-                      <FiEye className="w-4 h-4" />
-                      <span>{previewMode ? 'Edit Mode' : 'Preview Mode'}</span>
-                    </button>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900">Lesson Preview</h3>
+                      <p className="text-sm text-gray-600">This is how your lesson will appear to students</p>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-xs text-gray-500">Preview Mode</span>
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Content Area */}
-                <div className="p-6 min-h-96">
+                {/* Content Preview */}
+                <div className="p-6">
                   {currentLessonContent.length === 0 ? (
-                    <div className="text-center text-gray-500 py-16">
-                      <div className="text-6xl mb-4">📝</div>
-                      <h3 className="text-xl font-medium mb-2">No content yet</h3>
-                      <p>Add components from the sidebar to start building your lesson</p>
+                    <div className="text-center text-gray-500 py-20">
+                      <div className="text-6xl mb-4">📋</div>
+                      <h3 className="text-xl font-medium mb-2">Your lesson is empty</h3>
+                      <p className="text-gray-400">Start adding components from the sidebar to build your lesson content</p>
+                      <div className="mt-6 flex justify-center">
+                        <div className="flex items-center space-x-2 text-sm text-gray-400">
+                          <FiArrowLeft className="w-4 h-4" />
+                          <span>Use the sidebar to add components</span>
+                        </div>
+                      </div>
                     </div>
                   ) : (
                     <div className="space-y-6">
-                      {currentLessonContent.map((component, index) => {
+                      {currentLessonContent.map((component) => {
                         const ComponentRenderer = componentLibrary[component.type]?.component;
                         if (!ComponentRenderer) return null;
 
                         return (
                           <div
                             key={component.id}
-                            className={`relative group ${
-                              !previewMode ? 'border-2 border-dashed border-transparent hover:border-blue-300 rounded-lg p-4' : ''
-                            } ${
-                              selectedComponent?.id === component.id && !previewMode ? 'border-blue-500 bg-blue-50' : ''
+                            className={`transition-all duration-200 ${
+                              selectedComponent?.id === component.id 
+                                ? 'ring-2 ring-blue-400 ring-opacity-50 rounded-lg' 
+                                : ''
                             }`}
-                            onClick={() => !previewMode && selectComponent(component)}
+                            onClick={() => selectComponent(component)}
                           >
                             <ComponentRenderer data={component.data} />
-                            
-                            {!previewMode && (
-                              <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <div className="flex space-x-1">
-                                  {/* Move Up Button */}
-                                  {index > 0 && (
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        moveComponent(index, index - 1);
-                                      }}
-                                      className="p-1 bg-gray-600 text-white rounded hover:bg-gray-700"
-                                      title="Move Up"
-                                    >
-                                      <FiArrowUp className="w-3 h-3" />
-                                    </button>
-                                  )}
-                                  {/* Move Down Button */}
-                                  {index < currentLessonContent.length - 1 && (
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        moveComponent(index, index + 1);
-                                      }}
-                                      className="p-1 bg-gray-600 text-white rounded hover:bg-gray-700"
-                                      title="Move Down"
-                                    >
-                                      <FiArrowDown className="w-3 h-3" />
-                                    </button>
-                                  )}
-                                  {/* Edit Button */}
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      selectComponent(component);
-                                    }}
-                                    className="p-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                                    title="Edit"
-                                  >
-                                    <FiEdit3 className="w-3 h-3" />
-                                  </button>
-                                  {/* Delete Button */}
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      deleteComponent(component.id);
-                                    }}
-                                    className="p-1 bg-red-600 text-white rounded hover:bg-red-700"
-                                    title="Delete"
-                                  >
-                                    <FiTrash2 className="w-3 h-3" />
-                                  </button>
-                                </div>
-                              </div>
-                            )}
                           </div>
                         );
                       })}
