@@ -5,31 +5,49 @@ import AudioContent from './AudioContent';
 import QuizContent from './QuizContent';
 import InfoBox from './InfoBox';
 import CustomComponent from './CustomComponent';
+import HeadingContent from './HeadingContent';
 
 export const componentTypes = {
-  TEXT: 'text',
+  HEADING: 'heading',
   VIDEO: 'video',
   IMAGE: 'image',
   AUDIO: 'audio',
   QUIZ: 'quiz',
   INFO_BOX: 'info_box',
-  CUSTOM: 'custom'
+  CUSTOM: 'custom',
+  TEXT: 'text',
+  PARAGRAPH: 'paragraph',
+  BULLET_LIST: 'bullet_list',
+  NUMBERED_LIST: 'numbered_list',
+  QUOTE: 'quote',
+  CODE_BLOCK: 'code_block',
+  TABLE: 'table',
+  DIVIDER: 'divider',
+  BUTTON: 'button',
+  LINK: 'link',
+  EMBED: 'embed',
+  GALLERY: 'gallery',
+  ACCORDION: 'accordion',
+  TABS: 'tabs',
+  PROGRESS_BAR: 'progress_bar',
+  TIMER: 'timer',
+  CHECKLIST: 'checklist',
+  FORM: 'form',
+  DOWNLOAD: 'download'
 };
 
 export const componentLibrary = {
-  [componentTypes.TEXT]: {
-    name: 'Text Content',
-    component: TextContent,
-    icon: '📝',
+  [componentTypes.HEADING]: {
+    name: 'Heading',
+    component: HeadingContent,
     defaultData: {
-      title: 'Text Section',
-      content: 'Enter your text content here...'
+      title: 'Main Heading',
+      content: 'Main Heading'
     }
   },
   [componentTypes.VIDEO]: {
     name: 'Video',
     component: VideoContent,
-    icon: '🎥',
     defaultData: {
       title: 'Video Section',
       videoUrl: '',
@@ -40,7 +58,6 @@ export const componentLibrary = {
   [componentTypes.IMAGE]: {
     name: 'Image',
     component: ImageContent,
-    icon: '🖼️',
     defaultData: {
       title: 'Image Section',
       imageUrl: '',
@@ -51,7 +68,6 @@ export const componentLibrary = {
   [componentTypes.AUDIO]: {
     name: 'Audio',
     component: AudioContent,
-    icon: '🎵',
     defaultData: {
       title: 'Audio Section',
       audioUrl: '',
@@ -61,7 +77,6 @@ export const componentLibrary = {
   [componentTypes.QUIZ]: {
     name: 'Quiz',
     component: QuizContent,
-    icon: '❓',
     defaultData: {
       title: 'Quiz Section',
       question: 'Enter your question here...',
@@ -77,7 +92,6 @@ export const componentLibrary = {
   [componentTypes.INFO_BOX]: {
     name: 'Info Box',
     component: InfoBox,
-    icon: '💡',
     defaultData: {
       title: 'Info Box',
       content: 'Enter important information here...',
@@ -87,7 +101,6 @@ export const componentLibrary = {
   [componentTypes.CUSTOM]: {
     name: 'Custom Block',
     component: CustomComponent,
-    icon: '✨',
     defaultData: {
       title: 'Custom Component',
       content: 'This is a customizable component with various styling options.',
@@ -96,6 +109,189 @@ export const componentLibrary = {
       borderRadius: '8px',
       padding: '16px',
       customStyle: 'default'
+    }
+  },
+  [componentTypes.TEXT]: {
+    name: 'Text Content',
+    component: TextContent,
+    defaultData: {
+      title: 'Text Section',
+      content: 'Enter your text content here...'
+    }
+  },
+  [componentTypes.PARAGRAPH]: {
+    name: 'Paragraph',
+    component: TextContent,
+    defaultData: {
+      title: 'Paragraph',
+      content: 'This is a paragraph of text content.',
+      type: 'paragraph'
+    }
+  },
+  [componentTypes.BULLET_LIST]: {
+    name: 'Bullet List',
+    component: TextContent,
+    defaultData: {
+      title: 'Bullet List',
+      content: '• First item\n• Second item\n• Third item',
+      type: 'list'
+    }
+  },
+  [componentTypes.NUMBERED_LIST]: {
+    name: 'Numbered List',
+    component: TextContent,
+    defaultData: {
+      title: 'Numbered List',
+      content: '1. First item\n2. Second item\n3. Third item',
+      type: 'numbered_list'
+    }
+  },
+  [componentTypes.QUOTE]: {
+    name: 'Quote Block',
+    component: InfoBox,
+    defaultData: {
+      title: 'Quote',
+      content: 'This is an inspirational quote or important statement.',
+      type: 'quote'
+    }
+  },
+  [componentTypes.CODE_BLOCK]: {
+    name: 'Code Block',
+    component: TextContent,
+    defaultData: {
+      title: 'Code Block',
+      content: 'console.log("Hello, World!");',
+      type: 'code'
+    }
+  },
+  [componentTypes.TABLE]: {
+    name: 'Table',
+    component: CustomComponent,
+    defaultData: {
+      title: 'Table',
+      content: 'Data table with rows and columns',
+      type: 'table'
+    }
+  },
+  [componentTypes.DIVIDER]: {
+    name: 'Divider',
+    component: CustomComponent,
+    defaultData: {
+      title: 'Section Divider',
+      content: 'Visual separator between sections',
+      type: 'divider'
+    }
+  },
+  [componentTypes.BUTTON]: {
+    name: 'Button',
+    component: CustomComponent,
+    defaultData: {
+      title: 'Action Button',
+      content: 'Click Me',
+      type: 'button',
+      action: 'link'
+    }
+  },
+  [componentTypes.LINK]: {
+    name: 'Link',
+    component: CustomComponent,
+    defaultData: {
+      title: 'External Link',
+      content: 'Visit this resource',
+      url: '',
+      type: 'link'
+    }
+  },
+  [componentTypes.EMBED]: {
+    name: 'Embed',
+    component: CustomComponent,
+    defaultData: {
+      title: 'Embedded Content',
+      content: 'External content embed',
+      embedUrl: '',
+      type: 'embed'
+    }
+  },
+  [componentTypes.GALLERY]: {
+    name: 'Image Gallery',
+    component: ImageContent,
+    defaultData: {
+      title: 'Image Gallery',
+      images: [],
+      type: 'gallery'
+    }
+  },
+  [componentTypes.ACCORDION]: {
+    name: 'Accordion',
+    component: CustomComponent,
+    defaultData: {
+      title: 'Accordion Section',
+      content: 'Collapsible content section',
+      type: 'accordion'
+    }
+  },
+  [componentTypes.TABS]: {
+    name: 'Tabs',
+    component: CustomComponent,
+    defaultData: {
+      title: 'Tabbed Content',
+      tabs: [
+        { title: 'Tab 1', content: 'Content 1' },
+        { title: 'Tab 2', content: 'Content 2' }
+      ],
+      type: 'tabs'
+    }
+  },
+  [componentTypes.PROGRESS_BAR]: {
+    name: 'Progress Bar',
+    component: CustomComponent,
+    defaultData: {
+      title: 'Progress Indicator',
+      progress: 50,
+      type: 'progress'
+    }
+  },
+  [componentTypes.TIMER]: {
+    name: 'Timer',
+    component: CustomComponent,
+    defaultData: {
+      title: 'Timer Component',
+      duration: 300,
+      type: 'timer'
+    }
+  },
+  [componentTypes.CHECKLIST]: {
+    name: 'Checklist',
+    component: CustomComponent,
+    defaultData: {
+      title: 'Task Checklist',
+      items: [
+        { text: 'Task 1', completed: false },
+        { text: 'Task 2', completed: false }
+      ],
+      type: 'checklist'
+    }
+  },
+  [componentTypes.FORM]: {
+    name: 'Form',
+    component: CustomComponent,
+    defaultData: {
+      title: 'Input Form',
+      fields: [
+        { type: 'text', label: 'Name', required: true },
+        { type: 'email', label: 'Email', required: true }
+      ],
+      type: 'form'
+    }
+  },
+  [componentTypes.DOWNLOAD]: {
+    name: 'Download',
+    component: CustomComponent,
+    defaultData: {
+      title: 'File Download',
+      fileName: 'document.pdf',
+      fileUrl: '',
+      type: 'download'
     }
   }
 };

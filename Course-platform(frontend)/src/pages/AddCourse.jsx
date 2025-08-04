@@ -632,6 +632,32 @@ const AddCourse = () => {
     const { type } = selectedComponent;
 
     switch (type) {
+      case componentTypes.HEADING:
+        return (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Title</label>
+              <input
+                type="text"
+                value={componentData.title || ''}
+                onChange={(e) => handleComponentDataChange('title', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Heading title"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Heading Text</label>
+              <input
+                type="text"
+                value={componentData.content || ''}
+                onChange={(e) => handleComponentDataChange('content', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Enter your heading text..."
+              />
+            </div>
+          </div>
+        );
+
       case componentTypes.TEXT:
         return (
           <div className="space-y-3">
@@ -1063,17 +1089,18 @@ const AddCourse = () => {
                   {/* Component Library */}
                   <div className="p-4 border-b border-gray-200">
                     <h4 className="text-md font-semibold mb-3 text-gray-800">Add Components</h4>
-                    <div className="grid grid-cols-2 gap-2">
-                      {Object.entries(componentLibrary).map(([type, config]) => (
-                        <button
-                          key={type}
-                          onClick={() => addComponent(type)}
-                          className="flex flex-col items-center p-3 text-center border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 group"
-                        >
-                          <span className="text-2xl mb-1 group-hover:scale-110 transition-transform">{config.icon}</span>
-                          <span className="text-xs font-medium text-gray-700">{config.name}</span>
-                        </button>
-                      ))}
+                    <div className="max-h-80 overflow-y-auto pr-2">
+                      <div className="grid grid-cols-1 gap-2">
+                        {Object.entries(componentLibrary).map(([type, config]) => (
+                          <button
+                            key={type}
+                            onClick={() => addComponent(type)}
+                            className="flex items-center p-3 text-left border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 group w-full"
+                          >
+                            <span className="text-sm font-medium text-gray-700 text-left">{config.name}</span>
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
 
@@ -1125,7 +1152,8 @@ const AddCourse = () => {
                   {/* Content Structure */}
                   <div className="p-4 border-b border-gray-200">
                     <h4 className="text-md font-semibold mb-3 text-gray-800">Content Structure</h4>
-                    <div className="space-y-2">
+                    <div className="max-h-60 overflow-y-auto pr-2">
+                      <div className="space-y-2">
                       {currentLessonContent.length === 0 ? (
                         <p className="text-xs text-gray-500 italic">No components added yet</p>
                       ) : (
@@ -1142,7 +1170,6 @@ const AddCourse = () => {
                               }`}
                             >
                               <div className="flex items-center space-x-2">
-                                <span className="text-sm">{config?.icon}</span>
                                 <div>
                                   <p className="text-xs font-medium truncate max-w-32">
                                     {component.data.title || config?.name}
@@ -1166,6 +1193,7 @@ const AddCourse = () => {
                           );
                         })
                       )}
+                    </div>
                     </div>
                   </div>
 
