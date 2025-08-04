@@ -21,11 +21,33 @@ import {
   FiArrowUp,
   FiArrowDown
 } from 'react-icons/fi';
+import { HiSpeakerWave } from "react-icons/hi2";
+import { FaFileAlt } from "react-icons/fa";
+import { BsPencilFill } from "react-icons/bs";
 import { componentLibrary, componentTypes } from '../components/course-components';
 
 const AddCourse = () => {
   const { authToken } = useAuth();
   const navigate = useNavigate();
+
+  // Icon options for lessons
+  const iconOptions = [
+    { 
+      value: 'page', 
+      label: 'Page/Document',
+      icon: <FaFileAlt className="w-4 h-4" />
+    },
+    { 
+      value: 'speaker', 
+      label: 'Audio/Speaker',
+      icon: <HiSpeakerWave className="w-4 h-4" />
+    },
+    { 
+      value: 'checkbox', 
+      label: 'Exercise/Practice',
+      icon: <BsPencilFill className="w-4 h-4" />
+    }
+  ];
 
   // Wizard states
   const [currentStep, setCurrentStep] = useState(1);
@@ -206,7 +228,8 @@ const AddCourse = () => {
             title: '',
             order: i + 1,
             moduleTitle: module.title,
-            content: []
+            content: [],
+            icon: 'page'
           });
         }
       });
@@ -244,7 +267,8 @@ const AddCourse = () => {
           body: JSON.stringify({
             moduleID: lesson.moduleID,
             title: lesson.title,
-            order: lesson.order
+            order: lesson.order,
+            icon: lesson.icon || 'page'
           })
         });
 
@@ -1503,23 +1527,53 @@ const AddCourse = () => {
                           .reduce((sum, mod) => sum + mod.lessonNumber, 0) + lessonIndex;
                         
                         return (
-                          <div key={lessonIndex}>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                              Lesson {lessonIndex + 1} Title *
-                            </label>
-                            <input
-                              type="text"
-                              value={lessons[lessonGlobalIndex]?.title || ''}
-                              onChange={(e) => {
-                                const newLessons = [...lessons];
-                                if (newLessons[lessonGlobalIndex]) {
-                                  newLessons[lessonGlobalIndex].title = e.target.value;
-                                  setLessons(newLessons);
-                                }
-                              }}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                              placeholder="Enter lesson title"
-                            />
+                          <div key={lessonIndex} className="space-y-4">
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Lesson {lessonIndex + 1} Title *
+                              </label>
+                              <input
+                                type="text"
+                                value={lessons[lessonGlobalIndex]?.title || ''}
+                                onChange={(e) => {
+                                  const newLessons = [...lessons];
+                                  if (newLessons[lessonGlobalIndex]) {
+                                    newLessons[lessonGlobalIndex].title = e.target.value;
+                                    setLessons(newLessons);
+                                  }
+                                }}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Enter lesson title"
+                              />
+                            </div>
+                            
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Lesson Icon
+                              </label>
+                              <select
+                                value={lessons[lessonGlobalIndex]?.icon || 'page'}
+                                onChange={(e) => {
+                                  const newLessons = [...lessons];
+                                  if (newLessons[lessonGlobalIndex]) {
+                                    newLessons[lessonGlobalIndex].icon = e.target.value;
+                                    setLessons(newLessons);
+                                  }
+                                }}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              >
+                                {iconOptions.map((option) => (
+                                  <option key={option.value} value={option.value}>
+                                    {option.label}
+                                  </option>
+                                ))}
+                              </select>
+                              <div className="mt-2 flex items-center space-x-2 text-sm text-gray-600">
+                                <span>Preview:</span>
+                                {iconOptions.find(opt => opt.value === (lessons[lessonGlobalIndex]?.icon || 'page'))?.icon}
+                                <span>{iconOptions.find(opt => opt.value === (lessons[lessonGlobalIndex]?.icon || 'page'))?.label}</span>
+                              </div>
+                            </div>
                           </div>
                         );
                       })}

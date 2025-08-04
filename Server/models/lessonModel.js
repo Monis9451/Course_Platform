@@ -1,11 +1,12 @@
 const supabase = require('../config/supabase');
 
-const createLessonWithoutContent = async (moduleID, title, order) => {
+const createLessonWithoutContent = async (moduleID, title, order, icon = 'page') => {
     const {data, error} = await supabase.from('lesson').insert([{
         moduleID,
         title,
         content: '',
-        order
+        order,
+        icon
     }]).select();
     if (error) {
         throw new Error(`Error creating lesson: ${error.message}`);

@@ -12,13 +12,13 @@ const { catchAsync } = require('../utils/catchAsync.js');
 const { AppError } = require('../utils/appError.js');
 
 const lessonWithoutContentHandler = catchAsync(async (req, res, next) => {
-    const { moduleID, title, order } = req.body;
+    const { moduleID, title, order, icon } = req.body;
 
     if (!moduleID || !title || !order) {
         return next(new AppError('Module ID, title, and order are required', 400));
     }
 
-    const lesson = await createLessonWithoutContent(moduleID, title, order);
+    const lesson = await createLessonWithoutContent(moduleID, title, order, icon);
     res.status(201).json({
         status: 'success',
         data: {
