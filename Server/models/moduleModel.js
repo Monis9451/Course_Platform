@@ -57,11 +57,20 @@ const deleteModule = async (moduleID) => {
     return data;
 }
 
+const deleteModulesByCourseId = async (courseID) => {
+    const {data, error} = await supabase.from('modules').delete().eq('courseID', courseID).select();
+    if (error) {
+        throw new Error(`Error deleting modules by course ID: ${error.message}`);
+    }
+    return data;
+}
+
 module.exports = {
     createModule,
     getAllModules,
     getModuleById,
     getModulesByCourseId,
     updateModule,
-    deleteModule
+    deleteModule,
+    deleteModulesByCourseId
 };

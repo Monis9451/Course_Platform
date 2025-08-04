@@ -3,6 +3,7 @@ const { createCourse,
         getCourseById,
         updateCourse,
         deleteCourse,
+        deleteCourseWithCascade,
         getIncompleteCourses,
         getIncompleteCoursesWithDetails,
         markCourseAsCompleted } = require('../models/courseModel.js');
@@ -90,7 +91,7 @@ const deleteCourseHandler = catchAsync(async (req, res, next) => {
     return next(new AppError('Course ID is required', 400));
   }
 
-  const deletedCourse = await deleteCourse(id);
+  const deletedCourse = await deleteCourseWithCascade(id);
 
   if (!deletedCourse) {
     return next(new AppError('Course not found', 404));

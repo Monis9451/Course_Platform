@@ -57,6 +57,56 @@ const deleteCourse = async (courseID) => {
     return data;
 }
 
+const deleteCourseWithCascade = async (courseID) => {
+    // First, get all modules for this course
+    const {data: modules, error: modulesError} = await supabase
+        .from('modules')
+        .select('moduleID')
+        .eq('courseID', courseID);
+    
+    if (modulesError) {
+        throw new Error(`Error fetching modules for course: ${modulesError.message}`);
+    }
+
+    // Delete all lessons for each module
+    if (modules && modules.length > 0) {
+        const moduleIDs = modules.map(module => module.moduleID);
+        
+        // Delete lessons for all modules
+        const {error: lessonsError} = await supabase
+            .from('lesson')
+            .delete()
+            .in('moduleID', moduleIDs);
+        
+        if (lessonsError) {
+            throw new Error(`Error deleting lessons: ${lessonsError.message}`);
+        }
+
+        // Delete all modules for this course
+        const {error: modulesDeleteError} = await supabase
+            .from('modules')
+            .delete()
+            .eq('courseID', courseID);
+        
+        if (modulesDeleteError) {
+            throw new Error(`Error deleting modules: ${modulesDeleteError.message}`);
+        }
+    }
+
+    // Finally, delete the course
+    const {data, error} = await supabase
+        .from('course')
+        .delete()
+        .eq('courseID', courseID)
+        .select();
+    
+    if (error) {
+        throw new Error(`Error deleting course: ${error.message}`);
+    }
+    
+    return data;
+}
+
 const getIncompleteCourses = async () => {
     const {data, error} = await supabase.from('course').select('*').eq('completed', false);
     if (error) {
@@ -82,7 +132,7 @@ const getIncompleteCoursesWithDetails = async () => {
         courses.map(async (course) => {
             // Get modules for this course
             const {data: modules, error: modulesError} = await supabase
-                .from('module')
+                .from('modules')
                 .select('*')
                 .eq('courseID', course.courseID)
                 .order('order');
@@ -131,6 +181,7 @@ module.exports = {
     getCourseById,
     updateCourse,
     deleteCourse,
+    deleteCourseWithCascade,
     getIncompleteCourses,
     getIncompleteCoursesWithDetails,
     markCourseAsCompleted

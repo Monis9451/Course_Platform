@@ -76,6 +76,7 @@ const AddCourse = () => {
   const [incompleteCourses, setIncompleteCourses] = useState([]);
   const [showIncompleteModal, setShowIncompleteModal] = useState(false);
   const [checkingIncomplete, setCheckingIncomplete] = useState(true);
+  const [deletingCourseId, setDeletingCourseId] = useState(null);
 
   const steps = [
     { id: 1, title: 'Course Details', description: 'Basic course information' },
@@ -524,6 +525,9 @@ const AddCourse = () => {
 
   const deleteIncompleteCourse = async (courseId) => {
     try {
+      console.log('Deleting course with ID:', courseId);
+      setDeletingCourseId(courseId);
+      
       const response = await fetch(`${import.meta.env.VITE_API_URL}/courses/${courseId}`, {
         method: 'DELETE',
         headers: {
@@ -531,15 +535,22 @@ const AddCourse = () => {
         }
       });
 
-      if (response.ok) {
+      console.log('Delete response status:', response.status);
+
+      if (response.ok || response.status === 204) {
+        // Remove the course from the incomplete courses list
         setIncompleteCourses(prev => prev.filter(course => course.courseID !== courseId));
-        toast.success('Incomplete course deleted successfully!');
+        toast.success('Course and all related data deleted successfully!');
       } else {
-        throw new Error('Failed to delete course');
+        const errorData = await response.json().catch(() => ({ message: 'Unknown error' }));
+        console.error('Delete error response:', errorData);
+        throw new Error(errorData.message || `Failed to delete course (Status: ${response.status})`);
       }
     } catch (error) {
       console.error('Error deleting incomplete course:', error);
-      toast.error('Failed to delete incomplete course');
+      toast.error(`Failed to delete course: ${error.message}`);
+    } finally {
+      setDeletingCourseId(null);
     }
   };
 
@@ -1048,7 +1059,7 @@ const AddCourse = () => {
   if (isEditorMode) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header />
+        {/* <Header /> */}
         <div className="container mx-auto px-4 py-8">
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Course Content Editor</h1>
@@ -1311,7 +1322,7 @@ const AddCourse = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      {/* <Header /> */}
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
@@ -1664,9 +1675,10 @@ const AddCourse = () => {
                       </button>
                       <button
                         onClick={() => deleteIncompleteCourse(course.courseID)}
-                        className="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700"
+                        disabled={deletingCourseId === course.courseID}
+                        className="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 disabled:opacity-50"
                       >
-                        Delete
+                        {deletingCourseId === course.courseID ? 'Deleting...' : 'Delete'}
                       </button>
                     </div>
                   </div>
