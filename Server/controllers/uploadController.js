@@ -3,29 +3,18 @@ const { catchAsync } = require("../utils/catchAsync.js");
 const { AppError } = require("../utils/appError.js");
 
 const uploadHandler = catchAsync(async (req, res, next) => {
-
-  const localFilePath = req.file?.path;
-
-  if (!localFilePath) {
-    console.error("No file found in request");
-    return next(new AppError("File is missing", 400));
+  if (!req.file) {
+    return res.status(400).json({ message: "File is missing." });
   }
-
-  const cloudinaryResponse = await uploadOnCloudinary(localFilePath);
+  const cloudinaryResponse = await uploadOnCloudinary(req.file.buffer);
 
   if (!cloudinaryResponse) {
-    console.error("Cloudinary upload failed - no response");
-    return next(new AppError("Failed to upload file to Cloudinary", 500));
+    return res.status(500).json({ message: "Error uploading file." });
   }
 
-
   return res.status(200).json({
-    status: "success",
-    message: "File uploaded successfully",
-    data: {
-      url: cloudinaryResponse.secure_url,
-      public_id: cloudinaryResponse.public_id,
-    }
+    message: "File uploaded successfully.",
+    url: cloudinaryResponse.secure_url,
   });
 });
 
