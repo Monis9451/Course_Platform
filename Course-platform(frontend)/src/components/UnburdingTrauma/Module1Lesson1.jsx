@@ -5,7 +5,7 @@ const Module1Lesson1 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">THE NEUROSCIENCE: HOW TRAUMA REWIRES THE BRAIN</h1>
       
-      <div className="bg-yellow-100 p-6 rounded-md mb-8">
+      <div className="bg-[#FFF1DC] p-6 rounded-md mb-8">
         <h3 className="font-semibold mb-3 text-[#bd6334]">Understanding The Neuroscience of Trauma</h3>
         <p className="mb-4">Trauma isn't just something that happens to us - it changes us, right down to the way our brain functions. If you've ever wondered why certain triggers bring back overwhelming emotions, why your body reacts before your mind catches up, or why it feels impossible to just move on, the answer lies in how trauma rewires the brain.</p>
         <div className="flex items-center">

@@ -7,7 +7,7 @@ const Module1Lesson7 = () => {
         SOMATIC MAPPING EXERCISE
       </h1>
       
-      <div className="bg-yellow-100 p-6 rounded-md mb-8">
+      <div className="bg-[#FFF1DC] p-6 rounded-md mb-8">
         <h3 className="font-semibold mb-3 text-[#bd6334]">Reconnecting with Your Body</h3>
         <p className="mb-4">Many trauma survivors experience disconnection from their bodies as a protective response. This powerful exercise will help you begin to notice and map bodily sensations—safely and gently. It's a way to tune in without judgment and create a visual language for how trauma resides in your physical form.</p>
         <div className="flex flex-col sm:flex-row gap-4 text-sm mt-4">

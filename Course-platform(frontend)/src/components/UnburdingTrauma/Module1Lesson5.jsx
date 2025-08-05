@@ -7,7 +7,7 @@ const Module1Lesson5 = () => {
         PERSONAL TRAUMA TIMELINE
       </h1>
       
-      <div className="bg-yellow-100 p-6 rounded-md mb-8">
+      <div className="bg-[#FFF1DC] p-6 rounded-md mb-8">
         <h3 className="font-semibold mb-3 text-[#bd6334]">Why Create a Timeline?</h3>
         <p className="mb-4">Creating a trauma timeline helps you visualize your life's journey and identify patterns. This process can reveal connections between past events and current behaviors, providing insight into your healing journey. By mapping these experiences, you gain a new perspective on your resilience and growth.</p>
         <div className="flex flex-col sm:flex-row gap-4 text-sm">

@@ -5,7 +5,7 @@ const Module1Lesson2 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-8">THE NERVOUS SYSTEM & TRAUMA</h1>
 
-       <div className="bg-yellow-100 p-6 rounded-md mb-6">
+       <div className="bg-[#FFF1DC] p-6 rounded-md mb-6">
         <h3 className="font-semibold mb-3 text-[#bd6334]">Hyperarousal vs. Hypoarousal</h3>
         <ul className="list-disc pl-8 mb-3 space-y-2">
           <li><strong>Hyperarousal</strong> is when the nervous system is on constant alert, ready to react to perceived threats. You might feel anxious, overstimulated, or irrationally fearful, even when there's no immediate danger. It's like having an alarm system that always stays on, creating a state of restlessness or irritability.</li>

@@ -5,7 +5,7 @@ const Module1Lesson4 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-8">DISSOCIATION IN TRAUMA: DEPERSONALISATION, DEREALISATION, DISSOCIATIVE AMNESIA</h1>
 
-      <div className="bg-yellow-100 p-6 rounded-md mb-8">
+      <div className="bg-[#FFF1DC] p-6 rounded-md mb-8">
         <h3 className="font-semibold mb-4 text-[#bd6334]">Important to Remember</h3>
         <p className="mb-4"><strong>You're not losing your mind.</strong> These are normal responses to abnormal experiences. Dissociation happens when the mind says, "It's too much, let's pause this." Healing means helping those parts feel safe enough to come back.</p>
         

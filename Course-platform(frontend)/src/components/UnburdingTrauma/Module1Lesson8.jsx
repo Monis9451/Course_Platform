@@ -7,7 +7,7 @@ const Module1Lesson8 = () => {
         GUIDED VISUALISATION - GROUNDING & NERVOUS SYSTEM REGULATION
       </h1>
       
-      <div className="bg-yellow-100 p-6 rounded-md mb-8">
+      <div className="bg-[#FFF1DC] p-6 rounded-md mb-8">
         <h3 className="font-semibold mb-3 text-[#bd6334]">What is Grounding?</h3>
         <p className="mb-4">Grounding is a powerful technique that helps you reconnect to the present moment—particularly helpful when you're feeling anxious, disconnected, or overwhelmed. It's about gently anchoring back into your body and your current environment, using your senses and breath.</p>
         <div className="flex items-center">
@@ -51,16 +51,16 @@ const Module1Lesson8 = () => {
         <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
           <h3 className="font-semibold mb-4 text-[#bd6334] border-b pb-2">Benefits of This Practice</h3>
           <div className="space-y-3">
-            <div className="flex items-center border-l-4 border-primary pl-3 py-1 bg-green-50">
+            <div className="flex items-center border-l-4 border-primary pl-3 py-1 bg-gray-100">
               <p>Calms an overactive nervous system</p>
             </div>
-            <div className="flex items-center border-l-4 border-primary pl-3 py-1 bg-blue-50">
+            <div className="flex items-center border-l-4 border-primary pl-3 py-1 bg-gray-100">
               <p>Reduces anxiety and overwhelm</p>
             </div>
-            <div className="flex items-center border-l-4 border-primary pl-3 py-1 bg-purple-50">
+            <div className="flex items-center border-l-4 border-primary pl-3 py-1 bg-gray-100">
               <p>Brings you back to the present moment</p>
             </div>
-            <div className="flex items-center border-l-4 border-primary pl-3 py-1 bg-yellow-50">
+            <div className="flex items-center border-l-4 border-primary pl-3 py-1 bg-gray-100">
               <p>Helps you feel more embodied and connected</p>
             </div>
           </div>
@@ -79,8 +79,8 @@ const Module1Lesson8 = () => {
         </div>
       </div>
 
-      <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
-        <h3 className="font-semibold mb-3 text-[#bd6334]">Written Grounding Script</h3>
+      <div className="bg-gray-100 p-6 rounded-md mb-8">
+        <h3 className="font-semibold mb-3 text-primary">Written Grounding Script</h3>
         <p className="mb-4">If you prefer to read along or practice without audio, here's the full grounding script:</p>
         
         <div className="bg-white p-6 rounded-md border border-gray-200">

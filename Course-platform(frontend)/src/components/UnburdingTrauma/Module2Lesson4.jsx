@@ -5,17 +5,6 @@ const Module2Lesson4 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">SAFE SPACE VISUALIZATION</h1>
       
-      
-
-      <div className="mb-8">
-        <h2 className="font-semibold text-lg mb-3">JOURNAL</h2>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>What details did you include in your safe space?</li>
-          <li>Did you encounter any resistance when trying to visualize safety?</li>
-          <li>How did your body feel during and after the visualization?</li>
-        </ul>
-      </div>
-      
       <div className="bg-[#f7f1e9] p-6 rounded-md mb-8">
         <p className="mb-4">Creating a mental safe space gives your nervous system a powerful way to experience safety, even when your external environment feels threatening or overwhelming.</p>
         
@@ -32,21 +21,15 @@ const Module2Lesson4 = () => {
         <p className="font-medium italic">The more richly detailed and sensory your safe space becomes, the more effective it will be.</p>
       </div>
       
-      <div className="aspect-w-16 aspect-h-9 mb-8">
-        <div className="bg-yellow-100 rounded-lg flex items-center justify-center">
-          <div className="text-center p-8">
-            <div className="mb-8">
+      
+      <div className="mb-8">
         <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
         
         <div className="bg-primary p-1 rounded-md">
           <button className="flex items-center w-full px-4 py-3 bg-primary text-white hover:bg-gray-900 rounded-md">
             <span className="flex-shrink-0 mr-3">▶</span>
-            <span className="text-sm">Listen to Safe Space Visualization [18 mins].mp3</span>
+            <span className="text-sm">Listen to Felt Sense Exploration [18 mins].mp3</span>
           </button>
-        </div>
-      </div>
-            <p className="text-gray-600">10-minute guided safe space visualisation meditation</p>
-          </div>
         </div>
       </div>
       
