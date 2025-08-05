@@ -5,7 +5,7 @@ const Module4Lesson4 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">TAKING SMALL BOLD ACTIONS</h1>
       
-      <div className="bg-yellow-100 p-6 rounded-md mb-8">
+      <div className="bg-[#FFF1DC] p-6 rounded-md mb-8">
         <p className="mb-4">Creating alternative beliefs intellectually is just the first step—the real transformation happens when these new beliefs become embodied in your nervous system and daily life.</p>
         
         <p className="mb-4">Visualisation is a powerful tool for this embodiment process. By imagining yourself living from your new beliefs, you create neural pathways that make these beliefs more accessible and natural over time.</p>

@@ -5,7 +5,7 @@ const Module2Lesson6 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">MINDFUL MOVEMENT PRACTICE</h1>
       
-      <div className="bg-yellow-100 p-6 rounded-md mb-8">
+      <div className="bg-[#FFF1DC] p-6 rounded-md mb-8">
         <p className="mb-4">Mindful movement provides a gentle yet powerful way to reconnect with your body after trauma. By combining physical movement with present-moment awareness, you create new neural pathways that support embodied presence.</p>
         
         <p className="mb-4">Unlike high-intensity exercise which can sometimes be triggering, mindful movement practices emphasise awareness, gentle exploration, and respecting your body's limits.</p>
@@ -21,21 +21,15 @@ const Module2Lesson6 = () => {
         <p className="font-medium italic">Movement is medicine when approached with mindfulness and compassion.</p>
       </div>
       
-      <div className="aspect-w-16 aspect-h-9 mb-8">
-        <div className="bg-gray-100 rounded-lg flex items-center justify-center">
-          <div className="text-center p-8">
-            <div className="mb-8">
-              <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
-              
-              <div className="bg-primary p-1 rounded-md">
-                <button className="flex items-center w-full px-4 py-3 bg-primary text-white hover:bg-gray-900 rounded-md">
-                  <span className="flex-shrink-0 mr-3">▶</span>
-                  <span className="text-sm">Listen to Body Awareness Meditation [18 mins].mp3</span>
-                </button>
-              </div>
-            </div>
-            <p className="text-gray-600">15-minute guided mindful movement practice</p>
-          </div>
+      
+      <div className="mb-8">
+        <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
+        
+        <div className="bg-primary p-1 rounded-md">
+          <button className="flex items-center w-full px-4 py-3 bg-primary text-white hover:bg-gray-900 rounded-md">
+            <span className="flex-shrink-0 mr-3">▶</span>
+            <span className="text-sm">Listen to Felt Sense Exploration [18 mins].mp3</span>
+          </button>
         </div>
       </div>
       

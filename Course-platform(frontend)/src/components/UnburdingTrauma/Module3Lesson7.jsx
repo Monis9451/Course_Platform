@@ -5,7 +5,7 @@ const Module3Lesson7 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">LETTER TO YOUR INNER CHILD</h1>
       
-      <div className="bg-yellow-100 p-6 rounded-md mb-8">
+      <div className="bg-[#FFF1DC] p-6 rounded-md mb-8">
         <p className="mb-4">Writing a letter to your inner child is a powerful way to express the understanding, validation, and love that your younger self may have needed. This compassionate communication helps bridge the gap between your adult self and the child within who still carries unresolved feelings or needs.</p>
         
         <p className="mb-4">Through this letter, you can offer your inner child the words they most needed to hear and create a sense of safety, acceptance, and nurturing that may have been missing.</p>

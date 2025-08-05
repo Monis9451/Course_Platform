@@ -5,7 +5,7 @@ const Module3Lesson8 = () => {
     <div>
       <h1 className="text-black text-2xl mb-6">INNER CHILD HEALING MEDITATION</h1>
       
-      <div className="bg-yellow-100 p-6 rounded-md mb-8">
+      <div className="bg-[#FFF1DC] p-6 rounded-md mb-8">
         <p className="mb-4">This guided meditation creates a sacred space for you to connect with your inner child. Through visualisation and compassionate dialogue, you'll begin the process of healing old wounds and establishing a nurturing relationship with this vulnerable part of yourself.</p>
         
         <p className="mb-4">Regular practise of this meditation helps rebuild trust between your adult self and your inner child, allowing for deeper integration and healing.</p>
@@ -21,20 +21,15 @@ const Module3Lesson8 = () => {
         <p className="font-medium italic">The relationship you build with your inner child becomes a source of profound healing and self-compassion.</p>
       </div>
       
-      <div className="aspect-w-16 aspect-h-9 mb-8">
-        <div className="bg-[#f8f0e6] rounded-lg flex items-center justify-center">
-          <div className="text-center p-8">
-              <div className="mb-8">
-                <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
-                <div className="bg-primary p-1 rounded-md">
-                  <button className="flex items-center w-full px-4 py-3 bg-primary text-white hover:bg-gray-900 rounded-md">
-                    <span className="flex-shrink-0 mr-3">▶</span>
-                    <span className="text-sm">Listen to Inner Child Healing [18 mins].mp3</span>
-                  </button>
-                </div>
-              </div>
-            <p className="text-gray-600">20-minute guided inner child healing meditation</p>
-          </div>
+      
+      <div className="mb-8">
+        <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
+        
+        <div className="bg-primary p-1 rounded-md">
+          <button className="flex items-center w-full px-4 py-3 bg-primary text-white hover:bg-gray-900 rounded-md">
+            <span className="flex-shrink-0 mr-3">▶</span>
+            <span className="text-sm">Listen to Felt Sense Exploration [18 mins].mp3</span>
+          </button>
         </div>
       </div>
       

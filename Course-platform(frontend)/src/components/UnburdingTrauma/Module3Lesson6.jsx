@@ -5,7 +5,7 @@ const Module3Lesson6 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">CREATING A SELF-COMPASSION RITUAL</h1>
       
-      <div className="bg-yellow-100 p-6 rounded-md mb-8">
+      <div className="bg-[#FFF1DC] p-6 rounded-md mb-8">
         <p className="mb-4">Self-compassion is the practise of treating yourself with the same kindness, concern, and support you'd offer to a good friend. Yet for many of us, especially those with trauma histories, self-compassion doesn't come naturally. We need to deliberately cultivate it through consistent practise.</p>
         
         <p className="mb-4">Creating a regular self-compassion ritual helps rewire neural pathways that may be tuned toward self-criticism, making compassionate self-treatment more automatic over time.</p>

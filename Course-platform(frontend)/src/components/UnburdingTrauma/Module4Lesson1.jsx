@@ -5,7 +5,7 @@ const Module4Lesson1 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">THE INNER NARRATIVE: 'I'M NOT ENOUGH,' 'I'M UNSAFE,' 'I'M ALONE'</h1>
       
-      <div className="bg-yellow-100 p-6 rounded-md mb-8">
+      <div className="bg-[#FFF1DC] p-6 rounded-md mb-8">
         <p className="mb-4">The stories we tell ourselves shape our entire experience of life. Limiting beliefs are those internal narratives that constrain what we think is possible, acceptable, or available to us. They act like invisible prison walls, restricting our choices and experiences.</p>
         
         <p className="mb-4">Many of our most powerful limiting beliefs formed early in life before we had the cognitive abilities to question them. These core beliefs are particularly challenging to identify precisely because they feel like absolute truths rather than optional perspectives.</p>

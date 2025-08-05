@@ -5,7 +5,7 @@ const Module3Lesson5 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">WHAT MY INNER CHILD NEEDS TO HEAR</h1>
       
-      <div className="bg-yellow-100 p-6 rounded-md mb-8">
+      <div className="bg-[#FFF1DC] p-6 rounded-md mb-8">
         <p className="mb-4">Our inner child often carries wounds from moments when critical emotional needs went unmet. These unmet needs continue to influence our adult lives until we learn to provide what was missing.</p>
         
         <p className="mb-4">This practise focuses on identifying and expressing the specific messages your inner child needs to hear—words that perhaps were never spoken when you most needed them.</p>

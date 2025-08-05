@@ -5,7 +5,7 @@ const Module3Lesson4 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">MEET YOUR INNER CHILD</h1>
       
-      <div className="bg-yellow-100 p-6 rounded-md mb-8">
+      <div className="bg-[#FFF1DC] p-6 rounded-md mb-8">
         <p className="mb-4">This guided audio meditation creates a safe, nurturing space for you to connect with your inner child. Through gentle visualisation and compassionate dialogue, you'll begin building a relationship with this vulnerable part of yourself.</p>
         
         <p className="mb-4">Regular practise strengthens this connection, allowing for deeper healing of childhood wounds and the development of greater self-compassion.</p>
@@ -21,22 +21,15 @@ const Module3Lesson4 = () => {
         <p className="font-medium italic">The relationship you build with your inner child becomes a source of profound healing and self-compassion that grows stronger with practise.</p>
       </div>
       
-      <div className="aspect-w-16 aspect-h-9 mb-8">
-        <div className="bg-[#f8f0e6] rounded-lg flex items-center justify-center">
-          <div className="text-center p-8">
-            <div className="mb-8">
+      
+      <div className="mb-8">
         <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
         
         <div className="bg-primary p-1 rounded-md">
           <button className="flex items-center w-full px-4 py-3 bg-primary text-white hover:bg-gray-900 rounded-md">
             <span className="flex-shrink-0 mr-3">▶</span>
-            <span className="text-sm">Listen to Inner Child Connection [18 mins].mp3</span>
+            <span className="text-sm">Listen to Felt Sense Exploration [18 mins].mp3</span>
           </button>
-        </div>
-      </div>
-            <p className="text-lg font-medium">Meet Your Inner Child Meditation</p>
-            <p className="text-sm text-gray-500">18:30 • Guided Audio Visualisation</p>
-          </div>
         </div>
       </div>
       

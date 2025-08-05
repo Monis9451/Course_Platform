@@ -32,43 +32,31 @@ const Module4Lesson2 = () => {
         </div>
 
         {/* Introduction */}
-        <div className="bg-yellow-100 rounded-xl p-6 mb-8 border-l-4 border-[#D2691E]">
-          <h3 className="text-xl font-semibold text-[#8B4513] mb-4">The Lens of Trauma</h3>
-          <p className="text-[#5D4037] leading-relaxed mb-4">
+        <div className="bg-[#FFF1DC] rounded-xl p-6 mb-8">
+          <h3 className="text-xl font-semibold text-primary mb-4">The Lens of Trauma</h3>
+          <p className="text-black leading-relaxed mb-4">
             Trauma doesn't just affect our emotions and bodies - it fundamentally shapes how we see ourselves, others, and the world around us. These trauma-formed beliefs act like a lens through which we interpret every experience, often without us even realising it.
           </p>
-          <p className="text-[#5D4037] leading-relaxed">
+          <p className="text-black leading-relaxed">
             Understanding these beliefs is crucial because they influence every aspect of our lives - from our relationships and career choices to our daily decisions and self-care practices. Today, we'll explore the most common trauma-related beliefs and learn to recognise them in our own thinking patterns.
           </p>
         </div>
 
         {/* Learning Objectives */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 mb-8 shadow-lg border border-[#DEB887]/30">
-          <h3 className="text-xl font-semibold text-[#8B4513] mb-4 flex items-centre">
-            <span className="w-8 h-8 bg-[#D2691E] text-white rounded-full flex items-centre justify-centre text-sm mr-3">🎯</span>
-            Learning Objectives
-          </h3>
-          <ul className="space-y-3">
-            <li className="flex items-start">
-              <span className="w-6 h-6 bg-[#F4A460] text-white rounded-full flex items-centre justify-centre text-xs mr-3 mt-0.5">1</span>
-              <span className="text-[#5D4037]">Understand how trauma creates core beliefs about safety, self-worth, and relationships</span>
-            </li>
-            <li className="flex items-start">
-              <span className="w-6 h-6 bg-[#F4A460] text-white rounded-full flex items-centre justify-centre text-xs mr-3 mt-0.5">2</span>
-              <span className="text-[#5D4037]">Identify common trauma-related beliefs and their impact on daily life</span>
-            </li>
-            <li className="flex items-start">
-              <span className="w-6 h-6 bg-[#F4A460] text-white rounded-full flex items-centre justify-centre text-xs mr-3 mt-0.5">3</span>
-              <span className="text-[#5D4037]">Explore how different types of trauma shape specific belief patterns</span>
-            </li>
-            <li className="flex items-start">
-              <span className="w-6 h-6 bg-[#F4A460] text-white rounded-full flex items-centre justify-centre text-xs mr-3 mt-0.5">4</span>
-              <span className="text-[#5D4037]">Develop awareness of your own trauma-related beliefs</span>
-            </li>
-          </ul>
-        </div>
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 mb-8 shadow-lg border border-[#DEB887]/30">
+            <h3 className="text-xl font-semibold text-[#8B4513] mb-4 flex items-centre">
+              <span className="w-8 h-8 bg-[#D2691E] text-white rounded-full flex items-centre justify-centre text-sm mr-3">🎯</span>
+              Learning Objectives
+            </h3>
+            <ul className="list-disc pl-6 space-y-2 text-[#5D4037]">
+              <li>Understand how trauma creates core beliefs about safety, self-worth, and relationships</li>
+              <li>Identify common trauma-related beliefs and their impact on daily life</li>
+              <li>Explore how different types of trauma shape specific belief patterns</li>
+              <li>Develop awareness of your own trauma-related beliefs</li>
+            </ul>
+          </div>
 
-        {/* Core Beliefs Section */}
+          {/* Core Beliefs Section */}
         <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 mb-8 shadow-lg">
           <h3 className="text-2xl font-semibold text-[#8B4513] mb-6 flex items-centre">
             <span className="w-10 h-10 bg-gradient-to-r from-[#D2691E] to-[#CD853F] text-white rounded-full flex items-centre justify-centre text-lg mr-4">🧠</span>

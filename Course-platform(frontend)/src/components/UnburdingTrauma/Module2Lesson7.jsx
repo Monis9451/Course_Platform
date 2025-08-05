@@ -30,21 +30,15 @@ const Module2Lesson7 = () => {
         <p className="font-medium italic">With practice, this meditation becomes a powerful tool for emotional regulation and embodied presence.</p>
       </div>
       
-      <div className="aspect-w-16 aspect-h-9 mb-8">
-        <div className="bg-yellow-100 rounded-lg flex items-center justify-center">
-          <div className="text-center p-8">
-            <div className="mb-8">
-              <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
-              
-              <div className="bg-primary p-1 rounded-md">
-                <button className="flex items-center w-full px-4 py-3 bg-primary text-white hover:bg-gray-900 rounded-md">
-                  <span className="flex-shrink-0 mr-3">▶</span>
-                  <span className="text-sm">Listen to Body Awareness Meditation [18 mins].mp3</span>
-                </button>
-              </div>
-            </div>
-            <p className="text-gray-600">20-minute guided body awareness meditation</p>
-          </div>
+      
+      <div className="mb-8">
+        <h2 className="font-semibold text-lg mb-3">LISTEN</h2>
+        
+        <div className="bg-primary p-1 rounded-md">
+          <button className="flex items-center w-full px-4 py-3 bg-primary text-white hover:bg-gray-900 rounded-md">
+            <span className="flex-shrink-0 mr-3">▶</span>
+            <span className="text-sm">Listen to Felt Sense Exploration [18 mins].mp3</span>
+          </button>
         </div>
       </div>
       
