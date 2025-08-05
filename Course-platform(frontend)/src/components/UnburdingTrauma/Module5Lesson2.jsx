@@ -7,7 +7,7 @@ const Module5Lesson2 = () => {
         EMOTIONAL ENERGY & HOW THE BODY STORES PAIN
       </h1>
       
-      <div className="bg-yellow-100 p-6 rounded-lg mb-8">
+      <div className="bg-[#FFF1DC]p-6 rounded-lg mb-8">
         <p className="text-gray-700 leading-relaxed mb-4">
           Emotions are not merely psychological experiences—they are energetic phenomena that have physical components in our bodies. When we don't process emotional energy fully, it doesn't simply disappear but instead becomes stored within our physical form, often manifesting as tension, pain, or dysfunction.
         </p>

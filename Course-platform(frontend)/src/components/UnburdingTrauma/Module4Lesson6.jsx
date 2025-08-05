@@ -6,7 +6,7 @@ const Module4Lesson6 = () => {
       <h1 className="text-black text-2xl mb-6">TRANSFORMING INNER DIALOGUE WITH CLARITY AND COMPASSION</h1>
       
       {/* Content will be added later */}
-      <div className="bg-yellow-100 p-6 rounded-md mb-8">
+      <div className="bg-[#FFF1DC] p-6 rounded-md mb-8">
         <p className="mb-4">Content for this lesson will be added soon.</p>
       </div>
       

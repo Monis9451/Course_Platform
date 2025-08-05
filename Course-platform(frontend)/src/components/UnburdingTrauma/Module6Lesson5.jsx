@@ -5,7 +5,7 @@ const Module6Lesson5 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">FUTURE-SELF REFLECTION (SENTENCE COMPLETION)</h1>
       
-      <div className="bg-yellow-100 p-6 rounded-md mb-8">
+      <div className="bg-[#FFF1DC] p-6 rounded-md mb-8">
         <p className="mb-4">This powerful exercise invites you to connect with your future self—the version of you who has continued healing, growing, and thriving. Sentence completion helps your subconscious mind express truths that your analytical mind might overlook.</p>
         
         <p className="mb-4">As you complete these sentences, trust the first thoughts that come to mind. There are no right or wrong answers—only your authentic responses. This exercise creates a bridge between where you are now and where you're heading on your healing journey.</p>

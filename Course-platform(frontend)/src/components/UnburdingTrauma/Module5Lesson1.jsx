@@ -5,7 +5,7 @@ const Module5Lesson1 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">THE COST OF SUPPRESSED EMOTIONS</h1>
       
-      <div className="bg-yellow-100 p-6 rounded-md mb-8">
+      <div className="bg-[#FFF1DC] p-6 rounded-md mb-8">
         <p className="mb-4">When we experience difficult emotions—anger, grief, fear, shame—our natural tendency is often to push them away. This emotional suppression can seem like self-protection in the moment, especially when we've learned that certain feelings aren't safe to express or when we simply feel overwhelmed by their intensity.</p>
         
         <p className="mb-4">However, what begins as a survival strategy can create significant long-term costs to our wellbeing. Emotions that aren't processed don't simply disappear—they persist in our bodies and minds, requiring energy to keep contained and often emerging in unexpected and disruptive ways.</p>

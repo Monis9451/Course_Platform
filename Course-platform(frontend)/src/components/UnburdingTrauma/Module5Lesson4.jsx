@@ -6,7 +6,7 @@ const Module5Lesson4 = () => {
       <h1 className="text-2xl font-bold text-black mb-6">WRITING TO RELEASE</h1>
 
       
-        <div className="bg-yellow-100 p-6 rounded-lg mb-6">
+        <div className="bg-[#FFF1DC] p-6 rounded-lg mb-6">
           <h3 className="text-xl font-semibold text-primary mb-3">Step-by-Step Process:</h3>
           <ol className="list-decimal list-inside space-y-3">
             <li><strong>Ground yourself:</strong> Take several deep breaths and connect with your body</li>

@@ -8,7 +8,7 @@ const Module6Lesson2 = () => {
       </h1>
       
       <div className="space-y-8">
-        <section className="bg-yellow-100 p-6 rounded-lg">
+        <section className="bg-[#FFF1DC] p-6 rounded-lg">
           <h2 className="text-2xl font-semibold text-primary mb-4">
             Introduction: The Power of Rituals in Trauma Recovery
           </h2>

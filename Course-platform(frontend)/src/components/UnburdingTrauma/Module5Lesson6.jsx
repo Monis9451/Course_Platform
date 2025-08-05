@@ -5,7 +5,7 @@ const Module5Lesson6 = () => {
     <div className="p-8">
       <h1 className="text-2xl font-bold text-black mb-6">BREATHWORK FOR EMOTIONAL CLEARING</h1>
 
-      <div className="bg-yellow-100 p-6 rounded-lg mb-6">
+      <div className="bg-[#FFF1DC] p-6 rounded-lg mb-6">
           <h3 className="text-xl font-semibold text-primary mb-3">Why Breathwork Works for Emotional Release:</h3>
           <ul className="list-disc list-inside space-y-2">
             <li>Activates the parasympathetic nervous system for deeper relaxation</li>

@@ -5,7 +5,7 @@ const Module6Lesson4 = () => {
     <div className="p-8">
       <h1 className="text-black text-2xl mb-6">HEALING ACTION PLAN (WRITING PRACTICE)</h1>
       
-      <div className="bg-yellow-100 p-6 rounded-md mb-8">
+      <div className="bg-[#FFF1DC] p-6 rounded-md mb-8">
         <p className="mb-4">Creating a personalised healing action plan is one of the most empowering steps you can take in your recovery journey. This isn't about having all the answers right now—it's about identifying what works for you and building a practical roadmap for moving forward.</p>
         
         <p className="mb-4">Your healing action plan will be unique to you, incorporating the tools, insights, and practices that resonate most deeply with your experience and needs.</p>
