@@ -6,16 +6,27 @@ const uploadHandler = catchAsync(async (req, res, next) => {
   if (!req.file) {
     return next(new AppError("File is missing.", 400));
   }
-  const cloudinaryResponse = await uploadOnCloudinary(req.file.buffer);
 
-  if (!cloudinaryResponse) {
-    return next(new AppError("Error uploading file to Cloudinary.", 500));
+  if (!req.file.buffer) {
+    return next(new AppError("File buffer is missing.", 400));
   }
 
-  return res.status(200).json({
-    message: "File uploaded successfully.",
-    url: cloudinaryResponse.secure_url,
-  });
+  try {
+    const cloudinaryResponse = await uploadOnCloudinary(req.file.buffer);
+
+    if (!cloudinaryResponse || !cloudinaryResponse.secure_url) {
+      return next(new AppError("Error uploading file to Cloudinary.", 500));
+    }
+
+    return res.status(200).json({
+      message: "File uploaded successfully.",
+      url: cloudinaryResponse.secure_url,
+      publicId: cloudinaryResponse.public_id
+    });
+  } catch (uploadError) {
+    console.error("Cloudinary upload error:", uploadError);
+    return next(new AppError("Failed to upload file to cloud storage.", 500));
+  }
 });
 
 module.exports = { uploadHandler };

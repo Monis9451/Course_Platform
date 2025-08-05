@@ -57,6 +57,8 @@ const AddCourse = () => {
     imageURL: '',
     moduleNumbers: 0
   });
+  const [selectedThumbnailFile, setSelectedThumbnailFile] = useState(null);
+  const [thumbnailPreview, setThumbnailPreview] = useState('');
   const [modules, setModules] = useState([]);
   const [lessons, setLessons] = useState([]);
   const [courseId, setCourseId] = useState(null);
@@ -85,6 +87,15 @@ const AddCourse = () => {
     { id: 4, title: 'Content Editor', description: 'Add lesson content' }
   ];
 
+  // Cleanup preview URL when component unmounts or thumbnail changes
+  useEffect(() => {
+    return () => {
+      if (thumbnailPreview && thumbnailPreview.startsWith('blob:')) {
+        URL.revokeObjectURL(thumbnailPreview);
+      }
+    };
+  }, [thumbnailPreview]);
+
   // Step 1: Course Details Form
   const handleCourseSubmit = async (e) => {
     e.preventDefault();
@@ -95,7 +106,25 @@ const AddCourse = () => {
 
     setLoading(true);
     try {
-      console.log('Creating course with data:', courseData);
+      let imageURL = courseData.imageURL;
+      
+      // Upload thumbnail if a file is selected
+      if (selectedThumbnailFile) {
+        console.log('Uploading thumbnail...');
+        imageURL = await handleFileUpload(selectedThumbnailFile);
+        if (!imageURL) {
+          toast.error('Failed to upload thumbnail');
+          setLoading(false);
+          return;
+        }
+      }
+
+      const courseDataWithImage = {
+        ...courseData,
+        imageURL
+      };
+
+      console.log('Creating course with data:', courseDataWithImage);
       
       const response = await fetch(`${import.meta.env.VITE_API_URL}/courses/create`, {
         method: 'POST',
@@ -103,7 +132,7 @@ const AddCourse = () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${authToken}`
         },
-        body: JSON.stringify(courseData)
+        body: JSON.stringify(courseDataWithImage)
       });
 
       if (!response.ok) {
@@ -119,6 +148,10 @@ const AddCourse = () => {
       const createdCourse = result.data.course[0];
       setCourseId(createdCourse.courseID);
       console.log('Course created with ID:', createdCourse.courseID);
+      
+      // Update courseData with the uploaded image URL
+      setCourseData(prev => ({ ...prev, imageURL }));
+      
       toast.success('Course created successfully!');
       setCurrentStep(2);
 
@@ -317,11 +350,16 @@ const AddCourse = () => {
       });
 
       if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Upload error:', errorData);
         throw new Error('Failed to upload file');
       }
 
       const result = await response.json();
-      return result.data.url;
+      console.log('Upload response:', result);
+      
+      // Return the URL from the response
+      return result.url;
 
     } catch (error) {
       console.error('Error uploading file:', error);
@@ -332,8 +370,8 @@ const AddCourse = () => {
     }
   };
 
-  // Course image upload
-  const handleCourseImageUpload = async (e) => {
+  // Course image selection (no immediate upload)
+  const handleCourseImageSelection = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -342,11 +380,14 @@ const AddCourse = () => {
       return;
     }
 
-    const url = await handleFileUpload(file);
-    if (url) {
-      setCourseData(prev => ({ ...prev, imageURL: url }));
-      toast.success('Course image uploaded successfully!');
-    }
+    // Store the selected file for later upload
+    setSelectedThumbnailFile(file);
+    
+    // Create preview URL
+    const previewUrl = URL.createObjectURL(file);
+    setThumbnailPreview(previewUrl);
+    
+    toast.success('Thumbnail selected successfully! It will be uploaded when you submit the course.');
   };
 
   // Editor functions
@@ -556,6 +597,12 @@ const AddCourse = () => {
 
   const startNewCourse = () => {
     setShowIncompleteModal(false);
+    
+    // Cleanup preview URL before resetting
+    if (thumbnailPreview && thumbnailPreview.startsWith('blob:')) {
+      URL.revokeObjectURL(thumbnailPreview);
+    }
+    
     // Reset all states to start fresh
     setCourseData({
       title: '',
@@ -563,6 +610,8 @@ const AddCourse = () => {
       imageURL: '',
       moduleNumbers: 0
     });
+    setSelectedThumbnailFile(null);
+    setThumbnailPreview('');
     setModules([]);
     setLessons([]);
     setCourseId(null);
@@ -1405,16 +1454,21 @@ const AddCourse = () => {
                   <input
                     type="file"
                     accept="image/*"
-                    onChange={handleCourseImageUpload}
+                    onChange={handleCourseImageSelection}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
-                  {courseData.imageURL && (
+                  {(thumbnailPreview || courseData.imageURL) && (
                     <div className="mt-2">
                       <img
-                        src={courseData.imageURL}
+                        src={thumbnailPreview || courseData.imageURL}
                         alt="Course preview"
                         className="w-32 h-20 object-cover rounded border"
                       />
+                      {selectedThumbnailFile && (
+                        <p className="text-sm text-blue-600 mt-1">
+                          Ready to upload: {selectedThumbnailFile.name}
+                        </p>
+                      )}
                     </div>
                   )}
                 </div>
