@@ -1,23 +1,34 @@
 const dotenv = require('dotenv');
 dotenv.config();
 
+// Validate required environment variables
+const requiredEnvVars = ['SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY', 'ADMIN_EMAIL'];
+const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
+
+if (missingVars.length > 0) {
+  console.error('Missing required environment variables:', missingVars);
+  process.exit(1);
+}
+
 const express = require('express');
 const cors = require('cors');
 const supabase = require('./config/supabase');
 const morgan = require('morgan');
-const userRoutes = require('./routes/userRoutes');
-const uploadRoutes = require('./routes/uploadRoutes');
-const courseRoutes = require('./routes/courseRoutes');
-const moduleRoutes = require('./routes/moduleRoutes');
-const lessonRoutes = require('./routes/lessonRoutes');
+const userRoutes = require('./routes/user.routes');
+const uploadRoutes = require('./routes/upload.routes');
+const courseRoutes = require('./routes/course.routes');
+const moduleRoutes = require('./routes/module.routes');
+const lessonRoutes = require('./routes/lesson.routes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));  
 app.use(express.json());
+
+// Morgan logging - placed after body parsing for complete request info
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :date[clf]'));
 
 // CORS configuration
 app.use(cors ({

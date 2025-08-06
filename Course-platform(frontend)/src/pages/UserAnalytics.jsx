@@ -31,7 +31,9 @@ const UserAnalytics = () => {
         });
         
         if (!res.ok) {
-          throw new Error('Failed to fetch users');
+          const errorText = await res.text();
+          console.error('Error response:', errorText);
+          throw new Error(`Failed to fetch users: ${res.status} - ${errorText}`);
         }
         
         const response = await res.json();
@@ -47,11 +49,11 @@ const UserAnalytics = () => {
           const lastMonth = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
           const recentSignups = filteredUsers.filter(user =>
-            new Date(user.createdAt) >= lastWeek
+            new Date(user.created_at) >= lastWeek
           ).length;
 
           const monthlyUsers = filteredUsers.filter(user =>
-            new Date(user.createdAt) >= lastMonth
+            new Date(user.created_at) >= lastMonth
           ).length;
           
           setAnalytics({
@@ -188,7 +190,7 @@ const UserAnalytics = () => {
                           {user.email || 'N/A'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {formatDate(user.createdAt)}
+                          {formatDate(user.created_at)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">

@@ -12,12 +12,24 @@ const adminDashboardHandler = catchAsync(async (req, res, next) => {
 
 const adminCheckHandler = catchAsync(async (req, res, next) => {
     const adminEmail = process.env.ADMIN_EMAIL;
-    const isAdminUser = req.user?.email === adminEmail;
+    
+    if (!adminEmail) {
+        return next(new AppError('Server configuration error: Admin email not set', 500));
+    }
+    
+    const userEmail = req.user?.email;
+    
+    if (!userEmail) {
+        return next(new AppError('User email not found in token', 400));
+    }
+    
+    const isAdminUser = userEmail === adminEmail;
     
     res.status(200).json({
         status: 'success',
         isAdmin: isAdminUser,
-        email: req.user?.email
+        email: userEmail,
+        message: isAdminUser ? 'Admin access confirmed' : 'Regular user access'
     });
 });
 
