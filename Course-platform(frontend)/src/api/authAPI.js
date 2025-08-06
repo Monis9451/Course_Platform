@@ -1,61 +1,12 @@
-export const signupUserAPI = async (userInfo) => {
-  try {
-    const apiUrl = import.meta.env.VITE_API_URL;
+// This file is deprecated - using Supabase auth directly
+// All auth operations are now handled in src/supabase/auth.js
 
-    const response = await fetch(`${apiUrl}/users/create`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-      body: JSON.stringify({
-        userID: userInfo.uid,
-        username: userInfo.displayName,
-        email: userInfo.email,
-      }),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || `Signup API request failed: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log("New user created successfully:", data);
-    return { success: true, ...data };
-  } catch (error) {
-    console.error("Error creating new user:", error);
-    throw error;
-  }
+export const signupUserAPI = async () => {
+  console.warn('signupUserAPI is deprecated - using Supabase auth directly');
+  return { success: true, message: 'Using Supabase auth' };
 };
 
-export const loginUserAPI = async (userInfo) => {
-  try {
-    const apiUrl = import.meta.env.VITE_API_URL;
-
-    const response = await fetch(`${apiUrl}/users/me`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-      body: JSON.stringify({
-        userID: userInfo.uid,
-        username: userInfo.displayName,
-        email: userInfo.email,
-      }),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || `Login API request failed: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log("User login successful:", data);
-    return { success: true, ...data };
-  } catch (error) {
-    console.error("Error logging in user:", error);
-    throw error;
-  }
+export const loginUserAPI = async () => {
+  console.warn('loginUserAPI is deprecated - using Supabase auth directly');
+  return { success: true, message: 'Using Supabase auth' };
 };

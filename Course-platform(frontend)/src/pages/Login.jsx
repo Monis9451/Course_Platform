@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { FiEye, FiEyeOff } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 import Header from './Header'
-import { createNewUser, signInUser, signInWithGoogle } from '../firebase/auth'
+import { createNewUser, signInUser, signInWithGoogle } from '../supabase/auth'
 import { useAuth } from '../context/authContext'
 
 const Login = () => {
@@ -59,53 +59,44 @@ const Login = () => {
     }
   }, [shouldShowToast]);
 
-  const checkUserInDatabase = async (email) => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/email/${email}`);
-      const data = await response.json();
-      return {
-        exists: response.ok,
-        userData: data
-      };
-    } catch (error) {
-      console.error('Error checking user in database:', error);
-      return { exists: false, userData: null };
-    }
-  };
-
   const handleGoogleAuth = async () => {
     setLoading(true);
     setErrors({});
 
     try {
       const result = await signInWithGoogle();
-      const firebaseUser = result.user;
-      const email = firebaseUser.email;
-
-      const { exists } = await checkUserInDatabase(email);
-      const toastId = toast.loading(exists ? 'Logging you in...' : 'Creating your account...');
-
-      try {
-        let adminRedirected = false;
+      
+      if (result.url) {
+        // Supabase redirects to external URL for OAuth
+        window.location.href = result.url;
+        return;
+      }
+      
+      // If user is already authenticated (shouldn't happen with OAuth flow)
+      if (result.user) {
+        const toastId = toast.loading('Signing you in...');
         
-        await completeAuthFlow(firebaseUser, !exists, {
-          name: firebaseUser.displayName || '',
-          photoURL: firebaseUser.photoURL || null
-        }, (redirectPath) => {
-          // Handle admin redirect immediately and show welcome toast
-          toast.success('Welcome to Admin Dashboard!', { id: toastId });
-          setTimeout(() => navigate(redirectPath), 100);
-        });
+        try {
+          let adminRedirected = false;
+          
+          await completeAuthFlow(result.user, false, {
+            name: result.user.user_metadata?.full_name || '',
+            photoURL: result.user.user_metadata?.avatar_url || null
+          }, (redirectPath) => {
+            adminRedirected = true;
+            toast.success('Welcome to Admin Dashboard!', { id: toastId });
+            setTimeout(() => navigate(redirectPath), 100);
+          });
 
-        // Only show success toast if user wasn't redirected as admin
-        if (!adminRedirected) {
-          toast.success(exists ? 'Welcome back!' : 'Account created successfully!', { id: toastId });
-        } else {
-          toast.dismiss(toastId);
+          if (!adminRedirected) {
+            toast.success('Welcome back!', { id: toastId });
+          } else {
+            toast.dismiss(toastId);
+          }
+        } catch (backendError) {
+          toast.error(backendError.message || 'Server error occurred. Please try again.', { id: toastId });
+          setErrors({ general: backendError.message || 'Server error occurred' });
         }
-      } catch (backendError) {
-        toast.error(backendError.message || 'Server error occurred. Please try again.', { id: toastId });
-        setErrors({ general: backendError.message || 'Server error occurred' });
       }
     } catch (error) {
       console.error('Google auth error:', error);
@@ -128,77 +119,75 @@ const Login = () => {
     try {
       const email = formData.email;
 
-      const { exists } = await checkUserInDatabase(email);
-
       if (isLogin) {
-        
-        if (!exists) {
-          setErrors({ general: 'User not found. Please sign up first.' });
-          toast.error('User not found. Please sign up first.');
-          setLoading(false);
-          return;
-        }
-
+        // Login flow
         const toastId = toast.loading('Logging you in...');
 
         try {
           const result = await signInUser(email, formData.password);
-          const firebaseUser = result.user;
+          const user = result.user;
 
           let adminRedirected = false;
           
-          await completeAuthFlow(firebaseUser, false, {}, (redirectPath) => {
-            // Handle admin redirect immediately and show welcome toast
+          await completeAuthFlow(user, false, {}, (redirectPath) => {
             adminRedirected = true;
             toast.success('Welcome to Admin Dashboard!', { id: toastId });
             setTimeout(() => navigate(redirectPath), 100);
           });
 
-          // Only show success toast if user wasn't redirected as admin
           if (!adminRedirected) {
             toast.success('Welcome back!', { id: toastId });
           } else {
             toast.dismiss(toastId);
           }
-        } catch (backendError) {
-          toast.error(backendError.message || 'Server error occurred. Please try again.', { id: toastId });
-          setErrors({ general: backendError.message || 'Server error occurred' });
+        } catch (authError) {
+          let errorMessage = 'Login failed. Please try again.';
+          
+          if (authError.message.includes('Invalid login credentials')) {
+            errorMessage = 'Invalid email or password. Please check your credentials.';
+          } else if (authError.message.includes('Email not confirmed')) {
+            errorMessage = 'Please check your email and click the confirmation link.';
+          }
+          
+          toast.error(errorMessage, { id: toastId });
+          setErrors({ general: errorMessage });
         }
-
       } else {
-        if (exists) {
-          setErrors({ general: 'User already exists. Please log in instead.' });
-          toast.error('User already exists. Please log in instead.');
-          setLoading(false);
-          return;
-        }
-
+        // Signup flow
         const toastId = toast.loading('Creating your account...');
 
         try {
           const result = await createNewUser(email, formData.password);
-          const firebaseUser = result.user;
+          const user = result.user;
 
-          let adminRedirected = false;
-          
-          await completeAuthFlow(firebaseUser, true, {
-            name: formData.name
-          }, (redirectPath) => {
-            // Handle admin redirect immediately and show welcome toast
-            adminRedirected = true;
-            toast.success('Welcome to Admin Dashboard!', { id: toastId });
-            setTimeout(() => navigate(redirectPath), 100);
-          });
+          if (user) {
+            let adminRedirected = false;
+            
+            await completeAuthFlow(user, true, {
+              name: formData.name
+            }, (redirectPath) => {
+              adminRedirected = true;
+              toast.success('Welcome to Admin Dashboard!', { id: toastId });
+              setTimeout(() => navigate(redirectPath), 100);
+            });
 
-          // Only show success toast if user wasn't redirected as admin
-          if (!adminRedirected) {
-            toast.success('Account created successfully!', { id: toastId });
-          } else {
-            toast.dismiss(toastId);
+            if (!adminRedirected) {
+              toast.success('Account created successfully! Please check your email for verification.', { id: toastId });
+            } else {
+              toast.dismiss(toastId);
+            }
           }
-        } catch (backendError) {
-          toast.error(backendError.message || 'Server error occurred. Please try again.', { id: toastId });
-          setErrors({ general: backendError.message || 'Server error occurred' });
+        } catch (authError) {
+          let errorMessage = 'Signup failed. Please try again.';
+          
+          if (authError.message.includes('User already registered')) {
+            errorMessage = 'User already exists. Please log in instead.';
+          } else if (authError.message.includes('Password should be at least 6 characters')) {
+            errorMessage = 'Password must be at least 6 characters long.';
+          }
+          
+          toast.error(errorMessage, { id: toastId });
+          setErrors({ general: errorMessage });
         }
       }
     } catch (error) {
