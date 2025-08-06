@@ -66,19 +66,38 @@ const App = () => {
             style: {
               background: '#fff',
               color: '#333',
-              borderRadius: '0px',
+              borderRadius: '8px',
               border: '1px solid #ddd',
+              fontSize: '14px',
+              maxWidth: '400px',
             },
             success: {
               style: {
                 border: '1px solid #10b981',
                 color: '#10b981',
+                background: '#f0fdf4',
+              },
+              iconTheme: {
+                primary: '#10b981',
+                secondary: '#f0fdf4',
               },
             },
             error: {
               style: {
                 border: '1px solid #ef4444',
                 color: '#ef4444',
+                background: '#fef2f2',
+              },
+              iconTheme: {
+                primary: '#ef4444',
+                secondary: '#fef2f2',
+              },
+            },
+            loading: {
+              style: {
+                border: '1px solid #3b82f6',
+                color: '#3b82f6',
+                background: '#eff6ff',
               },
             },
           }}

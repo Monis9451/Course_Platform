@@ -1,11 +1,10 @@
-import React from 'react'
-import { useState, useEffect, useRef, useMemo } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
-import { FiEye, FiEyeOff } from 'react-icons/fi'
-import toast from 'react-hot-toast'
-import Header from './Header'
-import { createNewUser, signInUser, signInWithGoogle } from '../supabase/auth'
-import { useAuth } from '../context/authContext'
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
+import toast from 'react-hot-toast';
+import Header from './Header';
+import { createNewUser, signInUser, signInWithGoogle } from '../supabase/auth';
+import { useAuth } from '../context/authContext';
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -19,45 +18,26 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const hasShownToast = useRef(false);
-  const previousUser = useRef(null);
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { currentUser, completeAuthFlow, isAdmin, loading: authLoading } = useAuth();
-
-  const from = location.state?.from?.pathname || '/';
+  const { currentUser, handleAuthSuccess, loading: authLoading } = useAuth();
   
-  const shouldShowToast = useMemo(() => {
-    return !!(location.state?.from && !currentUser);
-  }, [location.state?.from, currentUser]);
+  const from = location.state?.from?.pathname || '/';
 
+  // Redirect if already logged in
   useEffect(() => {
-    // Only handle redirect for non-admin users who weren't already redirected
-    if (currentUser && !isAdmin) {
-      // Add a small delay to ensure admin status is properly set
-      const timeoutId = setTimeout(() => {
-        if (!isAdmin) {
-          navigate(from);
-        }
-      }, 100);
-      
-      return () => clearTimeout(timeoutId);
+    if (currentUser && !authLoading) {
+      navigate(from);
     }
-    
-    if (previousUser.current && !currentUser) {
-      hasShownToast.current = false;
-    }
-    
-    previousUser.current = currentUser;
-  }, [currentUser, navigate, from, isAdmin]);
+  }, [currentUser, authLoading, navigate, from]);
 
+  // Show login required message
   useEffect(() => {
-    if (shouldShowToast && !hasShownToast.current) {
+    if (location.state?.from && !currentUser) {
       toast.error('⚠️ You must be logged in to access this page.');
-      hasShownToast.current = true;
     }
-  }, [shouldShowToast]);
+  }, [location.state?.from, currentUser]);
 
   const handleGoogleAuth = async () => {
     setLoading(true);
@@ -67,43 +47,54 @@ const Login = () => {
       const result = await signInWithGoogle();
       
       if (result.url) {
-        // Supabase redirects to external URL for OAuth
+        // OAuth redirect - user will be redirected back to the app
         window.location.href = result.url;
         return;
       }
       
-      // If user is already authenticated (shouldn't happen with OAuth flow)
+      // Direct sign-in success (shouldn't happen with OAuth but handle it)
       if (result.user) {
-        const toastId = toast.loading('Signing you in...');
-        
-        try {
-          let adminRedirected = false;
-          
-          await completeAuthFlow(result.user, false, {
-            name: result.user.user_metadata?.full_name || '',
-            photoURL: result.user.user_metadata?.avatar_url || null
-          }, (redirectPath) => {
-            adminRedirected = true;
-            toast.success('Welcome to Admin Dashboard!', { id: toastId });
-            setTimeout(() => navigate(redirectPath), 100);
-          });
-
-          if (!adminRedirected) {
-            toast.success('Welcome back!', { id: toastId });
-          } else {
-            toast.dismiss(toastId);
-          }
-        } catch (backendError) {
-          toast.error(backendError.message || 'Server error occurred. Please try again.', { id: toastId });
-          setErrors({ general: backendError.message || 'Server error occurred' });
-        }
+        toast.success('Welcome back!');
+        handleAuthSuccess(result.user, navigate);
       }
     } catch (error) {
       console.error('Google auth error:', error);
-      toast.error(error.message || 'Authentication failed. Please try again.');
-      setErrors({ general: error.message });
+      toast.error(error.message || 'Failed to sign in with Google');
+      setErrors({ general: error.message || 'Failed to sign in with Google' });
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!formData.email) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email';
+    }
+    
+    if (!formData.password) {
+      newErrors.password = 'Password is required';
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters';
+    }
+    
+    if (!isLogin) {
+      if (!formData.firstName) {
+        newErrors.firstName = 'First name is required';
+      }
+      if (!formData.lastName) {
+        newErrors.lastName = 'Last name is required';
+      }
+      if (formData.password !== formData.confirmPassword) {
+        newErrors.confirmPassword = 'Passwords do not match';
+      }
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
@@ -117,85 +108,43 @@ const Login = () => {
     }
 
     try {
-      const email = formData.email;
+      const { email, password } = formData;
 
       if (isLogin) {
         // Login flow
         const toastId = toast.loading('Logging you in...');
-
+        
         try {
-          const result = await signInUser(email, formData.password);
-          const user = result.user;
-
-          let adminRedirected = false;
-          
-          await completeAuthFlow(user, false, {}, (redirectPath) => {
-            adminRedirected = true;
-            toast.success('Welcome to Admin Dashboard!', { id: toastId });
-            setTimeout(() => navigate(redirectPath), 100);
-          });
-
-          if (!adminRedirected) {
-            toast.success('Welcome back!', { id: toastId });
-          } else {
-            toast.dismiss(toastId);
-          }
+          const result = await signInUser(email, password);
+          toast.success('Welcome back!', { id: toastId });
+          handleAuthSuccess(result.user, navigate);
         } catch (authError) {
-          let errorMessage = 'Login failed. Please try again.';
-          
-          if (authError.message.includes('Invalid login credentials')) {
-            errorMessage = 'Invalid email or password. Please check your credentials.';
-          } else if (authError.message.includes('Email not confirmed')) {
-            errorMessage = 'Please check your email and click the confirmation link.';
-          }
-          
-          toast.error(errorMessage, { id: toastId });
-          setErrors({ general: errorMessage });
+          toast.error(authError.message || 'Login failed', { id: toastId });
+          setErrors({ general: authError.message || 'Login failed' });
         }
       } else {
         // Signup flow
         const toastId = toast.loading('Creating your account...');
-
+        
         try {
-          const result = await createNewUser(email, formData.password);
-          const user = result.user;
-
-          if (user) {
-            let adminRedirected = false;
-            
-            await completeAuthFlow(user, true, {
-              name: formData.name
-            }, (redirectPath) => {
-              adminRedirected = true;
-              toast.success('Welcome to Admin Dashboard!', { id: toastId });
-              setTimeout(() => navigate(redirectPath), 100);
-            });
-
-            if (!adminRedirected) {
-              toast.success('Account created successfully! Please check your email for verification.', { id: toastId });
-            } else {
-              toast.dismiss(toastId);
-            }
+          const result = await createNewUser(email, password);
+          
+          if (result.user) {
+            toast.success('Account created successfully! Please check your email for verification.', { id: toastId });
+            handleAuthSuccess(result.user, navigate);
           }
         } catch (authError) {
-          let errorMessage = 'Signup failed. Please try again.';
-          
-          if (authError.message.includes('User already registered')) {
-            errorMessage = 'User already exists. Please log in instead.';
-          } else if (authError.message.includes('Password should be at least 6 characters')) {
-            errorMessage = 'Password must be at least 6 characters long.';
-          }
-          
-          toast.error(errorMessage, { id: toastId });
-          setErrors({ general: errorMessage });
+          toast.error(authError.message || 'Signup failed', { id: toastId });
+          setErrors({ general: authError.message || 'Signup failed' });
         }
       }
     } catch (error) {
       console.error('Auth error:', error);
       toast.error(error.message || 'Authentication failed. Please try again.');
       setErrors({ general: error.message });
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const handleInputChange = (e) => {
@@ -205,6 +154,7 @@ const Login = () => {
       [name]: value
     }));
     
+    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -213,35 +163,8 @@ const Login = () => {
     }
   };
 
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!isLogin && !formData.name.trim()) {
-      newErrors.name = 'Full name is required';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
-    }
-
-    if (!formData.password) {
-      newErrors.password = 'Password is required';
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
-    }
-
-    if (!isLogin && formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleModeSwitch = (loginMode) => {
-    setIsLogin(loginMode);
+  const toggleAuthMode = () => {
+    setIsLogin(!isLogin);
     setFormData({
       name: '',
       email: '',
@@ -269,7 +192,8 @@ const Login = () => {
 
   return (
     <div>
-      <Header />        <div className="container mx-auto px-4 py-20">
+      <Header />
+      <div className="container mx-auto px-4 py-20">
         <div className="max-w-md mx-auto bg-cream p-8 shadow-md">
           <h1 className="text-3xl font-fitzgerald font-light text-center text-black mb-8">
             {isLogin ? "Log In to Your Account" : "Create an Account"}
@@ -278,14 +202,14 @@ const Login = () => {
             <button
               type="button"
               className={`flex-1 py-2 text-center font-light ${isLogin ? 'bg-primary text-white' : 'bg-white text-black'}`}
-              onClick={() => handleModeSwitch(true)}
+              onClick={() => toggleAuthMode()}
             >
               Log In
             </button>
             <button
               type="button"
               className={`flex-1 py-2 text-center font-light ${!isLogin ? 'bg-primary text-white' : 'bg-white text-black'}`}
-              onClick={() => handleModeSwitch(false)}
+              onClick={() => toggleAuthMode()}
             >
               Sign Up
             </button>
@@ -297,8 +221,8 @@ const Login = () => {
             </div>
           )}
 
-          <form className="space-y-6" onSubmit={handleSubmit}>            {!isLogin && (
-            <>
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            {!isLogin && (
               <div>
                 <label htmlFor="name" className="block text-sm font-light text-black mb-1">
                   Full Name
@@ -316,8 +240,8 @@ const Login = () => {
                   <p className="mt-1 text-sm text-primary font-light">{errors.name}</p>
                 )}
               </div>
-            </>
-          )}
+            )}
+
             <div>
               <label htmlFor="email" className="block text-sm font-light text-black mb-1">
                 Email Address
@@ -371,7 +295,9 @@ const Login = () => {
               <div className="text-right">
                 <a href="#" className="text-sm text-primary hover:underline font-light">
                   Forgot password?
-                </a>              </div>) : (
+                </a>
+              </div>
+            ) : (
               <div>
                 <label htmlFor="confirmPassword" className="block text-sm font-light text-black mb-1">
                   Confirm Password
@@ -403,6 +329,7 @@ const Login = () => {
                 )}
               </div>
             )}
+
             <button
               type="submit"
               disabled={loading}
@@ -449,7 +376,7 @@ const Login = () => {
               <button
                 type="button"
                 className="text-primary hover:underline font-light"
-                onClick={() => handleModeSwitch(!isLogin)}
+                onClick={() => toggleAuthMode()}
               >
                 {isLogin ? "Sign up" : "Log in"}
               </button>
@@ -458,7 +385,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

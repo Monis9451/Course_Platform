@@ -20,26 +20,18 @@ export const AuthProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-  // Check admin status
-  const checkAdminStatus = async (token) => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/admin/check`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        setIsAdmin(data.isAdmin);
-        return data.isAdmin;
-      }
-    } catch (error) {
-      console.error('Error checking admin status:', error);
+  // Check admin status client-side using environment variable
+  const checkAdminStatus = (user) => {
+    if (!user?.email) return false;
+    const adminEmail = import.meta.env.VITE_ADMIN_EMAIL;
+    
+    // Add validation for admin email
+    if (!adminEmail) {
+      console.error('VITE_ADMIN_EMAIL environment variable is not set');
+      return false;
     }
-    return false;
+    
+    return user.email === adminEmail;
   };
 
   useEffect(() => {
@@ -47,13 +39,12 @@ export const AuthProvider = ({ children }) => {
     const initializeAuth = async () => {
       try {
         const session = await validateSession();
-        setCurrentUser(session?.user ?? null);
+        const user = session?.user ?? null;
+        
+        setCurrentUser(user);
         setAuthToken(session?.access_token ?? null);
         setUserLogin(!!session);
-        
-        if (session?.access_token) {
-          checkAdminStatus(session.access_token);
-        }
+        setIsAdmin(checkAdminStatus(user));
       } catch (error) {
         console.warn('Auth initialization error:', error);
         // Clear potentially corrupted session data
@@ -72,19 +63,11 @@ export const AuthProvider = ({ children }) => {
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('Auth state change:', event);
-        
-        setCurrentUser(session?.user ?? null);
+        const user = session?.user ?? null;
+        setCurrentUser(user);
         setAuthToken(session?.access_token ?? null);
         setUserLogin(!!session);
-
-        if (event === 'SIGNED_IN' && session) {
-          await checkAdminStatus(session.access_token);
-        } else if (event === 'SIGNED_OUT' || event === 'TOKEN_REFRESHED') {
-          if (!session) {
-            setIsAdmin(false);
-          }
-        }
+        setIsAdmin(checkAdminStatus(user));
       }
     );
 
@@ -131,25 +114,42 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Complete auth flow for login/signup
-  const completeAuthFlow = async (user, onAdminRedirect = null) => {
+  // Complete auth flow with backend integration
+  const completeAuthFlow = async (user, isNewUser = false, additionalData = {}, onAdminRedirect = null) => {
     try {
-      // Check if user is admin
-      const adminEmail = import.meta.env.VITE_ADMIN_EMAIL;
-      const isAdminUser = user.email === adminEmail;
+      const isUserAdmin = checkAdminStatus(user);
       
-      setIsAdmin(isAdminUser);
+      // If it's a new user, we might want to store additional data in the future
+      if (isNewUser && additionalData.name) {
+        // For now, we'll just log this. In the future, you might want to call a backend API
+      }
       
-      if (isAdminUser && onAdminRedirect) {
+      // Handle admin redirect
+      if (isUserAdmin && onAdminRedirect) {
         onAdminRedirect('/admin/dashboard');
         return;
       }
       
-      return { success: true };
+      // For non-admin users or when no admin redirect callback is provided
+      return { isAdmin: isUserAdmin };
     } catch (error) {
-      console.error('Complete auth flow error:', error);
+      console.error('Error in completeAuthFlow:', error);
       throw error;
     }
+  };
+
+  // Simple auth completion - handle redirects in components
+  const handleAuthSuccess = (user, navigate) => {
+    const isUserAdmin = checkAdminStatus(user);
+    
+    // Add a small delay to ensure state is properly updated
+    setTimeout(() => {
+      if (isUserAdmin) {
+        navigate('/admin/dashboard');
+      } else {
+        navigate('/');
+      }
+    }, 100);
   };
 
   const value = {
@@ -160,8 +160,8 @@ export const AuthProvider = ({ children }) => {
     isAdmin,
     isLoggingOut,
     logout,
-    completeAuthFlow,
-    checkAdminStatus
+    handleAuthSuccess,
+    completeAuthFlow
   };
 
   return (
