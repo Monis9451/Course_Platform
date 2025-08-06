@@ -1,28 +1,30 @@
-const admin = require('../firebase/firebaseAdmin');
+const supabase = require("../config/supabase");
+const { catchAsync } = require('../utils/catchAsync.js');
+const { AppError } = require('../utils/appError.js');
 
-const verifyFirebaseToken = async (req, res, next) => {
-    const token = req.headers.authorization?.split(' ')[1];
+const verifySupabaseToken = catchAsync(async (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1];
 
-    if (!token) {
-        return res.status(401).json({ 
-            status: 'fail',
-            message: 'Authorization token is required' 
-        });
-    }
+  if (!token) {
+    return next(new AppError("Authorization token is required", 401));
+  }
 
-    try {
-        const decodedToken = await admin.auth().verifyIdToken(token);
-        req.user = decodedToken;
-        next();
-    }
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser(token);
 
-    catch (error) {
-        console.error('Token verification error:', error.message);
-        return res.status(401).json({ 
-            status: 'fail',
-            message: 'Invalid or expired token' 
-        });
-    }
-}
+  if (error) {
+    console.error("Token verification error:", error.message);
+    return next(new AppError(error.message, 401));
+  }
 
-module.exports = verifyFirebaseToken;
+  if (!user) {
+    return next(new AppError("Invalid or expired token", 401));
+  }
+
+  req.user = user;
+  next();
+});
+
+module.exports = verifySupabaseToken;

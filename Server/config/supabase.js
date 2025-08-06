@@ -1,25 +1,13 @@
-const {createClient} = require('@supabase/supabase-js');
+const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
+const supabaseUrl = process.env.SUPABASE_URL;
+const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-const checkConnection = async () => {
-  try {
-    const { data, error } = await supabase.from('user').select('*').limit(1);
-    if (error) {
-        throw new Error(`Supabase connection error: ${error.message}`);
-    }
-    console.log('Supabase connected successfully');
-  }
-
-  catch (error) {
-    console.error('Error connecting to Supabase:', error.message);
-  }
+if (!supabaseUrl || !serviceKey) {
+    throw new Error('Supabase URL and Service Role Key are required in environment variables.');
 }
 
-checkConnection();
+const supabase = createClient(supabaseUrl, serviceKey);
 
 module.exports = supabase;
