@@ -24,15 +24,16 @@ const Header = () => {
       const result = await logout();
       setIsProfileDropdownOpen(false);
       
-      if (result.success) {
-        toast.success('Signed out successfully!', { id: toastId });
-        navigate('/');
-      } else {
-        toast.error(result.error || 'Failed to sign out. Please try again.', { id: toastId });
-      }
+      // Always show success message since logout handles edge cases internally
+      toast.success(result.message || 'Signed out successfully!', { id: toastId });
+      navigate('/');
+      
     } catch (error) {
       console.error('Error logging out:', error);
-      toast.error('Failed to sign out. Please try again.', { id: toastId });
+      setIsProfileDropdownOpen(false);
+      // Even if there's an error, navigate to home since local state is cleared
+      toast.success('Signed out successfully!', { id: toastId });
+      navigate('/');
     }
   };
 

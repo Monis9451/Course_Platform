@@ -30,6 +30,63 @@ export const signInWithGoogle = async () => {
 }
 
 export const signOutUser = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
+    try {
+        // First check if there's an active session
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        // If no session exists, consider it already signed out
+        if (!session) {
+            return { success: true, message: 'Already signed out' };
+        }
+
+        const { error } = await supabase.auth.signOut();
+        
+        if (error) {
+            // Handle specific error cases
+            if (error.message?.includes('session_not_found') || 
+                error.message?.includes('Invalid session') ||
+                error.message?.includes('Session not found')) {
+                // Session was already invalid, consider it a successful logout
+                return { success: true, message: 'Session was already invalid' };
+            }
+            throw error;
+        }
+        
+        return { success: true, message: 'Signed out successfully' };
+    } catch (error) {
+        console.error('Sign out error:', error);
+        throw error;
+    }
+}
+
+// Utility function to clear local storage in case of session issues
+export const clearLocalSession = () => {
+    try {
+        // Clear Supabase auth storage
+        const keys = Object.keys(localStorage);
+        keys.forEach(key => {
+            if (key.startsWith('sb-') || key.includes('supabase')) {
+                localStorage.removeItem(key);
+            }
+        });
+        return true;
+    } catch (error) {
+        console.warn('Error clearing local session:', error);
+        return false;
+    }
+}
+
+// Function to validate current session
+export const validateSession = async () => {
+    try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        if (error) {
+            console.warn('Session validation error:', error);
+            return null;
+        }
+        return session;
+    } catch (error) {
+        console.warn('Error validating session:', error);
+        return null;
+    }
 }
