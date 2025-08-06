@@ -6,9 +6,7 @@ const createCourse = async (title, description, imageURL, moduleNumbers) => {
         description,
         imageURL,
         moduleNumbers,
-        completed: false, // Add completion flag
-        createdAt: new Date().toISOString(),
-        lastModified: new Date().toISOString()
+        completed: false
     }]).select()
 
     if (error) {
@@ -36,13 +34,7 @@ const getCourseById = async (courseID) => {
 }
 
 const updateCourse = async (courseID, updates) => {
-    // Add lastModified timestamp to all updates
-    const updatesWithTimestamp = {
-        ...updates,
-        lastModified: new Date().toISOString()
-    };
-    
-    const {data, error} = await supabase.from('course').update(updatesWithTimestamp).eq('courseID', courseID).select();
+    const {data, error} = await supabase.from('course').update(updates).eq('courseID', courseID).select();
     if (error) {
         throw new Error(`Error updating course: ${error.message}`);
     }

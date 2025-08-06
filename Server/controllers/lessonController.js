@@ -43,7 +43,102 @@ const addContentToLessonHandler = catchAsync(async (req, res, next) => {
     });
 });
 
+const getAllLessonsHandler = catchAsync(async (req, res, next) => {
+    const lessons = await getAllLessons();
+    res.status(200).json({
+        status: 'success',
+        data: {
+            lessons
+        }
+    });
+});
+
+const getLessonByIdHandler = catchAsync(async (req, res, next) => {
+    const { lessonID } = req.params;
+
+    if (!lessonID) {
+        return next(new AppError('Lesson ID is required', 400));
+    }
+
+    const lesson = await getLessonById(lessonID);
+    res.status(200).json({
+        status: 'success',
+        data: {
+            lesson
+        }
+    });
+});
+
+const getLessonsByModuleIdHandler = catchAsync(async (req, res, next) => {
+    const { moduleID } = req.params;
+
+    if (!moduleID) {
+        return next(new AppError('Module ID is required', 400));
+    }
+
+    const lessons = await getLessonsByModuleId(moduleID);
+    res.status(200).json({
+        status: 'success',
+        data: {
+            lessons
+        }
+    });
+});
+
+const getLessonsByCourseIdHandler = catchAsync(async (req, res, next) => {
+    const { courseID } = req.params;
+
+    if (!courseID) {
+        return next(new AppError('Course ID is required', 400));
+    }
+
+    const lessons = await getLessonsByCourseId(courseID);
+    res.status(200).json({
+        status: 'success',
+        data: {
+            lessons
+        }
+    });
+});
+
+const updateLessonHandler = catchAsync(async (req, res, next) => {
+    const { lessonID } = req.params;
+    const updates = req.body;
+
+    if (!lessonID) {
+        return next(new AppError('Lesson ID is required', 400));
+    }
+
+    const updatedLesson = await updateLesson(lessonID, updates);
+    res.status(200).json({
+        status: 'success',
+        data: {
+            lesson: updatedLesson
+        }
+    });
+});
+
+const deleteLessonHandler = catchAsync(async (req, res, next) => {
+    const { lessonID } = req.params;
+
+    if (!lessonID) {
+        return next(new AppError('Lesson ID is required', 400));
+    }
+
+    await deleteLesson(lessonID);
+    res.status(204).json({
+        status: 'success',
+        data: null
+    });
+});
+
 module.exports = {
     createLessonWithoutContent: lessonWithoutContentHandler,
-    addingContentToLesson: addContentToLessonHandler
+    addingContentToLesson: addContentToLessonHandler,
+    getAllLessons: getAllLessonsHandler,
+    getLessonById: getLessonByIdHandler,
+    getLessonsByModuleId: getLessonsByModuleIdHandler,
+    getLessonsByCourseId: getLessonsByCourseIdHandler,
+    updateLesson: updateLessonHandler,
+    deleteLesson: deleteLessonHandler
 };

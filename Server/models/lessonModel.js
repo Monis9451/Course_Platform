@@ -11,15 +11,11 @@ const createLessonWithoutContent = async (moduleID, title, order, icon = 'page')
     if (error) {
         throw new Error(`Error creating lesson: ${error.message}`);
     }
-    // Transform the response to include lessonID field for frontend compatibility
-    if (data && data.length > 0 && data[0].id) {
-        data[0].lessonID = data[0].id;
-    }
     return data;
 }
 
 const addingContentToLesson = async (lessonID, content) => {
-    const {data, error} = await supabase.from('lesson').update({content}).eq('id', lessonID).select();
+    const {data, error} = await supabase.from('lesson').update({content}).eq('lessonID', lessonID).select();
     if (error) {
         throw new Error(`Error adding content to lesson: ${error.message}`);
     }
@@ -35,7 +31,7 @@ const getAllLessons = async () => {
 }
 
 const getLessonById = async (lessonID) => {
-    const {data, error} = await supabase.from('lesson').select('*').eq('id', lessonID).single();
+    const {data, error} = await supabase.from('lesson').select('*').eq('lessonID', lessonID).single();
     if (error) {
         throw new Error(`Error fetching lesson by ID: ${error.message}`);
     }
@@ -51,7 +47,29 @@ const getLessonsByModuleId = async (moduleID) => {
 }
 
 const getLessonsByCourseId = async (courseID) => {
-    const {data, error} = await supabase.from('lesson').select('*').eq('courseID', courseID);
+    // First get all modules for this course
+    const {data: modules, error: moduleError} = await supabase
+        .from('modules')
+        .select('moduleID')
+        .eq('courseID', courseID);
+    
+    if (moduleError) {
+        throw new Error(`Error fetching modules for course: ${moduleError.message}`);
+    }
+    
+    if (!modules || modules.length === 0) {
+        return []; // No modules, so no lessons
+    }
+    
+    // Extract module IDs
+    const moduleIDs = modules.map(module => module.moduleID);
+    
+    // Get all lessons for these modules
+    const {data, error} = await supabase
+        .from('lesson')
+        .select('*')
+        .in('moduleID', moduleIDs);
+        
     if (error) {
         throw new Error(`Error fetching lessons by course ID: ${error.message}`);
     }
@@ -59,7 +77,7 @@ const getLessonsByCourseId = async (courseID) => {
 }
 
 const updateLesson = async (lessonID, updates) => {
-    const {data, error} = await supabase.from('lesson').update(updates).eq('id', lessonID).select();
+    const {data, error} = await supabase.from('lesson').update(updates).eq('lessonID', lessonID).select();
     if (error) {
         throw new Error(`Error updating lesson: ${error.message}`);
     }
@@ -67,7 +85,7 @@ const updateLesson = async (lessonID, updates) => {
 }
 
 const deleteLesson = async (lessonID) => {
-    const {data, error} = await supabase.from('lesson').delete().eq('id', lessonID);
+    const {data, error} = await supabase.from('lesson').delete().eq('lessonID', lessonID);
     if (error) {
         throw new Error(`Error deleting lesson: ${error.message}`);
     }
