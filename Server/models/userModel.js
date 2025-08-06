@@ -1,73 +1,38 @@
+// This file is deprecated as we're now using Supabase auth system
+// User management is handled by Supabase auth tables directly
+// No need for custom user table operations
+
 const supabase = require("../config/supabase");
 
-const createUser = async ({ userID, username, email }) => {
-  const { data, error } = await supabase.from("user").insert([
-    {
-      userID,
-      username,
-      email,
-      createdAt: new Date().toISOString()
-    },
-  ]).select();
-
-  if (error) {
-    throw new Error(`Error creating user: ${error.message}`);
-  }
-  return data;
+// These functions are kept for backwards compatibility but are deprecated
+const createUser = async () => {
+  console.warn('createUser is deprecated - using Supabase auth directly');
+  return { message: 'Using Supabase auth' };
 };
 
 const getAllUsers = async () => {
-    try {
-        const {data, error} = await supabase.from("user").select("*");
-
-        if(error){
-            console.error('Supabase error in getAllUsers:', error);
-            throw new Error(`Error in fetching all users: ${error.message}`);
-        }
-        
-        return data || [];
-    } catch (err) {
-        console.error('Exception in getAllUsers:', err);
-        throw err;
-    }
+  console.warn('getAllUsers is deprecated - using Supabase auth admin API');
+  return [];
 };
 
-const getUserById = async (userID) => {
-    const {data, error} = await supabase.from("user").select("*").eq("userID", userID).single();
-    if (error) {
-        if (error.code === 'PGRST116') {
-            return null;
-        }
-        throw new Error(`Error fetching user by ID: ${error.message}`);
-    }
-    return data;
+const getUserById = async () => {
+  console.warn('getUserById is deprecated - using Supabase auth');
+  return null;
 };
 
-const getUserByEmail = async (email) => {
-    const {data, error} = await supabase.from("user").select("*").eq("email", email).single();
-    if (error) {
-        if (error.code === 'PGRST116') {
-            return null;
-        }
-        throw new Error(`Error fetching user by email: ${error.message}`);
-    }
-    return data;
-}
-
-const updateUser = async (userID, updates) => {
-    const {data, error} = await supabase.from("user").update(updates).eq("userID", userID).select();
-    if (error) {
-        throw new Error(`Error updating user: ${error.message}`);
-    }
-    return data && data.length > 0 ? data[0] : null;
+const getUserByEmail = async () => {
+  console.warn('getUserByEmail is deprecated - using Supabase auth admin API');
+  return null;
 };
 
-const deleteUser = async (userID) => {
-    const {data, error} = await supabase.from("user").delete().eq("userID", userID).select();
-    if (error) {
-        throw new Error(`Error deleting user: ${error.message}`);
-    }
-    return data && data.length > 0 ? data[0] : null;
+const updateUser = async () => {
+  console.warn('updateUser is deprecated - using Supabase auth');
+  return null;
+};
+
+const deleteUser = async () => {
+  console.warn('deleteUser is deprecated - using Supabase auth admin API');
+  return null;
 };
 
 module.exports = { createUser, getAllUsers, getUserById, getUserByEmail, updateUser, deleteUser };

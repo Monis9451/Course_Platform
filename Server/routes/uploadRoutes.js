@@ -2,7 +2,7 @@ const express = require('express');
 const upload = require('../middleware/multer.js');
 const { uploadHandler } = require('../controllers/uploadController.js');
 const { isAdmin } = require('../middleware/isAdminMiddleware.js');
-const verifyFirebaseToken = require('../middleware/authMiddleware.js');
+const verifySupabaseToken = require('../middleware/authMiddleware.js');
 const { AppError } = require('../utils/appError.js');
 
 const router = express.Router();
@@ -24,6 +24,6 @@ const handleMulterError = (err, req, res, next) => {
   next(err);
 };
 
-router.post("/cloudinary", verifyFirebaseToken, isAdmin, upload.single("file"), handleMulterError, uploadHandler);
+router.post("/cloudinary", verifySupabaseToken, isAdmin, upload.single("file"), handleMulterError, uploadHandler);
 
 module.exports = router;

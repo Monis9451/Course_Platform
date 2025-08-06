@@ -1,5 +1,5 @@
 const express = require('express');
-const verifyFirebaseToken = require('../middleware/authMiddleware');
+const verifySupabaseToken = require('../middleware/authMiddleware');
 const { isAdmin } = require('../middleware/isAdminMiddleware.js');
 const { 
   createCourseHandler,
@@ -14,13 +14,13 @@ const {
 
 const router = express.Router();
 
-router.post('/create', verifyFirebaseToken, isAdmin, createCourseHandler);
+router.post('/create', verifySupabaseToken, isAdmin, createCourseHandler);
 router.get('/all', getAllCoursesHandler);
-router.get('/incomplete', verifyFirebaseToken, isAdmin, getIncompleteCoursesHandler);
-router.get('/incomplete/details', verifyFirebaseToken, isAdmin, getIncompleteCoursesWithDetailsHandler);
+router.get('/incomplete', verifySupabaseToken, isAdmin, getIncompleteCoursesHandler);
+router.get('/incomplete/details', verifySupabaseToken, isAdmin, getIncompleteCoursesWithDetailsHandler);
 router.get('/:id', getCourseByIdHandler);
-router.put('/:id', verifyFirebaseToken, isAdmin, updateCourseHandler);
-router.put('/:id/complete', verifyFirebaseToken, isAdmin, markCourseAsCompletedHandler);
-router.delete('/:id', verifyFirebaseToken, isAdmin, deleteCourseHandler);
+router.put('/:id', verifySupabaseToken, isAdmin, updateCourseHandler);
+router.put('/:id/complete', verifySupabaseToken, isAdmin, markCourseAsCompletedHandler);
+router.delete('/:id', verifySupabaseToken, isAdmin, deleteCourseHandler);
 
 module.exports = router;
