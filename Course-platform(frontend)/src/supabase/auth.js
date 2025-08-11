@@ -43,10 +43,8 @@ export const signInWithGoogle = async () => {
 
 export const signOutUser = async () => {
     try {
-        // First check if there's an active session
         const { data: { session } } = await supabase.auth.getSession();
         
-        // If no session exists, consider it already signed out
         if (!session) {
             return { success: true, message: 'Already signed out' };
         }
@@ -54,11 +52,9 @@ export const signOutUser = async () => {
         const { error } = await supabase.auth.signOut();
         
         if (error) {
-            // Handle specific error cases
             if (error.message?.includes('session_not_found') || 
                 error.message?.includes('Invalid session') ||
                 error.message?.includes('Session not found')) {
-                // Session was already invalid, consider it a successful logout
                 return { success: true, message: 'Session was already invalid' };
             }
             throw error;
@@ -71,10 +67,8 @@ export const signOutUser = async () => {
     }
 }
 
-// Utility function to clear local storage in case of session issues
 export const clearLocalSession = () => {
     try {
-        // Clear Supabase auth storage
         const keys = Object.keys(localStorage);
         keys.forEach(key => {
             if (key.startsWith('sb-') || key.includes('supabase')) {
@@ -88,7 +82,6 @@ export const clearLocalSession = () => {
     }
 }
 
-// Function to validate current session
 export const validateSession = async () => {
     try {
         const { data: { session }, error } = await supabase.auth.getSession();
@@ -103,7 +96,6 @@ export const validateSession = async () => {
     }
 }
 
-// Function to update user metadata (like display name)
 export const updateUserMetadata = async (metadata) => {
     try {
         const { data, error } = await supabase.auth.updateUser({

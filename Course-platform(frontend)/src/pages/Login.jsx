@@ -113,8 +113,8 @@ const Login = () => {
         
         try {
           const result = await signInUser(email, password);
-          toast.dismiss(toastId); // Dismiss the loading toast
-          handleAuthSuccess(result.user, navigate, true); // Show welcome message for manual login
+          toast.success('Welcome back!', { id: toastId });
+          handleAuthSuccess(result.user, navigate);
         } catch (authError) {
           toast.error(authError.message || 'Login failed', { id: toastId });
           setErrors({ general: authError.message || 'Login failed' });
@@ -128,7 +128,7 @@ const Login = () => {
           
           if (result.user) {
             toast.success('Account created successfully!', { id: toastId });
-            handleAuthSuccess(result.user, navigate, true); // Show welcome message for new users
+            handleAuthSuccess(result.user, navigate);
           }
         } catch (authError) {
           toast.error(authError.message || 'Signup failed', { id: toastId });

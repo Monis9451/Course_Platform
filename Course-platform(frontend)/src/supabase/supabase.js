@@ -3,7 +3,6 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// Validate required environment variables
 if (!supabaseUrl) {
   throw new Error('Missing VITE_SUPABASE_URL environment variable');
 }
@@ -16,7 +15,6 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     autoRefreshToken: true,
     persistSession: true,
     detectSessionInUrl: true,
-    // Handle session errors gracefully
     storage: {
       ...window.localStorage,
       getItem: (key) => {
