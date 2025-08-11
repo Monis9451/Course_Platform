@@ -160,10 +160,10 @@ const UserAnalytics = () => {
                 <thead className="bg-gray-100">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-primary uppercase tracking-wider">
-                      User ID
+                      UID
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-primary uppercase tracking-wider">
-                      Username
+                      Display Name
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-primary uppercase tracking-wider">
                       Email
@@ -179,12 +179,12 @@ const UserAnalytics = () => {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {users.length > 0 ? (
                     users.map((user, index) => (
-                      <tr key={user.userID || index} className="hover:bg-gray-50">
+                      <tr key={user.id || index} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {user.userID ? user.userID.substring(0, 10) + '...' : 'N/A'}
+                          {user.id ? user.id.substring(0, 10) + '...' : 'N/A'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {user.username || 'N/A'}
+                          {user.user_metadata?.display_name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'N/A'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                           {user.email || 'N/A'}
@@ -194,7 +194,7 @@ const UserAnalytics = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                            Active
+                            {user.email_confirmed_at ? 'Active' : 'Pending'}
                           </span>
                         </td>
                       </tr>

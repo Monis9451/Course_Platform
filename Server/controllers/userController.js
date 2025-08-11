@@ -47,10 +47,8 @@ const getUserProfile = catchAsync(async (req, res, next) => {
     });
 });
 
-// Get all users from Supabase auth (admin only)
 const getAllUsersHandler = catchAsync(async (req, res, next) => {
     try {
-        // Using Supabase Admin SDK to list users
         const { data: { users }, error } = await supabase.auth.admin.listUsers();
         
         if (error) {
@@ -74,7 +72,6 @@ const getAllUsersHandler = catchAsync(async (req, res, next) => {
     }
 });
 
-// Get user by email from Supabase auth (for checking existence)
 const getUserByEmailHandler = catchAsync(async (req, res, next) => {
     const { email } = req.params;
     
@@ -83,7 +80,6 @@ const getUserByEmailHandler = catchAsync(async (req, res, next) => {
     }
 
     try {
-        // Using Supabase Admin SDK to get user by email
         const { data: user, error } = await supabase.auth.admin.getUserByEmail(email);
         
         if (error || !user) {
