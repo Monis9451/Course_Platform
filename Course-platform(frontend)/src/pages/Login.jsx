@@ -82,11 +82,8 @@ const Login = () => {
     }
     
     if (!isLogin) {
-      if (!formData.firstName) {
-        newErrors.firstName = 'First name is required';
-      }
-      if (!formData.lastName) {
-        newErrors.lastName = 'Last name is required';
+      if (!formData.name) {
+        newErrors.name = 'Full name is required';
       }
       if (formData.password !== formData.confirmPassword) {
         newErrors.confirmPassword = 'Passwords do not match';
@@ -202,14 +199,36 @@ const Login = () => {
             <button
               type="button"
               className={`flex-1 py-2 text-center font-light ${isLogin ? 'bg-primary text-white' : 'bg-white text-black'}`}
-              onClick={() => toggleAuthMode()}
+              onClick={() => {
+                if (!isLogin) {
+                  setIsLogin(true);
+                  setFormData({
+                    name: '',
+                    email: '',
+                    password: '',
+                    confirmPassword: ''
+                  });
+                  setErrors({});
+                }
+              }}
             >
               Log In
             </button>
             <button
               type="button"
               className={`flex-1 py-2 text-center font-light ${!isLogin ? 'bg-primary text-white' : 'bg-white text-black'}`}
-              onClick={() => toggleAuthMode()}
+              onClick={() => {
+                if (isLogin) {
+                  setIsLogin(false);
+                  setFormData({
+                    name: '',
+                    email: '',
+                    password: '',
+                    confirmPassword: ''
+                  });
+                  setErrors({});
+                }
+              }}
             >
               Sign Up
             </button>

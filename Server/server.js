@@ -26,9 +26,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(express.urlencoded({ extended: true }));  
 app.use(express.json());
-
-// Morgan logging - placed after body parsing for complete request info
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms :date[clf]'));
+app.use(morgan('combined'));
 
 // CORS configuration
 app.use(cors ({
