@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { supabase } from '../supabase/supabase';
 import { signOutUser, clearLocalSession, validateSession } from '../supabase/auth';
+import toast from 'react-hot-toast';
 
 const AuthContext = createContext();
 
@@ -19,6 +20,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   // Check admin status client-side using environment variable
   const checkAdminStatus = (user) => {
@@ -55,6 +57,7 @@ export const AuthProvider = ({ children }) => {
         setIsAdmin(false);
       } finally {
         setLoading(false);
+        setIsInitialized(true);
       }
     };
 
@@ -68,13 +71,25 @@ export const AuthProvider = ({ children }) => {
         setAuthToken(session?.access_token ?? null);
         setUserLogin(!!session);
         setIsAdmin(checkAdminStatus(user));
+        
+        // Show welcome message for successful sign-ins (but not during initial load)
+        if (event === 'SIGNED_IN' && user && isInitialized) {
+          const isUserAdmin = checkAdminStatus(user);
+          setTimeout(() => {
+            if (isUserAdmin) {
+              toast.success('Welcome back, Admin!');
+            } else {
+              toast.success('Welcome back!');
+            }
+          }, 500); // Small delay to ensure UI is ready
+        }
       }
     );
 
     return () => {
       subscription?.unsubscribe();
     };
-  }, []);
+  }, [isInitialized]);
 
   // Logout function with enhanced error handling
   const logout = async () => {
@@ -139,8 +154,17 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Simple auth completion - handle redirects in components
-  const handleAuthSuccess = (user, navigate) => {
+  const handleAuthSuccess = (user, navigate, showWelcomeMessage = false) => {
     const isUserAdmin = checkAdminStatus(user);
+    
+    // Show welcome message if requested (for manual login flows)
+    if (showWelcomeMessage) {
+      if (isUserAdmin) {
+        toast.success('Welcome back, Admin!');
+      } else {
+        toast.success('Welcome back!');
+      }
+    }
     
     // Add a small delay to ensure state is properly updated
     setTimeout(() => {

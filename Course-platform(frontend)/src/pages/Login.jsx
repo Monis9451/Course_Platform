@@ -105,7 +105,7 @@ const Login = () => {
     }
 
     try {
-      const { email, password } = formData;
+      const { email, password, name } = formData;
 
       if (isLogin) {
         // Login flow
@@ -113,8 +113,8 @@ const Login = () => {
         
         try {
           const result = await signInUser(email, password);
-          toast.success('Welcome back!', { id: toastId });
-          handleAuthSuccess(result.user, navigate);
+          toast.dismiss(toastId); // Dismiss the loading toast
+          handleAuthSuccess(result.user, navigate, true); // Show welcome message for manual login
         } catch (authError) {
           toast.error(authError.message || 'Login failed', { id: toastId });
           setErrors({ general: authError.message || 'Login failed' });
@@ -124,11 +124,11 @@ const Login = () => {
         const toastId = toast.loading('Creating your account...');
         
         try {
-          const result = await createNewUser(email, password);
+          const result = await createNewUser(email, password, name);
           
           if (result.user) {
-            toast.success('Account created successfully! Please check your email for verification.', { id: toastId });
-            handleAuthSuccess(result.user, navigate);
+            toast.success('Account created successfully!', { id: toastId });
+            handleAuthSuccess(result.user, navigate, true); // Show welcome message for new users
           }
         } catch (authError) {
           toast.error(authError.message || 'Signup failed', { id: toastId });

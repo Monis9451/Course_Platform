@@ -184,7 +184,10 @@ const UserAnalytics = () => {
                           {user.id ? user.id.substring(0, 10) + '...' : 'N/A'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {user.user_metadata?.display_name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'N/A'}
+                          {user.user_metadata?.display_name || 
+                           user.user_metadata?.full_name || 
+                           user.user_metadata?.name ||
+                           (user.email ? user.email.split('@')[0] : 'No Name Set')}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                           {user.email || 'N/A'}

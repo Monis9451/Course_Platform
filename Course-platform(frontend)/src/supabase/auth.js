@@ -1,10 +1,22 @@
 import { supabase } from '../supabase/supabase';
 
-export const createNewUser = async (email, password) => {
-    const { data, error } = await supabase.auth.signUp({
+export const createNewUser = async (email, password, displayName = null) => {
+    const signUpData = {
         email: email,
         password: password,
-    });
+    };
+
+    // Add user metadata if display name is provided
+    if (displayName) {
+        signUpData.options = {
+            data: {
+                display_name: displayName,
+                full_name: displayName
+            }
+        };
+    }
+
+    const { data, error } = await supabase.auth.signUp(signUpData);
     if (error) throw error;
     return data;
 }
@@ -88,5 +100,19 @@ export const validateSession = async () => {
     } catch (error) {
         console.warn('Error validating session:', error);
         return null;
+    }
+}
+
+// Function to update user metadata (like display name)
+export const updateUserMetadata = async (metadata) => {
+    try {
+        const { data, error } = await supabase.auth.updateUser({
+            data: metadata
+        });
+        if (error) throw error;
+        return data;
+    } catch (error) {
+        console.error('Error updating user metadata:', error);
+        throw error;
     }
 }
