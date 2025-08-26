@@ -6,6 +6,9 @@ import QuizContent from './QuizContent';
 import InfoBox from './InfoBox';
 import CustomComponent from './CustomComponent';
 import HeadingContent from './HeadingContent';
+import PeachBox from './PeachBox';
+import ExerciseBox from './ExerciseBox';
+import GrayBox from './GrayBox';
 
 export const componentTypes = {
   HEADING: 'heading',
@@ -15,6 +18,9 @@ export const componentTypes = {
   TEXT: 'text',
   QUIZ: 'quiz',
   INFO_BOX: 'info_box',
+  PEACH_BOX: 'peach_box',
+  EXERCISE_BOX: 'exercise_box',
+  GRAY_BOX: 'gray_box',
   CUSTOM: 'custom',
   PARAGRAPH: 'paragraph',
   BULLET_LIST: 'bullet_list',
@@ -96,6 +102,40 @@ export const componentLibrary = {
       title: 'Info Box',
       content: 'Enter important information here...',
       type: 'info'
+    }
+  },
+  [componentTypes.PEACH_BOX]: {
+    name: 'Peach Box',
+    component: PeachBox,
+    defaultData: {
+      title: 'Peach Box Section',
+      boxTitle: 'Example: Title',
+      paragraph: 'Example: paragraph',
+      italicLines: 'Example: Some ending lines in italic'
+    }
+  },
+  [componentTypes.EXERCISE_BOX]: {
+    name: 'Exercise Box',
+    component: ExerciseBox,
+    defaultData: {
+      title: 'Exercise Section',
+      situation: 'Example: Some situation to ask question',
+      questions: [
+        {
+          question: 'Example: Question 1',
+          placeholder: 'Describe answer 1'
+        }
+      ]
+    }
+  },
+  [componentTypes.GRAY_BOX]: {
+    name: 'Gray Box',
+    component: GrayBox,
+    defaultData: {
+      title: 'Gray Box Section',
+      boxTitle: 'Example: Title',
+      paragraph: 'Example: Paragraph',
+      italicLines: 'Example: Some ending lines in italic'
     }
   },
   [componentTypes.CUSTOM]: {
