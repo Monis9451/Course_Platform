@@ -10,6 +10,7 @@ import PeachBox from './PeachBox';
 import ExerciseBox from './ExerciseBox';
 import GrayBox from './GrayBox';
 import LeftBorderBox from './LeftBorderBox';
+import OrderedListBox from './OrderedListBox';
 
 export const componentTypes = {
   HEADING: 'heading',
@@ -23,6 +24,7 @@ export const componentTypes = {
   EXERCISE_BOX: 'exercise_box',
   GRAY_BOX: 'gray_box',
   LEFT_BORDER_BOX: 'left_border_box',
+  ORDERED_LIST_BOX: 'ordered_list_box',
   CUSTOM: 'custom',
   PARAGRAPH: 'paragraph',
   BULLET_LIST: 'bullet_list',
@@ -149,6 +151,19 @@ export const componentLibrary = {
       paragraph: 'Example: Paragraph',
       quote: 'Example: Some quote',
       footerText: 'Example: Text'
+    }
+  },
+  [componentTypes.ORDERED_LIST_BOX]: {
+    name: 'Ordered List Box',
+    component: OrderedListBox,
+    defaultData: {
+      title: 'Ordered List Section',
+      boxTitle: 'Example: Title',
+      description: 'Example: Text',
+      points: [
+        { text: 'Example: point 1' }
+      ],
+      footerText: 'Example: some italic lines in last'
     }
   },
   [componentTypes.CUSTOM]: {

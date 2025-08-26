@@ -36,7 +36,8 @@ const allowedComponents = [
   componentTypes.PEACH_BOX,
   componentTypes.EXERCISE_BOX,
   componentTypes.GRAY_BOX,
-  componentTypes.LEFT_BORDER_BOX
+  componentTypes.LEFT_BORDER_BOX,
+  componentTypes.ORDERED_LIST_BOX
 ];
 
 const filteredComponentLibrary = Object.fromEntries(
@@ -1253,6 +1254,99 @@ const AddCourse = () => {
           </div>
         );
 
+      case componentTypes.ORDERED_LIST_BOX:
+        return (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Section Title</label>
+              <input
+                type="text"
+                value={componentData.title || ''}
+                onChange={(e) => handleComponentDataChange('title', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Section title"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Box Title</label>
+              <input
+                type="text"
+                value={componentData.boxTitle || ''}
+                onChange={(e) => handleComponentDataChange('boxTitle', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Title inside the box"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Description</label>
+              <textarea
+                value={componentData.description || ''}
+                onChange={(e) => handleComponentDataChange('description', e.target.value)}
+                rows={2}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Description text..."
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-2 text-gray-700">Points (Countdown Order)</label>
+              <div className="space-y-2 max-h-48 overflow-y-auto">
+                {(componentData.points || []).map((point, index) => (
+                  <div key={index} className="p-2 border border-gray-200 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-xs font-medium text-gray-600">
+                        Point #{(componentData.points || []).length - index}
+                      </span>
+                      {componentData.points && componentData.points.length > 1 && (
+                        <button
+                          onClick={() => {
+                            const newPoints = componentData.points.filter((_, i) => i !== index);
+                            handleComponentDataChange('points', newPoints);
+                          }}
+                          className="text-red-500 hover:text-red-700 text-xs px-1"
+                          type="button"
+                        >
+                          ✕
+                        </button>
+                      )}
+                    </div>
+                    <input
+                      type="text"
+                      value={point.text || ''}
+                      onChange={(e) => {
+                        const newPoints = [...(componentData.points || [])];
+                        newPoints[index] = { ...newPoints[index], text: e.target.value };
+                        handleComponentDataChange('points', newPoints);
+                      }}
+                      className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
+                      placeholder="Enter point text..."
+                    />
+                  </div>
+                ))}
+                <button
+                  onClick={() => {
+                    const newPoints = [...(componentData.points || []), { text: '' }];
+                    handleComponentDataChange('points', newPoints);
+                  }}
+                  className="w-full py-1 border border-dashed border-gray-400 text-gray-600 text-xs rounded hover:bg-gray-50"
+                  type="button"
+                >
+                  + Add Point
+                </button>
+              </div>
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Footer Text</label>
+              <input
+                type="text"
+                value={componentData.footerText || ''}
+                onChange={(e) => handleComponentDataChange('footerText', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Italic footer text"
+              />
+            </div>
+          </div>
+        );
+
       default:
         return <div className="text-xs text-gray-500">Unknown component type</div>;
     }
@@ -1526,8 +1620,8 @@ const AddCourse = () => {
                           >
                             <ComponentRenderer 
                               data={component.data} 
-                              isEditMode={component.type === componentTypes.EXERCISE_BOX}
-                              onUpdate={component.type === componentTypes.EXERCISE_BOX ? 
+                              isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX}
+                              onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX ? 
                                 (newData) => updateComponent(component.id, newData) : 
                                 undefined
                               }
