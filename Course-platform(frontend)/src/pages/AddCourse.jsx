@@ -38,7 +38,8 @@ const allowedComponents = [
   componentTypes.GRAY_BOX,
   componentTypes.LEFT_BORDER_BOX,
   componentTypes.ORDERED_LIST_BOX,
-  componentTypes.QUESTION_CARD_BOX
+  componentTypes.QUESTION_CARD_BOX,
+  componentTypes.CHECKBOX_LIST
 ];
 
 const filteredComponentLibrary = Object.fromEntries(
@@ -1454,6 +1455,79 @@ const AddCourse = () => {
           </div>
         );
 
+      case componentTypes.CHECKBOX_LIST:
+        return (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Section Title</label>
+              <input
+                type="text"
+                value={componentData.title || ''}
+                onChange={(e) => handleComponentDataChange('title', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Section title"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-2 text-gray-700">Checkboxes</label>
+              <div className="space-y-2 max-h-48 overflow-y-auto">
+                {(componentData.checkboxes || []).map((checkbox, index) => (
+                  <div key={index} className="p-2 border border-gray-200 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-xs font-medium text-gray-600">Checkbox {index + 1}</span>
+                      {componentData.checkboxes && componentData.checkboxes.length > 1 && (
+                        <button
+                          onClick={() => {
+                            const newCheckboxes = componentData.checkboxes.filter((_, i) => i !== index);
+                            handleComponentDataChange('checkboxes', newCheckboxes);
+                          }}
+                          className="text-red-500 hover:text-red-700 text-xs px-1"
+                          type="button"
+                        >
+                          ✕
+                        </button>
+                      )}
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        checked={checkbox.checked || false}
+                        onChange={(e) => {
+                          const newCheckboxes = [...(componentData.checkboxes || [])];
+                          newCheckboxes[index] = { ...newCheckboxes[index], checked: e.target.checked };
+                          handleComponentDataChange('checkboxes', newCheckboxes);
+                        }}
+                        className="h-3 w-3 accent-[#bd6334]"
+                      />
+                      <input
+                        type="text"
+                        value={checkbox.text || ''}
+                        onChange={(e) => {
+                          const newCheckboxes = [...(componentData.checkboxes || [])];
+                          newCheckboxes[index] = { ...newCheckboxes[index], text: e.target.value };
+                          handleComponentDataChange('checkboxes', newCheckboxes);
+                        }}
+                        className="flex-1 px-2 py-1 text-xs border border-gray-300 rounded"
+                        placeholder="Checkbox text..."
+                      />
+                    </div>
+                  </div>
+                ))}
+                <button
+                  onClick={() => {
+                    const newCheckboxes = [...(componentData.checkboxes || []), { text: '', checked: false }];
+                    handleComponentDataChange('checkboxes', newCheckboxes);
+                  }}
+                  className="w-full py-1 border border-dashed border-gray-400 text-gray-600 text-xs rounded hover:bg-gray-50"
+                  type="button"
+                >
+                  + Add Checkbox
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+
       default:
         return <div className="text-xs text-gray-500">Unknown component type</div>;
     }
@@ -1727,8 +1801,8 @@ const AddCourse = () => {
                           >
                             <ComponentRenderer 
                               data={component.data} 
-                              isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX}
-                              onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX ? 
+                              isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST}
+                              onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST ? 
                                 (newData) => updateComponent(component.id, newData) : 
                                 undefined
                               }

@@ -12,6 +12,7 @@ import GrayBox from './GrayBox';
 import LeftBorderBox from './LeftBorderBox';
 import OrderedListBox from './OrderedListBox';
 import QuestionCardBox from './QuestionCardBox';
+import CheckboxList from './CheckboxList';
 
 export const componentTypes = {
   HEADING: 'heading',
@@ -27,6 +28,7 @@ export const componentTypes = {
   LEFT_BORDER_BOX: 'left_border_box',
   ORDERED_LIST_BOX: 'ordered_list_box',
   QUESTION_CARD_BOX: 'question_card_box',
+  CHECKBOX_LIST: 'checkbox_list',
   CUSTOM: 'custom',
   PARAGRAPH: 'paragraph',
   BULLET_LIST: 'bullet_list',
@@ -180,6 +182,16 @@ export const componentLibrary = {
           placeholder: 'Example: Write your response here...',
           consideration: 'Example: some consideration and suggestion'
         }
+      ]
+    }
+  },
+  [componentTypes.CHECKBOX_LIST]: {
+    name: 'Checkbox List',
+    component: CheckboxList,
+    defaultData: {
+      title: 'Checkbox List Section',
+      checkboxes: [
+        { text: 'Example: check 1', checked: false }
       ]
     }
   },
