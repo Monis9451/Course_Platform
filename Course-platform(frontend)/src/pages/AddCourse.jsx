@@ -26,6 +26,22 @@ import { FaFileAlt } from "react-icons/fa";
 import { BsPencilFill } from "react-icons/bs";
 import { componentLibrary, componentTypes } from '../components/course-components';
 
+// Filter component library to only include allowed components
+const allowedComponents = [
+  componentTypes.HEADING,
+  componentTypes.AUDIO, 
+  componentTypes.TEXT,
+  componentTypes.IMAGE,
+  componentTypes.VIDEO,
+  componentTypes.PEACH_BOX,
+  componentTypes.EXERCISE_BOX,
+  componentTypes.GRAY_BOX
+];
+
+const filteredComponentLibrary = Object.fromEntries(
+  Object.entries(componentLibrary).filter(([key]) => allowedComponents.includes(key))
+);
+
 const AddCourse = () => {
   const { authToken } = useAuth();
   const navigate = useNavigate();
@@ -63,6 +79,10 @@ const AddCourse = () => {
   const [lessons, setLessons] = useState([]);
   const [courseId, setCourseId] = useState(null);
 
+  // Validation states
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+
   // Editor states
   const [isEditorMode, setIsEditorMode] = useState(false);
   const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
@@ -96,11 +116,130 @@ const AddCourse = () => {
     };
   }, [thumbnailPreview]);
 
+  // Validation functions
+  const validateCourseData = () => {
+    const newErrors = {};
+
+    // Title validation
+    if (!courseData.title.trim()) {
+      newErrors.title = 'Course title is required';
+    } else if (courseData.title.trim().length < 3) {
+      newErrors.title = 'Course title must be at least 3 characters long';
+    } else if (courseData.title.trim().length > 100) {
+      newErrors.title = 'Course title must be less than 100 characters';
+    }
+
+    // Description validation
+    if (!courseData.description.trim()) {
+      newErrors.description = 'Course description is required';
+    } else if (courseData.description.trim().length < 10) {
+      newErrors.description = 'Course description must be at least 10 characters long';
+    } else if (courseData.description.trim().length > 1000) {
+      newErrors.description = 'Course description must be less than 1000 characters';
+    }
+
+    // Module numbers validation
+    if (!courseData.moduleNumbers || courseData.moduleNumbers < 1) {
+      newErrors.moduleNumbers = 'Number of modules must be at least 1';
+    } else if (courseData.moduleNumbers > 20) {
+      newErrors.moduleNumbers = 'Maximum 20 modules are allowed';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validateModules = () => {
+    const newErrors = {};
+    
+    modules.forEach((module, index) => {
+      const moduleErrors = {};
+      
+      // Title validation
+      if (!module.title.trim()) {
+        moduleErrors.title = 'Module title is required';
+      } else if (module.title.trim().length < 3) {
+        moduleErrors.title = 'Module title must be at least 3 characters long';
+      } else if (module.title.trim().length > 100) {
+        moduleErrors.title = 'Module title must be less than 100 characters';
+      }
+
+      // Description validation
+      if (!module.description.trim()) {
+        moduleErrors.description = 'Module description is required';
+      } else if (module.description.trim().length < 10) {
+        moduleErrors.description = 'Module description must be at least 10 characters long';
+      } else if (module.description.trim().length > 500) {
+        moduleErrors.description = 'Module description must be less than 500 characters';
+      }
+
+      // Lesson number validation
+      if (!module.lessonNumber || module.lessonNumber < 1) {
+        moduleErrors.lessonNumber = 'At least 1 lesson is required';
+      } else if (module.lessonNumber > 50) {
+        moduleErrors.lessonNumber = 'Maximum 50 lessons are allowed per module';
+      }
+
+      if (Object.keys(moduleErrors).length > 0) {
+        newErrors[`module_${index}`] = moduleErrors;
+      }
+    });
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validateLessons = () => {
+    const newErrors = {};
+    
+    lessons.forEach((lesson, index) => {
+      if (!lesson.title.trim()) {
+        newErrors[`lesson_${index}`] = 'Lesson title is required';
+      } else if (lesson.title.trim().length < 3) {
+        newErrors[`lesson_${index}`] = 'Lesson title must be at least 3 characters long';
+      } else if (lesson.title.trim().length > 100) {
+        newErrors[`lesson_${index}`] = 'Lesson title must be less than 100 characters';
+      }
+    });
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleFieldChange = (field, value, index = null, isModule = false, moduleField = null) => {
+    // Clear specific field error when user starts typing
+    const errorKey = index !== null 
+      ? isModule 
+        ? `module_${index}.${moduleField || field}` 
+        : `lesson_${index}`
+      : field;
+    
+    if (errors[errorKey] || (isModule && errors[`module_${index}`]?.[moduleField || field])) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        if (isModule && newErrors[`module_${index}`]) {
+          delete newErrors[`module_${index}`][moduleField || field];
+          if (Object.keys(newErrors[`module_${index}`]).length === 0) {
+            delete newErrors[`module_${index}`];
+          }
+        } else {
+          delete newErrors[errorKey];
+        }
+        return newErrors;
+      });
+    }
+
+    // Mark field as touched
+    setTouched(prev => ({ ...prev, [errorKey]: true }));
+  };
+
   // Step 1: Course Details Form
   const handleCourseSubmit = async (e) => {
     e.preventDefault();
-    if (!courseData.title || !courseData.description) {
-      toast.error('Please fill in all required fields');
+    
+    // Validate form data
+    if (!validateCourseData()) {
+      toast.error('Please fix the validation errors before proceeding');
       return;
     }
 
@@ -193,17 +332,9 @@ const AddCourse = () => {
 
   // Step 2: Modules Form
   const handleModulesSubmit = async () => {
-    // Ensure all modules have proper data and at least 1 lesson
-    const incompleteModules = modules.filter(module => 
-      !module.title || 
-      !module.description || 
-      module.lessonNumber === undefined || 
-      module.lessonNumber === null ||
-      module.lessonNumber < 1
-    );
-    
-    if (incompleteModules.length > 0) {
-      toast.error('Please fill in all module details and ensure each module has at least 1 lesson');
+    // Validate modules data
+    if (!validateModules()) {
+      toast.error('Please fix the validation errors before proceeding');
       return;
     }
 
@@ -283,9 +414,9 @@ const AddCourse = () => {
 
   // Step 3: Lessons Form
   const handleLessonsSubmit = async () => {
-    const incompleteLessons = lessons.filter(lesson => !lesson.title);
-    if (incompleteLessons.length > 0) {
-      toast.error('Please fill in all lesson titles');
+    // Validate lessons data
+    if (!validateLessons()) {
+      toast.error('Please fix the validation errors before proceeding');
       return;
     }
 
@@ -392,7 +523,7 @@ const AddCourse = () => {
 
   // Editor functions
   const addComponent = (type) => {
-    const componentConfig = componentLibrary[type];
+    const componentConfig = filteredComponentLibrary[type];
     if (!componentConfig) return;
 
     const newComponent = {
@@ -617,6 +748,8 @@ const AddCourse = () => {
     setCourseId(null);
     setCurrentStep(1);
     setIsEditorMode(false);
+    setErrors({});  // Clear all validation errors
+    setTouched({}); // Clear all touched states
     toast.success('Starting a new course!');
   };
 
@@ -889,213 +1022,176 @@ const AddCourse = () => {
           </div>
         );
 
-      case componentTypes.QUIZ:
+      case componentTypes.PEACH_BOX:
         return (
           <div className="space-y-3">
             <div>
-              <label className="block text-xs font-medium mb-1 text-gray-700">Title</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Section Title</label>
               <input
                 type="text"
                 value={componentData.title || ''}
                 onChange={(e) => handleComponentDataChange('title', e.target.value)}
                 className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
-                placeholder="Quiz title"
+                placeholder="Section title"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium mb-1 text-gray-700">Question</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Box Title</label>
+              <input
+                type="text"
+                value={componentData.boxTitle || ''}
+                onChange={(e) => handleComponentDataChange('boxTitle', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Title inside the peach box"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Paragraph</label>
               <textarea
-                value={componentData.question || ''}
-                onChange={(e) => handleComponentDataChange('question', e.target.value)}
+                value={componentData.paragraph || ''}
+                onChange={(e) => handleComponentDataChange('paragraph', e.target.value)}
+                rows={3}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Main paragraph content..."
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Italic Lines</label>
+              <input
+                type="text"
+                value={componentData.italicLines || ''}
+                onChange={(e) => handleComponentDataChange('italicLines', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Ending lines in italic"
+              />
+            </div>
+          </div>
+        );
+
+      case componentTypes.EXERCISE_BOX:
+        return (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Section Title</label>
+              <input
+                type="text"
+                value={componentData.title || ''}
+                onChange={(e) => handleComponentDataChange('title', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Section title"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Situation</label>
+              <textarea
+                value={componentData.situation || ''}
+                onChange={(e) => handleComponentDataChange('situation', e.target.value)}
                 rows={2}
                 className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
-                placeholder="Enter your question..."
+                placeholder="Describe the situation for the exercise..."
               />
             </div>
             <div>
-              <label className="block text-xs font-medium mb-1 text-gray-700">Options</label>
-              <div className="space-y-2">
-                {(componentData.options || []).map((option, index) => (
-                  <div key={index} className="flex items-center space-x-2">
+              <label className="block text-xs font-medium mb-2 text-gray-700">Questions</label>
+              <div className="space-y-2 max-h-48 overflow-y-auto">
+                {(componentData.questions || []).map((q, index) => (
+                  <div key={index} className="p-2 border border-gray-200 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-xs font-medium text-gray-600">Question {index + 1}</span>
+                      {componentData.questions && componentData.questions.length > 1 && (
+                        <button
+                          onClick={() => {
+                            const newQuestions = componentData.questions.filter((_, i) => i !== index);
+                            handleComponentDataChange('questions', newQuestions);
+                          }}
+                          className="text-red-500 hover:text-red-700 text-xs px-1"
+                          type="button"
+                        >
+                          ✕
+                        </button>
+                      )}
+                    </div>
                     <input
                       type="text"
-                      value={option.text}
+                      value={q.question || ''}
                       onChange={(e) => {
-                        const newOptions = [...(componentData.options || [])];
-                        newOptions[index] = { ...option, text: e.target.value };
-                        handleComponentDataChange('options', newOptions);
+                        const newQuestions = [...(componentData.questions || [])];
+                        newQuestions[index] = { ...newQuestions[index], question: e.target.value };
+                        handleComponentDataChange('questions', newQuestions);
                       }}
-                      className="flex-1 px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
-                      placeholder={`Option ${String.fromCharCode(65 + index)}`}
+                      className="w-full px-2 py-1 text-xs border border-gray-300 rounded mb-1"
+                      placeholder="Enter question..."
                     />
                     <input
-                      type="radio"
-                      name="correctAnswer"
-                      checked={option.isCorrect}
-                      onChange={() => {
-                        const newOptions = (componentData.options || []).map((opt, idx) => ({
-                          ...opt,
-                          isCorrect: idx === index
-                        }));
-                        handleComponentDataChange('options', newOptions);
+                      type="text"
+                      value={q.placeholder || ''}
+                      onChange={(e) => {
+                        const newQuestions = [...(componentData.questions || [])];
+                        newQuestions[index] = { ...newQuestions[index], placeholder: e.target.value };
+                        handleComponentDataChange('questions', newQuestions);
                       }}
-                      className="text-blue-600"
+                      className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
+                      placeholder="Placeholder text for answer..."
                     />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const newOptions = (componentData.options || []).filter((_, idx) => idx !== index);
-                        handleComponentDataChange('options', newOptions);
-                      }}
-                      className="p-1 text-red-600 hover:text-red-800"
-                    >
-                      <FiTrash2 className="w-3 h-3" />
-                    </button>
                   </div>
                 ))}
                 <button
-                  type="button"
                   onClick={() => {
-                    const newOptions = [...(componentData.options || []), { text: '', isCorrect: false }];
-                    handleComponentDataChange('options', newOptions);
+                    const newQuestions = [...(componentData.questions || []), { question: '', placeholder: '' }];
+                    handleComponentDataChange('questions', newQuestions);
                   }}
-                  className="flex items-center space-x-1 text-xs text-blue-600 hover:text-blue-800"
+                  className="w-full py-1 border border-dashed border-gray-400 text-gray-600 text-xs rounded hover:bg-gray-50"
+                  type="button"
                 >
-                  <FiPlus className="w-3 h-3" />
-                  <span>Add Option</span>
+                  + Add Question
                 </button>
               </div>
             </div>
-            <div>
-              <label className="block text-xs font-medium mb-1 text-gray-700">Explanation</label>
-              <textarea
-                value={componentData.explanation || ''}
-                onChange={(e) => handleComponentDataChange('explanation', e.target.value)}
-                rows={2}
-                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
-                placeholder="Explain the answer..."
-              />
-            </div>
           </div>
         );
 
-      case componentTypes.INFO_BOX:
+      case componentTypes.GRAY_BOX:
         return (
           <div className="space-y-3">
             <div>
-              <label className="block text-xs font-medium mb-1 text-gray-700">Title</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Section Title</label>
               <input
                 type="text"
                 value={componentData.title || ''}
                 onChange={(e) => handleComponentDataChange('title', e.target.value)}
                 className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
-                placeholder="Info box title"
+                placeholder="Section title"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium mb-1 text-gray-700">Type</label>
-              <select
-                value={componentData.type || 'info'}
-                onChange={(e) => handleComponentDataChange('type', e.target.value)}
-                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
-              >
-                <option value="info">Info</option>
-                <option value="warning">Warning</option>
-                <option value="success">Success</option>
-                <option value="error">Error</option>
-                <option value="tip">Tip</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-xs font-medium mb-1 text-gray-700">Content</label>
-              <textarea
-                value={componentData.content || ''}
-                onChange={(e) => handleComponentDataChange('content', e.target.value)}
-                rows={3}
-                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
-                placeholder="Important information..."
-              />
-            </div>
-          </div>
-        );
-
-      case componentTypes.CUSTOM:
-        return (
-          <div className="space-y-3">
-            <div>
-              <label className="block text-xs font-medium mb-1 text-gray-700">Title</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Box Title</label>
               <input
                 type="text"
-                value={componentData.title || ''}
-                onChange={(e) => handleComponentDataChange('title', e.target.value)}
+                value={componentData.boxTitle || ''}
+                onChange={(e) => handleComponentDataChange('boxTitle', e.target.value)}
                 className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
-                placeholder="Custom component title"
+                placeholder="Title inside the gray box"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium mb-1 text-gray-700">Content</label>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Paragraph</label>
               <textarea
-                value={componentData.content || ''}
-                onChange={(e) => handleComponentDataChange('content', e.target.value)}
+                value={componentData.paragraph || ''}
+                onChange={(e) => handleComponentDataChange('paragraph', e.target.value)}
                 rows={3}
                 className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
-                placeholder="Your custom content..."
+                placeholder="Main paragraph content..."
               />
             </div>
             <div>
-              <label className="block text-xs font-medium mb-1 text-gray-700">Style</label>
-              <select
-                value={componentData.customStyle || 'default'}
-                onChange={(e) => handleComponentDataChange('customStyle', e.target.value)}
+              <label className="block text-xs font-medium mb-1 text-gray-700">Italic Lines</label>
+              <input
+                type="text"
+                value={componentData.italicLines || ''}
+                onChange={(e) => handleComponentDataChange('italicLines', e.target.value)}
                 className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
-              >
-                <option value="default">Default</option>
-                <option value="gradient">Gradient</option>
-                <option value="shadow">Shadow</option>
-                <option value="bordered">Bordered</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-xs font-medium mb-1 text-gray-700">Background Color</label>
-              <input
-                type="color"
-                value={componentData.backgroundColor || '#f3f4f6'}
-                onChange={(e) => handleComponentDataChange('backgroundColor', e.target.value)}
-                className="w-full h-8 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Ending lines in italic"
               />
-            </div>
-            <div>
-              <label className="block text-xs font-medium mb-1 text-gray-700">Text Color</label>
-              <input
-                type="color"
-                value={componentData.textColor || '#1f2937'}
-                onChange={(e) => handleComponentDataChange('textColor', e.target.value)}
-                className="w-full h-8 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-medium mb-1 text-gray-700">Border Radius (px)</label>
-              <input
-                type="range"
-                min="0"
-                max="50"
-                value={parseInt(componentData.borderRadius) || 8}
-                onChange={(e) => handleComponentDataChange('borderRadius', `${e.target.value}px`)}
-                className="w-full"
-              />
-              <span className="text-xs text-gray-500">{componentData.borderRadius || '8px'}</span>
-            </div>
-            <div>
-              <label className="block text-xs font-medium mb-1 text-gray-700">Padding (px)</label>
-              <input
-                type="range"
-                min="8"
-                max="64"
-                value={parseInt(componentData.padding) || 16}
-                onChange={(e) => handleComponentDataChange('padding', `${e.target.value}px`)}
-                className="w-full"
-              />
-              <span className="text-xs text-gray-500">{componentData.padding || '16px'}</span>
             </div>
           </div>
         );
@@ -1103,6 +1199,38 @@ const AddCourse = () => {
       default:
         return <div className="text-xs text-gray-500">Unknown component type</div>;
     }
+  };
+
+  // Render error summary
+  const renderErrorSummary = (stepErrors) => {
+    if (!stepErrors || Object.keys(stepErrors).length === 0) return null;
+
+    return (
+      <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+        <div className="flex items-start">
+          <div className="flex-shrink-0">
+            <span className="text-red-400 text-xl">⚠</span>
+          </div>
+          <div className="ml-3">
+            <h3 className="text-sm font-medium text-red-800">
+              Please fix the following validation errors:
+            </h3>
+            <div className="mt-2 text-sm text-red-700">
+              <ul className="list-disc pl-5 space-y-1">
+                {Object.entries(stepErrors).map(([key, error]) => (
+                  <li key={key}>
+                    {typeof error === 'string' ? error : 
+                     typeof error === 'object' ? Object.values(error).join(', ') : 
+                     'Please check this field'
+                    }
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   if (isEditorMode) {
@@ -1175,7 +1303,7 @@ const AddCourse = () => {
                     <h4 className="text-md font-semibold mb-3 text-gray-800">Add Components</h4>
                     <div className="max-h-80 overflow-y-auto pr-2">
                       <div className="grid grid-cols-1 gap-2">
-                        {Object.entries(componentLibrary).map(([type, config]) => (
+                        {Object.entries(filteredComponentLibrary).map(([type, config]) => (
                           <button
                             key={type}
                             onClick={() => addComponent(type)}
@@ -1218,7 +1346,7 @@ const AddCourse = () => {
                                 id: Date.now(),
                                 type: componentType,
                                 data: {
-                                  ...componentLibrary[componentType].defaultData,
+                                  ...filteredComponentLibrary[componentType].defaultData,
                                   title: file.name.split('.')[0],
                                   [fieldName]: url
                                 }
@@ -1242,7 +1370,7 @@ const AddCourse = () => {
                         <p className="text-xs text-gray-500 italic">No components added yet</p>
                       ) : (
                         currentLessonContent.map((component) => {
-                          const config = componentLibrary[component.type];
+                          const config = filteredComponentLibrary[component.type];
                           return (
                             <div
                               key={component.id}
@@ -1326,7 +1454,7 @@ const AddCourse = () => {
                   ) : (
                     <div className="space-y-6">
                       {currentLessonContent.map((component) => {
-                        const ComponentRenderer = componentLibrary[component.type]?.component;
+                        const ComponentRenderer = filteredComponentLibrary[component.type]?.component;
                         if (!ComponentRenderer) return null;
 
                         return (
@@ -1339,7 +1467,14 @@ const AddCourse = () => {
                             }`}
                             onClick={() => selectComponent(component)}
                           >
-                            <ComponentRenderer data={component.data} />
+                            <ComponentRenderer 
+                              data={component.data} 
+                              isEditMode={component.type === componentTypes.EXERCISE_BOX}
+                              onUpdate={component.type === componentTypes.EXERCISE_BOX ? 
+                                (newData) => updateComponent(component.id, newData) : 
+                                undefined
+                              }
+                            />
                           </div>
                         );
                       })}
@@ -1419,6 +1554,8 @@ const AddCourse = () => {
               <form onSubmit={handleCourseSubmit} className="space-y-6">
                 <h2 className="text-2xl font-semibold mb-6">Course Information</h2>
                 
+                {renderErrorSummary(errors)}
+                
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Course Title *
@@ -1426,11 +1563,24 @@ const AddCourse = () => {
                   <input
                     type="text"
                     value={courseData.title}
-                    onChange={(e) => setCourseData(prev => ({ ...prev, title: e.target.value }))}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onChange={(e) => {
+                      setCourseData(prev => ({ ...prev, title: e.target.value }));
+                      handleFieldChange('title', e.target.value);
+                    }}
+                    onBlur={() => setTouched(prev => ({ ...prev, title: true }))}
+                    className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
+                      errors.title && touched.title
+                        ? 'border-red-500 focus:ring-red-500 bg-red-50' 
+                        : 'border-gray-300 focus:ring-blue-500'
+                    }`}
                     placeholder="Enter course title"
-                    required
                   />
+                  {errors.title && touched.title && (
+                    <p className="mt-1 text-sm text-red-600 flex items-center">
+                      <span className="mr-1">⚠</span>
+                      {errors.title}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -1439,12 +1589,28 @@ const AddCourse = () => {
                   </label>
                   <textarea
                     value={courseData.description}
-                    onChange={(e) => setCourseData(prev => ({ ...prev, description: e.target.value }))}
+                    onChange={(e) => {
+                      setCourseData(prev => ({ ...prev, description: e.target.value }));
+                      handleFieldChange('description', e.target.value);
+                    }}
+                    onBlur={() => setTouched(prev => ({ ...prev, description: true }))}
                     rows={4}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
+                      errors.description && touched.description
+                        ? 'border-red-500 focus:ring-red-500 bg-red-50' 
+                        : 'border-gray-300 focus:ring-blue-500'
+                    }`}
                     placeholder="Describe your course"
-                    required
                   />
+                  {errors.description && touched.description && (
+                    <p className="mt-1 text-sm text-red-600 flex items-center">
+                      <span className="mr-1">⚠</span>
+                      {errors.description}
+                    </p>
+                  )}
+                  <p className="mt-1 text-xs text-gray-500">
+                    {courseData.description.length}/1000 characters
+                  </p>
                 </div>
 
                 <div>
@@ -1482,11 +1648,27 @@ const AddCourse = () => {
                     min="1"
                     max="20"
                     value={courseData.moduleNumbers}
-                    onChange={(e) => setCourseData(prev => ({ ...prev, moduleNumbers: parseInt(e.target.value) }))}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Enter number of modules"
-                    required
+                    onChange={(e) => {
+                      setCourseData(prev => ({ ...prev, moduleNumbers: parseInt(e.target.value) || 0 }));
+                      handleFieldChange('moduleNumbers', parseInt(e.target.value) || 0);
+                    }}
+                    onBlur={() => setTouched(prev => ({ ...prev, moduleNumbers: true }))}
+                    className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
+                      errors.moduleNumbers && touched.moduleNumbers
+                        ? 'border-red-500 focus:ring-red-500 bg-red-50' 
+                        : 'border-gray-300 focus:ring-blue-500'
+                    }`}
+                    placeholder="Enter number of modules (1-20)"
                   />
+                  {errors.moduleNumbers && touched.moduleNumbers && (
+                    <p className="mt-1 text-sm text-red-600 flex items-center">
+                      <span className="mr-1">⚠</span>
+                      {errors.moduleNumbers}
+                    </p>
+                  )}
+                  <p className="mt-1 text-xs text-gray-500">
+                    Recommended: 3-8 modules for optimal course structure
+                  </p>
                 </div>
 
                 <button
@@ -1504,6 +1686,8 @@ const AddCourse = () => {
               <div className="space-y-6">
                 <h2 className="text-2xl font-semibold mb-6">Course Modules</h2>
                 
+                {renderErrorSummary(errors)}
+                
                 {modules.map((module, index) => (
                   <div key={index} className="border border-gray-200 rounded-lg p-4">
                     <h3 className="text-lg font-medium mb-4">Module {module.order}</h3>
@@ -1520,10 +1704,22 @@ const AddCourse = () => {
                             const newModules = [...modules];
                             newModules[index].title = e.target.value;
                             setModules(newModules);
+                            handleFieldChange('title', e.target.value, index, true, 'title');
                           }}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          onBlur={() => setTouched(prev => ({ ...prev, [`module_${index}.title`]: true }))}
+                          className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${
+                            errors[`module_${index}`]?.title && touched[`module_${index}.title`]
+                              ? 'border-red-500 focus:ring-red-500 bg-red-50' 
+                              : 'border-gray-300 focus:ring-blue-500'
+                          }`}
                           placeholder="Enter module title"
                         />
+                        {errors[`module_${index}`]?.title && touched[`module_${index}.title`] && (
+                          <p className="mt-1 text-sm text-red-600 flex items-center">
+                            <span className="mr-1">⚠</span>
+                            {errors[`module_${index}`].title}
+                          </p>
+                        )}
                       </div>
                       
                       <div>
@@ -1533,17 +1729,29 @@ const AddCourse = () => {
                         <input
                           type="number"
                           min="1"
+                          max="50"
                           value={module.lessonNumber}
                           onChange={(e) => {
                             const newModules = [...modules];
-                            const value = parseInt(e.target.value) || 1; // Ensure minimum 1
-                            newModules[index].lessonNumber = Math.max(1, value);
+                            const value = parseInt(e.target.value) || 1;
+                            newModules[index].lessonNumber = Math.max(1, Math.min(50, value));
                             setModules(newModules);
+                            handleFieldChange('lessonNumber', newModules[index].lessonNumber, index, true, 'lessonNumber');
                           }}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          placeholder="Number of lessons"
-                          required
+                          onBlur={() => setTouched(prev => ({ ...prev, [`module_${index}.lessonNumber`]: true }))}
+                          className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${
+                            errors[`module_${index}`]?.lessonNumber && touched[`module_${index}.lessonNumber`]
+                              ? 'border-red-500 focus:ring-red-500 bg-red-50' 
+                              : 'border-gray-300 focus:ring-blue-500'
+                          }`}
+                          placeholder="Number of lessons (1-50)"
                         />
+                        {errors[`module_${index}`]?.lessonNumber && touched[`module_${index}.lessonNumber`] && (
+                          <p className="mt-1 text-sm text-red-600 flex items-center">
+                            <span className="mr-1">⚠</span>
+                            {errors[`module_${index}`].lessonNumber}
+                          </p>
+                        )}
                       </div>
                     </div>
                     
@@ -1557,11 +1765,26 @@ const AddCourse = () => {
                           const newModules = [...modules];
                           newModules[index].description = e.target.value;
                           setModules(newModules);
+                          handleFieldChange('description', e.target.value, index, true, 'description');
                         }}
+                        onBlur={() => setTouched(prev => ({ ...prev, [`module_${index}.description`]: true }))}
                         rows={3}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${
+                          errors[`module_${index}`]?.description && touched[`module_${index}.description`]
+                            ? 'border-red-500 focus:ring-red-500 bg-red-50' 
+                            : 'border-gray-300 focus:ring-blue-500'
+                        }`}
                         placeholder="Describe this module"
                       />
+                      {errors[`module_${index}`]?.description && touched[`module_${index}.description`] && (
+                        <p className="mt-1 text-sm text-red-600 flex items-center">
+                          <span className="mr-1">⚠</span>
+                          {errors[`module_${index}`].description}
+                        </p>
+                      )}
+                      <p className="mt-1 text-xs text-gray-500">
+                        {module.description.length}/500 characters
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -1580,6 +1803,8 @@ const AddCourse = () => {
             {currentStep === 3 && (
               <div className="space-y-6">
                 <h2 className="text-2xl font-semibold mb-6">Lesson Structure</h2>
+                
+                {renderErrorSummary(errors)}
                 
                 {modules.map((module, moduleIndex) => (
                   <div key={moduleIndex} className="border border-gray-200 rounded-lg p-4">
@@ -1605,11 +1830,23 @@ const AddCourse = () => {
                                   if (newLessons[lessonGlobalIndex]) {
                                     newLessons[lessonGlobalIndex].title = e.target.value;
                                     setLessons(newLessons);
+                                    handleFieldChange('title', e.target.value, lessonGlobalIndex, false);
                                   }
                                 }}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                onBlur={() => setTouched(prev => ({ ...prev, [`lesson_${lessonGlobalIndex}`]: true }))}
+                                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${
+                                  errors[`lesson_${lessonGlobalIndex}`] && touched[`lesson_${lessonGlobalIndex}`]
+                                    ? 'border-red-500 focus:ring-red-500 bg-red-50' 
+                                    : 'border-gray-300 focus:ring-blue-500'
+                                }`}
                                 placeholder="Enter lesson title"
                               />
+                              {errors[`lesson_${lessonGlobalIndex}`] && touched[`lesson_${lessonGlobalIndex}`] && (
+                                <p className="mt-1 text-sm text-red-600 flex items-center">
+                                  <span className="mr-1">⚠</span>
+                                  {errors[`lesson_${lessonGlobalIndex}`]}
+                                </p>
+                              )}
                             </div>
                             
                             <div>
