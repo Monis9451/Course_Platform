@@ -9,6 +9,7 @@ import HeadingContent from './HeadingContent';
 import PeachBox from './PeachBox';
 import ExerciseBox from './ExerciseBox';
 import GrayBox from './GrayBox';
+import LeftBorderBox from './LeftBorderBox';
 
 export const componentTypes = {
   HEADING: 'heading',
@@ -21,6 +22,7 @@ export const componentTypes = {
   PEACH_BOX: 'peach_box',
   EXERCISE_BOX: 'exercise_box',
   GRAY_BOX: 'gray_box',
+  LEFT_BORDER_BOX: 'left_border_box',
   CUSTOM: 'custom',
   PARAGRAPH: 'paragraph',
   BULLET_LIST: 'bullet_list',
@@ -136,6 +138,17 @@ export const componentLibrary = {
       boxTitle: 'Example: Title',
       paragraph: 'Example: Paragraph',
       italicLines: 'Example: Some ending lines in italic'
+    }
+  },
+  [componentTypes.LEFT_BORDER_BOX]: {
+    name: 'Left Border Box',
+    component: LeftBorderBox,
+    defaultData: {
+      title: 'Left Border Box Section',
+      boxTitle: 'Example: Title',
+      paragraph: 'Example: Paragraph',
+      quote: 'Example: Some quote',
+      footerText: 'Example: Text'
     }
   },
   [componentTypes.CUSTOM]: {

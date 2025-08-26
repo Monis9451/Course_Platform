@@ -35,7 +35,8 @@ const allowedComponents = [
   componentTypes.VIDEO,
   componentTypes.PEACH_BOX,
   componentTypes.EXERCISE_BOX,
-  componentTypes.GRAY_BOX
+  componentTypes.GRAY_BOX,
+  componentTypes.LEFT_BORDER_BOX
 ];
 
 const filteredComponentLibrary = Object.fromEntries(
@@ -1191,6 +1192,62 @@ const AddCourse = () => {
                 onChange={(e) => handleComponentDataChange('italicLines', e.target.value)}
                 className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
                 placeholder="Ending lines in italic"
+              />
+            </div>
+          </div>
+        );
+
+      case componentTypes.LEFT_BORDER_BOX:
+        return (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Section Title</label>
+              <input
+                type="text"
+                value={componentData.title || ''}
+                onChange={(e) => handleComponentDataChange('title', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Section title"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Box Title</label>
+              <input
+                type="text"
+                value={componentData.boxTitle || ''}
+                onChange={(e) => handleComponentDataChange('boxTitle', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Bold title inside the box"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Paragraph</label>
+              <textarea
+                value={componentData.paragraph || ''}
+                onChange={(e) => handleComponentDataChange('paragraph', e.target.value)}
+                rows={3}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Main paragraph content..."
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Quote</label>
+              <input
+                type="text"
+                value={componentData.quote || ''}
+                onChange={(e) => handleComponentDataChange('quote', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Italic quote text"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Footer Text</label>
+              <input
+                type="text"
+                value={componentData.footerText || ''}
+                onChange={(e) => handleComponentDataChange('footerText', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Small footer text"
               />
             </div>
           </div>
