@@ -11,6 +11,7 @@ import ExerciseBox from './ExerciseBox';
 import GrayBox from './GrayBox';
 import LeftBorderBox from './LeftBorderBox';
 import OrderedListBox from './OrderedListBox';
+import QuestionCardBox from './QuestionCardBox';
 
 export const componentTypes = {
   HEADING: 'heading',
@@ -25,6 +26,7 @@ export const componentTypes = {
   GRAY_BOX: 'gray_box',
   LEFT_BORDER_BOX: 'left_border_box',
   ORDERED_LIST_BOX: 'ordered_list_box',
+  QUESTION_CARD_BOX: 'question_card_box',
   CUSTOM: 'custom',
   PARAGRAPH: 'paragraph',
   BULLET_LIST: 'bullet_list',
@@ -164,6 +166,21 @@ export const componentLibrary = {
         { text: 'Example: point 1' }
       ],
       footerText: 'Example: some italic lines in last'
+    }
+  },
+  [componentTypes.QUESTION_CARD_BOX]: {
+    name: 'Question Cards',
+    component: QuestionCardBox,
+    defaultData: {
+      title: 'Question Cards Section',
+      questions: [
+        {
+          questionTitle: 'Example: title',
+          questionText: 'Example: some question',
+          placeholder: 'Example: Write your response here...',
+          consideration: 'Example: some consideration and suggestion'
+        }
+      ]
     }
   },
   [componentTypes.CUSTOM]: {

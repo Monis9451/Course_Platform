@@ -37,7 +37,8 @@ const allowedComponents = [
   componentTypes.EXERCISE_BOX,
   componentTypes.GRAY_BOX,
   componentTypes.LEFT_BORDER_BOX,
-  componentTypes.ORDERED_LIST_BOX
+  componentTypes.ORDERED_LIST_BOX,
+  componentTypes.QUESTION_CARD_BOX
 ];
 
 const filteredComponentLibrary = Object.fromEntries(
@@ -1347,6 +1348,112 @@ const AddCourse = () => {
           </div>
         );
 
+      case componentTypes.QUESTION_CARD_BOX:
+        return (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Section Title</label>
+              <input
+                type="text"
+                value={componentData.title || ''}
+                onChange={(e) => handleComponentDataChange('title', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Section title"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-2 text-gray-700">Question Cards</label>
+              <div className="space-y-3 max-h-64 overflow-y-auto">
+                {(componentData.questions || []).map((question, index) => (
+                  <div key={index} className="p-3 border border-gray-200 rounded bg-gray-50">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-xs font-medium text-gray-600">Card {index + 1}</span>
+                      {componentData.questions && componentData.questions.length > 1 && (
+                        <button
+                          onClick={() => {
+                            const newQuestions = componentData.questions.filter((_, i) => i !== index);
+                            handleComponentDataChange('questions', newQuestions);
+                          }}
+                          className="text-red-500 hover:text-red-700 text-xs px-1"
+                          type="button"
+                        >
+                          ✕
+                        </button>
+                      )}
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <input
+                        type="text"
+                        value={question.questionTitle || ''}
+                        onChange={(e) => {
+                          const newQuestions = [...(componentData.questions || [])];
+                          newQuestions[index] = { ...newQuestions[index], questionTitle: e.target.value };
+                          handleComponentDataChange('questions', newQuestions);
+                        }}
+                        className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
+                        placeholder="Question title..."
+                      />
+                      
+                      <textarea
+                        value={question.questionText || ''}
+                        onChange={(e) => {
+                          const newQuestions = [...(componentData.questions || [])];
+                          newQuestions[index] = { ...newQuestions[index], questionText: e.target.value };
+                          handleComponentDataChange('questions', newQuestions);
+                        }}
+                        rows={2}
+                        className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
+                        placeholder="Question text..."
+                      />
+                      
+                      <input
+                        type="text"
+                        value={question.placeholder || ''}
+                        onChange={(e) => {
+                          const newQuestions = [...(componentData.questions || [])];
+                          newQuestions[index] = { ...newQuestions[index], placeholder: e.target.value };
+                          handleComponentDataChange('questions', newQuestions);
+                        }}
+                        className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
+                        placeholder="Textarea placeholder..."
+                      />
+                      
+                      <input
+                        type="text"
+                        value={question.consideration || ''}
+                        onChange={(e) => {
+                          const newQuestions = [...(componentData.questions || [])];
+                          newQuestions[index] = { ...newQuestions[index], consideration: e.target.value };
+                          handleComponentDataChange('questions', newQuestions);
+                        }}
+                        className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
+                        placeholder="Consideration/suggestion text..."
+                      />
+                    </div>
+                  </div>
+                ))}
+                
+                <button
+                  onClick={() => {
+                    const newQuestions = [...(componentData.questions || []), { 
+                      questionTitle: '', 
+                      questionText: '', 
+                      placeholder: '', 
+                      consideration: '' 
+                    }];
+                    handleComponentDataChange('questions', newQuestions);
+                  }}
+                  className="w-full py-2 border border-dashed border-gray-400 text-gray-600 text-xs rounded hover:bg-gray-50"
+                  type="button"
+                >
+                  + Add Question Card
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+
       default:
         return <div className="text-xs text-gray-500">Unknown component type</div>;
     }
@@ -1620,8 +1727,8 @@ const AddCourse = () => {
                           >
                             <ComponentRenderer 
                               data={component.data} 
-                              isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX}
-                              onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX ? 
+                              isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX}
+                              onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX ? 
                                 (newData) => updateComponent(component.id, newData) : 
                                 undefined
                               }
