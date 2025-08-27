@@ -13,6 +13,7 @@ import LeftBorderBox from './LeftBorderBox';
 import OrderedListBox from './OrderedListBox';
 import QuestionCardBox from './QuestionCardBox';
 import CheckboxList from './CheckboxList';
+import MarkCompleteBox from './MarkCompleteBox';
 
 export const componentTypes = {
   HEADING: 'heading',
@@ -29,6 +30,7 @@ export const componentTypes = {
   ORDERED_LIST_BOX: 'ordered_list_box',
   QUESTION_CARD_BOX: 'question_card_box',
   CHECKBOX_LIST: 'checkbox_list',
+  MARK_COMPLETE_BOX: 'mark_complete_box',
   CUSTOM: 'custom',
   PARAGRAPH: 'paragraph',
   BULLET_LIST: 'bullet_list',
@@ -192,6 +194,19 @@ export const componentLibrary = {
       title: 'Checkbox List Section',
       checkboxes: [
         { text: 'Example: check 1', checked: false }
+      ]
+    }
+  },
+  [componentTypes.MARK_COMPLETE_BOX]: {
+    name: 'Mark Complete Box',
+    component: MarkCompleteBox,
+    defaultData: {
+      title: 'Mark Complete Section',
+      boxTitle: 'Example: Title',
+      description: 'Example: Description text',
+      question: 'Example: Some question',
+      checkboxes: [
+        { text: 'Example: Checkbox 1', checked: false }
       ]
     }
   },
