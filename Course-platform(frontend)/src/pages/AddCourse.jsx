@@ -151,12 +151,29 @@ const AddCourse = () => {
       newErrors.moduleNumbers = 'Maximum 20 modules are allowed';
     }
 
+    // Image validation (optional but helpful)
+    if (selectedThumbnailFile) {
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+      if (!allowedTypes.includes(selectedThumbnailFile.type)) {
+        newErrors.thumbnail = 'Please upload a valid image file (JPEG, PNG, WebP, or GIF)';
+      }
+      if (selectedThumbnailFile.size > 5 * 1024 * 1024) {
+        newErrors.thumbnail = 'Image size must be less than 5MB';
+      }
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const validateModules = () => {
     const newErrors = {};
+    
+    if (modules.length === 0) {
+      newErrors.general = 'At least one module is required';
+      setErrors(newErrors);
+      return false;
+    }
     
     modules.forEach((module, index) => {
       const moduleErrors = {};
@@ -168,6 +185,14 @@ const AddCourse = () => {
         moduleErrors.title = 'Module title must be at least 3 characters long';
       } else if (module.title.trim().length > 100) {
         moduleErrors.title = 'Module title must be less than 100 characters';
+      }
+
+      // Check for duplicate module titles
+      const duplicates = modules.filter((m, i) => 
+        i !== index && m.title.trim().toLowerCase() === module.title.trim().toLowerCase()
+      );
+      if (duplicates.length > 0 && module.title.trim()) {
+        moduleErrors.title = 'Module title must be unique';
       }
 
       // Description validation
@@ -198,6 +223,12 @@ const AddCourse = () => {
   const validateLessons = () => {
     const newErrors = {};
     
+    if (lessons.length === 0) {
+      newErrors.general = 'At least one lesson is required';
+      setErrors(newErrors);
+      return false;
+    }
+    
     lessons.forEach((lesson, index) => {
       if (!lesson.title.trim()) {
         newErrors[`lesson_${index}`] = 'Lesson title is required';
@@ -206,10 +237,84 @@ const AddCourse = () => {
       } else if (lesson.title.trim().length > 100) {
         newErrors[`lesson_${index}`] = 'Lesson title must be less than 100 characters';
       }
+      
+      // Check for duplicate lesson titles within the same module
+      const duplicates = lessons.filter((l, i) => 
+        i !== index && 
+        l.moduleID === lesson.moduleID && 
+        l.title.trim().toLowerCase() === lesson.title.trim().toLowerCase()
+      );
+      if (duplicates.length > 0) {
+        newErrors[`lesson_${index}`] = 'Lesson title must be unique within the module';
+      }
     });
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  const validateLessonContent = () => {
+    const errors = [];
+    
+    if (currentLessonContent.length === 0) {
+      errors.push('Lesson must contain at least one component');
+      return errors;
+    }
+
+    currentLessonContent.forEach((component, index) => {
+      const config = filteredComponentLibrary[component.type];
+      if (!config) {
+        errors.push(`Invalid component type at position ${index + 1}`);
+        return;
+      }
+
+      // Basic component data validation
+      switch (component.type) {
+        case componentTypes.HEADING:
+          if (!component.data?.title?.trim()) {
+            errors.push(`Heading component at position ${index + 1} requires a title`);
+          }
+          break;
+        case componentTypes.TEXT:
+          if (!component.data?.content?.trim()) {
+            errors.push(`Text component at position ${index + 1} requires content`);
+          }
+          break;
+        case componentTypes.LEFT_BORDER_BOX:
+          if (!component.data?.title?.trim()) {
+            errors.push(`Left Border Box at position ${index + 1} requires a section title`);
+          }
+          if (!component.data?.boxTitle?.trim()) {
+            errors.push(`Left Border Box at position ${index + 1} requires a box title`);
+          }
+          break;
+        case componentTypes.EXERCISE_BOX:
+          if (!component.data?.title?.trim()) {
+            errors.push(`Exercise Box at position ${index + 1} requires a title`);
+          }
+          if (!component.data?.questions || component.data.questions.length === 0) {
+            errors.push(`Exercise Box at position ${index + 1} requires at least one question`);
+          }
+          break;
+        case componentTypes.IMAGE:
+          if (!component.data?.imageURL?.trim()) {
+            errors.push(`Image component at position ${index + 1} requires an image`);
+          }
+          break;
+        case componentTypes.VIDEO:
+          if (!component.data?.videoURL?.trim()) {
+            errors.push(`Video component at position ${index + 1} requires a video URL`);
+          }
+          break;
+        case componentTypes.AUDIO:
+          if (!component.data?.audioURL?.trim()) {
+            errors.push(`Audio component at position ${index + 1} requires an audio URL`);
+          }
+          break;
+      }
+    });
+
+    return errors;
   };
 
   const handleFieldChange = (field, value, index = null, isModule = false, moduleField = null) => {
@@ -569,9 +674,16 @@ const AddCourse = () => {
     setComponentData(component.data);
   };
 
-  // Save lesson content
-  const saveLessonContent = async () => {
-    if (!lessons[currentLessonIndex]) return;
+  // Save lesson content with validation
+  const saveLessonContent = async (showSuccess = true) => {
+    if (!lessons[currentLessonIndex]) return false;
+
+    // Validate lesson content before saving
+    const contentErrors = validateLessonContent();
+    if (contentErrors.length > 0) {
+      toast.error(`Content validation failed: ${contentErrors[0]}`);
+      return false;
+    }
 
     setLoading(true);
     try {
@@ -591,7 +703,8 @@ const AddCourse = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to save lesson content');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to save lesson content');
       }
 
       // Update lessons array
@@ -599,21 +712,30 @@ const AddCourse = () => {
       updatedLessons[currentLessonIndex].content = currentLessonContent;
       setLessons(updatedLessons);
 
-      toast.success('Lesson content saved successfully!');
+      if (showSuccess) {
+        toast.success('Lesson content saved successfully!');
+      }
       await updateCourseProgress(); // Update progress timestamp
+      return true;
 
     } catch (error) {
       console.error('Error saving lesson content:', error);
-      toast.error('Failed to save lesson content');
+      toast.error(error.message || 'Failed to save lesson content');
+      return false;
     } finally {
       setLoading(false);
     }
   };
 
   // Navigate between lessons
-  const goToNextLesson = () => {
+  const goToNextLesson = async () => {
     if (currentLessonIndex < lessons.length - 1) {
-      saveLessonContent();
+      const saved = await saveLessonContent(false);
+      if (!saved) {
+        const confirmMove = window.confirm('Current lesson has validation errors. Do you want to continue without saving?');
+        if (!confirmMove) return;
+      }
+      
       setCurrentLessonIndex(currentLessonIndex + 1);
       setCurrentLessonContent(lessons[currentLessonIndex + 1]?.content || []);
       setSelectedComponent(null);
@@ -621,9 +743,14 @@ const AddCourse = () => {
     }
   };
 
-  const goToPreviousLesson = () => {
+  const goToPreviousLesson = async () => {
     if (currentLessonIndex > 0) {
-      saveLessonContent();
+      const saved = await saveLessonContent(false);
+      if (!saved) {
+        const confirmMove = window.confirm('Current lesson has validation errors. Do you want to continue without saving?');
+        if (!confirmMove) return;
+      }
+      
       setCurrentLessonIndex(currentLessonIndex - 1);
       setCurrentLessonContent(lessons[currentLessonIndex - 1]?.content || []);
       setSelectedComponent(null);
@@ -760,26 +887,53 @@ const AddCourse = () => {
   };
 
   // Mark course as completed
+  // Complete course creation with comprehensive validation
   const completeCourse = async () => {
     if (!courseId) return;
 
+    // Validate all lessons have content
+    const emptyLessons = lessons.filter((lesson, index) => {
+      const content = index === currentLessonIndex ? currentLessonContent : lesson.content;
+      return !content || content.length === 0;
+    });
+
+    if (emptyLessons.length > 0) {
+      toast.error(`${emptyLessons.length} lesson(s) are empty. Please add content to all lessons before completing the course.`);
+      return;
+    }
+
+    // Save current lesson content with validation
+    const saved = await saveLessonContent(false);
+    if (!saved) {
+      toast.error('Please fix validation errors in the current lesson before completing the course.');
+      return;
+    }
+
+    setLoading(true);
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/courses/${courseId}/complete`, {
         method: 'PUT',
         headers: {
+          'Content-Type': 'application/json',
           'Authorization': `Bearer ${authToken}`
         }
       });
 
-      if (response.ok) {
-        toast.success('Course completed successfully!');
-        navigate('/admin-dashboard');
-      } else {
-        throw new Error('Failed to mark course as completed');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to complete course');
       }
+
+      toast.success('Course completed successfully! 🎉');
+      setTimeout(() => {
+        navigate('/admin-dashboard');
+      }, 2000);
+
     } catch (error) {
       console.error('Error completing course:', error);
-      toast.error('Failed to complete course');
+      toast.error(error.message || 'Failed to complete course');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -1214,6 +1368,17 @@ const AddCourse = () => {
                 className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
                 placeholder="Section title"
               />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Layout</label>
+              <select
+                value={componentData.isHalfWidth ? 'half' : 'full'}
+                onChange={(e) => handleComponentDataChange('isHalfWidth', e.target.value === 'half')}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+              >
+                <option value="full">Full Width</option>
+                <option value="half">Half Width (2 per row)</option>
+              </select>
             </div>
             <div>
               <label className="block text-xs font-medium mb-1 text-gray-700">Box Title</label>
@@ -1817,6 +1982,29 @@ const AddCourse = () => {
                 <p className="text-sm text-gray-600">
                   Lesson {currentLessonIndex + 1} of {lessons.length}
                 </p>
+                
+                {/* Validation Progress */}
+                <div className="mt-2">
+                  <div className="flex items-center space-x-2">
+                    <div className="text-xs text-gray-500">
+                      Content Progress: {lessons.filter((lesson, index) => {
+                        const content = index === currentLessonIndex ? currentLessonContent : lesson.content;
+                        return content && content.length > 0;
+                      }).length}/{lessons.length} lessons
+                    </div>
+                    <div className="flex-1 bg-gray-200 rounded-full h-2 max-w-32">
+                      <div
+                        className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                        style={{
+                          width: `${(lessons.filter((lesson, index) => {
+                            const content = index === currentLessonIndex ? currentLessonContent : lesson.content;
+                            return content && content.length > 0;
+                          }).length / lessons.length) * 100}%`
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className="flex items-center space-x-2">
                 <button
@@ -2014,31 +2202,125 @@ const AddCourse = () => {
                     </div>
                   ) : (
                     <div className="space-y-6">
-                      {currentLessonContent.map((component) => {
-                        const ComponentRenderer = filteredComponentLibrary[component.type]?.component;
-                        if (!ComponentRenderer) return null;
-
-                        return (
-                          <div
-                            key={component.id}
-                            className={`transition-all duration-200 ${
-                              selectedComponent?.id === component.id 
-                                ? 'ring-2 ring-blue-400 ring-opacity-50 rounded-lg' 
-                                : ''
-                            }`}
-                            onClick={() => selectComponent(component)}
-                          >
-                            <ComponentRenderer 
-                              data={component.data} 
-                              isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX}
-                              onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX ? 
-                                (newData) => updateComponent(component.id, newData) : 
-                                undefined
-                              }
-                            />
-                          </div>
-                        );
-                      })}
+                      {(() => {
+                        const components = [];
+                        let i = 0;
+                        
+                        while (i < currentLessonContent.length) {
+                          const component = currentLessonContent[i];
+                          const ComponentRenderer = filteredComponentLibrary[component.type]?.component;
+                          
+                          if (!ComponentRenderer) {
+                            i++;
+                            continue;
+                          }
+                          
+                          // Check if this is a half-width LEFT_BORDER_BOX
+                          if (component.type === componentTypes.LEFT_BORDER_BOX && component.data.isHalfWidth) {
+                            // Look for next component to pair with
+                            const nextComponent = currentLessonContent[i + 1];
+                            const NextComponentRenderer = nextComponent?.type === componentTypes.LEFT_BORDER_BOX && 
+                              nextComponent?.data.isHalfWidth ? 
+                              filteredComponentLibrary[nextComponent.type]?.component : null;
+                            
+                            if (NextComponentRenderer) {
+                              // Render two half-width components in a row
+                              components.push(
+                                <div key={`pair-${component.id}-${nextComponent.id}`} className="flex flex-col md:flex-row gap-6">
+                                  <div
+                                    className={`flex-1 transition-all duration-200 ${
+                                      selectedComponent?.id === component.id 
+                                        ? 'ring-2 ring-blue-400 ring-opacity-50 rounded-lg' 
+                                        : ''
+                                    }`}
+                                    onClick={() => selectComponent(component)}
+                                  >
+                                    <ComponentRenderer 
+                                      data={component.data} 
+                                      isHalfWidth={true}
+                                      isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX}
+                                      onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX ? 
+                                        (newData) => updateComponent(component.id, newData) : 
+                                        undefined
+                                      }
+                                    />
+                                  </div>
+                                  <div
+                                    className={`flex-1 transition-all duration-200 ${
+                                      selectedComponent?.id === nextComponent.id 
+                                        ? 'ring-2 ring-blue-400 ring-opacity-50 rounded-lg' 
+                                        : ''
+                                    }`}
+                                    onClick={() => selectComponent(nextComponent)}
+                                  >
+                                    <NextComponentRenderer 
+                                      data={nextComponent.data} 
+                                      isHalfWidth={true}
+                                      isEditMode={nextComponent.type === componentTypes.EXERCISE_BOX || nextComponent.type === componentTypes.ORDERED_LIST_BOX || nextComponent.type === componentTypes.QUESTION_CARD_BOX || nextComponent.type === componentTypes.CHECKBOX_LIST || nextComponent.type === componentTypes.MARK_COMPLETE_BOX || nextComponent.type === componentTypes.UNORDERED_LIST_BOX}
+                                      onUpdate={nextComponent.type === componentTypes.EXERCISE_BOX || nextComponent.type === componentTypes.ORDERED_LIST_BOX || nextComponent.type === componentTypes.QUESTION_CARD_BOX || nextComponent.type === componentTypes.CHECKBOX_LIST || nextComponent.type === componentTypes.MARK_COMPLETE_BOX || nextComponent.type === componentTypes.UNORDERED_LIST_BOX ? 
+                                        (newData) => updateComponent(nextComponent.id, newData) : 
+                                        undefined
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                              );
+                              i += 2; // Skip next component as it's already rendered
+                            } else {
+                              // Render single half-width component taking half space
+                              components.push(
+                                <div key={component.id} className="flex flex-col md:flex-row gap-6">
+                                  <div
+                                    className={`flex-1 transition-all duration-200 ${
+                                      selectedComponent?.id === component.id 
+                                        ? 'ring-2 ring-blue-400 ring-opacity-50 rounded-lg' 
+                                        : ''
+                                    }`}
+                                    onClick={() => selectComponent(component)}
+                                  >
+                                    <ComponentRenderer 
+                                      data={component.data} 
+                                      isHalfWidth={true}
+                                      isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX}
+                                      onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX ? 
+                                        (newData) => updateComponent(component.id, newData) : 
+                                        undefined
+                                      }
+                                    />
+                                  </div>
+                                  <div className="flex-1"></div>
+                                </div>
+                              );
+                              i++;
+                            }
+                          } else {
+                            // Render full-width component normally
+                            components.push(
+                              <div
+                                key={component.id}
+                                className={`transition-all duration-200 ${
+                                  selectedComponent?.id === component.id 
+                                    ? 'ring-2 ring-blue-400 ring-opacity-50 rounded-lg' 
+                                    : ''
+                                }`}
+                                onClick={() => selectComponent(component)}
+                              >
+                                <ComponentRenderer 
+                                  data={component.data} 
+                                  isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX}
+                                  onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX ? 
+                                    (newData) => updateComponent(component.id, newData) : 
+                                    undefined
+                                  }
+                                />
+                              </div>
+                            );
+                            i++;
+                          }
+                        }
+                        
+                        return components;
+                      })()}
                     </div>
                   )}
                 </div>
@@ -2182,8 +2464,18 @@ const AddCourse = () => {
                     type="file"
                     accept="image/*"
                     onChange={handleCourseImageSelection}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
+                      errors.thumbnail
+                        ? 'border-red-500 focus:ring-red-500 bg-red-50' 
+                        : 'border-gray-300 focus:ring-blue-500'
+                    }`}
                   />
+                  {errors.thumbnail && (
+                    <p className="mt-1 text-sm text-red-600 flex items-center">
+                      <span className="mr-1">⚠</span>
+                      {errors.thumbnail}
+                    </p>
+                  )}
                   {(thumbnailPreview || courseData.imageURL) && (
                     <div className="mt-2">
                       <img
@@ -2198,6 +2490,9 @@ const AddCourse = () => {
                       )}
                     </div>
                   )}
+                  <p className="mt-1 text-xs text-gray-500">
+                    Supported formats: JPEG, PNG, WebP, GIF. Maximum size: 5MB
+                  </p>
                 </div>
 
                 <div>
