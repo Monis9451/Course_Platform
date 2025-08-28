@@ -14,6 +14,7 @@ import OrderedListBox from './OrderedListBox';
 import QuestionCardBox from './QuestionCardBox';
 import CheckboxList from './CheckboxList';
 import MarkCompleteBox from './MarkCompleteBox';
+import UnorderedListBox from './UnorderedListBox';
 
 export const componentTypes = {
   HEADING: 'heading',
@@ -31,6 +32,7 @@ export const componentTypes = {
   QUESTION_CARD_BOX: 'question_card_box',
   CHECKBOX_LIST: 'checkbox_list',
   MARK_COMPLETE_BOX: 'mark_complete_box',
+  UNORDERED_LIST_BOX: 'unordered_list_box',
   CUSTOM: 'custom',
   PARAGRAPH: 'paragraph',
   BULLET_LIST: 'bullet_list',
@@ -207,6 +209,21 @@ export const componentLibrary = {
       question: 'Example: Some question',
       checkboxes: [
         { text: 'Example: Checkbox 1', checked: false }
+      ]
+    }
+  },
+  [componentTypes.UNORDERED_LIST_BOX]: {
+    name: 'Unordered List Box',
+    component: UnorderedListBox,
+    defaultData: {
+      title: 'Unordered List Section',
+      sectionTitle: 'Example: Title',
+      description: 'Example: Description text',
+      listBoxes: [
+        {
+          title: 'Example: Safety First',
+          items: ['Example: list item 1']
+        }
       ]
     }
   },

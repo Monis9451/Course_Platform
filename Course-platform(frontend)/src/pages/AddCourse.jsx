@@ -40,7 +40,8 @@ const allowedComponents = [
   componentTypes.ORDERED_LIST_BOX,
   componentTypes.QUESTION_CARD_BOX,
   componentTypes.CHECKBOX_LIST,
-  componentTypes.MARK_COMPLETE_BOX
+  componentTypes.MARK_COMPLETE_BOX,
+  componentTypes.UNORDERED_LIST_BOX
 ];
 
 const filteredComponentLibrary = Object.fromEntries(
@@ -1632,6 +1633,130 @@ const AddCourse = () => {
           </div>
         );
 
+      case componentTypes.UNORDERED_LIST_BOX:
+        return (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Section Title</label>
+              <input
+                type="text"
+                value={componentData.title || ''}
+                onChange={(e) => handleComponentDataChange('title', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Section title"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Section Heading</label>
+              <input
+                type="text"
+                value={componentData.sectionTitle || ''}
+                onChange={(e) => handleComponentDataChange('sectionTitle', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Section heading"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Description</label>
+              <textarea
+                value={componentData.description || ''}
+                onChange={(e) => handleComponentDataChange('description', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 resize-none"
+                rows="2"
+                placeholder="Description text"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-2 text-gray-700">List Boxes</label>
+              <div className="space-y-3 max-h-64 overflow-y-auto">
+                {(componentData.listBoxes || []).map((listBox, boxIndex) => (
+                  <div key={boxIndex} className="p-3 border border-gray-200 rounded">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-xs font-medium text-gray-600">List Box {boxIndex + 1}</span>
+                      {componentData.listBoxes && componentData.listBoxes.length > 1 && (
+                        <button
+                          onClick={() => {
+                            const newListBoxes = componentData.listBoxes.filter((_, i) => i !== boxIndex);
+                            handleComponentDataChange('listBoxes', newListBoxes);
+                          }}
+                          className="text-red-500 hover:text-red-700 text-xs px-1"
+                          type="button"
+                        >
+                          ✕
+                        </button>
+                      )}
+                    </div>
+                    <div className="mb-2">
+                      <input
+                        type="text"
+                        value={listBox.title || ''}
+                        onChange={(e) => {
+                          const newListBoxes = [...(componentData.listBoxes || [])];
+                          newListBoxes[boxIndex] = { ...newListBoxes[boxIndex], title: e.target.value };
+                          handleComponentDataChange('listBoxes', newListBoxes);
+                        }}
+                        className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
+                        placeholder="List box title..."
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      {(listBox.items || []).map((item, itemIndex) => (
+                        <div key={itemIndex} className="flex items-center space-x-2">
+                          <input
+                            type="text"
+                            value={item || ''}
+                            onChange={(e) => {
+                              const newListBoxes = [...(componentData.listBoxes || [])];
+                              newListBoxes[boxIndex].items[itemIndex] = e.target.value;
+                              handleComponentDataChange('listBoxes', newListBoxes);
+                            }}
+                            className="flex-1 px-2 py-1 text-xs border border-gray-300 rounded"
+                            placeholder="List item..."
+                          />
+                          {listBox.items.length > 1 && (
+                            <button
+                              onClick={() => {
+                                const newListBoxes = [...(componentData.listBoxes || [])];
+                                newListBoxes[boxIndex].items = newListBoxes[boxIndex].items.filter((_, i) => i !== itemIndex);
+                                handleComponentDataChange('listBoxes', newListBoxes);
+                              }}
+                              className="text-red-500 hover:text-red-700 text-xs px-1"
+                              type="button"
+                            >
+                              ✕
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                      <button
+                        onClick={() => {
+                          const newListBoxes = [...(componentData.listBoxes || [])];
+                          newListBoxes[boxIndex].items = [...(newListBoxes[boxIndex].items || []), ''];
+                          handleComponentDataChange('listBoxes', newListBoxes);
+                        }}
+                        className="w-full py-1 border border-dashed border-gray-400 text-gray-600 text-xs rounded hover:bg-gray-50"
+                        type="button"
+                      >
+                        + Add Item
+                      </button>
+                    </div>
+                  </div>
+                ))}
+                <button
+                  onClick={() => {
+                    const newListBoxes = [...(componentData.listBoxes || []), { title: '', items: [''] }];
+                    handleComponentDataChange('listBoxes', newListBoxes);
+                  }}
+                  className="w-full py-2 border border-dashed border-gray-400 text-gray-600 text-xs rounded hover:bg-gray-50"
+                  type="button"
+                >
+                  + Add List Box
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+
       default:
         return <div className="text-xs text-gray-500">Unknown component type</div>;
     }
@@ -1905,8 +2030,8 @@ const AddCourse = () => {
                           >
                             <ComponentRenderer 
                               data={component.data} 
-                              isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX}
-                              onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX ? 
+                              isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX}
+                              onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX ? 
                                 (newData) => updateComponent(component.id, newData) : 
                                 undefined
                               }
