@@ -20,6 +20,8 @@ import Disclaimer from './pages/Disclaimer';
 import AdminDashboard from './pages/AdminDashboard';
 import UserAnalytics from './pages/UserAnalytics';
 import AddCourse from './pages/AddCourse';
+import TempCourseList from './pages/TempCourseList';
+import TempCourseContent from './pages/TempCourseContent';
 import Error from './pages/404';
 import './styles/standardColors.css'
 
@@ -47,6 +49,8 @@ const App = () => {
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/analytics" element={<UserAnalytics />} />
               <Route path="/admin/add-course" element={<AddCourse />} />
+              <Route path="/temp-course-content" element={<TempCourseList />} />
+              <Route path="/temp-course-content/:id" element={<TempCourseContent />} />
             </Route>
 
             <Route path="/about" element={<About />} />
