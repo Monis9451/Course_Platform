@@ -158,8 +158,7 @@ export const componentLibrary = {
       boxTitle: 'Example: Title',
       paragraph: 'Example: Paragraph',
       quote: 'Example: Some quote',
-      footerText: 'Example: Text',
-      isHalfWidth: false
+      footerText: 'Example: Text'
     }
   },
   [componentTypes.ORDERED_LIST_BOX]: {

@@ -1370,17 +1370,6 @@ const AddCourse = () => {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium mb-1 text-gray-700">Layout</label>
-              <select
-                value={componentData.isHalfWidth ? 'half' : 'full'}
-                onChange={(e) => handleComponentDataChange('isHalfWidth', e.target.value === 'half')}
-                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
-              >
-                <option value="full">Full Width</option>
-                <option value="half">Half Width (2 per row)</option>
-              </select>
-            </div>
-            <div>
               <label className="block text-xs font-medium mb-1 text-gray-700">Box Title</label>
               <input
                 type="text"
@@ -2215,16 +2204,15 @@ const AddCourse = () => {
                             continue;
                           }
                           
-                          // Check if this is a half-width LEFT_BORDER_BOX
-                          if (component.type === componentTypes.LEFT_BORDER_BOX && component.data.isHalfWidth) {
+                          // Check if this is a LEFT_BORDER_BOX (always treat as half-width)
+                          if (component.type === componentTypes.LEFT_BORDER_BOX) {
                             // Look for next component to pair with
                             const nextComponent = currentLessonContent[i + 1];
-                            const NextComponentRenderer = nextComponent?.type === componentTypes.LEFT_BORDER_BOX && 
-                              nextComponent?.data.isHalfWidth ? 
+                            const NextComponentRenderer = nextComponent?.type === componentTypes.LEFT_BORDER_BOX ? 
                               filteredComponentLibrary[nextComponent.type]?.component : null;
                             
                             if (NextComponentRenderer) {
-                              // Render two half-width components in a row
+                              // Render two LEFT_BORDER_BOX components in a row
                               components.push(
                                 <div key={`pair-${component.id}-${nextComponent.id}`} className="flex flex-col md:flex-row gap-6">
                                   <div
@@ -2267,7 +2255,7 @@ const AddCourse = () => {
                               );
                               i += 2; // Skip next component as it's already rendered
                             } else {
-                              // Render single half-width component taking half space
+                              // Render single LEFT_BORDER_BOX taking half space, other half remains empty
                               components.push(
                                 <div key={component.id} className="flex flex-col md:flex-row gap-6">
                                   <div
