@@ -43,65 +43,47 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
     })
   }
 
-  const getLessonIconType = (lesson, moduleIndex, lessonIndex) => {
+  const getLessonIconType = (lesson, moduleIndex) => {
+    // Use icon from database if available
+    if (lesson.icon) {
+      return lesson.icon;
+    }
+    
     // Welcome module (new moduleIndex 0)
     if (moduleIndex === 0) {
       return 'page';
     }
     
-    // Closing pages (moduleIndex 7, 8, 9)
-    if (moduleIndex >= 7) {
+    // Closing pages (last 3 modules)
+    const totalModules = workshopData.modules.length;
+    if (moduleIndex >= totalModules - 3) {
       return 'page';
     }
     
-    if (moduleIndex === 6 && lessonIndex === 0) {
-      return 'page';
-    }
-    
-    if (lesson.iconType) {
-      return lesson.iconType;
-    }
-    
+    // Default icon detection based on title
     const title = lesson.title ? lesson.title.toLowerCase() : '';
     
-    if (moduleIndex === 6 && title === "creating your ongoing healing practice") {
-      return 'page';
-    }
-    
     if (title.includes('exercise') || 
-        (title.includes('practice') && !title.includes('creating your ongoing healing practice') && !title.includes('mindful movement practice')) || 
-        title.includes('checklist')) {
+        title.includes('practice') || 
+        title.includes('checklist') ||
+        title.includes('assessment') ||
+        title.includes('reflection') ||
+        title.includes('writing') ||
+        title.includes('timeline') ||
+        title.includes('map') ||
+        title.includes('letter')) {
       return 'checkbox';
-    } else if (title.includes('audio') || title.includes('listen') || title.includes('podcast')) {
+    } else if (title.includes('meditation') ||
+             title.includes('visualisation') ||
+             title.includes('visualization') ||
+             title.includes('audio') || 
+             title.includes('listen') || 
+             title.includes('guided') ||
+             title.includes('breathwork')) {
       return 'speaker';
     }
     
-    // Module 1: Understanding Trauma & the Body (now moduleIndex 1)
-    if (moduleIndex === 1) {
-      if (lessonIndex <= 3) return 'page';
-      if (lessonIndex >= 4 && lessonIndex <= 6) return 'checkbox';
-      if (lessonIndex === 7) return 'speaker';
-    } else if (moduleIndex === 2) { // Module 2: Reconnecting with the Body
-      if (lessonIndex === 0 || lessonIndex === 2) return 'page';
-      if (lessonIndex === 1 || lessonIndex === 3 || lessonIndex === 5 || lessonIndex === 6) return 'speaker';
-      if (lessonIndex === 4) return 'checkbox';
-    } else if (moduleIndex === 3) { // Module 3: Inner Child Healing
-      if (lessonIndex <= 2) return 'page';
-      if (lessonIndex === 3 || lessonIndex === 7) return 'speaker';
-      if (lessonIndex >= 4 && lessonIndex <= 6) return 'checkbox';
-    } else if (moduleIndex === 4) { // Module 4: The Inner Narrative
-      if (lessonIndex <= 2) return 'page';
-      if (lessonIndex <= 5) return 'checkbox';
-      if (lessonIndex === 6) return 'speaker';
-    } else if (moduleIndex === 5) { // Module 5: Releasing Emotional Baggage
-      if (lessonIndex <= 2) return 'page';
-      if (lessonIndex <= 5) return 'checkbox';
-      if (lessonIndex === 6) return 'speaker';
-    } else if (moduleIndex === 6) { // Module 6: Integration & Forward Momentum
-      if (lessonIndex >= 1 && lessonIndex <= 2) return 'page';
-      if (lessonIndex >= 3 && lessonIndex <= 5) return 'checkbox';
-    }
-    
+    // Default to page icon
     return 'page';
   }
 
@@ -243,7 +225,7 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
                     </div>
 
                     <div className="mr-3 ml-14">
-                      {renderLessonIcon(getLessonIconType(lesson, moduleIndex, lessonIndex), selectedLesson?.moduleIndex === moduleIndex && selectedLesson?.lessonIndex === lessonIndex)}
+                      {renderLessonIcon(getLessonIconType(lesson, moduleIndex), selectedLesson?.moduleIndex === moduleIndex && selectedLesson?.lessonIndex === lessonIndex)}
                     </div>
 
                     <div className="flex-1 min-w-0">
