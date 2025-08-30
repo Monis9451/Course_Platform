@@ -159,6 +159,51 @@ const getIncompleteCoursesWithDetails = async () => {
     return coursesWithDetails;
 }
 
+const getCourseWithDetails = async (courseID) => {
+    // Get the course
+    const {data: course, error: courseError} = await supabase
+        .from('course')
+        .select('*')
+        .eq('courseID', courseID)
+        .single();
+    
+    if (courseError) {
+        throw new Error(`Error fetching course: ${courseError.message}`);
+    }
+
+    // Get modules for this course
+    const {data: modules, error: modulesError} = await supabase
+        .from('modules')
+        .select('*')
+        .eq('courseID', courseID)
+        .order('order');
+        
+    if (modulesError) {
+        console.warn(`Error fetching modules for course ${courseID}:`, modulesError);
+        return { ...course, modules: [] };
+    }
+
+    // Get lessons for each module
+    const modulesWithLessons = await Promise.all(
+        modules.map(async (module) => {
+            const {data: lessons, error: lessonsError} = await supabase
+                .from('lesson')
+                .select('*')
+                .eq('moduleID', module.moduleID)
+                .order('order');
+                
+            if (lessonsError) {
+                console.warn(`Error fetching lessons for module ${module.moduleID}:`, lessonsError);
+                return { ...module, lessons: [] };
+            }
+            
+            return { ...module, lessons };
+        })
+    );
+
+    return { ...course, modules: modulesWithLessons };
+}
+
 const markCourseAsCompleted = async (courseID) => {
     const {data, error} = await supabase.from('course').update({completed: true}).eq('courseID', courseID).select();
     if (error) {
@@ -171,6 +216,7 @@ module.exports = {
     createCourse,
     getAllCourses,
     getCourseById,
+    getCourseWithDetails,
     updateCourse,
     deleteCourse,
     deleteCourseWithCascade,

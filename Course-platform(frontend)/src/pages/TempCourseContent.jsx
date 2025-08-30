@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getIncompleteCoursesWithDetails } from '../api/courseAPI';
-import { useAuth } from '../context/authContext';
+import { getCourseWithDetails } from '../api/courseAPI';
 import WorkshopSidebar from '../components/CourseSidebar';
 import DynamicContentRenderer from '../components/DynamicContentRenderer';
 
@@ -142,7 +141,6 @@ const SupportResourcesComponent = () => (
 const TempCourseContent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user } = useAuth();
   const [selectedLesson, setSelectedLesson] = useState({ moduleIndex: 0, lessonIndex: 0 });
   const [completedLessons, setCompletedLessons] = useState(new Set([]));
   const [lessonProgress, setLessonProgress] = useState({});
@@ -159,12 +157,8 @@ const TempCourseContent = () => {
     const fetchCourseData = async () => {
       try {
         setLoading(true);
-        if (!user?.access_token) {
-          throw new Error('Authentication required');
-        }
         
-        const courses = await getIncompleteCoursesWithDetails(user.access_token);
-        const course = courses.find(c => c.courseID === parseInt(id));
+        const course = await getCourseWithDetails(id);
         
         if (!course) {
           throw new Error('Course not found');
@@ -182,7 +176,7 @@ const TempCourseContent = () => {
     };
 
     fetchCourseData();
-  }, [id, user]);
+  }, [id]);
 
   const transformCourseData = (dbCourse) => {
     // Create modules array with compulsory pages and database modules

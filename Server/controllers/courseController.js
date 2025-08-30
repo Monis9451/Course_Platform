@@ -1,6 +1,7 @@
 const { createCourse,
         getAllCourses,
         getCourseById,
+        getCourseWithDetails,
         updateCourse,
         deleteCourse,
         deleteCourseWithCascade,
@@ -48,6 +49,27 @@ const getCourseByIdHandler = catchAsync(async (req, res, next) => {
   }
 
   const course = await getCourseById(id);
+
+  if (!course) {
+    return next(new AppError('Course not found', 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      course,
+    },
+  });
+});
+
+const getCourseWithDetailsHandler = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return next(new AppError('Course ID is required', 400));
+  }
+
+  const course = await getCourseWithDetails(id);
 
   if (!course) {
     return next(new AppError('Course not found', 404));
@@ -153,6 +175,7 @@ module.exports = {
   createCourseHandler,
   getAllCoursesHandler,
   getCourseByIdHandler,
+  getCourseWithDetailsHandler,
   updateCourseHandler,
   deleteCourseHandler,
   getIncompleteCoursesHandler,
