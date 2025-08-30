@@ -5,6 +5,7 @@ const {
   createCourseHandler,
   getAllCoursesHandler,
   getCourseByIdHandler,
+  getCourseWithDetailsHandler,
   updateCourseHandler,
   deleteCourseHandler,
   getIncompleteCoursesHandler,
@@ -19,6 +20,7 @@ router.get('/all', getAllCoursesHandler);
 router.get('/incomplete', verifySupabaseToken, isAdmin, getIncompleteCoursesHandler);
 router.get('/incomplete/details', verifySupabaseToken, isAdmin, getIncompleteCoursesWithDetailsHandler);
 router.get('/:id', getCourseByIdHandler);
+router.get('/:id/details', getCourseWithDetailsHandler);
 router.put('/:id', verifySupabaseToken, isAdmin, updateCourseHandler);
 router.put('/:id/complete', verifySupabaseToken, isAdmin, markCourseAsCompletedHandler);
 router.delete('/:id', verifySupabaseToken, isAdmin, deleteCourseHandler);

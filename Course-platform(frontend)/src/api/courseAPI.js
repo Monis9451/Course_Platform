@@ -42,6 +42,27 @@ export const getCourseById = async (courseId) => {
   }
 };
 
+export const getCourseWithDetails = async (courseId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/courses/${courseId}/details`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.data.course;
+  } catch (error) {
+    console.error('Error fetching course with details:', error);
+    throw error;
+  }
+};
+
 export const getIncompleteCoursesWithDetails = async (token) => {
   try {
     const response = await fetch(`${API_BASE_URL}/courses/incomplete/details`, {
