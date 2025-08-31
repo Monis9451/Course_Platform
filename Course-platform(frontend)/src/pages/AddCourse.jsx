@@ -268,34 +268,8 @@ const AddCourse = () => {
         return;
       }
 
-      // Basic component data validation
+      // Relaxed component data validation - only validate essential fields
       switch (component.type) {
-        case componentTypes.HEADING:
-          if (!component.data?.title?.trim()) {
-            errors.push(`Heading component at position ${index + 1} requires a title`);
-          }
-          break;
-        case componentTypes.TEXT:
-          if (!component.data?.content?.trim()) {
-            errors.push(`Text component at position ${index + 1} requires content`);
-          }
-          break;
-        case componentTypes.LEFT_BORDER_BOX:
-          if (!component.data?.title?.trim()) {
-            errors.push(`Left Border Box at position ${index + 1} requires a section title`);
-          }
-          if (!component.data?.boxTitle?.trim()) {
-            errors.push(`Left Border Box at position ${index + 1} requires a box title`);
-          }
-          break;
-        case componentTypes.EXERCISE_BOX:
-          if (!component.data?.title?.trim()) {
-            errors.push(`Exercise Box at position ${index + 1} requires a title`);
-          }
-          if (!component.data?.questions || component.data.questions.length === 0) {
-            errors.push(`Exercise Box at position ${index + 1} requires at least one question`);
-          }
-          break;
         case componentTypes.IMAGE:
           if (!component.data?.imageURL?.trim()) {
             errors.push(`Image component at position ${index + 1} requires an image`);
@@ -310,6 +284,11 @@ const AddCourse = () => {
           if (!component.data?.audioURL?.trim()) {
             errors.push(`Audio component at position ${index + 1} requires an audio URL`);
           }
+          break;
+        // For other components like HEADING, TEXT, LEFT_BORDER_BOX, EXERCISE_BOX, etc.
+        // we remove strict validation to allow optional titles and content
+        default:
+          // No validation for other component types - they can be empty/optional
           break;
       }
     });
