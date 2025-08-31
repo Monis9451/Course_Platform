@@ -41,7 +41,8 @@ const allowedComponents = [
   componentTypes.QUESTION_CARD_BOX,
   componentTypes.CHECKBOX_LIST,
   componentTypes.MARK_COMPLETE_BOX,
-  componentTypes.UNORDERED_LIST_BOX
+  componentTypes.UNORDERED_LIST_BOX,
+  componentTypes.TIMELINE
 ];
 
 const filteredComponentLibrary = Object.fromEntries(
@@ -1890,6 +1891,135 @@ const AddCourse = () => {
           </div>
         );
 
+      case componentTypes.TIMELINE:
+        return (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Section Title</label>
+              <input
+                type="text"
+                value={componentData.title || ''}
+                onChange={(e) => handleComponentDataChange('title', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Section title"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Timeline Title</label>
+              <input
+                type="text"
+                value={componentData.timelineTitle || ''}
+                onChange={(e) => handleComponentDataChange('timelineTitle', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Timeline heading"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-2 text-gray-700">Timeline Stages</label>
+              <div className="space-y-2 max-h-32 overflow-y-auto">
+                {(componentData.stages || []).map((stage, index) => (
+                  <div key={index} className="flex items-center space-x-2">
+                    <input
+                      type="text"
+                      value={stage || ''}
+                      onChange={(e) => {
+                        const newStages = [...(componentData.stages || [])];
+                        newStages[index] = e.target.value;
+                        handleComponentDataChange('stages', newStages);
+                      }}
+                      className="flex-1 px-2 py-1 text-xs border border-gray-300 rounded"
+                      placeholder={`Stage ${index + 1}`}
+                    />
+                    {componentData.stages && componentData.stages.length > 2 && (
+                      <button
+                        onClick={() => {
+                          const newStages = componentData.stages.filter((_, i) => i !== index);
+                          handleComponentDataChange('stages', newStages);
+                        }}
+                        className="text-red-500 hover:text-red-700 text-xs px-1"
+                        type="button"
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <button
+                  onClick={() => {
+                    const newStages = [...(componentData.stages || []), 'New Stage'];
+                    handleComponentDataChange('stages', newStages);
+                  }}
+                  className="w-full py-1 border border-dashed border-gray-400 text-gray-600 text-xs rounded hover:bg-gray-50"
+                  type="button"
+                >
+                  + Add Stage
+                </button>
+              </div>
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-2 text-gray-700">Event Slots</label>
+              <div className="space-y-2 max-h-40 overflow-y-auto">
+                {(componentData.events || []).map((event, index) => (
+                  <div key={index} className="p-2 border border-gray-200 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-xs font-medium text-gray-600">Event Slot {index + 1}</span>
+                      {componentData.events && componentData.events.length > 1 && (
+                        <button
+                          onClick={() => {
+                            const newEvents = componentData.events.filter((_, i) => i !== index);
+                            handleComponentDataChange('events', newEvents);
+                          }}
+                          className="text-red-500 hover:text-red-700 text-xs px-1"
+                          type="button"
+                        >
+                          ✕
+                        </button>
+                      )}
+                    </div>
+                    <div className="space-y-1">
+                      <input
+                        type="text"
+                        value={event.event || ''}
+                        onChange={(e) => {
+                          const newEvents = [...(componentData.events || [])];
+                          newEvents[index] = { ...newEvents[index], event: e.target.value };
+                          handleComponentDataChange('events', newEvents);
+                        }}
+                        className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
+                        placeholder="Event description (optional for students)"
+                      />
+                      <input
+                        type="text"
+                        value={event.impact || ''}
+                        onChange={(e) => {
+                          const newEvents = [...(componentData.events || [])];
+                          newEvents[index] = { ...newEvents[index], impact: e.target.value };
+                          handleComponentDataChange('events', newEvents);
+                        }}
+                        className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
+                        placeholder="Impact description (optional for students)"
+                      />
+                    </div>
+                  </div>
+                ))}
+                <button
+                  onClick={() => {
+                    const newEvents = [...(componentData.events || []), { event: '', impact: '', userCanEdit: true }];
+                    handleComponentDataChange('events', newEvents);
+                  }}
+                  className="w-full py-1 border border-dashed border-gray-400 text-gray-600 text-xs rounded hover:bg-gray-50"
+                  type="button"
+                >
+                  + Add Event Slot
+                </button>
+              </div>
+            </div>
+            <div className="mt-2 p-2 bg-blue-50 rounded text-xs text-blue-700">
+              <strong>Note:</strong> Students will be able to fill in the event and impact fields when taking the course.
+            </div>
+          </div>
+        );
+
       default:
         return <div className="text-xs text-gray-500">Unknown component type</div>;
     }
@@ -2205,8 +2335,8 @@ const AddCourse = () => {
                                     <ComponentRenderer 
                                       data={component.data} 
                                       isHalfWidth={true}
-                                      isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX}
-                                      onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX ? 
+                                      isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX || component.type === componentTypes.TIMELINE}
+                                      onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX || component.type === componentTypes.TIMELINE ? 
                                         (newData) => updateComponent(component.id, newData) : 
                                         undefined
                                       }
@@ -2223,8 +2353,8 @@ const AddCourse = () => {
                                     <NextComponentRenderer 
                                       data={nextComponent.data} 
                                       isHalfWidth={true}
-                                      isEditMode={nextComponent.type === componentTypes.EXERCISE_BOX || nextComponent.type === componentTypes.ORDERED_LIST_BOX || nextComponent.type === componentTypes.QUESTION_CARD_BOX || nextComponent.type === componentTypes.CHECKBOX_LIST || nextComponent.type === componentTypes.MARK_COMPLETE_BOX || nextComponent.type === componentTypes.UNORDERED_LIST_BOX}
-                                      onUpdate={nextComponent.type === componentTypes.EXERCISE_BOX || nextComponent.type === componentTypes.ORDERED_LIST_BOX || nextComponent.type === componentTypes.QUESTION_CARD_BOX || nextComponent.type === componentTypes.CHECKBOX_LIST || nextComponent.type === componentTypes.MARK_COMPLETE_BOX || nextComponent.type === componentTypes.UNORDERED_LIST_BOX ? 
+                                      isEditMode={nextComponent.type === componentTypes.EXERCISE_BOX || nextComponent.type === componentTypes.ORDERED_LIST_BOX || nextComponent.type === componentTypes.QUESTION_CARD_BOX || nextComponent.type === componentTypes.CHECKBOX_LIST || nextComponent.type === componentTypes.MARK_COMPLETE_BOX || nextComponent.type === componentTypes.UNORDERED_LIST_BOX || nextComponent.type === componentTypes.TIMELINE}
+                                      onUpdate={nextComponent.type === componentTypes.EXERCISE_BOX || nextComponent.type === componentTypes.ORDERED_LIST_BOX || nextComponent.type === componentTypes.QUESTION_CARD_BOX || nextComponent.type === componentTypes.CHECKBOX_LIST || nextComponent.type === componentTypes.MARK_COMPLETE_BOX || nextComponent.type === componentTypes.UNORDERED_LIST_BOX || nextComponent.type === componentTypes.TIMELINE ? 
                                         (newData) => updateComponent(nextComponent.id, newData) : 
                                         undefined
                                       }
@@ -2248,8 +2378,8 @@ const AddCourse = () => {
                                     <ComponentRenderer 
                                       data={component.data} 
                                       isHalfWidth={true}
-                                      isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX}
-                                      onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX ? 
+                                      isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX || component.type === componentTypes.TIMELINE}
+                                      onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX || component.type === componentTypes.TIMELINE ? 
                                         (newData) => updateComponent(component.id, newData) : 
                                         undefined
                                       }
@@ -2274,8 +2404,8 @@ const AddCourse = () => {
                               >
                                 <ComponentRenderer 
                                   data={component.data} 
-                                  isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX}
-                                  onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX ? 
+                                  isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX || component.type === componentTypes.TIMELINE}
+                                  onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX || component.type === componentTypes.TIMELINE ? 
                                     (newData) => updateComponent(component.id, newData) : 
                                     undefined
                                   }

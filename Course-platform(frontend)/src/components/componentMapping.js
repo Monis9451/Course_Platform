@@ -45,6 +45,7 @@ export const COMPONENT_ID_MAPPING = {
   'tabs-1': 'tabs',
   'progress-bar-1': 'progress_bar',
   'timer-1': 'timer',
+  'timeline-1': 'timeline',
   
   // Custom Components
   'custom-1': 'custom'

@@ -15,6 +15,7 @@ import QuestionCardBox from './QuestionCardBox';
 import CheckboxList from './CheckboxList';
 import MarkCompleteBox from './MarkCompleteBox';
 import UnorderedListBox from './UnorderedListBox';
+import TimelineComponent from './TimelineComponent';
 
 export const componentTypes = {
   HEADING: 'heading',
@@ -51,7 +52,8 @@ export const componentTypes = {
   TIMER: 'timer',
   CHECKLIST: 'checklist',
   FORM: 'form',
-  DOWNLOAD: 'download'
+  DOWNLOAD: 'download',
+  TIMELINE: 'timeline'
 };
 
 export const componentLibrary = {
@@ -421,6 +423,26 @@ export const componentLibrary = {
       fileName: 'document.pdf',
       fileUrl: '',
       type: 'download'
+    }
+  },
+  [componentTypes.TIMELINE]: {
+    name: 'Timeline',
+    component: TimelineComponent,
+    defaultData: {
+      title: 'Timeline Section',
+      timelineTitle: 'Your Personal Timeline',
+      stages: [
+        'Early Childhood',
+        'Adolescence', 
+        'Early Adulthood',
+        'Mid Adulthood',
+        'Present'
+      ],
+      events: [
+        { event: '', impact: '', userCanEdit: true },
+        { event: '', impact: '', userCanEdit: true },
+        { event: '', impact: '', userCanEdit: true }
+      ]
     }
   }
 };
