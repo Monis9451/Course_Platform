@@ -205,7 +205,8 @@ const TempCourseContent = () => {
             .map(lesson => ({
               title: lesson.title,
               icon: lesson.icon,
-              component: () => <DynamicContentRenderer content={lesson.content} />
+              lessonData: lesson, // Pass the full lesson data
+              component: () => <DynamicContentRenderer content={lesson.content} lesson={lesson} />
             }));
 
           if (sortedLessons.length > 0) {
