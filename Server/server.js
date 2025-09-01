@@ -32,7 +32,7 @@ app.use(morgan('combined'));
 app.use(cors ({
   origin: process.env.NODE_ENV === 'production' 
     ? [process.env.CLIENT_URL]
-    : ["http://localhost:5173"],
+    : ["http://localhost:5173", "http://localhost:5174"],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
