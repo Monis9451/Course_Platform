@@ -43,7 +43,8 @@ const allowedComponents = [
   componentTypes.MARK_COMPLETE_BOX,
   componentTypes.UNORDERED_LIST_BOX,
   componentTypes.TIMELINE,
-  componentTypes.DESCRIPTION_WITH_IMAGE_BOX
+  componentTypes.DESCRIPTION_WITH_IMAGE_BOX,
+  componentTypes.INFO_CARD_PAIR
 ];
 
 const filteredComponentLibrary = Object.fromEntries(
@@ -2098,6 +2099,104 @@ const AddCourse = () => {
           </div>
         );
 
+      case componentTypes.INFO_CARD_PAIR:
+        return (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Section Title</label>
+              <input
+                type="text"
+                value={componentData.title || ''}
+                onChange={(e) => handleComponentDataChange('title', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Section title"
+              />
+            </div>
+            
+            {/* Card 1 */}
+            <div className="p-3 border border-gray-200 rounded bg-gray-50">
+              <h4 className="text-sm font-medium mb-2 text-gray-800">First Card</h4>
+              <div className="space-y-2">
+                <div>
+                  <label className="block text-xs font-medium mb-1 text-gray-700">Card Title</label>
+                  <input
+                    type="text"
+                    value={componentData.card1Title || ''}
+                    onChange={(e) => handleComponentDataChange('card1Title', e.target.value)}
+                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
+                    placeholder="First card title"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium mb-1 text-gray-700">Icon</label>
+                  <select
+                    value={componentData.card1Icon || 'heart'}
+                    onChange={(e) => handleComponentDataChange('card1Icon', e.target.value)}
+                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
+                  >
+                    <option value="heart">Heart</option>
+                    <option value="lightbulb">Light Bulb</option>
+                    <option value="star">Star</option>
+                    <option value="info">Info</option>
+                    <option value="check">Check</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-medium mb-1 text-gray-700">Content</label>
+                  <textarea
+                    value={componentData.card1Content || ''}
+                    onChange={(e) => handleComponentDataChange('card1Content', e.target.value)}
+                    rows={3}
+                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
+                    placeholder="Content for first card (use line breaks for paragraphs)"
+                  />
+                </div>
+              </div>
+            </div>
+            
+            {/* Card 2 */}
+            <div className="p-3 border border-gray-200 rounded bg-gray-50">
+              <h4 className="text-sm font-medium mb-2 text-gray-800">Second Card</h4>
+              <div className="space-y-2">
+                <div>
+                  <label className="block text-xs font-medium mb-1 text-gray-700">Card Title</label>
+                  <input
+                    type="text"
+                    value={componentData.card2Title || ''}
+                    onChange={(e) => handleComponentDataChange('card2Title', e.target.value)}
+                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
+                    placeholder="Second card title"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium mb-1 text-gray-700">Icon</label>
+                  <select
+                    value={componentData.card2Icon || 'lightbulb'}
+                    onChange={(e) => handleComponentDataChange('card2Icon', e.target.value)}
+                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
+                  >
+                    <option value="heart">Heart</option>
+                    <option value="lightbulb">Light Bulb</option>
+                    <option value="star">Star</option>
+                    <option value="info">Info</option>
+                    <option value="check">Check</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-medium mb-1 text-gray-700">Content</label>
+                  <textarea
+                    value={componentData.card2Content || ''}
+                    onChange={(e) => handleComponentDataChange('card2Content', e.target.value)}
+                    rows={3}
+                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
+                    placeholder="Content for second card (use line breaks for paragraphs)"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
       default:
         return <div className="text-xs text-gray-500">Unknown component type</div>;
     }
@@ -2391,15 +2490,15 @@ const AddCourse = () => {
                             continue;
                           }
                           
-                          // Check if this is a LEFT_BORDER_BOX (always treat as half-width)
-                          if (component.type === componentTypes.LEFT_BORDER_BOX) {
+                          // Check if this is a LEFT_BORDER_BOX or INFO_CARD_PAIR (always treat as half-width)
+                          if (component.type === componentTypes.LEFT_BORDER_BOX || component.type === componentTypes.INFO_CARD_PAIR) {
                             // Look for next component to pair with
                             const nextComponent = currentLessonContent[i + 1];
-                            const NextComponentRenderer = nextComponent?.type === componentTypes.LEFT_BORDER_BOX ? 
+                            const NextComponentRenderer = (nextComponent?.type === componentTypes.LEFT_BORDER_BOX || nextComponent?.type === componentTypes.INFO_CARD_PAIR) ? 
                               filteredComponentLibrary[nextComponent.type]?.component : null;
                             
                             if (NextComponentRenderer) {
-                              // Render two LEFT_BORDER_BOX components in a row
+                              // Render two half-width components in a row
                               components.push(
                                 <div key={`pair-${component.id}-${nextComponent.id}`} className="flex flex-col md:flex-row gap-6">
                                   <div
@@ -2442,7 +2541,7 @@ const AddCourse = () => {
                               );
                               i += 2; // Skip next component as it's already rendered
                             } else {
-                              // Render single LEFT_BORDER_BOX taking half space, other half remains empty
+                              // Render single half-width component taking half space, other half remains empty
                               components.push(
                                 <div key={component.id} className="flex flex-col md:flex-row gap-6">
                                   <div

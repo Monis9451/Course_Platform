@@ -17,6 +17,7 @@ import MarkCompleteBox from './MarkCompleteBox';
 import UnorderedListBox from './UnorderedListBox';
 import TimelineComponent from './TimelineComponent';
 import DescriptionWithImageBox from './DescriptionWithImageBox';
+import InfoCardPair from './InfoCardPair';
 
 export const componentTypes = {
   HEADING: 'heading',
@@ -55,7 +56,8 @@ export const componentTypes = {
   FORM: 'form',
   DOWNLOAD: 'download',
   TIMELINE: 'timeline',
-  DESCRIPTION_WITH_IMAGE_BOX: 'description_with_image_box'
+  DESCRIPTION_WITH_IMAGE_BOX: 'description_with_image_box',
+  INFO_CARD_PAIR: 'info_card_pair'
 };
 
 export const componentLibrary = {
@@ -458,6 +460,19 @@ export const componentLibrary = {
       alt: 'Image',
       termLabel: 'Term:',
       termPlaceholder: 'Describe answer...'
+    }
+  },
+  [componentTypes.INFO_CARD_PAIR]: {
+    name: 'Info Card Pair',
+    component: InfoCardPair,
+    defaultData: {
+      title: 'Info Card Pair Section',
+      card1Title: 'First Card Title',
+      card1Content: 'Content for the first card goes here. This can be multiple paragraphs of information.',
+      card1Icon: 'heart',
+      card2Title: 'Second Card Title',
+      card2Content: 'Content for the second card goes here. This can also be multiple paragraphs of information.',
+      card2Icon: 'lightbulb'
     }
   }
 };
