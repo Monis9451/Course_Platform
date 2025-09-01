@@ -84,3 +84,26 @@ export const getIncompleteCoursesWithDetails = async (token) => {
     throw error;
   }
 };
+
+export const updateLessonContent = async (lessonId, content, token) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/lessons/${lessonId}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ content }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.data.lesson;
+  } catch (error) {
+    console.error('Error updating lesson content:', error);
+    throw error;
+  }
+};
