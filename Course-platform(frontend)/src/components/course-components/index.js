@@ -16,6 +16,7 @@ import CheckboxList from './CheckboxList';
 import MarkCompleteBox from './MarkCompleteBox';
 import UnorderedListBox from './UnorderedListBox';
 import TimelineComponent from './TimelineComponent';
+import DescriptionWithImageBox from './DescriptionWithImageBox';
 
 export const componentTypes = {
   HEADING: 'heading',
@@ -53,7 +54,8 @@ export const componentTypes = {
   CHECKLIST: 'checklist',
   FORM: 'form',
   DOWNLOAD: 'download',
-  TIMELINE: 'timeline'
+  TIMELINE: 'timeline',
+  DESCRIPTION_WITH_IMAGE_BOX: 'description_with_image_box'
 };
 
 export const componentLibrary = {
@@ -443,6 +445,19 @@ export const componentLibrary = {
         { event: '', impact: '', userCanEdit: true },
         { event: '', impact: '', userCanEdit: true }
       ]
+    }
+  },
+  [componentTypes.DESCRIPTION_WITH_IMAGE_BOX]: {
+    name: 'Description with Image Box',
+    component: DescriptionWithImageBox,
+    defaultData: {
+      title: 'Description with Image Section',
+      boxTitle: 'Your Body Map',
+      description: 'Description',
+      imageUrl: '/img.jpg',
+      alt: 'Image',
+      termLabel: 'Term:',
+      termPlaceholder: 'Describe answer...'
     }
   }
 };

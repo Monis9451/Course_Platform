@@ -42,7 +42,8 @@ const allowedComponents = [
   componentTypes.CHECKBOX_LIST,
   componentTypes.MARK_COMPLETE_BOX,
   componentTypes.UNORDERED_LIST_BOX,
-  componentTypes.TIMELINE
+  componentTypes.TIMELINE,
+  componentTypes.DESCRIPTION_WITH_IMAGE_BOX
 ];
 
 const filteredComponentLibrary = Object.fromEntries(
@@ -2016,6 +2017,83 @@ const AddCourse = () => {
             </div>
             <div className="mt-2 p-2 bg-blue-50 rounded text-xs text-blue-700">
               <strong>Note:</strong> Students will be able to fill in the event and impact fields when taking the course.
+            </div>
+          </div>
+        );
+
+      case componentTypes.DESCRIPTION_WITH_IMAGE_BOX:
+        return (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Section Title</label>
+              <input
+                type="text"
+                value={componentData.title || ''}
+                onChange={(e) => handleComponentDataChange('title', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Section title"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Box Title</label>
+              <input
+                type="text"
+                value={componentData.boxTitle || ''}
+                onChange={(e) => handleComponentDataChange('boxTitle', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Box title (e.g., Your Body Map)"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Upload Image</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleComponentFileUpload(e, 'imageUrl')}
+                className="w-full text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-blue-50 file:text-blue-700"
+                disabled={uploadingFile}
+              />
+              {uploadingFile && <p className="text-xs text-blue-600 mt-1">Uploading...</p>}
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Alt Text</label>
+              <input
+                type="text"
+                value={componentData.alt || ''}
+                onChange={(e) => handleComponentDataChange('alt', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Alternative text for image"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Description</label>
+              <input
+                type="text"
+                value={componentData.description || ''}
+                onChange={(e) => handleComponentDataChange('description', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Description text below image"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Term Label</label>
+              <input
+                type="text"
+                value={componentData.termLabel || ''}
+                onChange={(e) => handleComponentDataChange('termLabel', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Term label (e.g., Term:)"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Term Placeholder</label>
+              <input
+                type="text"
+                value={componentData.termPlaceholder || ''}
+                onChange={(e) => handleComponentDataChange('termPlaceholder', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Placeholder text for textarea"
+              />
             </div>
           </div>
         );
