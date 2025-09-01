@@ -242,12 +242,13 @@ const AddCourse = () => {
       }
       
       // Check for duplicate lesson titles within the same module
+      // Only check for duplicates if this is a new lesson (no lessonID) or if title was changed
       const duplicates = lessons.filter((l, i) => 
         i !== index && 
         l.moduleID === lesson.moduleID && 
         l.title.trim().toLowerCase() === lesson.title.trim().toLowerCase()
       );
-      if (duplicates.length > 0) {
+      if (duplicates.length > 0 && lesson.title.trim()) {
         newErrors[`lesson_${index}`] = 'Lesson title must be unique within the module';
       }
     });
@@ -515,7 +516,25 @@ const AddCourse = () => {
 
     setLoading(true);
     try {
+      // Check if lessons already have lessonIDs (meaning they already exist)
+      const existingLessons = lessons.filter(lesson => lesson.lessonID);
+      
+      if (existingLessons.length === lessons.length) {
+        // All lessons already exist, just proceed to editor
+        toast.success('Lesson structure verified successfully!');
+        await updateCourseProgress(); // Update progress timestamp
+        setIsEditorMode(true);
+        setCurrentStep(4);
+        setLoading(false);
+        return;
+      }
+
       const lessonPromises = lessons.map(async (lesson) => {
+        // Skip lessons that already exist
+        if (lesson.lessonID) {
+          return lesson;
+        }
+
         const response = await fetch(`${import.meta.env.VITE_API_URL}/lessons/without-content`, {
           method: 'POST',
           headers: {
@@ -776,20 +795,23 @@ const AddCourse = () => {
         if (allLessons.length > 0) {
           setLessons(allLessons);
           
-          // Determine which step to resume at based on available data
+          // Reset current lesson index to start from the first lesson
+          setCurrentLessonIndex(0);
+          setCurrentLessonContent(allLessons[0]?.content || []);
+          
+          // If lessons exist, go directly to editor mode regardless of content
+          // This prevents the duplicate title validation error when resuming
+          setCurrentStep(4);
+          setIsEditorMode(true);
+          
           const hasLessonsWithContent = allLessons.some(lesson => 
             lesson.content && lesson.content.length > 0
           );
           
           if (hasLessonsWithContent) {
-            // If there are lessons with content, go to editor mode
-            setCurrentStep(4);
-            setIsEditorMode(true);
             toast.success('Resumed course creation from where you left off!');
           } else {
-            // If lessons exist but no content, go to lesson creation step
-            setCurrentStep(3);
-            toast.success('Resumed course creation at lesson creation step!');
+            toast.success('Resumed course creation at content editing step!');
           }
         } else {
           // If modules exist but no lessons, go to lesson creation step
@@ -2115,7 +2137,7 @@ const AddCourse = () => {
             
             {/* Card 1 */}
             <div className="p-3 border border-gray-200 rounded bg-gray-50">
-              <h4 className="text-sm font-medium mb-2 text-gray-800">First Card</h4>
+              <h4 className="text-sm font-medium mb-2 text-gray-800">Card</h4>
               <div className="space-y-2">
                 <div>
                   <label className="block text-xs font-medium mb-1 text-gray-700">Card Title</label>
@@ -2124,7 +2146,7 @@ const AddCourse = () => {
                     value={componentData.card1Title || ''}
                     onChange={(e) => handleComponentDataChange('card1Title', e.target.value)}
                     className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
-                    placeholder="First card title"
+                    placeholder="Card title"
                   />
                 </div>
                 <div>
@@ -2148,48 +2170,7 @@ const AddCourse = () => {
                     onChange={(e) => handleComponentDataChange('card1Content', e.target.value)}
                     rows={3}
                     className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
-                    placeholder="Content for first card (use line breaks for paragraphs)"
-                  />
-                </div>
-              </div>
-            </div>
-            
-            {/* Card 2 */}
-            <div className="p-3 border border-gray-200 rounded bg-gray-50">
-              <h4 className="text-sm font-medium mb-2 text-gray-800">Second Card</h4>
-              <div className="space-y-2">
-                <div>
-                  <label className="block text-xs font-medium mb-1 text-gray-700">Card Title</label>
-                  <input
-                    type="text"
-                    value={componentData.card2Title || ''}
-                    onChange={(e) => handleComponentDataChange('card2Title', e.target.value)}
-                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
-                    placeholder="Second card title"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-medium mb-1 text-gray-700">Icon</label>
-                  <select
-                    value={componentData.card2Icon || 'lightbulb'}
-                    onChange={(e) => handleComponentDataChange('card2Icon', e.target.value)}
-                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
-                  >
-                    <option value="heart">Heart</option>
-                    <option value="lightbulb">Light Bulb</option>
-                    <option value="star">Star</option>
-                    <option value="info">Info</option>
-                    <option value="check">Check</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-xs font-medium mb-1 text-gray-700">Content</label>
-                  <textarea
-                    value={componentData.card2Content || ''}
-                    onChange={(e) => handleComponentDataChange('card2Content', e.target.value)}
-                    rows={3}
-                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
-                    placeholder="Content for second card (use line breaks for paragraphs)"
+                    placeholder="Content for card (use line breaks for paragraphs)"
                   />
                 </div>
               </div>

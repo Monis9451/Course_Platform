@@ -463,16 +463,13 @@ export const componentLibrary = {
     }
   },
   [componentTypes.INFO_CARD_PAIR]: {
-    name: 'Info Card Pair',
+    name: 'Info Card',
     component: InfoCardPair,
     defaultData: {
-      title: 'Info Card Pair Section',
-      card1Title: 'First Card Title',
-      card1Content: 'Content for the first card goes here. This can be multiple paragraphs of information.',
-      card1Icon: 'heart',
-      card2Title: 'Second Card Title',
-      card2Content: 'Content for the second card goes here. This can also be multiple paragraphs of information.',
-      card2Icon: 'lightbulb'
+      title: 'Info Card Section',
+      card1Title: 'Card Title',
+      card1Content: 'Content for the card goes here. This can be multiple paragraphs of information.',
+      card1Icon: 'heart'
     }
   }
 };

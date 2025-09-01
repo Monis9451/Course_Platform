@@ -3,12 +3,9 @@ import React from 'react';
 const InfoCardPair = ({ data }) => {
   const {
     title = '',
-    card1Title = 'First Card Title',
-    card1Content = 'Content for the first card goes here. This can be multiple paragraphs of information.',
-    card1Icon = 'heart',
-    card2Title = 'Second Card Title', 
-    card2Content = 'Content for the second card goes here. This can also be multiple paragraphs of information.',
-    card2Icon = 'heart'
+    card1Title = 'Card Title',
+    card1Content = 'Content for the card goes here. This can be multiple paragraphs of information.',
+    card1Icon = 'heart'
   } = data;
 
   // SVG icons
@@ -20,8 +17,7 @@ const InfoCardPair = ({ data }) => {
     ),
     lightbulb: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#bd6334] mr-2" viewBox="0 0 20 20" fill="currentColor">
-        <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 6.343a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464a1 1 0 10-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM6 10a1 1 0 01-1 1H4a1 1 0 110-2h1a1 1 0 011 1zM.343 15.657a1 1 0 001.414 0l.707-.707a1 1 0 00-1.414-1.414l-.707.707a1 1 0 000 1.414zM3 17a1 1 0 011-1h.01a1 1 0 110 2H4a1 1 0 01-1-1zM16 15.657l-.707-.707a1 1 0 00-1.414 1.414l.707.707a1 1 0 001.414 0zM17 17a1 1 0 01-1 1h-.01a1 1 0 110-2H16a1 1 0 011 1z" />
-        <path d="M9 13h2a1 1 0 110 2H9a1 1 0 110-2zM9 15h2a1 1 0 110 2H9a1 1 0 110-2z" />
+        <path d="M10 2C7.79 2 6 3.79 6 6c0 1.5.83 2.77 2 3.46V12c0 .55.45 1 1 1h2c.55 0 1-.45 1-1V9.46C13.17 8.77 14 7.5 14 6c0-2.21-1.79-4-4-4zm0 1.5c1.38 0 2.5 1.12 2.5 2.5S11.38 8.5 10 8.5 7.5 7.38 7.5 6 8.62 3.5 10 3.5zM8.5 14.5h3c.28 0 .5.22.5.5s-.22.5-.5.5h-3c-.28 0-.5-.22-.5-.5s.22-.5.5-.5z"/>
       </svg>
     ),
     star: (
@@ -49,29 +45,15 @@ const InfoCardPair = ({ data }) => {
         </div>
       )}
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white border border-gray-200 p-5 rounded-lg">
-          <h4 className="font-medium mb-3 flex items-center">
-            {icons[card1Icon] || icons.heart}
-            {card1Title}
-          </h4>
-          <div className="text-gray-700">
-            {card1Content.split('\n').map((paragraph, index) => (
-              <p key={index} className={index > 0 ? "mt-3" : ""}>{paragraph}</p>
-            ))}
-          </div>
-        </div>
-        
-        <div className="bg-white border border-gray-200 p-5 rounded-lg">
-          <h4 className="font-medium mb-3 flex items-center">
-            {icons[card2Icon] || icons.heart}
-            {card2Title}
-          </h4>
-          <div className="text-gray-700">
-            {card2Content.split('\n').map((paragraph, index) => (
-              <p key={index} className={index > 0 ? "mt-3" : ""}>{paragraph}</p>
-            ))}
-          </div>
+      <div className="bg-white border border-gray-200 p-5 rounded-lg">
+        <h4 className="font-medium mb-3 flex items-center">
+          {icons[card1Icon] || icons.heart}
+          {card1Title}
+        </h4>
+        <div className="text-gray-700">
+          {card1Content.split('\n').map((paragraph, index) => (
+            <p key={index} className={index > 0 ? "mt-3" : ""}>{paragraph}</p>
+          ))}
         </div>
       </div>
     </div>
