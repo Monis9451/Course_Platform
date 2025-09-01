@@ -6,7 +6,7 @@ const InfoCardPair = ({ data }) => {
     card1Title = 'Card Title',
     card1Content = 'Content for the card goes here. This can be multiple paragraphs of information.',
     card1Icon = 'heart'
-  } = data;
+  } = data; 
 
   // SVG icons
   const icons = {
