@@ -110,9 +110,9 @@ const AdminDashboard = () => {
               
               <button 
                 className="bg-primary text-white px-6 py-3 rounded-lg cursor-pointer"
-                onClick={() => toast.info('Manage courses feature coming soon')}
+                onClick={() => navigate('/admin/edit-courses')}
               >
-                Manage Existing Courses
+                Edit Existing Courses
               </button>
             </div>
           </div>
