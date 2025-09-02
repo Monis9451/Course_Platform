@@ -100,7 +100,7 @@ const AdminDashboard = () => {
               </div>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <button 
                 className="bg-primary text-white px-6 py-3 rounded-lg cursor-pointer"
                 onClick={() => navigate('/admin/add-course')}
@@ -113,6 +113,13 @@ const AdminDashboard = () => {
                 onClick={() => navigate('/admin/edit-courses')}
               >
                 Edit Existing Courses
+              </button>
+
+              <button 
+                className="bg-red-500 text-white px-6 py-3 rounded-lg cursor-pointer"
+                onClick={() => navigate('/admin/delete-courses')}
+              >
+                Delete Existing Courses
               </button>
             </div>
           </div>

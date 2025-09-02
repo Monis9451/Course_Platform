@@ -1,3 +1,21 @@
+// Delete a course and its related modules and lessons
+export const deleteCourseCascade = async (courseId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/courses/${courseId}/cascade-delete`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error deleting course and related data:', error);
+    throw error;
+  }
+};
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export const getAllCourses = async () => {
