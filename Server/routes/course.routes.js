@@ -23,6 +23,6 @@ router.get('/:id', getCourseByIdHandler);
 router.get('/:id/details', getCourseWithDetailsHandler);
 router.put('/:id', verifySupabaseToken, isAdmin, updateCourseHandler);
 router.put('/:id/complete', verifySupabaseToken, isAdmin, markCourseAsCompletedHandler);
-router.delete('/:id', verifySupabaseToken, isAdmin, deleteCourseHandler);
+router.delete('/:id/cascade-delete', verifySupabaseToken, isAdmin, deleteCourseHandler);
 
 module.exports = router;
