@@ -154,7 +154,7 @@ const CourseContent_new = () => {
           { title: "Breathwork for Emotional Clearing", component: Module5Lesson6 },
           { title: "Guided Release Meditation", component: Module5Lesson7 }
         ]
-      },
+      }, 
       {
         title: "Integration & Forward Momentum",
         description: "Staying Connected to Growth, Resilience, and Self-Love",
