@@ -1,7 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useUserProgress } from '../../context/userProgressContext';
 
-const ExerciseBox = ({ data, isEditMode = false, onUpdate }) => {
+const ExerciseBox = ({ data, isEditMode = false, onUpdate, lessonId = null, componentId = null }) => {
   const { title, situation, questions = [{ question: '', placeholder: '' }] } = data;
+  const { getResponse, updateResponse } = useUserProgress();
+  
+  // Get saved responses when in view mode
+  const [userAnswers, setUserAnswers] = useState({});
+
+  useEffect(() => {
+    if (!isEditMode && lessonId && componentId) {
+      const savedResponse = getResponse(lessonId, componentId);
+      setUserAnswers(savedResponse.answers || {});
+    }
+  }, [lessonId, componentId, isEditMode, getResponse]);
+
+  const handleAnswerChange = (questionIndex, answer) => {
+    if (isEditMode) {
+      // Edit mode - update component data
+      updateQuestion(questionIndex, 'answer', answer);
+    } else {
+      // View mode - save user response
+      const newAnswers = { ...userAnswers, [questionIndex]: answer };
+      setUserAnswers(newAnswers);
+      
+      if (lessonId && componentId) {
+        updateResponse(lessonId, componentId, { 
+          answers: newAnswers,
+          type: 'exercise',
+          completed: Object.keys(newAnswers).length === questions.length && 
+                    Object.values(newAnswers).every(a => a.trim().length > 0)
+        });
+      }
+    }
+  };
 
   const addQuestion = () => {
     if (onUpdate) {
@@ -48,11 +80,10 @@ const ExerciseBox = ({ data, isEditMode = false, onUpdate }) => {
               </div>
               <textarea 
                 rows={2} 
-                className="w-full p-2 border border-gray-300 rounded-md" 
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#bd6334] focus:border-transparent" 
                 placeholder={q.placeholder}
-                disabled={!isEditMode}
-                value={q.answer || ''}
-                onChange={(e) => isEditMode && updateQuestion(index, 'answer', e.target.value)}
+                value={isEditMode ? (q.answer || '') : (userAnswers[index] || '')}
+                onChange={(e) => handleAnswerChange(index, e.target.value)}
               />
             </div>
           ))}

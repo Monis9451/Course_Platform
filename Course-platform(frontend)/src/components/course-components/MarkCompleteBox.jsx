@@ -1,7 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useUserProgress } from '../../context/userProgressContext';
 
-const MarkCompleteBox = ({ data, isEditMode = false, onUpdate }) => {
+const MarkCompleteBox = ({ data, isEditMode = false, onUpdate, lessonId = null, componentId = null }) => {
   const { title, description, question, checkboxes = [{ text: '', checked: false }] } = data;
+  const { getResponse, updateResponse, isComponentCompleted, markComponentCompleted } = useUserProgress();
+  
+  // Get saved responses when in view mode
+  const [userChecked, setUserChecked] = useState({});
+  const [isCompleted, setIsCompleted] = useState(false);
+
+  useEffect(() => {
+    if (!isEditMode && lessonId && componentId) {
+      const savedResponse = getResponse(lessonId, componentId);
+      setUserChecked(savedResponse.checked || {});
+      setIsCompleted(isComponentCompleted(lessonId, componentId));
+    }
+  }, [lessonId, componentId, isEditMode, getResponse, isComponentCompleted]);
+
+  const handleCheckboxChange = (index, checked) => {
+    if (isEditMode) {
+      // Edit mode - update component data
+      updateCheckbox(index, 'checked', checked);
+    } else {
+      // View mode - save user response
+      const newChecked = { ...userChecked, [index]: checked };
+      setUserChecked(newChecked);
+      
+      if (lessonId && componentId) {
+        updateResponse(lessonId, componentId, { 
+          checked: newChecked,
+          type: 'mark_complete',
+          completed: isCompleted
+        });
+      }
+    }
+  };
+
+  const handleMarkComplete = () => {
+    if (!isEditMode && lessonId && componentId) {
+      const newCompleted = !isCompleted;
+      setIsCompleted(newCompleted);
+      markComponentCompleted(lessonId, componentId, newCompleted);
+      
+      // Also update the response data
+      updateResponse(lessonId, componentId, { 
+        checked: userChecked,
+        type: 'mark_complete',
+        completed: newCompleted
+      });
+    }
+  };
 
   const addCheckbox = () => {
     if (onUpdate) {
@@ -31,9 +79,23 @@ const MarkCompleteBox = ({ data, isEditMode = false, onUpdate }) => {
       <div className="border border-gray-200 rounded-md p-6 mb-8">
         <div className="flex justify-between mb-3">
           <h3 className="text-xl font-semibold text-[#bd6334]">{data.boxTitle}</h3>
-          <button className="h-8 px-3 rounded-full text-sm flex items-center bg-gray-100 text-gray-600">
-            Mark Complete
-          </button>
+          {!isEditMode && (
+            <button 
+              className={`h-8 px-3 rounded-full text-sm flex items-center transition-colors ${
+                isCompleted 
+                  ? 'bg-green-100 text-green-700 hover:bg-green-200' 
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+              onClick={handleMarkComplete}
+            >
+              {isCompleted ? '✓ Completed' : 'Mark Complete'}
+            </button>
+          )}
+          {isEditMode && (
+            <button className="h-8 px-3 rounded-full text-sm flex items-center bg-gray-100 text-gray-600">
+              Mark Complete
+            </button>
+          )}
         </div>
         
         <p className="mb-4">{description}</p>
@@ -48,9 +110,8 @@ const MarkCompleteBox = ({ data, isEditMode = false, onUpdate }) => {
                   <input 
                     type="checkbox" 
                     className="mt-1 mr-3 h-4 w-4 accent-[#bd6334]"
-                    checked={checkbox.checked || false}
-                    onChange={(e) => updateCheckbox(index, 'checked', e.target.checked)}
-                    disabled={!isEditMode}
+                    checked={isEditMode ? (checkbox.checked || false) : (userChecked[index] || false)}
+                    onChange={(e) => handleCheckboxChange(index, e.target.checked)}
                   />
                   <div className="flex-1">
                     <div className="flex items-center justify-between">

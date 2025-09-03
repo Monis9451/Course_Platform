@@ -1,7 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useUserProgress } from '../../context/userProgressContext';
 
-const QuestionCardBox = ({ data, isEditMode = false, onUpdate }) => {
+const QuestionCardBox = ({ data, isEditMode = false, onUpdate, lessonId = null, componentId = null }) => {
   const { title, questions = [{ questionTitle: '', questionText: '', placeholder: '', consideration: '' }] } = data;
+  const { getResponse, updateResponse } = useUserProgress();
+  
+  // Get saved responses when in view mode
+  const [userAnswers, setUserAnswers] = useState({});
+
+  useEffect(() => {
+    if (!isEditMode && lessonId && componentId) {
+      const savedResponse = getResponse(lessonId, componentId);
+      setUserAnswers(savedResponse.answers || {});
+    }
+  }, [lessonId, componentId, isEditMode, getResponse]);
+
+  const handleAnswerChange = (questionIndex, answer) => {
+    if (isEditMode) {
+      // Edit mode - update component data
+      if (onUpdate) {
+        const newQuestions = [...questions];
+        newQuestions[questionIndex] = { ...newQuestions[questionIndex], answer };
+        onUpdate({ ...data, questions: newQuestions });
+      }
+    } else {
+      // View mode - save user response
+      const newAnswers = { ...userAnswers, [questionIndex]: answer };
+      setUserAnswers(newAnswers);
+      
+      if (lessonId && componentId) {
+        updateResponse(lessonId, componentId, { 
+          answers: newAnswers,
+          type: 'question_card',
+          completed: Object.keys(newAnswers).length === questions.length && 
+                    Object.values(newAnswers).every(a => a.trim().length > 0)
+        });
+      }
+    }
+  };
 
   const addQuestion = () => {
     if (onUpdate) {
@@ -51,17 +87,10 @@ const QuestionCardBox = ({ data, isEditMode = false, onUpdate }) => {
             
             {/* Textarea */}
             <textarea 
-              className="w-full p-3 border border-gray-300 rounded-md h-32" 
+              className="w-full p-3 border border-gray-300 rounded-md h-32 focus:outline-none focus:ring-2 focus:ring-[#bd6334] focus:border-transparent" 
               placeholder={question.placeholder}
-              disabled={!isEditMode}
-              value={question.answer || ''}
-              onChange={(e) => {
-                if (isEditMode && onUpdate) {
-                  const newQuestions = [...questions];
-                  newQuestions[index] = { ...newQuestions[index], answer: e.target.value };
-                  onUpdate({ ...data, questions: newQuestions });
-                }
-              }}
+              value={isEditMode ? (question.answer || '') : (userAnswers[index] || '')}
+              onChange={(e) => handleAnswerChange(index, e.target.value)}
             />
             
             {/* Consideration Text */}

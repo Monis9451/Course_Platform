@@ -1,7 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useUserProgress } from '../../context/userProgressContext';
 
-const CheckboxList = ({ data, isEditMode = false, onUpdate }) => {
+const CheckboxList = ({ data, isEditMode = false, onUpdate, lessonId = null, componentId = null }) => {
   const { title, checkboxes = [{ text: '', checked: false }] } = data;
+  const { getResponse, updateResponse } = useUserProgress();
+  
+  // Get saved responses when in view mode
+  const [userChecked, setUserChecked] = useState({});
+
+  useEffect(() => {
+    if (!isEditMode && lessonId && componentId) {
+      const savedResponse = getResponse(lessonId, componentId);
+      setUserChecked(savedResponse.checked || {});
+    }
+  }, [lessonId, componentId, isEditMode, getResponse]);
+
+  const handleCheckboxChange = (index, checked) => {
+    if (isEditMode) {
+      // Edit mode - update component data
+      updateCheckbox(index, 'checked', checked);
+    } else {
+      // View mode - save user response
+      const newChecked = { ...userChecked, [index]: checked };
+      setUserChecked(newChecked);
+      
+      if (lessonId && componentId) {
+        const checkedCount = Object.values(newChecked).filter(Boolean).length;
+        updateResponse(lessonId, componentId, { 
+          checked: newChecked,
+          type: 'checkbox_list',
+          completed: checkedCount > 0 // At least one checkbox checked
+        });
+      }
+    }
+  };
 
   const addCheckbox = () => {
     if (onUpdate) {
@@ -35,9 +67,8 @@ const CheckboxList = ({ data, isEditMode = false, onUpdate }) => {
               <input 
                 type="checkbox" 
                 className="mt-1 mr-3 h-4 w-4 accent-[#bd6334]"
-                checked={checkbox.checked || false}
-                onChange={(e) => updateCheckbox(index, 'checked', e.target.checked)}
-                disabled={!isEditMode}
+                checked={isEditMode ? (checkbox.checked || false) : (userChecked[index] || false)}
+                onChange={(e) => handleCheckboxChange(index, e.target.checked)}
               />
               <div className="flex-1">
                 <div className="flex items-center justify-between">
