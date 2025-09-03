@@ -1,7 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-const UnorderedListBox = ({ data, isEditMode = false, onUpdate }) => {
+const UnorderedListBox = ({ 
+  data, 
+  isEditMode = false, 
+  onUpdate,
+  lessonId,
+  componentId,
+  userProgress,
+  updateUserProgress
+}) => {
   const { title, description, listBoxes = [{ title: 'Example Title', items: ['Example item'] }] } = data;
+  const [userNotes, setUserNotes] = useState('');
+
+  // Load saved user notes on component mount
+  useEffect(() => {
+    if (lessonId && componentId && userProgress) {
+      const savedNotes = userProgress.getResponse(lessonId, componentId, 'notes');
+      if (savedNotes) {
+        setUserNotes(savedNotes);
+      }
+    }
+  }, [lessonId, componentId, userProgress]);
+
+  // Handle user notes change
+  const handleNotesChange = (event) => {
+    const notes = event.target.value;
+    setUserNotes(notes);
+    
+    if (updateUserProgress) {
+      updateUserProgress(lessonId, componentId, 'notes', notes);
+    }
+  };
 
   const addListBox = () => {
     if (onUpdate) {
@@ -98,6 +127,21 @@ const UnorderedListBox = ({ data, isEditMode = false, onUpdate }) => {
             </div>
           )}
         </div>
+        
+        {/* Interactive notes section for view mode */}
+        {!isEditMode && lessonId && (
+          <div className="mt-6 border-t pt-4">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              My Notes:
+            </label>
+            <textarea
+              value={userNotes}
+              onChange={handleNotesChange}
+              className="w-full p-3 border border-gray-300 rounded-md resize-vertical min-h-[100px] focus:ring-2 focus:ring-[#bd6334] focus:border-transparent"
+              placeholder="Add your personal notes about this content..."
+            />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -3,9 +3,31 @@ import componentLibrary from './course-components';
 import { parseContentString, resolveComponentType } from './componentMapping';
 import { componentTypes } from './course-components';
 
-const DynamicContentRenderer = ({ content }) => {
+const DynamicContentRenderer = ({ content, lessonId = null }) => {
   // Parse the content string into an array of components
   const parsedContent = parseContentString(content);
+  
+  // Helper function to get props for interactive components
+  const getInteractiveProps = (componentType, item) => {
+    const interactiveComponents = [
+      componentTypes.EXERCISE_BOX,
+      componentTypes.QUESTION_CARD_BOX,
+      componentTypes.CHECKBOX_LIST,
+      componentTypes.MARK_COMPLETE_BOX,
+      componentTypes.ORDERED_LIST_BOX,
+      componentTypes.UNORDERED_LIST_BOX
+    ];
+    
+    if (interactiveComponents.includes(componentType)) {
+      return {
+        lessonId,
+        componentId: item.id || `component_${Date.now()}_${Math.random()}`,
+        isEditMode: false
+      };
+    }
+    
+    return {};
+  };
   
   if (!parsedContent || !Array.isArray(parsedContent)) {
     return (
@@ -74,6 +96,7 @@ const DynamicContentRenderer = ({ content }) => {
                   data={componentData} 
                   isHalfWidth={true}
                   {...componentData}
+                  {...getInteractiveProps(componentType, item)}
                   originalItem={item}
                 />
               </div>
@@ -82,6 +105,7 @@ const DynamicContentRenderer = ({ content }) => {
                   data={nextComponentData} 
                   isHalfWidth={true}
                   {...nextComponentData}
+                  {...getInteractiveProps(nextComponentType, nextItem)}
                   originalItem={nextItem}
                 />
               </div>
@@ -97,6 +121,7 @@ const DynamicContentRenderer = ({ content }) => {
                   data={componentData} 
                   isHalfWidth={true}
                   {...componentData}
+                  {...getInteractiveProps(componentType, item)}
                   originalItem={item}
                 />
               </div>
@@ -112,6 +137,7 @@ const DynamicContentRenderer = ({ content }) => {
             <Component 
               data={componentData} 
               {...componentData}
+              {...getInteractiveProps(componentType, item)}
               originalItem={item}
             />
           </div>

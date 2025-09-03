@@ -206,7 +206,11 @@ const TempCourseContent = () => {
               title: lesson.title,
               icon: lesson.icon,
               lessonData: lesson, // Pass the full lesson data
-              component: () => <DynamicContentRenderer content={lesson.content} lesson={lesson} />
+              component: () => <DynamicContentRenderer 
+                content={lesson.content} 
+                lessonId={lesson.lessonID} 
+                lesson={lesson} 
+              />
             }));
 
           if (sortedLessons.length > 0) {
