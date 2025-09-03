@@ -10,6 +10,9 @@ const ImageContent = ({ data }) => {
             src={data.imageUrl}
             alt={data.alt || data.title}
             className="w-full h-auto max-h-96 object-contain"
+            onError={(e) => {
+              console.error('Image failed to load:', data.imageUrl, e);
+            }}
           />
         ) : (
           <div className="w-full h-48 flex items-center justify-center text-gray-500">

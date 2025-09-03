@@ -339,56 +339,51 @@ const EditCourseContent = () => {
 
   // Upload all pending files and update content URLs
   const uploadPendingFiles = async (content) => {
-    const updatedContent = [...content];
-    const uploadPromises = [];
-
-    for (const [uploadKey, file] of Object.entries(pendingUploads)) {
-      const [componentId, fieldName] = uploadKey.split('_');
-      
-      const uploadPromise = handleFileUpload(file).then(cloudinaryUrl => {
-        if (cloudinaryUrl) {
-          // Find and update the component in content
-          const componentIndex = updatedContent.findIndex(comp => comp.id === componentId);
-          if (componentIndex !== -1) {
-            updatedContent[componentIndex] = {
-              ...updatedContent[componentIndex],
-              data: {
-                ...updatedContent[componentIndex].data,
-                [fieldName]: cloudinaryUrl
-              }
-            };
-          }
-        }
-        return { uploadKey, cloudinaryUrl };
-      });
-      
-      uploadPromises.push(uploadPromise);
+    if (Object.keys(pendingUploads).length === 0) {
+      return content; // No uploads needed
     }
 
-    if (uploadPromises.length > 0) {
-      setUploadingFile(true);
-      try {
-        const uploadResults = await Promise.all(uploadPromises);
+    const updatedContent = [...content];
+    setUploadingFile(true);
+
+    try {
+      // Upload all files sequentially to avoid race conditions
+      for (const [uploadKey, file] of Object.entries(pendingUploads)) {
+        const [componentId, fieldName] = uploadKey.split('_');
         
-        // Clear successful uploads from pendingUploads
-        const successfulUploads = uploadResults.filter(result => result.cloudinaryUrl);
-        if (successfulUploads.length > 0) {
-          setPendingUploads(prev => {
-            const updated = { ...prev };
-            successfulUploads.forEach(({ uploadKey }) => {
-              delete updated[uploadKey];
-            });
-            return updated;
-          });
-          
-          toast.success(`${successfulUploads.length} files uploaded successfully!`);
+        try {
+          const cloudinaryUrl = await handleFileUpload(file);
+          if (cloudinaryUrl) {
+            // Find and update the component in content
+            // Handle both string and numeric IDs
+            const componentIndex = updatedContent.findIndex(comp => 
+              comp.id == componentId // Use == for loose comparison to handle type differences
+            );
+            
+            if (componentIndex !== -1) {
+              updatedContent[componentIndex] = {
+                ...updatedContent[componentIndex],
+                data: {
+                  ...updatedContent[componentIndex].data,
+                  [fieldName]: cloudinaryUrl
+                }
+              };
+            }
+          }
+        } catch (error) {
+          console.error(`Failed to upload file for component ${componentId}:`, error);
+          toast.error(`Failed to upload ${fieldName} for component`);
         }
-      } catch (error) {
-        console.error('Error uploading files:', error);
-        toast.error('Some files failed to upload');
-      } finally {
-        setUploadingFile(false);
       }
+
+      // Clear all successful uploads
+      setPendingUploads({});
+      toast.success(`Files uploaded successfully!`);
+    } catch (error) {
+      console.error('Error in upload process:', error);
+      toast.error('Some files failed to upload');
+    } finally {
+      setUploadingFile(false);
     }
 
     return updatedContent;
