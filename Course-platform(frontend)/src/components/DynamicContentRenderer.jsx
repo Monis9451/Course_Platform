@@ -57,15 +57,15 @@ const DynamicContentRenderer = ({ content }) => {
       // Ensure we have valid data
       const componentData = item.data || item.content || item;
       
-      // Special handling for LEFT_BORDER_BOX to render at half width
-      if (componentType === componentTypes.LEFT_BORDER_BOX) {
+      // Special handling for LEFT_BORDER_BOX and INFO_CARD_PAIR to render at half width
+      if (componentType === componentTypes.LEFT_BORDER_BOX || componentType === componentTypes.INFO_CARD_PAIR) {
         // Look for next component to pair with
         const nextItem = parsedContent[i + 1];
         const nextComponentType = nextItem ? resolveComponentType(nextItem, componentLibrary) : null;
         const NextComponent = nextComponentType && componentLibrary[nextComponentType] ? componentLibrary[nextComponentType].component : null;
         
-        if (NextComponent && nextComponentType === componentTypes.LEFT_BORDER_BOX) {
-          // Render two LEFT_BORDER_BOX components in a row
+        if (NextComponent && (nextComponentType === componentTypes.LEFT_BORDER_BOX || nextComponentType === componentTypes.INFO_CARD_PAIR)) {
+          // Render two half-width components in a row
           const nextComponentData = nextItem.data || nextItem.content || nextItem;
           processedComponents.push(
             <div key={`pair-${item.id || i}-${nextItem.id || (i + 1)}`} className="flex flex-col md:flex-row gap-6">
@@ -89,7 +89,7 @@ const DynamicContentRenderer = ({ content }) => {
           );
           i += 2; // Skip next component as it's already rendered
         } else {
-          // Render single LEFT_BORDER_BOX taking half space, other half remains empty
+          // Render single half-width component taking half space, other half remains empty
           processedComponents.push(
             <div key={item.id || i} className="flex flex-col md:flex-row gap-6">
               <div className="flex-1">
