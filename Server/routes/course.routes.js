@@ -19,10 +19,10 @@ router.post('/create', verifySupabaseToken, isAdmin, createCourseHandler);
 router.get('/all', getAllCoursesHandler);
 router.get('/incomplete', verifySupabaseToken, isAdmin, getIncompleteCoursesHandler);
 router.get('/incomplete/details', verifySupabaseToken, isAdmin, getIncompleteCoursesWithDetailsHandler);
+router.delete('/cascade-delete/:id', verifySupabaseToken, isAdmin, deleteCourseHandler);
 router.get('/:id', getCourseByIdHandler);
 router.get('/:id/details', getCourseWithDetailsHandler);
 router.put('/:id', verifySupabaseToken, isAdmin, updateCourseHandler);
 router.put('/:id/complete', verifySupabaseToken, isAdmin, markCourseAsCompletedHandler);
-router.delete('/:id/cascade-delete', verifySupabaseToken, isAdmin, deleteCourseHandler);
 
 module.exports = router;

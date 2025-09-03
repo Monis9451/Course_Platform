@@ -22,6 +22,7 @@ import UserAnalytics from './pages/UserAnalytics';
 import AddCourse from './pages/AddCourse';
 import EditCoursesList from './pages/EditCoursesList';
 import EditCourseContent from './pages/EditCourseContent';
+import DeleteCoursesList from './pages/DeleteCoursesList';
 import TempCourseList from './pages/TempCourseList';
 import TempCourseContent from './pages/TempCourseContent';
 import Error from './pages/404';
@@ -53,6 +54,7 @@ const App = () => {
               <Route path="/admin/add-course" element={<AddCourse />} />
               <Route path="/admin/edit-courses" element={<EditCoursesList />} />
               <Route path="/admin/edit-course/:courseId" element={<EditCourseContent />} />
+              <Route path="/admin/delete-courses" element={<DeleteCoursesList />} />
               <Route path="/temp-course-content" element={<TempCourseList />} />
               <Route path="/temp-course-content/:id" element={<TempCourseContent />} />
             </Route>
