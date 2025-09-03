@@ -129,7 +129,8 @@ export const componentLibrary = {
       title: 'Peach Box Section',
       boxTitle: 'Example: Title',
       paragraph: 'Example: paragraph',
-      italicLines: 'Example: Some ending lines in italic'
+      italicLines: 'Example: Some ending lines in italic',
+      svgType: 'lightbulb'
     }
   },
   [componentTypes.EXERCISE_BOX]: {

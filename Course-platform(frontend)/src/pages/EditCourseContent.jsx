@@ -537,6 +537,24 @@ const EditCourseContent = () => {
               />
             </div>
             <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">SVG Icon</label>
+              <select
+                value={componentData.svgType || 'lightbulb'}
+                onChange={(e) => handleComponentDataChange('svgType', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+              >
+                <option value="lightbulb">💡 Light Bulb</option>
+                <option value="heart">❤️ Heart</option>
+                <option value="brain">🧠 Brain</option>
+                <option value="star">⭐ Star</option>
+                <option value="shield">🛡️ Shield</option>
+                <option value="target">🎯 Target</option>
+                <option value="check">✅ Check</option>
+                <option value="exclamation">⚠️ Exclamation</option>
+                <option value="none">🚫 None</option>
+              </select>
+            </div>
+            <div>
               <label className="block text-xs font-medium mb-1 text-gray-700">Italic Lines</label>
               <input
                 type="text"
