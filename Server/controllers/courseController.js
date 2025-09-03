@@ -119,8 +119,9 @@ const deleteCourseHandler = catchAsync(async (req, res, next) => {
     return next(new AppError('Course not found', 404));
   }
 
-  res.status(204).json({
+  res.status(200).json({
     status: 'success',
+    message: 'Course and related data deleted successfully',
     data: null,
   });
 });

@@ -930,7 +930,7 @@ const AddCourse = () => {
 
       toast.success('Course completed successfully! 🎉');
       setTimeout(() => {
-        navigate('/admin-dashboard');
+        navigate('/admin/dashboard');
       }, 2000);
 
     } catch (error) {
