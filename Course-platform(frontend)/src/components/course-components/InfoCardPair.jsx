@@ -1,6 +1,6 @@
 import React from 'react';
 
-const InfoCardPair = ({ data }) => {
+const InfoCardPair = ({ data, isHalfWidth = false }) => {
   const {
     title = '',
     card1Title = 'Card Title',

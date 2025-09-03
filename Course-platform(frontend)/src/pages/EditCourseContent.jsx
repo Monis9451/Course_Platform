@@ -60,6 +60,9 @@ const EditCourseContent = () => {
   const [saving, setSaving] = useState(false);
   const [uploadingFile, setUploadingFile] = useState(false);
   
+  // Pending file uploads - store files temporarily until save
+  const [pendingUploads, setPendingUploads] = useState({});
+  
   // Editor states
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [componentData, setComponentData] = useState({});
@@ -123,6 +126,23 @@ const EditCourseContent = () => {
     }
   }, [courseId, navigate]);
 
+  // Cleanup pending uploads on component unmount or lesson change
+  useEffect(() => {
+    return () => {
+      // Revoke all blob URLs when component unmounts or lesson changes
+      Object.keys(pendingUploads).forEach(uploadKey => {
+        const [componentId, fieldName] = uploadKey.split('_');
+        const component = editingContent.find(comp => comp.id === componentId);
+        if (component && component.data && component.data[fieldName]) {
+          const url = component.data[fieldName];
+          if (typeof url === 'string' && url.startsWith('blob:')) {
+            URL.revokeObjectURL(url);
+          }
+        }
+      });
+    };
+  }, [currentLessonIndex, pendingUploads, editingContent]);
+
   // Editor functions
   const addComponent = (type) => {
     const componentConfig = filteredComponentLibrary[type];
@@ -154,6 +174,30 @@ const EditCourseContent = () => {
 
   const deleteComponent = (componentId) => {
     setEditingContent(prev => prev.filter(comp => comp.id !== componentId));
+    
+    // Clean up pending uploads for this component
+    setPendingUploads(prev => {
+      const updated = { ...prev };
+      Object.keys(updated).forEach(key => {
+        if (key.startsWith(`${componentId}_`)) {
+          // Revoke the object URL to free memory
+          const file = updated[key];
+          if (file instanceof File) {
+            const component = editingContent.find(comp => comp.id === componentId);
+            if (component && component.data) {
+              Object.values(component.data).forEach(value => {
+                if (typeof value === 'string' && value.startsWith('blob:')) {
+                  URL.revokeObjectURL(value);
+                }
+              });
+            }
+          }
+          delete updated[key];
+        }
+      });
+      return updated;
+    });
+    
     if (selectedComponent && selectedComponent.id === componentId) {
       setSelectedComponent(null);
       setComponentData({});
@@ -235,16 +279,25 @@ const EditCourseContent = () => {
     }
   };
 
-  // Handle file upload for components
+  // Handle file upload for components (now stores temporarily)
   const handleComponentFileUpload = async (e, field) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const url = await handleFileUpload(file);
-    if (url) {
-      handleComponentDataChange(field, url);
-      toast.success('File uploaded successfully!');
-    }
+    // Create a local URL for preview
+    const localUrl = URL.createObjectURL(file);
+    
+    // Store the file for later upload
+    const uploadKey = `${selectedComponent.id}_${field}`;
+    setPendingUploads(prev => ({
+      ...prev,
+      [uploadKey]: file
+    }));
+
+    // Update component data with local URL for preview
+    handleComponentDataChange(field, localUrl);
+    
+    toast.success('Image selected! It will be uploaded when you save the lesson.');
   };
 
   // Navigate between lessons
@@ -284,6 +337,63 @@ const EditCourseContent = () => {
     }
   };
 
+  // Upload all pending files and update content URLs
+  const uploadPendingFiles = async (content) => {
+    const updatedContent = [...content];
+    const uploadPromises = [];
+
+    for (const [uploadKey, file] of Object.entries(pendingUploads)) {
+      const [componentId, fieldName] = uploadKey.split('_');
+      
+      const uploadPromise = handleFileUpload(file).then(cloudinaryUrl => {
+        if (cloudinaryUrl) {
+          // Find and update the component in content
+          const componentIndex = updatedContent.findIndex(comp => comp.id === componentId);
+          if (componentIndex !== -1) {
+            updatedContent[componentIndex] = {
+              ...updatedContent[componentIndex],
+              data: {
+                ...updatedContent[componentIndex].data,
+                [fieldName]: cloudinaryUrl
+              }
+            };
+          }
+        }
+        return { uploadKey, cloudinaryUrl };
+      });
+      
+      uploadPromises.push(uploadPromise);
+    }
+
+    if (uploadPromises.length > 0) {
+      setUploadingFile(true);
+      try {
+        const uploadResults = await Promise.all(uploadPromises);
+        
+        // Clear successful uploads from pendingUploads
+        const successfulUploads = uploadResults.filter(result => result.cloudinaryUrl);
+        if (successfulUploads.length > 0) {
+          setPendingUploads(prev => {
+            const updated = { ...prev };
+            successfulUploads.forEach(({ uploadKey }) => {
+              delete updated[uploadKey];
+            });
+            return updated;
+          });
+          
+          toast.success(`${successfulUploads.length} files uploaded successfully!`);
+        }
+      } catch (error) {
+        console.error('Error uploading files:', error);
+        toast.error('Some files failed to upload');
+      } finally {
+        setUploadingFile(false);
+      }
+    }
+
+    return updatedContent;
+  };
+
   const handleSaveContent = async () => {
     if (!course?.allLessons?.[currentLessonIndex]) {
       toast.error('No lesson selected');
@@ -294,18 +404,25 @@ const EditCourseContent = () => {
 
     try {
       setSaving(true);
-      const contentString = JSON.stringify(editingContent);
+      
+      // Upload pending files first
+      const contentWithUploadedFiles = await uploadPendingFiles(editingContent);
+      
+      const contentString = JSON.stringify(contentWithUploadedFiles);
       await updateLessonContent(currentLesson.lessonID, contentString, authToken);
 
-      // Update local state
+      // Update local state with uploaded URLs
       setCourse(prevCourse => {
         const updatedLessons = [...prevCourse.allLessons];
         updatedLessons[currentLessonIndex] = {
           ...updatedLessons[currentLessonIndex],
-          content: editingContent
+          content: contentWithUploadedFiles
         };
         return { ...prevCourse, allLessons: updatedLessons };
       });
+      
+      // Update editing content with uploaded URLs
+      setEditingContent(contentWithUploadedFiles);
 
       toast.success('Content saved successfully');
     } catch (error) {
@@ -1817,31 +1934,107 @@ const EditCourseContent = () => {
                   </div>
                 ) : (
                   <div className="space-y-6">
-                    {editingContent.map((component) => {
-                      const ComponentRenderer = filteredComponentLibrary[component.type]?.component;
+                    {(() => {
+                      const components = [];
+                      let i = 0;
                       
-                      if (!ComponentRenderer) {
-                        return (
-                          <div key={component.id} className="p-4 border border-red-300 bg-red-50 rounded-lg">
-                            <p className="text-red-600 text-sm">Unknown component type: {component.type}</p>
-                          </div>
-                        );
+                      while (i < editingContent.length) {
+                        const component = editingContent[i];
+                        const ComponentRenderer = filteredComponentLibrary[component.type]?.component;
+                        
+                        if (!ComponentRenderer) {
+                          components.push(
+                            <div key={component.id} className="p-4 border border-red-300 bg-red-50 rounded-lg">
+                              <p className="text-red-600 text-sm">Unknown component type: {component.type}</p>
+                            </div>
+                          );
+                          i++;
+                          continue;
+                        }
+                        
+                        // Check if this is a LEFT_BORDER_BOX or INFO_CARD_PAIR (always treat as half-width)
+                        if (component.type === componentTypes.LEFT_BORDER_BOX || component.type === componentTypes.INFO_CARD_PAIR) {
+                          // Look for next component to pair with
+                          const nextComponent = editingContent[i + 1];
+                          const NextComponentRenderer = (nextComponent?.type === componentTypes.LEFT_BORDER_BOX || nextComponent?.type === componentTypes.INFO_CARD_PAIR) ? 
+                            filteredComponentLibrary[nextComponent.type]?.component : null;
+                          
+                          if (NextComponentRenderer) {
+                            // Render two half-width components in a row
+                            components.push(
+                              <div key={`pair-${component.id}-${nextComponent.id}`} className="flex flex-col md:flex-row gap-6">
+                                <div
+                                  className={`flex-1 transition-all duration-200 cursor-pointer ${
+                                    selectedComponent?.id === component.id 
+                                      ? 'ring-2 ring-blue-400 ring-opacity-50 rounded-lg' 
+                                      : ''
+                                  }`}
+                                  onClick={() => selectComponent(component)}
+                                >
+                                  <ComponentRenderer 
+                                    data={component.data} 
+                                    isHalfWidth={true}
+                                  />
+                                </div>
+                                <div
+                                  className={`flex-1 transition-all duration-200 cursor-pointer ${
+                                    selectedComponent?.id === nextComponent.id 
+                                      ? 'ring-2 ring-blue-400 ring-opacity-50 rounded-lg' 
+                                      : ''
+                                  }`}
+                                  onClick={() => selectComponent(nextComponent)}
+                                >
+                                  <NextComponentRenderer 
+                                    data={nextComponent.data} 
+                                    isHalfWidth={true}
+                                  />
+                                </div>
+                              </div>
+                            );
+                            i += 2; // Skip next component as it's already rendered
+                          } else {
+                            // Render single half-width component taking half space, other half remains empty
+                            components.push(
+                              <div key={component.id} className="flex flex-col md:flex-row gap-6">
+                                <div
+                                  className={`flex-1 transition-all duration-200 cursor-pointer ${
+                                    selectedComponent?.id === component.id 
+                                      ? 'ring-2 ring-blue-400 ring-opacity-50 rounded-lg' 
+                                      : ''
+                                  }`}
+                                  onClick={() => selectComponent(component)}
+                                >
+                                  <ComponentRenderer 
+                                    data={component.data} 
+                                    isHalfWidth={true}
+                                  />
+                                </div>
+                                <div className="flex-1"></div>
+                              </div>
+                            );
+                            i++;
+                          }
+                        } else {
+                          // Render full-width component normally
+                          components.push(
+                            <div
+                              key={component.id}
+                              className={`transition-all duration-200 cursor-pointer ${
+                                selectedComponent?.id === component.id 
+                                  ? 'ring-2 ring-blue-400 ring-opacity-50 rounded-lg' 
+                                  : ''
+                              }`}
+                              onClick={() => selectComponent(component)}
+                            >
+                              <ComponentRenderer data={component.data} />
+                            </div>
+                          );
+                          i++;
+                        }
                       }
                       
-                      return (
-                        <div
-                          key={component.id}
-                          className={`transition-all duration-200 cursor-pointer ${
-                            selectedComponent?.id === component.id 
-                              ? 'ring-2 ring-blue-400 ring-opacity-50 rounded-lg' 
-                              : ''
-                          }`}
-                          onClick={() => selectComponent(component)}
-                        >
-                          <ComponentRenderer data={component.data} />
-                        </div>
-                      );
-                    })}
+                      return components;
+                    })()}
                   </div>
                 )}
               </div>

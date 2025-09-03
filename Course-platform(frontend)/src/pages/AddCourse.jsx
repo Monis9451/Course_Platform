@@ -103,6 +103,9 @@ const AddCourse = () => {
   const [loading, setLoading] = useState(false);
   const [uploadingFile, setUploadingFile] = useState(false);
 
+  // Pending file uploads - store files temporarily until save
+  const [pendingUploads, setPendingUploads] = useState({});
+
   // Incomplete course detection
   const [incompleteCourses, setIncompleteCourses] = useState([]);
   const [showIncompleteModal, setShowIncompleteModal] = useState(false);
@@ -124,6 +127,23 @@ const AddCourse = () => {
       }
     };
   }, [thumbnailPreview]);
+
+  // Cleanup pending uploads on component unmount or lesson change
+  useEffect(() => {
+    return () => {
+      // Revoke all blob URLs when component unmounts
+      Object.keys(pendingUploads).forEach(uploadKey => {
+        const [componentId, fieldName] = uploadKey.split('_');
+        const component = currentLessonContent.find(comp => comp.id === componentId);
+        if (component && component.data && component.data[fieldName]) {
+          const url = component.data[fieldName];
+          if (typeof url === 'string' && url.startsWith('blob:')) {
+            URL.revokeObjectURL(url);
+          }
+        }
+      });
+    };
+  }, [currentLessonIndex, pendingUploads, currentLessonContent]);
 
   // Validation functions
   const validateCourseData = () => {
@@ -664,6 +684,30 @@ const AddCourse = () => {
 
   const deleteComponent = (componentId) => {
     setCurrentLessonContent(prev => prev.filter(comp => comp.id !== componentId));
+    
+    // Clean up pending uploads for this component
+    setPendingUploads(prev => {
+      const updated = { ...prev };
+      Object.keys(updated).forEach(key => {
+        if (key.startsWith(`${componentId}_`)) {
+          // Revoke the object URL to free memory
+          const file = updated[key];
+          if (file instanceof File) {
+            const component = currentLessonContent.find(comp => comp.id === componentId);
+            if (component && component.data) {
+              Object.values(component.data).forEach(value => {
+                if (typeof value === 'string' && value.startsWith('blob:')) {
+                  URL.revokeObjectURL(value);
+                }
+              });
+            }
+          }
+          delete updated[key];
+        }
+      });
+      return updated;
+    });
+    
     if (selectedComponent && selectedComponent.id === componentId) {
       setSelectedComponent(null);
       setComponentData({});
@@ -673,6 +717,63 @@ const AddCourse = () => {
   const selectComponent = (component) => {
     setSelectedComponent(component);
     setComponentData(component.data);
+  };
+
+  // Upload all pending files and update content URLs
+  const uploadPendingFiles = async (content) => {
+    const updatedContent = [...content];
+    const uploadPromises = [];
+
+    for (const [uploadKey, file] of Object.entries(pendingUploads)) {
+      const [componentId, fieldName] = uploadKey.split('_');
+      
+      const uploadPromise = handleFileUpload(file).then(cloudinaryUrl => {
+        if (cloudinaryUrl) {
+          // Find and update the component in content
+          const componentIndex = updatedContent.findIndex(comp => comp.id === componentId);
+          if (componentIndex !== -1) {
+            updatedContent[componentIndex] = {
+              ...updatedContent[componentIndex],
+              data: {
+                ...updatedContent[componentIndex].data,
+                [fieldName]: cloudinaryUrl
+              }
+            };
+          }
+        }
+        return { uploadKey, cloudinaryUrl };
+      });
+      
+      uploadPromises.push(uploadPromise);
+    }
+
+    if (uploadPromises.length > 0) {
+      setUploadingFile(true);
+      try {
+        const uploadResults = await Promise.all(uploadPromises);
+        
+        // Clear successful uploads from pendingUploads
+        const successfulUploads = uploadResults.filter(result => result.cloudinaryUrl);
+        if (successfulUploads.length > 0) {
+          setPendingUploads(prev => {
+            const updated = { ...prev };
+            successfulUploads.forEach(({ uploadKey }) => {
+              delete updated[uploadKey];
+            });
+            return updated;
+          });
+          
+          toast.success(`${successfulUploads.length} files uploaded successfully!`);
+        }
+      } catch (error) {
+        console.error('Error uploading files:', error);
+        toast.error('Some files failed to upload');
+      } finally {
+        setUploadingFile(false);
+      }
+    }
+
+    return updatedContent;
   };
 
   // Save lesson content with validation
@@ -688,8 +789,11 @@ const AddCourse = () => {
 
     setLoading(true);
     try {
+      // Upload pending files first
+      const contentWithUploadedFiles = await uploadPendingFiles(currentLessonContent);
+      
       const lesson = lessons[currentLessonIndex];
-      const content = JSON.stringify(currentLessonContent);
+      const content = JSON.stringify(contentWithUploadedFiles);
 
       const response = await fetch(`${import.meta.env.VITE_API_URL}/lessons/add-content`, {
         method: 'POST',
@@ -708,10 +812,11 @@ const AddCourse = () => {
         throw new Error(errorData.message || 'Failed to save lesson content');
       }
 
-      // Update lessons array
+      // Update lessons array and current lesson content with uploaded URLs
       const updatedLessons = [...lessons];
-      updatedLessons[currentLessonIndex].content = currentLessonContent;
+      updatedLessons[currentLessonIndex].content = contentWithUploadedFiles;
       setLessons(updatedLessons);
+      setCurrentLessonContent(contentWithUploadedFiles);
 
       if (showSuccess) {
         toast.success('Lesson content saved successfully!');
@@ -987,16 +1092,25 @@ const AddCourse = () => {
     }
   };
 
-  // Handle file upload for components
+  // Handle file upload for components (now stores temporarily)
   const handleComponentFileUpload = async (e, field) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const url = await handleFileUpload(file);
-    if (url) {
-      handleComponentDataChange(field, url);
-      toast.success('File uploaded successfully!');
-    }
+    // Create a local URL for preview
+    const localUrl = URL.createObjectURL(file);
+    
+    // Store the file for later upload
+    const uploadKey = `${selectedComponent.id}_${field}`;
+    setPendingUploads(prev => ({
+      ...prev,
+      [uploadKey]: file
+    }));
+
+    // Update component data with local URL for preview
+    handleComponentDataChange(field, localUrl);
+    
+    toast.success('Image selected! It will be uploaded when you save the lesson.');
   };
 
   // Render component form based on type
