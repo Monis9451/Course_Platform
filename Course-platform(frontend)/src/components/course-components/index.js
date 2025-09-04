@@ -18,6 +18,7 @@ import UnorderedListBox from './UnorderedListBox';
 import TimelineComponent from './TimelineComponent';
 import DescriptionWithImageBox from './DescriptionWithImageBox';
 import InfoCardPair from './InfoCardPair';
+import NumberedStepsBox from './NumberedStepsBox';
 
 export const componentTypes = {
   HEADING: 'heading',
@@ -36,6 +37,7 @@ export const componentTypes = {
   CHECKBOX_LIST: 'checkbox_list',
   MARK_COMPLETE_BOX: 'mark_complete_box',
   UNORDERED_LIST_BOX: 'unordered_list_box',
+  NUMBERED_STEPS_BOX: 'numbered_steps_box',
   CUSTOM: 'custom',
   PARAGRAPH: 'paragraph',
   BULLET_LIST: 'bullet_list',
@@ -234,6 +236,22 @@ export const componentLibrary = {
           items: ['Example: list item 1']
         }
       ]
+    }
+  },
+  [componentTypes.NUMBERED_STEPS_BOX]: {
+    name: 'Numbered Steps Box',
+    component: NumberedStepsBox,
+    defaultData: {
+      sectionTitle: 'Numbered Steps Section',
+      title: 'Getting Started',
+      paragraph: '',
+      steps: [
+        {
+          title: 'Example Step Title',
+          description: 'Example step description that explains what to do in this step.'
+        }
+      ],
+      listItems: []
     }
   },
   [componentTypes.CUSTOM]: {
@@ -462,7 +480,9 @@ export const componentLibrary = {
       imageUrl: '/img.jpg',
       alt: 'Image',
       termLabel: 'Term:',
-      termPlaceholder: 'Describe answer...'
+      termPlaceholder: 'Describe answer...',
+      termLabel2: 'Second Term:',
+      termPlaceholder2: 'Describe second answer...'
     }
   },
   [componentTypes.INFO_CARD_PAIR]: {
