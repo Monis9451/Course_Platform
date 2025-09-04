@@ -57,8 +57,8 @@ const QuestionCardBox = ({ data, isEditMode = false, onUpdate, lessonId = null, 
     <div className={`mb-6 ${isHalfWidth ? 'w-full' : ''}`}>
       <h3 className="text-xl font-semibold mb-3">{title}</h3>
       
-      {/* Questions Grid - 2 cards per row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Questions Grid - Responsive based on isHalfWidth */}
+      <div className={`grid gap-6 ${isHalfWidth ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
         {questions.map((question, index) => (
           <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm transition-all hover:shadow-md">
             {/* Edit Mode Controls */}
