@@ -891,6 +891,16 @@ const EditCourseContent = () => {
               />
             </div>
             <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Footer Text</label>
+              <input
+                type="text"
+                value={componentData.footerText || ''}
+                onChange={(e) => handleComponentDataChange('footerText', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Small footer text"
+              />
+            </div>
+            <div>
               <label className="block text-xs font-medium mb-1 text-gray-700">List Items (Optional)</label>
               <div className="space-y-2">
                 {(componentData.listItems || []).map((item, index) => (
@@ -929,16 +939,6 @@ const EditCourseContent = () => {
                   Add List Item
                 </button>
               </div>
-            </div>
-            <div>
-              <label className="block text-xs font-medium mb-1 text-gray-700">Footer Text</label>
-              <input
-                type="text"
-                value={componentData.footerText || ''}
-                onChange={(e) => handleComponentDataChange('footerText', e.target.value)}
-                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
-                placeholder="Small footer text"
-              />
             </div>
           </div>
         );
