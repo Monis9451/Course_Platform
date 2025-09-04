@@ -11,7 +11,7 @@ const router = express.Router();
 const handleMulterError = (err, req, res, next) => {
   if (err instanceof Error) {
     if (err.code === 'LIMIT_FILE_SIZE') {
-      return next(new AppError('File size too large. Maximum size is 50MB.', 400));
+      return next(new AppError('File size too large. Maximum size is 100MB.', 400));
     }
     if (err.code === 'LIMIT_FILE_COUNT') {
       return next(new AppError('Too many files. Only one file is allowed.', 400));
@@ -19,6 +19,7 @@ const handleMulterError = (err, req, res, next) => {
     if (err.message.includes('File type') && err.message.includes('not allowed')) {
       return next(new AppError('Invalid file type. Only images, videos, audio files, and PDFs are allowed.', 400));
     }
+    console.error('Multer error:', err);
     return next(new AppError(err.message, 400));
   }
   next(err);

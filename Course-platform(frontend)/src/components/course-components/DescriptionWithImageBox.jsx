@@ -8,7 +8,9 @@ const DescriptionWithImageBox = ({ data }) => {
     imageUrl = '/img.jpg',
     alt = 'Image',
     termLabel = 'Term:',
-    termPlaceholder = 'Describe answer...'
+    termPlaceholder = 'Describe answer...',
+    termLabel2 = 'Second Term:',
+    termPlaceholder2 = 'Describe second answer...'
   } = data;
 
   return (
@@ -44,6 +46,15 @@ const DescriptionWithImageBox = ({ data }) => {
                 rows={3} 
                 className="w-full p-2 border border-gray-300 rounded-md" 
                 placeholder={termPlaceholder}
+                readOnly
+              />
+            </div>
+            <div>
+              <p className="font-medium mb-2">{termLabel2}</p>
+              <textarea 
+                rows={3} 
+                className="w-full p-2 border border-gray-300 rounded-md" 
+                placeholder={termPlaceholder2}
                 readOnly
               />
             </div>

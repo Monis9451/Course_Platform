@@ -17,12 +17,22 @@ const fileFilter = (req, file, cb) => {
         'audio/mpeg',
         'audio/wav',
         'audio/mp3',
+        'audio/mp4',
+        'audio/x-wav',
+        'audio/x-mpeg',
+        'audio/webm',
+        'audio/ogg',
+        'audio/aac',
+        'audio/flac',
         'application/pdf'
     ];
+
+    console.log(`File upload attempt: ${file.originalname}, MIME type: ${file.mimetype}`);
 
     if (allowedMimeTypes.includes(file.mimetype)) {
         cb(null, true);
     } else {
+        console.error(`Rejected file type: ${file.mimetype} for file: ${file.originalname}`);
         cb(new Error(`File type ${file.mimetype} is not allowed`), false);
     }
 };
@@ -31,7 +41,7 @@ const upload = multer({
     storage,
     fileFilter,
     limits: {
-        fileSize: 50 * 1024 * 1024, // 50MB limit
+        fileSize: 100 * 1024 * 1024, // 100MB limit for audio files
         files: 1
     }
 });
