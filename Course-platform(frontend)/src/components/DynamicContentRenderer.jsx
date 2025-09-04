@@ -79,14 +79,14 @@ const DynamicContentRenderer = ({ content, lessonId = null }) => {
       // Ensure we have valid data
       const componentData = item.data || item.content || item;
       
-      // Special handling for LEFT_BORDER_BOX and INFO_CARD_PAIR to render at half width
-      if (componentType === componentTypes.LEFT_BORDER_BOX || componentType === componentTypes.INFO_CARD_PAIR) {
+      // Special handling for LEFT_BORDER_BOX, INFO_CARD_PAIR, and QUESTION_CARD_BOX to render at half width
+      if (componentType === componentTypes.LEFT_BORDER_BOX || componentType === componentTypes.INFO_CARD_PAIR || componentType === componentTypes.QUESTION_CARD_BOX) {
         // Look for next component to pair with
         const nextItem = parsedContent[i + 1];
         const nextComponentType = nextItem ? resolveComponentType(nextItem, componentLibrary) : null;
         const NextComponent = nextComponentType && componentLibrary[nextComponentType] ? componentLibrary[nextComponentType].component : null;
         
-        if (NextComponent && (nextComponentType === componentTypes.LEFT_BORDER_BOX || nextComponentType === componentTypes.INFO_CARD_PAIR)) {
+        if (NextComponent && (nextComponentType === componentTypes.LEFT_BORDER_BOX || nextComponentType === componentTypes.INFO_CARD_PAIR || nextComponentType === componentTypes.QUESTION_CARD_BOX)) {
           // Render two half-width components in a row
           const nextComponentData = nextItem.data || nextItem.content || nextItem;
           processedComponents.push(

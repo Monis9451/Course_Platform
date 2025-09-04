@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useUserProgress } from '../../context/userProgressContext';
 
-const QuestionCardBox = ({ data, isEditMode = false, onUpdate, lessonId = null, componentId = null }) => {
+const QuestionCardBox = ({ data, isEditMode = false, onUpdate, lessonId = null, componentId = null, isHalfWidth = false }) => {
   const { title, questions = [{ questionTitle: '', questionText: '', placeholder: '', consideration: '' }] } = data;
   const { getResponse, updateResponse } = useUserProgress();
   
@@ -54,7 +54,7 @@ const QuestionCardBox = ({ data, isEditMode = false, onUpdate, lessonId = null, 
   };
 
   return (
-    <div className="mb-6">
+    <div className={`mb-6 ${isHalfWidth ? 'w-full' : ''}`}>
       <h3 className="text-xl font-semibold mb-3">{title}</h3>
       
       {/* Questions Grid - 2 cards per row */}

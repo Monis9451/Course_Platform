@@ -2678,11 +2678,11 @@ const AddCourse = () => {
                             continue;
                           }
                           
-                          // Check if this is a LEFT_BORDER_BOX or INFO_CARD_PAIR (always treat as half-width)
-                          if (component.type === componentTypes.LEFT_BORDER_BOX || component.type === componentTypes.INFO_CARD_PAIR) {
+                          // Check if this is a LEFT_BORDER_BOX, INFO_CARD_PAIR, or QUESTION_CARD_BOX (always treat as half-width)
+                          if (component.type === componentTypes.LEFT_BORDER_BOX || component.type === componentTypes.INFO_CARD_PAIR || component.type === componentTypes.QUESTION_CARD_BOX) {
                             // Look for next component to pair with
                             const nextComponent = currentLessonContent[i + 1];
-                            const NextComponentRenderer = (nextComponent?.type === componentTypes.LEFT_BORDER_BOX || nextComponent?.type === componentTypes.INFO_CARD_PAIR) ? 
+                            const NextComponentRenderer = (nextComponent?.type === componentTypes.LEFT_BORDER_BOX || nextComponent?.type === componentTypes.INFO_CARD_PAIR || nextComponent?.type === componentTypes.QUESTION_CARD_BOX) ? 
                               filteredComponentLibrary[nextComponent.type]?.component : null;
                             
                             if (NextComponentRenderer) {
