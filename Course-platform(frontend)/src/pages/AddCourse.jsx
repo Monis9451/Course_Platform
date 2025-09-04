@@ -42,6 +42,7 @@ const allowedComponents = [
   componentTypes.CHECKBOX_LIST,
   componentTypes.MARK_COMPLETE_BOX,
   componentTypes.UNORDERED_LIST_BOX,
+  componentTypes.NUMBERED_STEPS_BOX,
   componentTypes.TIMELINE,
   componentTypes.DESCRIPTION_WITH_IMAGE_BOX,
   componentTypes.INFO_CARD_PAIR
@@ -2122,6 +2123,140 @@ const AddCourse = () => {
           </div>
         );
 
+      case componentTypes.NUMBERED_STEPS_BOX:
+        return (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Section Title</label>
+              <input
+                type="text"
+                value={componentData.sectionTitle || ''}
+                onChange={(e) => handleComponentDataChange('sectionTitle', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Section title"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Box Title</label>
+              <input
+                type="text"
+                value={componentData.title || ''}
+                onChange={(e) => handleComponentDataChange('title', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Box title (e.g., Getting Started)"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Optional Paragraph</label>
+              <textarea
+                value={componentData.paragraph || ''}
+                onChange={(e) => handleComponentDataChange('paragraph', e.target.value)}
+                rows={3}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Optional paragraph text (appears after title)"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Steps</label>
+              <div className="space-y-3">
+                {(componentData.steps || []).map((step, stepIndex) => (
+                  <div key={stepIndex} className="border border-gray-200 rounded p-3">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-xs font-medium text-gray-600">Step {stepIndex + 1}</span>
+                      {(componentData.steps || []).length > 1 && (
+                        <button
+                          onClick={() => {
+                            const newSteps = (componentData.steps || []).filter((_, i) => i !== stepIndex);
+                            handleComponentDataChange('steps', newSteps);
+                          }}
+                          className="text-red-500 hover:text-red-700 text-xs px-2 py-1 rounded"
+                          type="button"
+                        >
+                          ✕ Remove
+                        </button>
+                      )}
+                    </div>
+                    <div className="space-y-2">
+                      <input
+                        type="text"
+                        value={step.title || ''}
+                        onChange={(e) => {
+                          const newSteps = [...(componentData.steps || [])];
+                          newSteps[stepIndex] = { ...newSteps[stepIndex], title: e.target.value };
+                          handleComponentDataChange('steps', newSteps);
+                        }}
+                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        placeholder="Step title"
+                      />
+                      <textarea
+                        value={step.description || ''}
+                        onChange={(e) => {
+                          const newSteps = [...(componentData.steps || [])];
+                          newSteps[stepIndex] = { ...newSteps[stepIndex], description: e.target.value };
+                          handleComponentDataChange('steps', newSteps);
+                        }}
+                        rows={3}
+                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        placeholder="Step description"
+                      />
+                    </div>
+                  </div>
+                ))}
+                <button
+                  onClick={() => {
+                    const newSteps = [...(componentData.steps || []), { title: '', description: '' }];
+                    handleComponentDataChange('steps', newSteps);
+                  }}
+                  className="w-full py-2 border border-dashed border-gray-400 text-gray-600 text-xs rounded hover:bg-gray-50"
+                  type="button"
+                >
+                  + Add Step
+                </button>
+              </div>
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Optional List Items</label>
+              <div className="space-y-2">
+                {(componentData.listItems || []).map((item, index) => (
+                  <div key={index} className="flex gap-2">
+                    <input
+                      type="text"
+                      value={item}
+                      onChange={(e) => {
+                        const newListItems = [...(componentData.listItems || [])];
+                        newListItems[index] = e.target.value;
+                        handleComponentDataChange('listItems', newListItems);
+                      }}
+                      className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      placeholder={`List item ${index + 1}...`}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newListItems = (componentData.listItems || []).filter((_, i) => i !== index);
+                        handleComponentDataChange('listItems', newListItems);
+                      }}
+                      className="px-2 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newListItems = [...(componentData.listItems || []), ''];
+                    handleComponentDataChange('listItems', newListItems);
+                  }}
+                  className="px-3 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600"
+                >
+                  Add List Item
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+
       case componentTypes.TIMELINE:
         return (
           <div className="space-y-3">
@@ -2323,6 +2458,26 @@ const AddCourse = () => {
                 onChange={(e) => handleComponentDataChange('termPlaceholder', e.target.value)}
                 className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
                 placeholder="Placeholder text for textarea"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Second Term Label</label>
+              <input
+                type="text"
+                value={componentData.termLabel2 || ''}
+                onChange={(e) => handleComponentDataChange('termLabel2', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Second term label (e.g., Second Term:)"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Second Term Placeholder</label>
+              <input
+                type="text"
+                value={componentData.termPlaceholder2 || ''}
+                onChange={(e) => handleComponentDataChange('termPlaceholder2', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Placeholder text for second textarea"
               />
             </div>
           </div>
@@ -2678,11 +2833,23 @@ const AddCourse = () => {
                             continue;
                           }
                           
-                          // Check if this is a LEFT_BORDER_BOX, INFO_CARD_PAIR, or QUESTION_CARD_BOX (always treat as half-width)
-                          if (component.type === componentTypes.LEFT_BORDER_BOX || component.type === componentTypes.INFO_CARD_PAIR || component.type === componentTypes.QUESTION_CARD_BOX) {
+                          // Check if this is a half-width component (LEFT_BORDER_BOX, INFO_CARD_PAIR, QUESTION_CARD_BOX, NUMBERED_STEPS_BOX, CHECKBOX_LIST, or DESCRIPTION_WITH_IMAGE_BOX)
+                          if (component.type === componentTypes.LEFT_BORDER_BOX || 
+                              component.type === componentTypes.INFO_CARD_PAIR || 
+                              component.type === componentTypes.QUESTION_CARD_BOX || 
+                              component.type === componentTypes.NUMBERED_STEPS_BOX ||
+                              component.type === componentTypes.CHECKBOX_LIST ||
+                              component.type === componentTypes.DESCRIPTION_WITH_IMAGE_BOX ||
+                              component.type === 'checkbox_list') {
                             // Look for next component to pair with
                             const nextComponent = currentLessonContent[i + 1];
-                            const NextComponentRenderer = (nextComponent?.type === componentTypes.LEFT_BORDER_BOX || nextComponent?.type === componentTypes.INFO_CARD_PAIR || nextComponent?.type === componentTypes.QUESTION_CARD_BOX) ? 
+                            const NextComponentRenderer = (nextComponent?.type === componentTypes.LEFT_BORDER_BOX || 
+                                                          nextComponent?.type === componentTypes.INFO_CARD_PAIR || 
+                                                          nextComponent?.type === componentTypes.QUESTION_CARD_BOX || 
+                                                          nextComponent?.type === componentTypes.NUMBERED_STEPS_BOX ||
+                                                          nextComponent?.type === componentTypes.CHECKBOX_LIST ||
+                                                          nextComponent?.type === componentTypes.DESCRIPTION_WITH_IMAGE_BOX ||
+                                                          nextComponent?.type === 'checkbox_list') ? 
                               filteredComponentLibrary[nextComponent.type]?.component : null;
                             
                             if (NextComponentRenderer) {
@@ -2700,8 +2867,8 @@ const AddCourse = () => {
                                     <ComponentRenderer 
                                       data={component.data} 
                                       isHalfWidth={true}
-                                      isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX || component.type === componentTypes.TIMELINE}
-                                      onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX || component.type === componentTypes.TIMELINE ? 
+                                      isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX || component.type === componentTypes.NUMBERED_STEPS_BOX || component.type === componentTypes.TIMELINE}
+                                      onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX || component.type === componentTypes.NUMBERED_STEPS_BOX || component.type === componentTypes.TIMELINE ? 
                                         (newData) => updateComponent(component.id, newData) : 
                                         undefined
                                       }
@@ -2743,8 +2910,8 @@ const AddCourse = () => {
                                     <ComponentRenderer 
                                       data={component.data} 
                                       isHalfWidth={true}
-                                      isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX || component.type === componentTypes.TIMELINE}
-                                      onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX || component.type === componentTypes.TIMELINE ? 
+                                      isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX || component.type === componentTypes.NUMBERED_STEPS_BOX || component.type === componentTypes.TIMELINE}
+                                      onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX || component.type === componentTypes.NUMBERED_STEPS_BOX || component.type === componentTypes.TIMELINE ? 
                                         (newData) => updateComponent(component.id, newData) : 
                                         undefined
                                       }
@@ -2769,8 +2936,8 @@ const AddCourse = () => {
                               >
                                 <ComponentRenderer 
                                   data={component.data} 
-                                  isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX || component.type === componentTypes.TIMELINE}
-                                  onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX || component.type === componentTypes.TIMELINE ? 
+                                  isEditMode={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX || component.type === componentTypes.NUMBERED_STEPS_BOX || component.type === componentTypes.TIMELINE}
+                                  onUpdate={component.type === componentTypes.EXERCISE_BOX || component.type === componentTypes.ORDERED_LIST_BOX || component.type === componentTypes.QUESTION_CARD_BOX || component.type === componentTypes.CHECKBOX_LIST || component.type === componentTypes.MARK_COMPLETE_BOX || component.type === componentTypes.UNORDERED_LIST_BOX || component.type === componentTypes.NUMBERED_STEPS_BOX || component.type === componentTypes.TIMELINE ? 
                                     (newData) => updateComponent(component.id, newData) : 
                                     undefined
                                   }

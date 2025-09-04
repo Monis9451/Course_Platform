@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DescriptionWithImageBox = ({ data }) => {
+const DescriptionWithImageBox = ({ data, isHalfWidth = false }) => {
   const {
     title = '',
     boxTitle = 'Your Body Map',
@@ -14,16 +14,16 @@ const DescriptionWithImageBox = ({ data }) => {
   } = data;
 
   return (
-    <div className="mb-8">
+    <div className={`mb-8 ${isHalfWidth ? 'w-full' : ''}`}>
       {title && (
         <div className="mb-6">
-          <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
+          <h2 className={`font-semibold text-gray-800 ${isHalfWidth ? 'text-lg' : 'text-xl'}`}>{title}</h2>
         </div>
       )}
       
       <div className="p-1 border-4 border-[#f7f1e9] rounded-lg">
         <div className="p-6 border border-dashed border-[#bd6334] rounded-lg bg-white">
-          <h3 className="font-semibold mb-6 text-center">{boxTitle}</h3>
+          <h3 className={`font-semibold mb-6 text-center ${isHalfWidth ? 'text-base' : 'text-lg'}`}>{boxTitle}</h3>
           
           <div className="flex justify-center my-8">
             <div className="flex flex-col items-center">
@@ -39,7 +39,7 @@ const DescriptionWithImageBox = ({ data }) => {
             </div>
           </div>
           
-          <div className="grid grid-cols-2 gap-4 mt-4">
+          <div className={`gap-4 mt-4 ${isHalfWidth ? 'grid grid-cols-1' : 'grid grid-cols-2'}`}>
             <div>
               <p className="font-medium mb-2">{termLabel}</p>
               <textarea 

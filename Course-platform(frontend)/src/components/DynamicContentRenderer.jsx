@@ -15,7 +15,8 @@ const DynamicContentRenderer = ({ content, lessonId = null }) => {
       componentTypes.CHECKBOX_LIST,
       componentTypes.MARK_COMPLETE_BOX,
       componentTypes.ORDERED_LIST_BOX,
-      componentTypes.UNORDERED_LIST_BOX
+      componentTypes.UNORDERED_LIST_BOX,
+      componentTypes.NUMBERED_STEPS_BOX
     ];
     
     if (interactiveComponents.includes(componentType)) {
@@ -79,14 +80,42 @@ const DynamicContentRenderer = ({ content, lessonId = null }) => {
       // Ensure we have valid data
       const componentData = item.data || item.content || item;
       
-      // Special handling for LEFT_BORDER_BOX, INFO_CARD_PAIR, and QUESTION_CARD_BOX to render at half width
-      if (componentType === componentTypes.LEFT_BORDER_BOX || componentType === componentTypes.INFO_CARD_PAIR || componentType === componentTypes.QUESTION_CARD_BOX) {
+      // Debug logging
+      console.log('Processing component:', {
+        componentType,
+        itemId: item.id,
+        itemType: item.type,
+        data: componentData
+      });
+      
+      // Special handling for half-width components 
+      const isHalfWidthComponent = componentType === componentTypes.LEFT_BORDER_BOX || 
+                                 componentType === componentTypes.INFO_CARD_PAIR || 
+                                 componentType === componentTypes.QUESTION_CARD_BOX || 
+                                 componentType === componentTypes.NUMBERED_STEPS_BOX || 
+                                 componentType === componentTypes.CHECKBOX_LIST || 
+                                 componentType === componentTypes.DESCRIPTION_WITH_IMAGE_BOX ||
+                                 componentType === 'checkbox_list' || // Direct type check
+                                 (item.type && item.type === 'checkbox_list') || // Item type check
+                                 (item.id && typeof item.id === 'string' && item.id.includes('checkbox')); // ID-based check
+      
+      if (isHalfWidthComponent) {
         // Look for next component to pair with
         const nextItem = parsedContent[i + 1];
         const nextComponentType = nextItem ? resolveComponentType(nextItem, componentLibrary) : null;
         const NextComponent = nextComponentType && componentLibrary[nextComponentType] ? componentLibrary[nextComponentType].component : null;
         
-        if (NextComponent && (nextComponentType === componentTypes.LEFT_BORDER_BOX || nextComponentType === componentTypes.INFO_CARD_PAIR || nextComponentType === componentTypes.QUESTION_CARD_BOX)) {
+        const isNextHalfWidth = nextComponentType === componentTypes.LEFT_BORDER_BOX || 
+                               nextComponentType === componentTypes.INFO_CARD_PAIR || 
+                               nextComponentType === componentTypes.QUESTION_CARD_BOX || 
+                               nextComponentType === componentTypes.NUMBERED_STEPS_BOX || 
+                               nextComponentType === componentTypes.CHECKBOX_LIST || 
+                               nextComponentType === componentTypes.DESCRIPTION_WITH_IMAGE_BOX ||
+                               nextComponentType === 'checkbox_list' ||
+                               (nextItem && nextItem.type === 'checkbox_list') ||
+                               (nextItem && nextItem.id && typeof nextItem.id === 'string' && nextItem.id.includes('checkbox'));
+        
+        if (NextComponent && isNextHalfWidth) {
           // Render two half-width components in a row
           const nextComponentData = nextItem.data || nextItem.content || nextItem;
           processedComponents.push(
@@ -116,7 +145,7 @@ const DynamicContentRenderer = ({ content, lessonId = null }) => {
           // Render single half-width component taking half space, other half remains empty
           processedComponents.push(
             <div key={item.id || i} className="flex flex-col md:flex-row gap-6">
-              <div className="flex-1">
+              <div className="flex-1 max-w-[50%]">
                 <Component 
                   data={componentData} 
                   isHalfWidth={true}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useUserProgress } from '../../context/userProgressContext';
 
-const CheckboxList = ({ data, isEditMode = false, onUpdate, lessonId = null, componentId = null }) => {
+const CheckboxList = ({ data, isEditMode = false, onUpdate, lessonId = null, componentId = null, isHalfWidth = false }) => {
   const { title, checkboxes = [{ text: '', checked: false }] } = data;
   const { getResponse, updateResponse } = useUserProgress();
   
@@ -59,24 +59,24 @@ const CheckboxList = ({ data, isEditMode = false, onUpdate, lessonId = null, com
 
   return (
     <div className="mb-6">
-      <h3 className="text-xl font-semibold mb-3">{title}</h3>
+      <h3 className={`font-semibold mb-3 ${isHalfWidth ? 'text-lg' : 'text-xl'}`}>{title}</h3>
       <div className="bg-[#f8f0e6] p-5 rounded-lg">
         <ul className="space-y-3 pl-5">
           {checkboxes.map((checkbox, index) => (
             <li key={index} className="flex items-start">
               <input 
                 type="checkbox" 
-                className="mt-1 mr-3 h-4 w-4 accent-[#bd6334]"
+                className="mt-1 mr-3 h-4 w-4 accent-[#bd6334] flex-shrink-0"
                 checked={isEditMode ? (checkbox.checked || false) : (userChecked[index] || false)}
                 onChange={(e) => handleCheckboxChange(index, e.target.checked)}
               />
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
-                  <span className="flex-1">{checkbox.text}</span>
+                  <span className="flex-1 break-words">{checkbox.text}</span>
                   {isEditMode && checkboxes.length > 1 && (
                     <button
                       onClick={() => removeCheckbox(index)}
-                      className="text-red-500 hover:text-red-700 text-sm px-2 py-1 rounded ml-2"
+                      className="text-red-500 hover:text-red-700 text-sm px-2 py-1 rounded ml-2 flex-shrink-0"
                       type="button"
                     >
                       ✕ Remove
