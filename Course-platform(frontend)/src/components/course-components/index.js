@@ -131,7 +131,7 @@ export const componentLibrary = {
       paragraph: 'Example: paragraph',
       listItems: [],
       italicLines: 'Example: Some ending lines in italic',
-      svgType: 'lightbulb'
+      svgType: 'none'
     }
   },
   [componentTypes.EXERCISE_BOX]: {
@@ -166,6 +166,7 @@ export const componentLibrary = {
       boxTitle: 'Example: Title',
       paragraph: 'Example: Paragraph',
       quote: 'Example: Some quote',
+      listItems: [],
       footerText: 'Example: Text'
     }
   },

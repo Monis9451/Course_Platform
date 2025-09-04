@@ -64,10 +64,13 @@ const PeachBox = ({ data }) => {
           </ul>
         )}
         
-        <div className="flex items-center">
-          {selectedSvg}
-          <p className="italic">{data.italicLines}</p>
-        </div>
+        {/* Render icon and italic lines section only if there's content */}
+        {(selectedSvg && data.svgType !== 'none') || data.italicLines ? (
+          <div className="flex items-center">
+            {selectedSvg && data.svgType !== 'none' && selectedSvg}
+            {data.italicLines && <p className="italic">{data.italicLines}</p>}
+          </div>
+        ) : null}
       </div>
     </div>
   );

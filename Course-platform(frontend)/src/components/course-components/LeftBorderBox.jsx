@@ -10,6 +10,16 @@ const LeftBorderBox = ({ data, isHalfWidth = false }) => {
         </h3>
         <p className="mb-3">{data.paragraph}</p>
         <p className="italic text-primary">"{data.quote}"</p>
+        
+        {/* Render unordered list if listItems exist and have content */}
+        {data.listItems && data.listItems.length > 0 && data.listItems.some(item => item.trim() !== '') && (
+          <ul className="mt-4 mb-3 list-disc list-inside space-y-1">
+            {data.listItems.filter(item => item.trim() !== '').map((item, index) => (
+              <li key={index} className="text-gray-700">{item}</li>
+            ))}
+          </ul>
+        )}
+        
         <div className="mt-4 text-sm">
           {data.footerText}
         </div>
