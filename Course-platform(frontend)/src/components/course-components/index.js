@@ -129,6 +129,7 @@ export const componentLibrary = {
       title: 'Peach Box Section',
       boxTitle: 'Example: Title',
       paragraph: 'Example: paragraph',
+      listItems: [],
       italicLines: 'Example: Some ending lines in italic',
       svgType: 'lightbulb'
     }

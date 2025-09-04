@@ -54,6 +54,16 @@ const PeachBox = ({ data }) => {
       <div className="bg-[#FFF1DC] p-6 rounded-md mb-8">
         <h3 className="font-semibold mb-3 text-primary">{data.boxTitle}</h3>
         <p className="mb-4">{data.paragraph}</p>
+        
+        {/* Render unordered list if listItems exist and have content */}
+        {data.listItems && data.listItems.length > 0 && data.listItems.some(item => item.trim() !== '') && (
+          <ul className="mb-4 list-disc list-inside space-y-1">
+            {data.listItems.filter(item => item.trim() !== '').map((item, index) => (
+              <li key={index} className="text-gray-700">{item}</li>
+            ))}
+          </ul>
+        )}
+        
         <div className="flex items-center">
           {selectedSvg}
           <p className="italic">{data.italicLines}</p>

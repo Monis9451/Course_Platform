@@ -1329,6 +1329,46 @@ const AddCourse = () => {
               />
             </div>
             <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">List Items (Optional)</label>
+              <div className="space-y-2">
+                {(componentData.listItems || []).map((item, index) => (
+                  <div key={index} className="flex gap-2">
+                    <input
+                      type="text"
+                      value={item}
+                      onChange={(e) => {
+                        const newListItems = [...(componentData.listItems || [])];
+                        newListItems[index] = e.target.value;
+                        handleComponentDataChange('listItems', newListItems);
+                      }}
+                      className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      placeholder={`List item ${index + 1}...`}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newListItems = (componentData.listItems || []).filter((_, i) => i !== index);
+                        handleComponentDataChange('listItems', newListItems);
+                      }}
+                      className="px-2 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newListItems = [...(componentData.listItems || []), ''];
+                    handleComponentDataChange('listItems', newListItems);
+                  }}
+                  className="px-3 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600"
+                >
+                  Add List Item
+                </button>
+              </div>
+            </div>
+            <div>
               <label className="block text-xs font-medium mb-1 text-gray-700">SVG Icon</label>
               <select
                 value={componentData.svgType || 'lightbulb'}
