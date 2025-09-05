@@ -98,7 +98,7 @@ const MarkCompleteBox = ({ data, isEditMode = false, onUpdate, lessonId = null, 
           )}
         </div>
         
-        <p className="mb-4">{description}</p>
+        <p className="mb-4 whitespace-pre-wrap">{description}</p>
         
         {showCheckboxes && (
           <div className="space-y-6 mb-6">

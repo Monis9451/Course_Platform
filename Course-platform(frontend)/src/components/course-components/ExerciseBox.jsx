@@ -61,8 +61,7 @@ const ExerciseBox = ({ data, isEditMode = false, onUpdate, lessonId = null, comp
     <div className="mb-6">
       <h3 className="text-xl font-semibold mb-3">{title}</h3>
       <div className="p-6 border border-dashed border-[#bd6334] rounded-md mb-8">
-        <h3 className="font-semibold mb-4 text-center">Reflection Exercise</h3>
-        <p className="mb-4">{situation}</p>
+        <p className="mb-4 whitespace-pre-wrap">{situation}</p>
         <div className="space-y-4">
           {questions.map((q, index) => (
             <div key={index}>
