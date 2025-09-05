@@ -40,13 +40,13 @@ const SimpleUnorderList = ({
       {isEditMode ? (
         <div className="space-y-3">
           <div>
-            <label className="block text-xs font-medium mb-1 text-gray-700">Title</label>
-            <input
-              type="text"
+            <label className="block text-xs font-medium mb-1 text-gray-700 whitespace-pre-wrap">Title</label>
+            <textarea
               value={title}
               onChange={(e) => updateTitle(e.target.value)}
-              className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 resize-vertical min-h-[2.5rem]"
               placeholder="Enter title..."
+              rows="2"
             />
           </div>
           <div>
@@ -84,10 +84,10 @@ const SimpleUnorderList = ({
         </div>
       ) : (
         <>
-          <h2 className="font-semibold text-lg mb-3">{title}</h2>
+          <p className="font-semibold text-lg mb-3 whitespace-pre-wrap">{title}</p>
           <ul className="list-disc pl-6 space-y-2">
             {listItems.map((item, index) => (
-              <li key={index}>{item}</li>
+              <li key={index} className="whitespace-pre-wrap">{item}</li>
             ))}
           </ul>
         </>
