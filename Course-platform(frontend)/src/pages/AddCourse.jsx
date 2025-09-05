@@ -42,6 +42,7 @@ const allowedComponents = [
   componentTypes.CHECKBOX_LIST,
   componentTypes.MARK_COMPLETE_BOX,
   componentTypes.UNORDERED_LIST_BOX,
+  componentTypes.SIMPLE_UNORDER_LIST,
   componentTypes.NUMBERED_STEPS_BOX,
   componentTypes.TIMELINE,
   componentTypes.DESCRIPTION_WITH_IMAGE_BOX,
@@ -1940,62 +1941,75 @@ const AddCourse = () => {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium mb-2 text-gray-700">Checkboxes</label>
-              <div className="space-y-2 max-h-48 overflow-y-auto">
-                {(componentData.checkboxes || []).map((checkbox, index) => (
-                  <div key={index} className="p-2 border border-gray-200 rounded">
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="text-xs font-medium text-gray-600">Checkbox {index + 1}</span>
-                      {componentData.checkboxes && componentData.checkboxes.length > 1 && (
-                        <button
-                          onClick={() => {
-                            const newCheckboxes = componentData.checkboxes.filter((_, i) => i !== index);
+              <label className="flex items-center text-xs font-medium text-gray-700 mb-2">
+                <input
+                  type="checkbox"
+                  checked={componentData.showCheckboxes !== false}
+                  onChange={(e) => handleComponentDataChange('showCheckboxes', e.target.checked)}
+                  className="mr-2 h-3 w-3 accent-[#bd6334]"
+                />
+                Show Checkboxes
+              </label>
+            </div>
+            {componentData.showCheckboxes !== false && (
+              <div>
+                <label className="block text-xs font-medium mb-2 text-gray-700">Checkboxes</label>
+                <div className="space-y-2 max-h-48 overflow-y-auto">
+                  {(componentData.checkboxes || []).map((checkbox, index) => (
+                    <div key={index} className="p-2 border border-gray-200 rounded">
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-xs font-medium text-gray-600">Checkbox {index + 1}</span>
+                        {componentData.checkboxes && componentData.checkboxes.length > 1 && (
+                          <button
+                            onClick={() => {
+                              const newCheckboxes = componentData.checkboxes.filter((_, i) => i !== index);
+                              handleComponentDataChange('checkboxes', newCheckboxes);
+                            }}
+                            className="text-red-500 hover:text-red-700 text-xs px-1"
+                            type="button"
+                          >
+                            ✕
+                          </button>
+                        )}
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <input
+                          type="checkbox"
+                          checked={checkbox.checked || false}
+                          onChange={(e) => {
+                            const newCheckboxes = [...(componentData.checkboxes || [])];
+                            newCheckboxes[index] = { ...newCheckboxes[index], checked: e.target.checked };
                             handleComponentDataChange('checkboxes', newCheckboxes);
                           }}
-                          className="text-red-500 hover:text-red-700 text-xs px-1"
-                          type="button"
-                        >
-                          ✕
-                        </button>
-                      )}
+                          className="h-3 w-3 accent-[#bd6334]"
+                        />
+                        <input
+                          type="text"
+                          value={checkbox.text || ''}
+                          onChange={(e) => {
+                            const newCheckboxes = [...(componentData.checkboxes || [])];
+                            newCheckboxes[index] = { ...newCheckboxes[index], text: e.target.value };
+                            handleComponentDataChange('checkboxes', newCheckboxes);
+                          }}
+                          className="flex-1 px-2 py-1 text-xs border border-gray-300 rounded"
+                          placeholder="Checkbox text..."
+                        />
+                      </div>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        checked={checkbox.checked || false}
-                        onChange={(e) => {
-                          const newCheckboxes = [...(componentData.checkboxes || [])];
-                          newCheckboxes[index] = { ...newCheckboxes[index], checked: e.target.checked };
-                          handleComponentDataChange('checkboxes', newCheckboxes);
-                        }}
-                        className="h-3 w-3 accent-[#bd6334]"
-                      />
-                      <input
-                        type="text"
-                        value={checkbox.text || ''}
-                        onChange={(e) => {
-                          const newCheckboxes = [...(componentData.checkboxes || [])];
-                          newCheckboxes[index] = { ...newCheckboxes[index], text: e.target.value };
-                          handleComponentDataChange('checkboxes', newCheckboxes);
-                        }}
-                        className="flex-1 px-2 py-1 text-xs border border-gray-300 rounded"
-                        placeholder="Checkbox text..."
-                      />
-                    </div>
-                  </div>
-                ))}
-                <button
-                  onClick={() => {
-                    const newCheckboxes = [...(componentData.checkboxes || []), { text: '', checked: false }];
-                    handleComponentDataChange('checkboxes', newCheckboxes);
-                  }}
-                  className="w-full py-1 border border-dashed border-gray-400 text-gray-600 text-xs rounded hover:bg-gray-50"
-                  type="button"
-                >
-                  + Add Checkbox
-                </button>
+                  ))}
+                  <button
+                    onClick={() => {
+                      const newCheckboxes = [...(componentData.checkboxes || []), { text: '', checked: false }];
+                      handleComponentDataChange('checkboxes', newCheckboxes);
+                    }}
+                    className="w-full py-1 border border-dashed border-gray-400 text-gray-600 text-xs rounded hover:bg-gray-50"
+                    type="button"
+                  >
+                    + Add Checkbox
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         );
 
@@ -2117,6 +2131,64 @@ const AddCourse = () => {
                   type="button"
                 >
                   + Add List Box
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+
+      case componentTypes.SIMPLE_UNORDER_LIST:
+        return (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Title</label>
+              <input
+                type="text"
+                value={componentData.title || ''}
+                onChange={(e) => handleComponentDataChange('title', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Enter title..."
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-2 text-gray-700">List Items</label>
+              <div className="space-y-2">
+                {(componentData.listItems || []).map((item, index) => (
+                  <div key={index} className="flex gap-2">
+                    <input
+                      type="text"
+                      value={item}
+                      onChange={(e) => {
+                        const newListItems = [...(componentData.listItems || [])];
+                        newListItems[index] = e.target.value;
+                        handleComponentDataChange('listItems', newListItems);
+                      }}
+                      className="flex-1 px-2 py-1 text-xs border border-gray-300 rounded"
+                      placeholder={`List item ${index + 1}...`}
+                    />
+                    {(componentData.listItems || []).length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newListItems = (componentData.listItems || []).filter((_, i) => i !== index);
+                          handleComponentDataChange('listItems', newListItems);
+                        }}
+                        className="px-2 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newListItems = [...(componentData.listItems || []), ''];
+                    handleComponentDataChange('listItems', newListItems);
+                  }}
+                  className="px-3 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600"
+                >
+                  Add List Item
                 </button>
               </div>
             </div>

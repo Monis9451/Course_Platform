@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useUserProgress } from '../../context/userProgressContext';
 
 const MarkCompleteBox = ({ data, isEditMode = false, onUpdate, lessonId = null, componentId = null }) => {
-  const { title, description, question, checkboxes = [{ text: '', checked: false }] } = data;
+  const { title, description, question, checkboxes = [{ text: '', checked: false }], showCheckboxes = true } = data;
   const { getResponse, updateResponse, isComponentCompleted, markComponentCompleted } = useUserProgress();
   
   // Get saved responses when in view mode
@@ -100,50 +100,52 @@ const MarkCompleteBox = ({ data, isEditMode = false, onUpdate, lessonId = null, 
         
         <p className="mb-4">{description}</p>
         
-        <div className="space-y-6 mb-6">
-          <div>
-            <p className="mb-3 text-sm">{question}</p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
-              {checkboxes.map((checkbox, index) => (
-                <div key={index} className="flex items-start">
-                  <input 
-                    type="checkbox" 
-                    className="mt-1 mr-3 h-4 w-4 accent-[#bd6334]"
-                    checked={isEditMode ? (checkbox.checked || false) : (userChecked[index] || false)}
-                    onChange={(e) => handleCheckboxChange(index, e.target.checked)}
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm flex-1">{checkbox.text}</span>
-                      {isEditMode && checkboxes.length > 1 && (
-                        <button
-                          onClick={() => removeCheckbox(index)}
-                          className="text-red-500 hover:text-red-700 text-xs px-2 py-1 rounded ml-2"
-                          type="button"
-                        >
-                          ✕
-                        </button>
-                      )}
+        {showCheckboxes && (
+          <div className="space-y-6 mb-6">
+            <div>
+              {question && <p className="mb-3 text-sm">{question}</p>}
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                {checkboxes.map((checkbox, index) => (
+                  <div key={index} className="flex items-start">
+                    <input 
+                      type="checkbox" 
+                      className="mt-1 mr-3 h-4 w-4 accent-[#bd6334]"
+                      checked={isEditMode ? (checkbox.checked || false) : (userChecked[index] || false)}
+                      onChange={(e) => handleCheckboxChange(index, e.target.checked)}
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm flex-1">{checkbox.text}</span>
+                        {isEditMode && checkboxes.length > 1 && (
+                          <button
+                            onClick={() => removeCheckbox(index)}
+                            className="text-red-500 hover:text-red-700 text-xs px-2 py-1 rounded ml-2"
+                            type="button"
+                          >
+                            ✕
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-              
-              {isEditMode && (
-                <div className="flex items-center justify-center col-span-1 md:col-span-2">
-                  <button
-                    onClick={addCheckbox}
-                    className="w-full py-2 border border-dashed border-[#bd6334] text-[#bd6334] rounded-md hover:bg-orange-50 transition-colors"
-                    type="button"
-                  >
-                    + Add Checkbox
-                  </button>
-                </div>
-              )}
+                ))}
+                
+                {isEditMode && (
+                  <div className="flex items-center justify-center col-span-1 md:col-span-2">
+                    <button
+                      onClick={addCheckbox}
+                      className="w-full py-2 border border-dashed border-[#bd6334] text-[#bd6334] rounded-md hover:bg-orange-50 transition-colors"
+                      type="button"
+                    >
+                      + Add Checkbox
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

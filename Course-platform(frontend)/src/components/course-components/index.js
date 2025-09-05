@@ -15,6 +15,7 @@ import QuestionCardBox from './QuestionCardBox';
 import CheckboxList from './CheckboxList';
 import MarkCompleteBox from './MarkCompleteBox';
 import UnorderedListBox from './UnorderedListBox';
+import SimpleUnorderList from './SimpleUnorderList';
 import TimelineComponent from './TimelineComponent';
 import DescriptionWithImageBox from './DescriptionWithImageBox';
 import InfoCardPair from './InfoCardPair';
@@ -37,6 +38,7 @@ export const componentTypes = {
   CHECKBOX_LIST: 'checkbox_list',
   MARK_COMPLETE_BOX: 'mark_complete_box',
   UNORDERED_LIST_BOX: 'unordered_list_box',
+  SIMPLE_UNORDER_LIST: 'simple_unorder_list',
   NUMBERED_STEPS_BOX: 'numbered_steps_box',
   CUSTOM: 'custom',
   PARAGRAPH: 'paragraph',
@@ -218,6 +220,7 @@ export const componentLibrary = {
       boxTitle: 'Example: Title',
       description: 'Example: Description text',
       question: 'Example: Some question',
+      showCheckboxes: true,
       checkboxes: [
         { text: 'Example: Checkbox 1', checked: false }
       ]
@@ -236,6 +239,14 @@ export const componentLibrary = {
           items: ['Example: list item 1']
         }
       ]
+    }
+  },
+  [componentTypes.SIMPLE_UNORDER_LIST]: {
+    name: 'Simple Unorder List',
+    component: SimpleUnorderList,
+    defaultData: {
+      title: 'Title',
+      listItems: ['List 1']
     }
   },
   [componentTypes.NUMBERED_STEPS_BOX]: {

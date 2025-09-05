@@ -19,6 +19,7 @@ export const COMPONENT_ID_MAPPING = {
   // Lists and Interactive Components
   'ordered-list-box-1': 'ordered_list_box',
   'unordered-list-box-1': 'unordered_list_box',
+  'simple-unorder-list-1': 'simple_unorder_list',
   'checkbox-list-1': 'checkbox_list',
   'question-card-box-1': 'question_card_box',
   'bullet-list-1': 'bullet_list',
