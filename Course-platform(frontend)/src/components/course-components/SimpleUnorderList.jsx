@@ -5,7 +5,7 @@ const SimpleUnorderList = ({
   isEditMode = false, 
   onUpdate 
 }) => {
-  const { title = 'Title', listItems = ['List 1'] } = data;
+  const { title = 'Title', listItems = ['List 1'], italicLines = '' } = data;
 
   const addListItem = () => {
     if (onUpdate) {
@@ -35,18 +35,30 @@ const SimpleUnorderList = ({
     }
   };
 
+  const updateItalicLines = (value) => {
+    if (onUpdate) {
+      onUpdate({ ...data, italicLines: value });
+    }
+  };
+
   return (
     <div className="mb-8">
       {isEditMode ? (
         <div className="space-y-3">
           <div>
-            <label className="block text-xs font-medium mb-1 text-gray-700 whitespace-pre-wrap">Title</label>
+            <label className="block text-xs font-medium mb-1 text-gray-700">Title</label>
             <textarea
               value={title}
               onChange={(e) => updateTitle(e.target.value)}
               className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 resize-vertical min-h-[2.5rem]"
               placeholder="Enter title..."
-              rows="2"
+              rows="3"
+              style={{ 
+                whiteSpace: 'pre-wrap',
+                wordWrap: 'break-word',
+                overflowWrap: 'break-word'
+              }}
+              wrap="soft"
             />
           </div>
           <div>
@@ -81,6 +93,22 @@ const SimpleUnorderList = ({
               </button>
             </div>
           </div>
+          <div>
+            <label className="block text-xs font-medium mb-1 text-gray-700">Italic Lines</label>
+            <textarea
+              value={italicLines}
+              onChange={(e) => updateItalicLines(e.target.value)}
+              className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 resize-vertical min-h-[2.5rem]"
+              placeholder="Enter italic text..."
+              rows="2"
+              style={{ 
+                whiteSpace: 'pre-wrap',
+                wordWrap: 'break-word',
+                overflowWrap: 'break-word'
+              }}
+              wrap="soft"
+            />
+          </div>
         </div>
       ) : (
         <>
@@ -90,6 +118,7 @@ const SimpleUnorderList = ({
               <li key={index} className="whitespace-pre-wrap">{item}</li>
             ))}
           </ul>
+          <p className="italic mt-4 whitespace-pre-wrap">{italicLines}</p>
         </>
       )}
     </div>
