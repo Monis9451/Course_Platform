@@ -159,6 +159,7 @@ export const componentLibrary = {
       title: 'Gray Box Section',
       boxTitle: 'Example: Title',
       paragraph: 'Example: Paragraph',
+      listItems: [],
       italicLines: 'Example: Some ending lines in italic'
     }
   },
@@ -246,7 +247,8 @@ export const componentLibrary = {
     component: SimpleUnorderList,
     defaultData: {
       title: 'Title',
-      listItems: ['List 1']
+      listItems: ['List 1'],
+      italicLines: 'Italic lines...'
     }
   },
   [componentTypes.NUMBERED_STEPS_BOX]: {
