@@ -46,7 +46,8 @@ const allowedComponents = [
   componentTypes.NUMBERED_STEPS_BOX,
   componentTypes.TIMELINE,
   componentTypes.DESCRIPTION_WITH_IMAGE_BOX,
-  componentTypes.INFO_CARD_PAIR
+  componentTypes.INFO_CARD_PAIR,
+  componentTypes.QUOTE
 ];
 
 const filteredComponentLibrary = Object.fromEntries(
@@ -2674,6 +2675,65 @@ const AddCourse = () => {
           </div>
         );
 
+      case componentTypes.QUOTE:
+        return (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Title</label>
+              <input
+                type="text"
+                value={componentData.title || ''}
+                onChange={(e) => handleComponentDataChange('title', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Quote Section Title"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Quotes</label>
+              <div className="space-y-2">
+                {(componentData.quotes || ['']).map((quote, index) => (
+                  <div key={index} className="flex gap-2">
+                    <textarea
+                      value={quote}
+                      onChange={(e) => {
+                        const newQuotes = [...(componentData.quotes || [''])];
+                        newQuotes[index] = e.target.value;
+                        handleComponentDataChange('quotes', newQuotes);
+                      }}
+                      rows={2}
+                      className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      placeholder="Enter your quote..."
+                    />
+                    {(componentData.quotes || ['']).length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newQuotes = (componentData.quotes || ['']).filter((_, i) => i !== index);
+                          handleComponentDataChange('quotes', newQuotes);
+                        }}
+                        className="px-2 py-1 text-red-600 hover:text-red-800 hover:bg-red-50 rounded"
+                      >
+                        <FiTrash2 size={14} />
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newQuotes = [...(componentData.quotes || ['']), ''];
+                    handleComponentDataChange('quotes', newQuotes);
+                  }}
+                  className="flex items-center gap-1 px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-xs"
+                >
+                  <FiPlus size={12} />
+                  Add Quote
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+
       default:
         return <div className="text-xs text-gray-500">Unknown component type</div>;
     }
@@ -2967,13 +3027,14 @@ const AddCourse = () => {
                             continue;
                           }
                           
-                          // Check if this is a half-width component (LEFT_BORDER_BOX, INFO_CARD_PAIR, QUESTION_CARD_BOX, NUMBERED_STEPS_BOX, CHECKBOX_LIST, or DESCRIPTION_WITH_IMAGE_BOX)
+                          // Check if this is a half-width component (LEFT_BORDER_BOX, INFO_CARD_PAIR, QUESTION_CARD_BOX, NUMBERED_STEPS_BOX, CHECKBOX_LIST, DESCRIPTION_WITH_IMAGE_BOX, or QUOTE)
                           if (component.type === componentTypes.LEFT_BORDER_BOX || 
                               component.type === componentTypes.INFO_CARD_PAIR || 
                               component.type === componentTypes.QUESTION_CARD_BOX || 
                               component.type === componentTypes.NUMBERED_STEPS_BOX ||
                               component.type === componentTypes.CHECKBOX_LIST ||
                               component.type === componentTypes.DESCRIPTION_WITH_IMAGE_BOX ||
+                              component.type === componentTypes.QUOTE ||
                               component.type === 'checkbox_list') {
                             // Look for next component to pair with
                             const nextComponent = currentLessonContent[i + 1];
@@ -2983,6 +3044,7 @@ const AddCourse = () => {
                                                           nextComponent?.type === componentTypes.NUMBERED_STEPS_BOX ||
                                                           nextComponent?.type === componentTypes.CHECKBOX_LIST ||
                                                           nextComponent?.type === componentTypes.DESCRIPTION_WITH_IMAGE_BOX ||
+                                                          nextComponent?.type === componentTypes.QUOTE ||
                                                           nextComponent?.type === 'checkbox_list') ? 
                               filteredComponentLibrary[nextComponent.type]?.component : null;
                             

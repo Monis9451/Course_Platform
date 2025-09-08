@@ -85,7 +85,8 @@ const DynamicContentRenderer = ({ content, lessonId = null }) => {
         componentType,
         itemId: item.id,
         itemType: item.type,
-        data: componentData
+        data: componentData,
+        isHalfWidthComponent: isHalfWidthComponent
       });
       
       // Special handling for half-width components 
@@ -95,8 +96,11 @@ const DynamicContentRenderer = ({ content, lessonId = null }) => {
                                  componentType === componentTypes.NUMBERED_STEPS_BOX || 
                                  componentType === componentTypes.CHECKBOX_LIST || 
                                  componentType === componentTypes.DESCRIPTION_WITH_IMAGE_BOX ||
+                                 componentType === componentTypes.QUOTE ||
+                                 componentType === 'quote' || // Direct type check
                                  componentType === 'checkbox_list' || // Direct type check
                                  (item.type && item.type === 'checkbox_list') || // Item type check
+                                 (item.type && item.type === 'quote') || // Item type check for quote
                                  (item.id && typeof item.id === 'string' && item.id.includes('checkbox')); // ID-based check
       
       if (isHalfWidthComponent) {
@@ -111,16 +115,19 @@ const DynamicContentRenderer = ({ content, lessonId = null }) => {
                                nextComponentType === componentTypes.NUMBERED_STEPS_BOX || 
                                nextComponentType === componentTypes.CHECKBOX_LIST || 
                                nextComponentType === componentTypes.DESCRIPTION_WITH_IMAGE_BOX ||
+                               nextComponentType === componentTypes.QUOTE ||
+                               nextComponentType === 'quote' ||
                                nextComponentType === 'checkbox_list' ||
                                (nextItem && nextItem.type === 'checkbox_list') ||
+                               (nextItem && nextItem.type === 'quote') ||
                                (nextItem && nextItem.id && typeof nextItem.id === 'string' && nextItem.id.includes('checkbox'));
         
         if (NextComponent && isNextHalfWidth) {
-          // Render two half-width components in a row
+          // Render two half-width components in a row using grid layout
           const nextComponentData = nextItem.data || nextItem.content || nextItem;
           processedComponents.push(
-            <div key={`pair-${item.id || i}-${nextItem.id || (i + 1)}`} className="flex flex-col md:flex-row gap-6">
-              <div className="flex-1">
+            <div key={`pair-${item.id || i}-${nextItem.id || (i + 1)}`} className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
                 <Component 
                   data={componentData} 
                   isHalfWidth={true}
@@ -129,7 +136,7 @@ const DynamicContentRenderer = ({ content, lessonId = null }) => {
                   originalItem={item}
                 />
               </div>
-              <div className="flex-1">
+              <div>
                 <NextComponent 
                   data={nextComponentData} 
                   isHalfWidth={true}
@@ -144,8 +151,8 @@ const DynamicContentRenderer = ({ content, lessonId = null }) => {
         } else {
           // Render single half-width component taking half space, other half remains empty
           processedComponents.push(
-            <div key={item.id || i} className="flex flex-col md:flex-row gap-6">
-              <div className="flex-1 max-w-[50%]">
+            <div key={item.id || i} className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
                 <Component 
                   data={componentData} 
                   isHalfWidth={true}
@@ -154,7 +161,7 @@ const DynamicContentRenderer = ({ content, lessonId = null }) => {
                   originalItem={item}
                 />
               </div>
-              <div className="flex-1"></div>
+              <div></div>
             </div>
           );
           i++;

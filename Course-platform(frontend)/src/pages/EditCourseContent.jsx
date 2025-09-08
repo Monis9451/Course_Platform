@@ -45,7 +45,8 @@ const allowedComponents = [
   componentTypes.NUMBERED_STEPS_BOX,
   componentTypes.TIMELINE,
   componentTypes.DESCRIPTION_WITH_IMAGE_BOX,
-  componentTypes.INFO_CARD_PAIR
+  componentTypes.INFO_CARD_PAIR,
+  componentTypes.QUOTE
 ];
 
 const filteredComponentLibrary = Object.fromEntries(
@@ -1989,6 +1990,65 @@ const EditCourseContent = () => {
                     placeholder="Content for card (use line breaks for paragraphs)"
                   />
                 </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case componentTypes.QUOTE:
+        return (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Title</label>
+              <input
+                type="text"
+                value={componentData.title || ''}
+                onChange={(e) => handleComponentDataChange('title', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Quote Section Title"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Quotes</label>
+              <div className="space-y-2">
+                {(componentData.quotes || ['']).map((quote, index) => (
+                  <div key={index} className="flex gap-2">
+                    <textarea
+                      value={quote}
+                      onChange={(e) => {
+                        const newQuotes = [...(componentData.quotes || [''])];
+                        newQuotes[index] = e.target.value;
+                        handleComponentDataChange('quotes', newQuotes);
+                      }}
+                      rows={2}
+                      className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      placeholder="Enter your quote..."
+                    />
+                    {(componentData.quotes || ['']).length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newQuotes = (componentData.quotes || ['']).filter((_, i) => i !== index);
+                          handleComponentDataChange('quotes', newQuotes);
+                        }}
+                        className="px-2 py-1 text-red-600 hover:text-red-800 hover:bg-red-50 rounded"
+                      >
+                        <FiTrash2 size={14} />
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newQuotes = [...(componentData.quotes || ['']), ''];
+                    handleComponentDataChange('quotes', newQuotes);
+                  }}
+                  className="flex items-center gap-1 px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-xs"
+                >
+                  <FiPlus size={12} />
+                  Add Quote
+                </button>
               </div>
             </div>
           </div>

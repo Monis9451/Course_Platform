@@ -20,6 +20,7 @@ import TimelineComponent from './TimelineComponent';
 import DescriptionWithImageBox from './DescriptionWithImageBox';
 import InfoCardPair from './InfoCardPair';
 import NumberedStepsBox from './NumberedStepsBox';
+import QuoteComponent from './QuoteComponent';
 
 export const componentTypes = {
   HEADING: 'heading',
@@ -317,11 +318,10 @@ export const componentLibrary = {
   },
   [componentTypes.QUOTE]: {
     name: 'Quote Block',
-    component: InfoBox,
+    component: QuoteComponent,
     defaultData: {
-      title: 'Quote',
-      content: 'This is an inspirational quote or important statement.',
-      type: 'quote'
+      title: 'Quote Section',
+      quotes: ['Enter your inspirational quote here...']
     }
   },
   [componentTypes.CODE_BLOCK]: {
