@@ -505,7 +505,8 @@ export const componentLibrary = {
       title: 'Info Card Section',
       card1Title: 'Card Title',
       card1Content: 'Content for the card goes here. This can be multiple paragraphs of information.',
-      card1Icon: 'heart'
+      card1Icon: 'heart',
+      italicLines: ''
     }
   }
 };

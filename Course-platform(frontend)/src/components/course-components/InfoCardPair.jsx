@@ -5,7 +5,8 @@ const InfoCardPair = ({ data, isHalfWidth = false }) => {
     title = '',
     card1Title = 'Card Title',
     card1Content = 'Content for the card goes here. This can be multiple paragraphs of information.',
-    card1Icon = 'heart'
+    card1Icon = 'heart',
+    italicLines = ''
   } = data; 
 
   // SVG icons
@@ -34,8 +35,31 @@ const InfoCardPair = ({ data, isHalfWidth = false }) => {
       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#bd6334] mr-2" viewBox="0 0 20 20" fill="currentColor">
         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
       </svg>
-    )
+    ),
+    brain: (
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#bd6334] mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      </svg>
+    ),
+    shield: (
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#bd6334] mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+      </svg>
+    ),
+    target: (
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#bd6334] mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
+      </svg>
+    ),
+    exclamation: (
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#bd6334] mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L4.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+      </svg>
+    ),
+    none: null
   };
+
+  const selectedIcon = icons[card1Icon] || icons.heart;
 
   return (
     <div className="mb-8">
@@ -47,7 +71,7 @@ const InfoCardPair = ({ data, isHalfWidth = false }) => {
       
       <div className="bg-white border border-gray-200 p-5 rounded-lg">
         <h4 className="font-medium mb-3 flex items-center">
-          {icons[card1Icon] || icons.heart}
+          {selectedIcon && card1Icon !== 'none' && selectedIcon}
           {card1Title}
         </h4>
         <div className="text-gray-700">
@@ -55,6 +79,13 @@ const InfoCardPair = ({ data, isHalfWidth = false }) => {
             <p key={index} className={index > 0 ? "mt-3" : ""}>{paragraph}</p>
           ))}
         </div>
+        
+        {/* Render italic lines section if there's content */}
+        {italicLines && (
+          <div className="mt-4">
+            <p className="italic text-[#bd6334]">{italicLines}</p>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1973,11 +1973,16 @@ const EditCourseContent = () => {
                     onChange={(e) => handleComponentDataChange('card1Icon', e.target.value)}
                     className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
                   >
-                    <option value="heart">Heart</option>
-                    <option value="lightbulb">Light Bulb</option>
-                    <option value="star">Star</option>
-                    <option value="info">Info</option>
-                    <option value="check">Check</option>
+                    <option value="none">🚫 None (No Icon)</option>
+                    <option value="heart">❤️ Heart</option>
+                    <option value="lightbulb">💡 Light Bulb</option>
+                    <option value="star">⭐ Star</option>
+                    <option value="info">ℹ️ Info</option>
+                    <option value="check">✅ Check</option>
+                    <option value="brain">🧠 Brain</option>
+                    <option value="shield">🛡️ Shield</option>
+                    <option value="target">🎯 Target</option>
+                    <option value="exclamation">⚠️ Exclamation</option>
                   </select>
                 </div>
                 <div>
@@ -1988,6 +1993,16 @@ const EditCourseContent = () => {
                     rows={3}
                     className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
                     placeholder="Content for card (use line breaks for paragraphs)"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium mb-1 text-gray-700">Italic Lines (Optional)</label>
+                  <input
+                    type="text"
+                    value={componentData.italicLines || ''}
+                    onChange={(e) => handleComponentDataChange('italicLines', e.target.value)}
+                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
+                    placeholder="Text to appear in italics at the end"
                   />
                 </div>
               </div>
