@@ -49,7 +49,8 @@ export const COMPONENT_ID_MAPPING = {
   'timeline-1': 'timeline',
   
   // Custom Components
-  'custom-1': 'custom'
+  'custom-1': 'custom',
+  'dropdown-1': 'dropdown'
 };
 
 // Helper function to parse content string to JSON

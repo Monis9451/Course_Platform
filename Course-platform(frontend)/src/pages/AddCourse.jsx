@@ -25,6 +25,7 @@ import { HiSpeakerWave } from "react-icons/hi2";
 import { FaFileAlt } from "react-icons/fa";
 import { BsPencilFill } from "react-icons/bs";
 import { componentLibrary, componentTypes } from '../components/course-components';
+import DropdownComponent from '../components/course-components/DropdownComponent';
 
 // Filter component library to only include allowed components
 const allowedComponents = [
@@ -47,7 +48,8 @@ const allowedComponents = [
   componentTypes.TIMELINE,
   componentTypes.DESCRIPTION_WITH_IMAGE_BOX,
   componentTypes.INFO_CARD_PAIR,
-  componentTypes.QUOTE
+  componentTypes.QUOTE,
+  componentTypes.DROPDOWN
 ];
 
 const filteredComponentLibrary = Object.fromEntries(
@@ -2745,6 +2747,266 @@ const AddCourse = () => {
                   Add Quote
                 </button>
               </div>
+            </div>
+          </div>
+        );
+
+      case componentTypes.DROPDOWN:
+        return (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Main Title</label>
+              <input
+                type="text"
+                value={componentData.title || ''}
+                onChange={(e) => handleComponentDataChange('title', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Main title"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Main Icon (Emoji)</label>
+              <input
+                type="text"
+                value={componentData.icon || ''}
+                onChange={(e) => handleComponentDataChange('icon', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="🔍"
+              />
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-xs font-medium text-gray-700">Dropdown Sections</label>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newSection = {
+                      id: `section-${Date.now()}`,
+                      title: 'New Section',
+                      icon: '📋',
+                      content: [{
+                        heading: 'Content Heading',
+                        description: 'Content description goes here.',
+                        listTitle: 'List Title',
+                        listItems: ['List item 1']
+                      }]
+                    };
+                    const updatedSections = [...(componentData.sections || []), newSection];
+                    handleComponentDataChange('sections', updatedSections);
+                  }}
+                  className="px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600"
+                >
+                  <FiPlus size={12} className="inline mr-1" />
+                  Add Section
+                </button>
+              </div>
+
+              {(componentData.sections || []).map((section, sectionIndex) => (
+                <div key={section.id || sectionIndex} className="border border-gray-300 rounded p-3 mb-3 bg-gray-50">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-medium text-gray-800">Section {sectionIndex + 1}</span>
+                    {(componentData.sections || []).length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updatedSections = (componentData.sections || []).filter((_, index) => index !== sectionIndex);
+                          handleComponentDataChange('sections', updatedSections);
+                        }}
+                        className="text-red-500 hover:text-red-700 text-xs"
+                      >
+                        <FiTrash2 size={12} />
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <div>
+                      <label className="block text-xs text-gray-600 mb-1">Section Title</label>
+                      <input
+                        type="text"
+                        value={section.title || ''}
+                        onChange={(e) => {
+                          const updatedSections = [...(componentData.sections || [])];
+                          updatedSections[sectionIndex] = { ...updatedSections[sectionIndex], title: e.target.value };
+                          handleComponentDataChange('sections', updatedSections);
+                        }}
+                        className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
+                        placeholder="Section title"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-gray-600 mb-1">Section Icon</label>
+                      <input
+                        type="text"
+                        value={section.icon || ''}
+                        onChange={(e) => {
+                          const updatedSections = [...(componentData.sections || [])];
+                          updatedSections[sectionIndex] = { ...updatedSections[sectionIndex], icon: e.target.value };
+                          handleComponentDataChange('sections', updatedSections);
+                        }}
+                        className="w-full px-2 py-1 text-xs border border-gray-300 rounded"
+                        placeholder="📋"
+                      />
+                    </div>
+
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="block text-xs text-gray-600">Content Items</label>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const updatedSections = [...(componentData.sections || [])];
+                            const newContentItem = {
+                              heading: 'New Content Heading',
+                              description: 'New content description.',
+                              listTitle: 'New List Title',
+                              listItems: ['New list item']
+                            };
+                            updatedSections[sectionIndex] = {
+                              ...updatedSections[sectionIndex],
+                              content: [...(updatedSections[sectionIndex].content || []), newContentItem]
+                            };
+                            handleComponentDataChange('sections', updatedSections);
+                          }}
+                          className="text-xs text-green-600 hover:text-green-800"
+                        >
+                          + Add Content
+                        </button>
+                      </div>
+
+                      {(section.content || []).map((item, itemIndex) => (
+                        <div key={itemIndex} className="border border-gray-200 rounded p-2 mb-2 bg-white">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-xs text-gray-500">Content {itemIndex + 1}</span>
+                            {(section.content || []).length > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const updatedSections = [...(componentData.sections || [])];
+                                  updatedSections[sectionIndex] = {
+                                    ...updatedSections[sectionIndex],
+                                    content: updatedSections[sectionIndex].content.filter((_, index) => index !== itemIndex)
+                                  };
+                                  handleComponentDataChange('sections', updatedSections);
+                                }}
+                                className="text-red-500 hover:text-red-700 text-xs"
+                              >
+                                <FiTrash2 size={10} />
+                              </button>
+                            )}
+                          </div>
+
+                          <div className="space-y-1">
+                            <input
+                              type="text"
+                              value={item.heading || ''}
+                              onChange={(e) => {
+                                const updatedSections = [...(componentData.sections || [])];
+                                const updatedContent = [...updatedSections[sectionIndex].content];
+                                updatedContent[itemIndex] = { ...updatedContent[itemIndex], heading: e.target.value };
+                                updatedSections[sectionIndex] = { ...updatedSections[sectionIndex], content: updatedContent };
+                                handleComponentDataChange('sections', updatedSections);
+                              }}
+                              className="w-full px-1 py-1 text-xs border border-gray-300 rounded"
+                              placeholder="Heading"
+                            />
+
+                            <textarea
+                              value={item.description || ''}
+                              onChange={(e) => {
+                                const updatedSections = [...(componentData.sections || [])];
+                                const updatedContent = [...updatedSections[sectionIndex].content];
+                                updatedContent[itemIndex] = { ...updatedContent[itemIndex], description: e.target.value };
+                                updatedSections[sectionIndex] = { ...updatedSections[sectionIndex], content: updatedContent };
+                                handleComponentDataChange('sections', updatedSections);
+                              }}
+                              className="w-full px-1 py-1 text-xs border border-gray-300 rounded resize-none"
+                              rows={2}
+                              placeholder="Description"
+                            />
+
+                            <input
+                              type="text"
+                              value={item.listTitle || ''}
+                              onChange={(e) => {
+                                const updatedSections = [...(componentData.sections || [])];
+                                const updatedContent = [...updatedSections[sectionIndex].content];
+                                updatedContent[itemIndex] = { ...updatedContent[itemIndex], listTitle: e.target.value };
+                                updatedSections[sectionIndex] = { ...updatedSections[sectionIndex], content: updatedContent };
+                                handleComponentDataChange('sections', updatedSections);
+                              }}
+                              className="w-full px-1 py-1 text-xs border border-gray-300 rounded"
+                              placeholder="List title"
+                            />
+
+                            <div>
+                              <div className="flex items-center justify-between mb-1">
+                                <span className="text-xs text-gray-500">List Items</span>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    const updatedSections = [...(componentData.sections || [])];
+                                    const updatedContent = [...updatedSections[sectionIndex].content];
+                                    updatedContent[itemIndex] = {
+                                      ...updatedContent[itemIndex],
+                                      listItems: [...(updatedContent[itemIndex].listItems || []), 'New item']
+                                    };
+                                    updatedSections[sectionIndex] = { ...updatedSections[sectionIndex], content: updatedContent };
+                                    handleComponentDataChange('sections', updatedSections);
+                                  }}
+                                  className="text-xs text-blue-600 hover:text-blue-800"
+                                >
+                                  +
+                                </button>
+                              </div>
+                              {(item.listItems || []).map((listItem, listIndex) => (
+                                <div key={listIndex} className="flex gap-1 mb-1">
+                                  <input
+                                    type="text"
+                                    value={listItem}
+                                    onChange={(e) => {
+                                      const updatedSections = [...(componentData.sections || [])];
+                                      const updatedContent = [...updatedSections[sectionIndex].content];
+                                      const updatedListItems = [...updatedContent[itemIndex].listItems];
+                                      updatedListItems[listIndex] = e.target.value;
+                                      updatedContent[itemIndex] = { ...updatedContent[itemIndex], listItems: updatedListItems };
+                                      updatedSections[sectionIndex] = { ...updatedSections[sectionIndex], content: updatedContent };
+                                      handleComponentDataChange('sections', updatedSections);
+                                    }}
+                                    className="flex-1 px-1 py-1 text-xs border border-gray-300 rounded"
+                                    placeholder="List item"
+                                  />
+                                  {(item.listItems || []).length > 1 && (
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        const updatedSections = [...(componentData.sections || [])];
+                                        const updatedContent = [...updatedSections[sectionIndex].content];
+                                        updatedContent[itemIndex] = {
+                                          ...updatedContent[itemIndex],
+                                          listItems: updatedContent[itemIndex].listItems.filter((_, index) => index !== listIndex)
+                                        };
+                                        updatedSections[sectionIndex] = { ...updatedSections[sectionIndex], content: updatedContent };
+                                        handleComponentDataChange('sections', updatedSections);
+                                      }}
+                                      className="px-1 text-red-500 hover:text-red-700 text-xs"
+                                    >
+                                      ×
+                                    </button>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         );

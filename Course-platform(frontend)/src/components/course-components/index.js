@@ -21,6 +21,7 @@ import DescriptionWithImageBox from './DescriptionWithImageBox';
 import InfoCardPair from './InfoCardPair';
 import NumberedStepsBox from './NumberedStepsBox';
 import QuoteComponent from './QuoteComponent';
+import DropdownComponent from './DropdownComponent';
 
 export const componentTypes = {
   HEADING: 'heading',
@@ -62,7 +63,8 @@ export const componentTypes = {
   DOWNLOAD: 'download',
   TIMELINE: 'timeline',
   DESCRIPTION_WITH_IMAGE_BOX: 'description_with_image_box',
-  INFO_CARD_PAIR: 'info_card_pair'
+  INFO_CARD_PAIR: 'info_card_pair',
+  DROPDOWN: 'dropdown'
 };
 
 export const componentLibrary = {
@@ -508,6 +510,26 @@ export const componentLibrary = {
       card1Icon: 'heart',
       italicLines: ''
     }
+  },
+  [componentTypes.DROPDOWN]: {
+    name: 'Dropdown Component',
+    component: DropdownComponent,
+    defaultData: {
+      title: 'Dropdown Title',
+      icon: '🔍',
+      sections: [{
+        id: 'section-1',
+        title: 'Section Title',
+        icon: '📋',
+        content: [{
+          heading: 'Content Heading',
+          description: 'Content description goes here.',
+          listTitle: 'List Title',
+          listItems: ['List item 1', 'List item 2']
+        }]
+      }]
+    },
+    isHalfWidth: false
   }
 };
 
