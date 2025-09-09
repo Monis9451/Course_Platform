@@ -49,7 +49,8 @@ const allowedComponents = [
   componentTypes.DESCRIPTION_WITH_IMAGE_BOX,
   componentTypes.INFO_CARD_PAIR,
   componentTypes.QUOTE,
-  componentTypes.DROPDOWN
+  componentTypes.DROPDOWN,
+  componentTypes.RATING_QUESTION
 ];
 
 const filteredComponentLibrary = Object.fromEntries(
@@ -2706,6 +2707,16 @@ const AddCourse = () => {
               />
             </div>
             <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Description (Optional)</label>
+              <textarea
+                value={componentData.description || ''}
+                onChange={(e) => handleComponentDataChange('description', e.target.value)}
+                rows={2}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Add an optional description for your quotes..."
+              />
+            </div>
+            <div>
               <label className="block text-xs font-medium mb-1 text-gray-700">Quotes</label>
               <div className="space-y-2">
                 {(componentData.quotes || ['']).map((quote, index) => (
@@ -3011,6 +3022,78 @@ const AddCourse = () => {
           </div>
         );
 
+      case componentTypes.RATING_QUESTION:
+        return (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Title</label>
+              <input
+                type="text"
+                value={componentData.title || ''}
+                onChange={(e) => handleComponentDataChange('title', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Self-Assessment Questions"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Description</label>
+              <textarea
+                value={componentData.description || ''}
+                onChange={(e) => handleComponentDataChange('description', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 resize-none"
+                rows={2}
+                placeholder="Please rate yourself on the following questions from 0 (not at all) to 5 (extremely):"
+              />
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-xs font-medium text-gray-700">Questions</label>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newQuestions = [...(componentData.questions || []), 'New question'];
+                    handleComponentDataChange('questions', newQuestions);
+                  }}
+                  className="flex items-center gap-1 px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-xs"
+                >
+                  <FiPlus size={12} />
+                  Add Question
+                </button>
+              </div>
+
+              {(componentData.questions || []).map((question, index) => (
+                <div key={index} className="flex gap-2 mb-2">
+                  <input
+                    type="text"
+                    value={question}
+                    onChange={(e) => {
+                      const newQuestions = [...(componentData.questions || [])];
+                      newQuestions[index] = e.target.value;
+                      handleComponentDataChange('questions', newQuestions);
+                    }}
+                    className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    placeholder="Enter question"
+                  />
+                  {(componentData.questions || []).length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newQuestions = (componentData.questions || []).filter((_, i) => i !== index);
+                        handleComponentDataChange('questions', newQuestions);
+                      }}
+                      className="px-2 py-1 text-red-500 hover:text-red-700 border border-gray-300 rounded"
+                    >
+                      <FiTrash2 size={12} />
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+
       default:
         return <div className="text-xs text-gray-500">Unknown component type</div>;
     }
@@ -3290,7 +3373,7 @@ const AddCourse = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="space-y-6">
+                    <div className="space-y-0">
                       {(() => {
                         const components = [];
                         let i = 0;
@@ -3312,7 +3395,8 @@ const AddCourse = () => {
                               component.type === componentTypes.CHECKBOX_LIST ||
                               component.type === componentTypes.DESCRIPTION_WITH_IMAGE_BOX ||
                               component.type === componentTypes.QUOTE ||
-                              component.type === 'checkbox_list') {
+                              component.type === 'checkbox_list' ||
+                              component.type === 'quote') {
                             // Look for next component to pair with
                             const nextComponent = currentLessonContent[i + 1];
                             const NextComponentRenderer = (nextComponent?.type === componentTypes.LEFT_BORDER_BOX || 
@@ -3322,15 +3406,16 @@ const AddCourse = () => {
                                                           nextComponent?.type === componentTypes.CHECKBOX_LIST ||
                                                           nextComponent?.type === componentTypes.DESCRIPTION_WITH_IMAGE_BOX ||
                                                           nextComponent?.type === componentTypes.QUOTE ||
-                                                          nextComponent?.type === 'checkbox_list') ? 
+                                                          nextComponent?.type === 'checkbox_list' ||
+                                                          nextComponent?.type === 'quote') ? 
                               filteredComponentLibrary[nextComponent.type]?.component : null;
                             
                             if (NextComponentRenderer) {
-                              // Render two half-width components in a row
+                              // Render two half-width components in a row using grid layout
                               components.push(
-                                <div key={`pair-${component.id}-${nextComponent.id}`} className="flex flex-col md:flex-row gap-6">
+                                <div key={`pair-${component.id}-${nextComponent.id}`} className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                                   <div
-                                    className={`flex-1 transition-all duration-200 ${
+                                    className={`transition-all duration-200 ${
                                       selectedComponent?.id === component.id 
                                         ? 'ring-2 ring-blue-400 ring-opacity-50 rounded-lg' 
                                         : ''
@@ -3348,7 +3433,7 @@ const AddCourse = () => {
                                     />
                                   </div>
                                   <div
-                                    className={`flex-1 transition-all duration-200 ${
+                                    className={`transition-all duration-200 ${
                                       selectedComponent?.id === nextComponent.id 
                                         ? 'ring-2 ring-blue-400 ring-opacity-50 rounded-lg' 
                                         : ''
@@ -3371,9 +3456,9 @@ const AddCourse = () => {
                             } else {
                               // Render single half-width component taking half space, other half remains empty
                               components.push(
-                                <div key={component.id} className="flex flex-col md:flex-row gap-6">
+                                <div key={component.id} className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                                   <div
-                                    className={`flex-1 transition-all duration-200 ${
+                                    className={`transition-all duration-200 ${
                                       selectedComponent?.id === component.id 
                                         ? 'ring-2 ring-blue-400 ring-opacity-50 rounded-lg' 
                                         : ''
@@ -3390,7 +3475,7 @@ const AddCourse = () => {
                                       }
                                     />
                                   </div>
-                                  <div className="flex-1"></div>
+                                  <div></div>
                                 </div>
                               );
                               i++;

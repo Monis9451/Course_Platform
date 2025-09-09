@@ -22,6 +22,7 @@ import InfoCardPair from './InfoCardPair';
 import NumberedStepsBox from './NumberedStepsBox';
 import QuoteComponent from './QuoteComponent';
 import DropdownComponent from './DropdownComponent';
+import RatingQuestionComponent from './RatingQuestionComponent';
 
 export const componentTypes = {
   HEADING: 'heading',
@@ -64,7 +65,8 @@ export const componentTypes = {
   TIMELINE: 'timeline',
   DESCRIPTION_WITH_IMAGE_BOX: 'description_with_image_box',
   INFO_CARD_PAIR: 'info_card_pair',
-  DROPDOWN: 'dropdown'
+  DROPDOWN: 'dropdown',
+  RATING_QUESTION: 'rating_question'
 };
 
 export const componentLibrary = {
@@ -323,8 +325,10 @@ export const componentLibrary = {
     component: QuoteComponent,
     defaultData: {
       title: 'Quote Section',
+      description: 'Add an optional description for your quotes here...',
       quotes: ['Enter your inspirational quote here...']
-    }
+    },
+    isHalfWidth: true
   },
   [componentTypes.CODE_BLOCK]: {
     name: 'Code Block',
@@ -528,6 +532,19 @@ export const componentLibrary = {
           listItems: ['List item 1', 'List item 2']
         }]
       }]
+    },
+    isHalfWidth: false
+  },
+  [componentTypes.RATING_QUESTION]: {
+    name: 'Rating Question',
+    component: RatingQuestionComponent,
+    defaultData: {
+      title: 'Self-Assessment Questions',
+      description: 'Please rate yourself on the following questions from 0 (not at all) to 5 (extremely):',
+      questions: [
+        'How stressed do you feel right now?',
+        'How confident are you in managing your emotions?'
+      ]
     },
     isHalfWidth: false
   }

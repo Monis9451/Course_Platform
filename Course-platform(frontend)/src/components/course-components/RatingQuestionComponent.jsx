@@ -1,0 +1,56 @@
+import React from 'react';
+import { FiPlus, FiTrash2 } from 'react-icons/fi';
+
+const RatingQuestionComponent = ({ data, isHalfWidth = false, ...props }) => {
+  // Handle different ways data might be passed
+  const actualData = data || props || {};
+  const displayTitle = actualData.title || 'Rating Questions';
+  const displayDescription = actualData.description || '';
+  const displayQuestions = actualData.questions || [
+    {
+      id: 1,
+      question: 'Enter your question here...',
+      selectedValue: null
+    }
+  ];
+
+  // Display mode (for course content viewing)
+  return (
+    <div className="mb-6">
+      <div className="bg-white border border-gray-200 p-5 rounded-lg">
+        <h4 className="font-medium mb-3 text-[#bd6334]">{displayTitle}</h4>
+        {displayDescription && (
+          <p className="text-gray-700 mb-4">{displayDescription}</p>
+        )}
+        
+        <div className="space-y-6">
+          {displayQuestions.map((questionItem, index) => (
+            <div key={questionItem.id || index} className="space-y-3">
+              <div>
+                <p className="text-gray-700 mb-3">
+                  {index + 1}. {questionItem.question}
+                </p>
+                <div className="flex space-x-4">
+                  {[0, 1, 2, 3, 4, 5].map((num) => (
+                    <div key={num} className="flex items-center">
+                      <input 
+                        type="radio" 
+                        name={`question-${questionItem.id || index}`} 
+                        value={num} 
+                        className="mr-1 accent-[#bd6334]" 
+                        defaultChecked={questionItem.selectedValue === num}
+                      />
+                      <label className="text-sm">{num}</label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default RatingQuestionComponent;
