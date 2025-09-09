@@ -213,6 +213,7 @@ export const componentLibrary = {
     component: CheckboxList,
     defaultData: {
       title: 'Checkbox List Section',
+      description: 'Optional description for the checkbox list',
       checkboxes: [
         { text: 'Example: check 1', checked: false }
       ]

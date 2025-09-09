@@ -1882,6 +1882,16 @@ const AddCourse = () => {
               />
             </div>
             <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Description (Optional)</label>
+              <textarea
+                value={componentData.description || ''}
+                onChange={(e) => handleComponentDataChange('description', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 resize-none"
+                rows={2}
+                placeholder="Optional description for the checkbox list"
+              />
+            </div>
+            <div>
               <label className="block text-xs font-medium mb-2 text-gray-700">Checkboxes</label>
               <div className="space-y-2 max-h-48 overflow-y-auto">
                 {(componentData.checkboxes || []).map((checkbox, index) => (

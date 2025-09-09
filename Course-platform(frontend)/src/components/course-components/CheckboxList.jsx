@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useUserProgress } from '../../context/userProgressContext';
 
 const CheckboxList = ({ data, isEditMode = false, onUpdate, lessonId = null, componentId = null, isHalfWidth = false }) => {
-  const { title, checkboxes = [{ text: '', checked: false }] } = data;
+  const { title, description, checkboxes = [{ text: '', checked: false }] } = data;
   const { getResponse, updateResponse } = useUserProgress();
   
   // Get saved responses when in view mode
@@ -60,6 +60,9 @@ const CheckboxList = ({ data, isEditMode = false, onUpdate, lessonId = null, com
   return (
     <div className="mb-6">
       <h3 className={`font-semibold mb-3 ${isHalfWidth ? 'text-lg' : 'text-xl'}`}>{title}</h3>
+      {description && (
+        <p className="text-gray-700 mb-3">{description}</p>
+      )}
       <div className="bg-[#f8f0e6] p-5 rounded-lg">
         <ul className="space-y-3 pl-5">
           {checkboxes.map((checkbox, index) => (
