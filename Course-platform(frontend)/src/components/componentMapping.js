@@ -50,7 +50,8 @@ export const COMPONENT_ID_MAPPING = {
   
   // Custom Components
   'custom-1': 'custom',
-  'dropdown-1': 'dropdown'
+  'dropdown-1': 'dropdown',
+  'rating-question-1': 'rating_question'
 };
 
 // Helper function to parse content string to JSON

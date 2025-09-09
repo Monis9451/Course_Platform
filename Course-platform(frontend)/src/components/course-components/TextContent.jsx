@@ -14,7 +14,7 @@ const TextContent = ({ data, title, content, ...props }) => {
   return (
     <div className="mb-6">
       {displayTitle && displayTitle !== 'Content' && (
-        <h3 className="text-xl font-semibold mb-3">{displayTitle}</h3>
+        <h3 className="text-xl font-semibold mb-3 text-[#bd6334]">{displayTitle}</h3>
       )}
       <div className="text-gray-700 leading-relaxed whitespace-pre-wrap">
         {displayContent}

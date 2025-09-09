@@ -80,16 +80,7 @@ const DynamicContentRenderer = ({ content, lessonId = null }) => {
       // Ensure we have valid data
       const componentData = item.data || item.content || item;
       
-      // Debug logging
-      console.log('Processing component:', {
-        componentType,
-        itemId: item.id,
-        itemType: item.type,
-        data: componentData,
-        isHalfWidthComponent: isHalfWidthComponent
-      });
-      
-      // Special handling for half-width components 
+      // Special handling for half-width components - moved before debug logging
       const isHalfWidthComponent = componentType === componentTypes.LEFT_BORDER_BOX || 
                                  componentType === componentTypes.INFO_CARD_PAIR || 
                                  componentType === componentTypes.QUESTION_CARD_BOX || 
@@ -102,6 +93,15 @@ const DynamicContentRenderer = ({ content, lessonId = null }) => {
                                  (item.type && item.type === 'checkbox_list') || // Item type check
                                  (item.type && item.type === 'quote') || // Item type check for quote
                                  (item.id && typeof item.id === 'string' && item.id.includes('checkbox')); // ID-based check
+      
+      // Debug logging
+      console.log('Processing component:', {
+        componentType,
+        itemId: item.id,
+        itemType: item.type,
+        data: componentData,
+        isHalfWidthComponent: isHalfWidthComponent
+      });
       
       if (isHalfWidthComponent) {
         // Look for next component to pair with
