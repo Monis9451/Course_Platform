@@ -1357,6 +1357,7 @@ const AddCourse = () => {
                         handleComponentDataChange('listItems', newListItems);
                       }}
                       className="px-2 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600"
+                      style={{ cursor: 'pointer' }}
                     >
                       Remove
                     </button>
@@ -1369,6 +1370,7 @@ const AddCourse = () => {
                     handleComponentDataChange('listItems', newListItems);
                   }}
                   className="px-3 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600"
+                  style={{ cursor: 'pointer' }}
                 >
                   Add List Item
                 </button>
@@ -1479,6 +1481,7 @@ const AddCourse = () => {
                   }}
                   className="w-full py-1 border border-dashed border-gray-400 text-gray-600 text-xs rounded hover:bg-gray-50"
                   type="button"
+                  style={{ cursor: 'pointer' }}
                 >
                   + Add Question
                 </button>
@@ -1543,6 +1546,7 @@ const AddCourse = () => {
                         handleComponentDataChange('listItems', newListItems);
                       }}
                       className="px-2 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600"
+                      style={{ cursor: 'pointer' }}
                     >
                       Remove
                     </button>
@@ -1555,6 +1559,7 @@ const AddCourse = () => {
                     handleComponentDataChange('listItems', newListItems);
                   }}
                   className="px-3 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600"
+                  style={{ cursor: 'pointer' }}
                 >
                   Add List Item
                 </button>
@@ -1649,6 +1654,7 @@ const AddCourse = () => {
                         handleComponentDataChange('listItems', newListItems);
                       }}
                       className="px-2 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600"
+                      style={{ cursor: 'pointer' }}
                     >
                       Remove
                     </button>
@@ -1661,6 +1667,7 @@ const AddCourse = () => {
                     handleComponentDataChange('listItems', newListItems);
                   }}
                   className="px-3 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600"
+                  style={{ cursor: 'pointer' }}
                 >
                   Add List Item
                 </button>
@@ -1719,6 +1726,7 @@ const AddCourse = () => {
                           }}
                           className="text-red-500 hover:text-red-700 text-xs px-1"
                           type="button"
+                          style={{ cursor: 'pointer' }}
                         >
                           ✕
                         </button>
@@ -1744,6 +1752,7 @@ const AddCourse = () => {
                   }}
                   className="w-full py-1 border border-dashed border-gray-400 text-gray-600 text-xs rounded hover:bg-gray-50"
                   type="button"
+                  style={{ cursor: 'pointer' }}
                 >
                   + Add Point
                 </button>
@@ -1790,6 +1799,7 @@ const AddCourse = () => {
                           }}
                           className="text-red-500 hover:text-red-700 text-xs px-1"
                           type="button"
+                          style={{ cursor: 'pointer' }}
                         >
                           ✕
                         </button>
@@ -1860,6 +1870,7 @@ const AddCourse = () => {
                   }}
                   className="w-full py-2 border border-dashed border-gray-400 text-gray-600 text-xs rounded hover:bg-gray-50"
                   type="button"
+                  style={{ cursor: 'pointer' }}
                 >
                   + Add Question Card
                 </button>
@@ -1906,6 +1917,7 @@ const AddCourse = () => {
                           }}
                           className="text-red-500 hover:text-red-700 text-xs px-1"
                           type="button"
+                          style={{ cursor: 'pointer' }}
                         >
                           ✕
                         </button>
@@ -1943,6 +1955,7 @@ const AddCourse = () => {
                   }}
                   className="w-full py-1 border border-dashed border-gray-400 text-gray-600 text-xs rounded hover:bg-gray-50"
                   type="button"
+                  style={{ cursor: 'pointer' }}
                 >
                   + Add Checkbox
                 </button>
@@ -3193,6 +3206,7 @@ const AddCourse = () => {
                   onClick={goToPreviousLesson}
                   disabled={currentLessonIndex === 0}
                   className="flex items-center space-x-1 px-3 py-1 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  style={{ cursor: 'pointer' }}
                 >
                   <FiArrowLeft className="w-4 h-4" />
                   <span>Previous</span>
@@ -3201,6 +3215,7 @@ const AddCourse = () => {
                   onClick={saveLessonContent}
                   disabled={loading}
                   className="flex items-center space-x-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+                  style={{ cursor: 'pointer' }}
                 >
                   <FiSave className="w-4 h-4" />
                   <span>{loading ? 'Saving...' : 'Save'}</span>
@@ -3209,6 +3224,7 @@ const AddCourse = () => {
                   onClick={goToNextLesson}
                   disabled={currentLessonIndex === lessons.length - 1}
                   className="flex items-center space-x-1 px-3 py-1 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  style={{ cursor: 'pointer' }}
                 >
                   <span>Next</span>
                   <FiArrowRight className="w-4 h-4" />
@@ -3239,6 +3255,7 @@ const AddCourse = () => {
                             key={type}
                             onClick={() => addComponent(type)}
                             className="flex items-center p-3 text-left border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 group w-full"
+                            style={{ cursor: 'pointer' }}
                           >
                             <span className="text-sm font-medium text-gray-700 text-left">{config.name}</span>
                           </button>
@@ -3328,6 +3345,7 @@ const AddCourse = () => {
                                   }}
                                   className="p-1 hover:bg-red-100 rounded"
                                   title="Delete"
+                                  style={{ cursor: 'pointer' }}
                                 >
                                   <FiTrash2 className="w-3 h-3 text-red-600" />
                                 </button>
@@ -3534,6 +3552,7 @@ const AddCourse = () => {
               }}
               disabled={loading}
               className="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 font-semibold"
+              style={{ cursor: 'pointer' }}
             >
               {loading ? 'Completing Course...' : 'Complete Course Creation'}
             </button>
@@ -3728,6 +3747,7 @@ const AddCourse = () => {
                   type="submit"
                   disabled={loading}
                   className="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 font-medium"
+                  style={{ cursor: 'pointer' }}
                 >
                   {loading ? 'Creating Course...' : 'Continue to Modules'}
                 </button>
@@ -3846,6 +3866,7 @@ const AddCourse = () => {
                   onClick={handleModulesSubmit}
                   disabled={loading}
                   className="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 font-medium"
+                  style={{ cursor: 'pointer' }}
                 >
                   {loading ? 'Creating Modules...' : 'Continue to Lessons'}
                 </button>
@@ -3940,6 +3961,7 @@ const AddCourse = () => {
                   onClick={handleLessonsSubmit}
                   disabled={loading}
                   className="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 font-medium"
+                  style={{ cursor: 'pointer' }}
                 >
                   {loading ? 'Creating Lessons...' : 'Continue to Content Editor'}
                 </button>
@@ -4014,6 +4036,7 @@ const AddCourse = () => {
                         onClick={() => resumeCourse(course)}
                         disabled={loading}
                         className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 disabled:opacity-50"
+                        style={{ cursor: 'pointer' }}
                       >
                         {loading ? 'Resuming...' : 'Resume'}
                       </button>
@@ -4021,6 +4044,7 @@ const AddCourse = () => {
                         onClick={() => deleteIncompleteCourse(course.courseID)}
                         disabled={deletingCourseId === course.courseID}
                         className="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 disabled:opacity-50"
+                        style={{ cursor: 'pointer' }}
                       >
                         {deletingCourseId === course.courseID ? 'Deleting...' : 'Delete'}
                       </button>
@@ -4034,12 +4058,14 @@ const AddCourse = () => {
               <button
                 onClick={startNewCourse}
                 className="flex-1 px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700"
+                style={{ cursor: 'pointer' }}
               >
                 Start New Course
               </button>
               <button
                 onClick={() => setShowIncompleteModal(false)}
                 className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50"
+                style={{ cursor: 'pointer' }}
               >
                 Cancel
               </button>

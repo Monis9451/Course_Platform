@@ -87,6 +87,7 @@ const DeleteCoursesList = () => {
               <button
                 onClick={() => navigate('/admin/dashboard')}
                 className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors"
+                style={{ cursor: 'pointer' }}
               >
                 Back to Dashboard
               </button>
@@ -105,6 +106,7 @@ const DeleteCoursesList = () => {
               <button
                 onClick={() => navigate('/admin/add-course')}
                 className="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-lg transition-colors"
+                style={{ cursor: 'pointer' }}
               >
                 Add New Course
               </button>
@@ -156,6 +158,7 @@ const DeleteCoursesList = () => {
                           ? 'bg-gray-400 cursor-not-allowed text-white'
                           : 'bg-red-500 hover:bg-red-600 text-white'
                       }`}
+                      style={{ cursor: deleting === course.courseID ? 'not-allowed' : 'pointer' }}
                     >
                       {deleting === course.courseID ? (
                         <>

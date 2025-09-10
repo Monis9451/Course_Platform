@@ -80,12 +80,14 @@ const Courses = () => {
                       <button 
                         onClick={() => window.location.href = course.id === 3 ? '/bundle' : `/checkout/${course.id}`}
                         className="bg-primary hover:bg-[#a3532c] text-white font-fitzgerald px-8 py-2 rounded-none transition-colors duration-200"
+                        style={{ cursor: 'pointer' }}
                       >
                         Buy Now
                       </button>
                       <button 
                         onClick={() => window.location.href = `/course/${course.id}`}
                         className="border border-primary text-[#bd6334] hover:bg-[#bd6334] hover:text-white font-fitzgerald px-8 py-2 rounded-none transition-colors duration-200"
+                        style={{ cursor: 'pointer' }}
                       >
                         Learn More
                       </button>
@@ -105,7 +107,7 @@ const Courses = () => {
             Enroll in one of our transformative workshop today and take the first step toward healing and growth.
           </p>
           <Link to="/login">
-            <button className="border border-white text-white hover:bg-white hover:text-[#bd6334] font-fitzgerald px-8 py-6 text-lg transition-colors duration-200">
+            <button className="border border-white text-white hover:bg-white hover:text-[#bd6334] font-fitzgerald px-8 py-6 text-lg transition-colors duration-200" style={{ cursor: 'pointer' }}>
               Get Started
             </button>
           </Link>

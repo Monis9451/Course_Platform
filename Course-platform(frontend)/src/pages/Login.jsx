@@ -211,6 +211,7 @@ const Login = () => {
                   setErrors({});
                 }
               }}
+              style={{ cursor: 'pointer' }}
             >
               Log In
             </button>

@@ -142,6 +142,7 @@ function ContactUs() {
               <button
                 type="submit"
                 className="bg-[#CCBFAF] text-black px-8 py-3 font-medium text-sm hover:bg-[#E0D8CE] transition-colors duration-200"
+                style={{ cursor: 'pointer' }}
               >
                 Send
               </button>

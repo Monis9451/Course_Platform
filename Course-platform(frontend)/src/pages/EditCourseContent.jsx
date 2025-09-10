@@ -2454,6 +2454,7 @@ const EditCourseContent = () => {
             <button
               onClick={() => navigate('/admin/edit-courses')}
               className="bg-primary text-white px-6 py-3 rounded-lg"
+              style={{ cursor: 'pointer' }}
             >
               Back to Courses List
             </button>
@@ -2491,6 +2492,7 @@ const EditCourseContent = () => {
               <button
                 onClick={() => navigate('/admin/edit-courses')}
                 className="flex items-center space-x-1 px-3 py-1 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200"
+                style={{ cursor: 'pointer' }}
               >
                 <FiArrowLeft className="w-4 h-4" />
                 <span>Back to Courses</span>
@@ -2499,6 +2501,7 @@ const EditCourseContent = () => {
                 onClick={goToPreviousLesson}
                 disabled={currentLessonIndex === 0}
                 className="flex items-center space-x-1 px-3 py-1 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{ cursor: currentLessonIndex === 0 ? 'not-allowed' : 'pointer' }}
               >
                 <FiArrowLeft className="w-4 h-4" />
                 <span>Previous</span>
@@ -2507,6 +2510,7 @@ const EditCourseContent = () => {
                 onClick={handleSaveContent}
                 disabled={saving}
                 className="flex items-center space-x-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+                style={{ cursor: saving ? 'not-allowed' : 'pointer' }}
               >
                 <FiSave className="w-4 h-4" />
                 <span>{saving ? 'Saving...' : 'Save'}</span>
@@ -2515,6 +2519,7 @@ const EditCourseContent = () => {
                 onClick={goToNextLesson}
                 disabled={!course.allLessons || currentLessonIndex === course.allLessons.length - 1}
                 className="flex items-center space-x-1 px-3 py-1 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{ cursor: (!course.allLessons || currentLessonIndex === course.allLessons.length - 1) ? 'not-allowed' : 'pointer' }}
               >
                 <span>Next</span>
                 <FiArrowRight className="w-4 h-4" />
@@ -2545,6 +2550,7 @@ const EditCourseContent = () => {
                           key={type}
                           onClick={() => addComponent(type)}
                           className="flex items-center p-3 text-left border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 group w-full"
+                          style={{ cursor: 'pointer' }}
                         >
                           <span className="text-sm font-medium text-gray-700 text-left">{config.name}</span>
                         </button>

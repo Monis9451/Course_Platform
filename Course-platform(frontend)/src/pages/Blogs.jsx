@@ -79,7 +79,7 @@ const Blogs = () => {
               </article>
             </div>
             <div className="text-center mt-12">
-              <button className="bg-primary text-white px-8 py-3 rounded-full font-medium hover:bg-primary-dark transition-colors">
+              <button className="bg-primary text-white px-8 py-3 rounded-full font-medium hover:bg-primary-dark transition-colors" style={{ cursor: 'pointer' }}>
                 Load More Articles
               </button>
             </div>

@@ -229,7 +229,9 @@ const Home = () => {
           </p>          
           <button
           onClick={() => window.location.href = "/courses"}
-          className="bg-primary hover-primary text-white px-6 py-2 md:px-8 md:py-3 rounded-4xl text-base md:text-lg font-semibold transition-colors duration-200">
+          className="bg-primary hover-primary text-white px-6 py-2 md:px-8 md:py-3 rounded-4xl text-base md:text-lg font-semibold transition-colors duration-200"
+          style={{ cursor: 'pointer' }}
+          >
             EXPLORE WORKSHOPS
           </button>
         </div>
@@ -371,12 +373,14 @@ const Home = () => {
                 <button
                   onClick={() => window.location.href = "/checkout/1"}
                   className="flex-1 bg-primary text-white py-3 px-4 rounded-full text-base font-medium hover:bg-gray-800 transition-colors"
+                  style={{ cursor: 'pointer' }}
                 >
                   BUY NOW
                 </button>
                 <button
                   onClick={() => window.location.href = "/course/1"}
                   className="flex-1 border-2 border-primary text-primary py-3 px-4 rounded-full text-base font-medium hover:bg-primary hover:text-white transition-colors"
+                  style={{ cursor: 'pointer' }}
                 >
                   LEARN MORE
                 </button>
@@ -406,12 +410,14 @@ const Home = () => {
                 <button
                   onClick={() => window.location.href = "/checkout/2"}
                   className="flex-1 bg-primary text-white py-3 px-4 rounded-full text-base font-medium hover:bg-gray-800 transition-colors"
+                  style={{ cursor: 'pointer' }}
                 >
                   BUY NOW
                 </button>
                 <button
                   onClick={() => window.location.href = "/course/2"}
                   className="flex-1 border-2 border-primary text-primary py-3 px-4 rounded-full text-base font-medium hover:bg-primary hover:text-white transition-colors"
+                  style={{ cursor: 'pointer' }}
                 >
                   LEARN MORE
                 </button>
@@ -441,6 +447,7 @@ const Home = () => {
                 <button
                   onClick={() => window.location.href = "/checkout/3"}
                   className="flex-1 bg-primary text-white py-3 px-4 rounded-full text-base font-medium hover:bg-gray-800 transition-colors"
+                  style={{ cursor: 'pointer' }}
                 >
                   BUY NOW
                 </button>

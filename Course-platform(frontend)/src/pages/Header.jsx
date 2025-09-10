@@ -60,6 +60,7 @@ const Header = () => {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-white hover:text-gray-200 focus:outline-none transition-colors duration-200 pl-1"
+              style={{ cursor: 'pointer' }}
             >
               <svg 
                 aria-hidden="true" 
@@ -93,6 +94,7 @@ const Header = () => {
                 <button 
                   onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
                   className="flex items-center text-white hover:text-gray-200 transition-colors duration-200 space-x-1"
+                  style={{ cursor: 'pointer' }}
                 >
                   {currentUser.photoURL ? (
                     <img 
@@ -129,6 +131,7 @@ const Header = () => {
                           ? 'text-gray-400 cursor-not-allowed bg-gray-50' 
                           : 'text-gray-700 hover:bg-gray-100'
                       }`}
+                      style={{ cursor: isLoggingOut ? 'not-allowed' : 'pointer' }}
                     >
                       <FiLogOut className="h-4 w-4 mr-3" />
                       {isLoggingOut ? 'Signing out...' : 'Sign out'}
@@ -153,7 +156,7 @@ const Header = () => {
               </Link>
             )}
             
-            <button className="text-white hover:text-gray-200 transition-colors duration-200">
+            <button className="text-white hover:text-gray-200 transition-colors duration-200" style={{ cursor: 'pointer' }}>
               <svg 
                 aria-hidden="true" 
                 focusable="false" 
@@ -204,6 +207,7 @@ const Header = () => {
             <button
               className="text-black hover:text-gray-700 focus:outline-none transition-colors duration-200"
               onClick={() => setIsMobileMenuOpen(false)}
+              style={{ cursor: 'pointer' }}
             >
               <FiX className="h-6 w-6" />
             </button>
@@ -237,6 +241,7 @@ const Header = () => {
                       ? 'text-gray-400 cursor-not-allowed' 
                       : 'text-black hover:text-gray-700'
                   }`}
+                  style={{ cursor: isLoggingOut ? 'not-allowed' : 'pointer' }}
                 >
                   <FiLogOut className="h-4 w-4 mr-3" />
                   {isLoggingOut ? 'Signing out...' : 'Sign out'}

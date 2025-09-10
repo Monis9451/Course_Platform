@@ -452,7 +452,7 @@ const CourseDetails = () => {
         <div className="container mx-auto px-4 py-20 text-center">
           <h1 className="text-3xl font-fitzgerald text-black mb-4">Workshop Not Found</h1>
           <p className="text-gray-600 font-fitzgerald mb-8">The Workshop you're looking for doesn't exist or has been removed.</p>
-          <Link to="/courses" className="bg-primary text-white font-fitzgerald px-8 py-3 hover:bg-primary-dark transition-colors">
+          <Link to="/courses" className="bg-primary text-white font-fitzgerald px-8 py-3 hover:bg-primary-dark transition-colors" style={{ cursor: 'pointer' }}>
             Browse All Courses
           </Link>
         </div>
@@ -696,6 +696,7 @@ const CourseDetails = () => {
                 <button
                   onClick={() => toggleFaq(faq.id)}
                   className="w-full py-6 flex items-center justify-between text-left hover:bg-gray-50 transition-colors duration-200"
+                  style={{ cursor: 'pointer' }}
                 >
                   <div className="flex items-center">
                     <span className="text-lg mr-3">{faq.icon}</span>
@@ -739,6 +740,7 @@ const CourseDetails = () => {
             <button
               onClick={() => (window.location.href = `/checkout/${course.id}`)}
               className="bg-primary hover:bg-gray-100 text-white font-medium px-12 py-4 uppercase text-lg transition-colors duration-200 font-fitzgerald"
+              style={{ cursor: 'pointer' }}
             >
               Enrol Now for £{course.price}
             </button>

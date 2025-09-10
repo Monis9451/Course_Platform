@@ -63,6 +63,7 @@ const EditCoursesList = () => {
               <button
                 onClick={() => navigate('/admin/dashboard')}
                 className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors"
+                style={{ cursor: 'pointer' }}
               >
                 Back to Dashboard
               </button>
@@ -81,6 +82,7 @@ const EditCoursesList = () => {
               <button
                 onClick={() => navigate('/admin/add-course')}
                 className="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-lg transition-colors"
+                style={{ cursor: 'pointer' }}
               >
                 Add New Course
               </button>
@@ -127,6 +129,7 @@ const EditCoursesList = () => {
                     <button
                       onClick={() => handleEditCourse(course.courseID)}
                       className="w-full bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg transition-colors"
+                      style={{ cursor: 'pointer' }}
                     >
                       Edit Lesson Content
                     </button>

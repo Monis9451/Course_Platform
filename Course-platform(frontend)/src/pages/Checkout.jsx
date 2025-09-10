@@ -72,7 +72,7 @@ function Checkout() {
             <p className="text-gray-700 text-lg sm:text-xl">
               The Workshop you're looking for doesn't exist.
             </p>
-            <Link to="/" className="mt-4 bg-[#B45B29] text-white px-6 py-3 rounded">
+            <Link to="/" className="mt-4 bg-[#B45B29] text-white px-6 py-3 rounded" style={{ cursor: 'pointer' }}>
               Return to Homepage
             </Link>
           </div>
@@ -135,7 +135,7 @@ function Checkout() {
                   placeholder="Enter a Coupon Code"
                   type="text"
                 />
-                <button className="bg-[#393128] text-white px-4 py-3 rounded sm:rounded-r cursor-pointer">
+                <button className="bg-[#393128] text-white px-4 py-3 rounded sm:rounded-r cursor-pointer" style={{ cursor: 'pointer' }}>
                   Apply
                 </button>
               </div>
@@ -172,7 +172,7 @@ function Checkout() {
               ))}
             </div>
             <Link to={`/thankyou/${course.id}`}>
-              <button className="w-full bg-[#B45B29] text-white cursor-pointer p-4 mt-10 mb-5 hover:bg-[#a44d1f] transition flex items-center justify-center gap-4 text-base sm:text-lg font-semibold">
+              <button className="w-full bg-[#B45B29] text-white cursor-pointer p-4 mt-10 mb-5 hover:bg-[#a44d1f] transition flex items-center justify-center gap-4 text-base sm:text-lg font-semibold" style={{ cursor: 'pointer' }}>
                 Complete Purchase <FaArrowRight />
               </button>
             </Link>
