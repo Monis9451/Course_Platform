@@ -3,7 +3,14 @@ dotenv.config();
 
 // Validate required environment variables
 const requiredEnvVars = ['SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY', 'ADMIN_EMAIL'];
+const optionalEmailVars = ['FEEDBACK_ADMIN_EMAIL', 'EMAIL_PASSWORD'];
 const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
+const missingEmailVars = optionalEmailVars.filter(varName => !process.env[varName]);
+
+if (missingEmailVars.length > 0) {
+  console.warn('Missing optional email environment variables:', missingEmailVars);
+  console.warn('Email functionality will be limited until these are configured.');
+}
 
 if (missingVars.length > 0) {
   console.error('Missing required environment variables:', missingVars);
@@ -19,6 +26,7 @@ const uploadRoutes = require('./routes/upload.routes');
 const courseRoutes = require('./routes/course.routes');
 const moduleRoutes = require('./routes/module.routes');
 const lessonRoutes = require('./routes/lesson.routes');
+const emailRoutes = require('./routes/email.routes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -44,6 +52,7 @@ app.use('/api/uploads', uploadRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/modules', moduleRoutes);
 app.use('/api/lessons', lessonRoutes);
+app.use('/api/email', emailRoutes);
 
 
 // Error handling middleware
