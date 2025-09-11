@@ -45,6 +45,11 @@ const validateFeedback = [
     .isBoolean()
     .withMessage('Anonymous must be a boolean value'),
 
+  body('courseName')
+    .optional()
+    .isLength({ min: 1, max: 200 })
+    .withMessage('Course name must be between 1 and 200 characters'),
+
   // Custom validation to ensure email is provided when not anonymous
   body().custom((value, { req }) => {
     if (!req.body.anonymous && !req.body.email) {

@@ -41,7 +41,8 @@ const sendFeedbackEmail = catchAsync(async (req, res, next) => {
     personalChanges,
     additionalComments,
     anonymous,
-    userEmail // The email of the logged-in user (from auth)
+    userEmail, // The email of the logged-in user (from auth)
+    courseName // The name of the course being reviewed
   } = req.body;
 
   // Validation
@@ -90,16 +91,18 @@ const sendFeedbackEmail = catchAsync(async (req, res, next) => {
   // Prepare email content
   const senderEmail = anonymous ? 'Anonymous User' : email || userEmail;
   const senderName = anonymous ? 'Anonymous' : (name || 'Not provided');
+  const courseTitle = courseName || 'Unknown Course';
 
   const emailHTML = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
       <h2 style="color: #393128; border-bottom: 2px solid #393128; padding-bottom: 10px;">
-        New Course Feedback Received
+        Feedback for "${courseTitle}"
       </h2>
       
       <div style="background-color: #f8f6f3; padding: 20px; border-radius: 8px; margin: 20px 0;">
         <h3 style="color: #393128; margin-top: 0;">Feedback Details</h3>
         
+        <p><strong>Course:</strong> ${courseTitle}</p>
         <p><strong>From:</strong> ${senderName} ${anonymous ? '(Anonymous)' : ''}</p>
         <p><strong>Email:</strong> ${senderEmail}</p>
         <p><strong>Overall Rating:</strong> ${rating}/5</p>
@@ -150,8 +153,9 @@ const sendFeedbackEmail = catchAsync(async (req, res, next) => {
   `;
 
   const emailText = `
-    New Course Feedback Received
+    Feedback for "${courseTitle}"
 
+    Course: ${courseTitle}
     From: ${senderName} ${anonymous ? '(Anonymous)' : ''}
     Email: ${senderEmail}
     Overall Rating: ${rating}/5
@@ -168,7 +172,7 @@ const sendFeedbackEmail = catchAsync(async (req, res, next) => {
   const mailOptions = {
     from: `"Mind Planner Feedback" <${process.env.FEEDBACK_ADMIN_EMAIL}>`,
     to: process.env.FEEDBACK_ADMIN_EMAIL,
-    subject: `Course Feedback - Rating: ${rating}/5 ${anonymous ? '(Anonymous)' : `from ${senderName}`}`,
+    subject: `"${courseTitle}" Feedback - Rating: ${rating}/5 ${anonymous ? '(Anonymous)' : `from ${senderName}`}`,
     text: emailText,
     html: emailHTML,
     replyTo: anonymous ? undefined : (email || userEmail)

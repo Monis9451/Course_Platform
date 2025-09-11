@@ -46,7 +46,8 @@ const FeedbackInvitation = () => {
       // Prepare data for submission
       const submissionData = {
         ...formData,
-        userEmail: currentUser?.email // Include logged-in user's email if available
+        userEmail: currentUser?.email, // Include logged-in user's email if available
+        courseName: 'Unburdening Trauma' // Include the course name
       };
 
       await sendFeedbackEmail(submissionData);
