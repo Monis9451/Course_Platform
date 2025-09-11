@@ -122,7 +122,7 @@ const sendFeedbackEmail = catchAsync(async (req, res, next) => {
             ${improvements}
           </div>
         </div>
-      ` : ''}
+      ` : ''} 
 
       ${personalChanges ? `
         <div style="margin: 20px 0;">
