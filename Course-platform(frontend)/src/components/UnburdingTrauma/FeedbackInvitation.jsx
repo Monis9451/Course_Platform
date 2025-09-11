@@ -1,6 +1,77 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { sendFeedbackEmail } from '../../api/emailAPI';
+import { useAuth } from '../../context/authContext';
+import toast from 'react-hot-toast';
 
 const FeedbackInvitation = () => {
+  const { currentUser } = useAuth();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    rating: '',
+    mostHelpful: '',
+    improvements: '',
+    personalChanges: '',
+    additionalComments: '',
+    anonymous: false
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // Validate required fields
+      if (!formData.rating) {
+        toast.error('Please select a rating');
+        setIsSubmitting(false);
+        return;
+      }
+
+      if (!formData.anonymous && !formData.email) {
+        toast.error('Please provide your email or choose to submit anonymously');
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Prepare data for submission
+      const submissionData = {
+        ...formData,
+        userEmail: currentUser?.email // Include logged-in user's email if available
+      };
+
+      await sendFeedbackEmail(submissionData);
+      
+      toast.success('Thank you! Your feedback has been submitted successfully.');
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        rating: '',
+        mostHelpful: '',
+        improvements: '',
+        personalChanges: '',
+        additionalComments: '',
+        anonymous: false
+      });
+
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+      toast.error(error.message || 'Failed to submit feedback. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <div>
       {/* Welcome Content Section */}
@@ -68,7 +139,7 @@ const FeedbackInvitation = () => {
                 </p>
               </div>
               
-              <form className="space-y-6 max-w-2xl mx-auto">
+              <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-[#393128] mb-2 uppercase tracking-wider">
@@ -77,8 +148,11 @@ const FeedbackInvitation = () => {
                     <input
                       type="text"
                       name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
                       className="w-full px-2 py-3 bg-transparent border-1 border-gray-300 focus:border-[#393128] focus:outline-none transition-colors text-[#393128] placeholder-gray-400"
                       placeholder="Your name"
+                      disabled={formData.anonymous}
                     />
                   </div>
                   <div>
@@ -88,19 +162,25 @@ const FeedbackInvitation = () => {
                     <input
                       type="email"
                       name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       className="w-full px-2 py-3 bg-transparent border-1 border-gray-300 focus:border-[#393128] focus:outline-none transition-colors text-[#393128] placeholder-gray-400"
                       placeholder="Your email address"
+                      disabled={formData.anonymous}
                     />
                   </div>
                 </div>
                 
                 <div>
                   <label className="block text-sm font-medium text-[#393128] mb-2 uppercase tracking-wider">
-                    OVERALL RATING
+                    OVERALL RATING <span className="text-red-500">*</span>
                   </label>
                   <select
                     name="rating"
+                    value={formData.rating}
+                    onChange={handleInputChange}
                     className="w-full px-2 py-3 bg-transparent border-1 border-gray-300 focus:border-[#393128] focus:outline-none transition-colors text-[#393128]"
+                    required
                   >
                     <option value="">Please select a rating</option>
                     <option value="5">5 - Excellent</option>
@@ -117,6 +197,8 @@ const FeedbackInvitation = () => {
                   </label>
                   <textarea
                     name="mostHelpful"
+                    value={formData.mostHelpful}
+                    onChange={handleInputChange}
                     rows="4"
                     className="w-full px-2 py-3 bg-transparent border-1 border-gray-300 focus:border-[#393128] focus:outline-none transition-colors resize-none text-[#393128] placeholder-gray-400"
                     placeholder="Share what resonated with you or helped you the most..."
@@ -129,6 +211,8 @@ const FeedbackInvitation = () => {
                   </label>
                   <textarea
                     name="improvements"
+                    value={formData.improvements}
+                    onChange={handleInputChange}
                     rows="4"
                     className="w-full px-2 py-3 bg-transparent border-1 border-gray-300 focus:border-[#393128] focus:outline-none transition-colors resize-none text-[#393128] placeholder-gray-400"
                     placeholder="Were there moments that felt unclear, challenging, or incomplete?"
@@ -141,6 +225,8 @@ const FeedbackInvitation = () => {
                   </label>
                   <textarea
                     name="personalChanges"
+                    value={formData.personalChanges}
+                    onChange={handleInputChange}
                     rows="4"
                     className="w-full px-2 py-3 bg-transparent border-1 border-gray-300 focus:border-[#393128] focus:outline-none transition-colors resize-none text-[#393128] placeholder-gray-400"
                     placeholder="What do you feel has changed or begun to shift since starting this workshop?"
@@ -153,6 +239,8 @@ const FeedbackInvitation = () => {
                   </label>
                   <textarea
                     name="additionalComments"
+                    value={formData.additionalComments}
+                    onChange={handleInputChange}
                     rows="4"
                     className="w-full px-2 py-3 bg-transparent border-1 border-gray-300 focus:border-[#393128] focus:outline-none transition-colors resize-none text-[#393128] placeholder-gray-400"
                     placeholder="Any other thoughts or feedback you'd like to share..."
@@ -163,6 +251,8 @@ const FeedbackInvitation = () => {
                   <input
                     type="checkbox"
                     name="anonymous"
+                    checked={formData.anonymous}
+                    onChange={handleInputChange}
                     className="mr-3 h-4 w-4 text-[#393128] focus:ring-[#393128] border-gray-300 rounded"
                   />
                   <label className="text-sm text-[#393128]">
@@ -173,9 +263,11 @@ const FeedbackInvitation = () => {
                 <div className="text-center pt-8">
                   <button
                     type="submit"
-                    className="bg-primary hover:bg-primary-dark text-white px-8 py-3 font-medium text-sm transition-colors duration-200 rounded-lg"
+                    disabled={isSubmitting}
+                    className="bg-primary hover:bg-primary-dark text-white px-8 py-3 font-medium text-sm transition-colors duration-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    style={{ cursor: isSubmitting ? 'not-allowed' : 'pointer' }}
                   >
-                    Submit Feedback
+                    {isSubmitting ? 'Submitting...' : 'Submit Feedback'}
                   </button>
                 </div>
               </form>
