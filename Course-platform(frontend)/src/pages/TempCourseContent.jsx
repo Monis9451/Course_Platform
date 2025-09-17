@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getCourseWithDetails } from '../api/courseAPI';
 import WorkshopSidebar from '../components/CourseSidebar';
 import DynamicContentRenderer from '../components/DynamicContentRenderer';
+import { useUserResponses } from '../context/userResponsesContext';
+import toast from 'react-hot-toast';
 
 const fontStyle = `
   @import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
@@ -148,6 +150,8 @@ const TempCourseContent = () => {
   const [courseData, setCourseData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
+  const { saveLessonResponses, hasUnsavedChanges, getUnsavedChangesCount } = useUserResponses();
   
   const lessonContentRef = useRef(null);
   const sidebarRef = useRef(null);
@@ -331,6 +335,16 @@ const TempCourseContent = () => {
   const isLastLesson = courseData && selectedLesson.moduleIndex === courseData.modules.length - 1 && 
                       selectedLesson.lessonIndex === courseData.modules[courseData.modules.length - 1].lessons.length - 1;
 
+  // Get current lesson ID for saving responses
+  const getCurrentLessonId = () => {
+    if (!courseData) return null;
+    const currentModule = courseData.modules[selectedLesson.moduleIndex];
+    const currentLesson = currentModule?.lessons[selectedLesson.lessonIndex];
+    return currentLesson?.lessonData?.lessonID || null;
+  };
+
+  // Auto-save is now handled by individual components
+
   const getCurrentLessonComponent = () => {
     if (!courseData) return null;
     
@@ -358,6 +372,8 @@ const TempCourseContent = () => {
               <span className="hidden sm:inline">Previous Lecture</span>
               <span className="sm:hidden">Previous</span>
             </button>
+
+            {/* Auto-save handles saving automatically - no manual save button needed */}
 
             <button
               onClick={completeAndContinue}
