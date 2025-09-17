@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/authContext';
 import { UserProgressProvider } from './context/userProgressContext';
+import { UserResponsesProvider } from './context/userResponsesContext';
 import ProtectedRoute from './components/protectedRoutes';
 import AdminProtectedRoute from './components/AdminProtectedRoute';
 import Home from './pages/Home';
@@ -33,7 +34,8 @@ const App = () => {
   return (
     <AuthProvider>
       <UserProgressProvider>
-        <div className="font-fitzgerald font-thin bg-white text-black min-h-screen">
+        <UserResponsesProvider>
+          <div className="font-fitzgerald font-thin bg-white text-black min-h-screen">
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -115,6 +117,7 @@ const App = () => {
           }}
         />
       </div>
+      </UserResponsesProvider>
       </UserProgressProvider>
     </AuthProvider>
   )

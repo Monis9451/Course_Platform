@@ -8,7 +8,7 @@ const DynamicContentRenderer = ({ content, lessonId = null }) => {
   const parsedContent = parseContentString(content);
   
   // Helper function to get props for interactive components
-  const getInteractiveProps = (componentType, item) => {
+  const getInteractiveProps = (componentType, item, index) => {
     const interactiveComponents = [
       componentTypes.EXERCISE_BOX,
       componentTypes.QUESTION_CARD_BOX,
@@ -16,13 +16,17 @@ const DynamicContentRenderer = ({ content, lessonId = null }) => {
       componentTypes.MARK_COMPLETE_BOX,
       componentTypes.ORDERED_LIST_BOX,
       componentTypes.UNORDERED_LIST_BOX,
-      componentTypes.NUMBERED_STEPS_BOX
+      componentTypes.NUMBERED_STEPS_BOX,
+      componentTypes.RATING_QUESTION
     ];
     
     if (interactiveComponents.includes(componentType)) {
+      // Generate consistent component ID based on lesson and component index
+      const componentId = item.id || `${lessonId}_${componentType}_${index}`;
+      
       return {
         lessonId,
-        componentId: item.id || `component_${Date.now()}_${Math.random()}`,
+        componentId,
         isEditMode: false
       };
     }
@@ -132,7 +136,7 @@ const DynamicContentRenderer = ({ content, lessonId = null }) => {
                   data={componentData} 
                   isHalfWidth={true}
                   {...componentData}
-                  {...getInteractiveProps(componentType, item)}
+                  {...getInteractiveProps(componentType, item, i)}
                   originalItem={item}
                 />
               </div>
@@ -141,7 +145,7 @@ const DynamicContentRenderer = ({ content, lessonId = null }) => {
                   data={nextComponentData} 
                   isHalfWidth={true}
                   {...nextComponentData}
-                  {...getInteractiveProps(nextComponentType, nextItem)}
+                  {...getInteractiveProps(nextComponentType, nextItem, i + 1)}
                   originalItem={nextItem}
                 />
               </div>
@@ -157,7 +161,7 @@ const DynamicContentRenderer = ({ content, lessonId = null }) => {
                   data={componentData} 
                   isHalfWidth={true}
                   {...componentData}
-                  {...getInteractiveProps(componentType, item)}
+                  {...getInteractiveProps(componentType, item, i)}
                   originalItem={item}
                 />
               </div>
@@ -173,7 +177,7 @@ const DynamicContentRenderer = ({ content, lessonId = null }) => {
             <Component 
               data={componentData} 
               {...componentData}
-              {...getInteractiveProps(componentType, item)}
+              {...getInteractiveProps(componentType, item, i)}
               originalItem={item}
             />
           </div>
