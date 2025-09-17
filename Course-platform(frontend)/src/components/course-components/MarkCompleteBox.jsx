@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { useUserProgress } from '../../context/userProgressContext';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useUserResponses } from '../../context/userResponsesContext';
+import { useAuth } from '../../context/authContext';
+import toast from 'react-hot-toast';
 
 const MarkCompleteBox = ({ data, isEditMode = false, onUpdate, lessonId = null, componentId = null }) => {
   const { title, description, question, checkboxes = [{ text: '', checked: false }], showCheckboxes = true } = data;
-  const { getResponse, updateResponse, isComponentCompleted, markComponentCompleted } = useUserProgress();
+  const { getResponse, updateResponse, saveResponse, hasUnsavedChanges, isComponentCompleted, markComponentCompleted, loading } = useUserResponses();
+  const { currentUser } = useAuth();
   
   // Get saved responses when in view mode
   const [userChecked, setUserChecked] = useState({});
   const [isCompleted, setIsCompleted] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [autoSaveTimeoutId, setAutoSaveTimeoutId] = useState(null);
 
   useEffect(() => {
     if (!isEditMode && lessonId && componentId) {
@@ -17,12 +22,56 @@ const MarkCompleteBox = ({ data, isEditMode = false, onUpdate, lessonId = null, 
     }
   }, [lessonId, componentId, isEditMode, getResponse, isComponentCompleted]);
 
+  // Auto-save functionality with debouncing
+  const debouncedAutoSave = useCallback(async () => {
+    if (!lessonId || !componentId || isEditMode || !hasUnsavedChanges(lessonId) || !currentUser) return;
+    
+    try {
+      setIsSaving(true);
+      const responseData = {
+        checked: userChecked,
+        type: 'mark_complete',
+        completed: isCompleted
+      };
+      
+      await saveResponse(lessonId, componentId, 'mark_complete', responseData);
+    } catch (error) {
+      console.error('Auto-save failed:', error);
+      if (currentUser) {
+        toast.error('Failed to save your progress automatically');
+      }
+    } finally {
+      setIsSaving(false);
+    }
+  }, [lessonId, componentId, isEditMode, userChecked, isCompleted, saveResponse, hasUnsavedChanges, currentUser]);
+
+  // Trigger auto-save after user interaction
+  useEffect(() => {
+    if (autoSaveTimeoutId) {
+      clearTimeout(autoSaveTimeoutId);
+    }
+    
+    if (!isEditMode && lessonId && componentId && hasUnsavedChanges(lessonId) && currentUser) {
+      const timeoutId = setTimeout(() => {
+        debouncedAutoSave();
+      }, 1000); // 1 second delay
+      
+      setAutoSaveTimeoutId(timeoutId);
+    }
+    
+    return () => {
+      if (autoSaveTimeoutId) {
+        clearTimeout(autoSaveTimeoutId);
+      }
+    };
+  }, [userChecked, isCompleted, debouncedAutoSave, lessonId, componentId, isEditMode, hasUnsavedChanges, autoSaveTimeoutId]);
+
   const handleCheckboxChange = (index, checked) => {
     if (isEditMode) {
       // Edit mode - update component data
       updateCheckbox(index, 'checked', checked);
     } else {
-      // View mode - save user response
+      // View mode - save user response locally (not to API yet)
       const newChecked = { ...userChecked, [index]: checked };
       setUserChecked(newChecked);
       
@@ -42,7 +91,7 @@ const MarkCompleteBox = ({ data, isEditMode = false, onUpdate, lessonId = null, 
       setIsCompleted(newCompleted);
       markComponentCompleted(lessonId, componentId, newCompleted);
       
-      // Also update the response data
+      // Also update the response data locally
       updateResponse(lessonId, componentId, { 
         checked: userChecked,
         type: 'mark_complete',

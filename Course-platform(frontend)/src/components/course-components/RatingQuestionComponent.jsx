@@ -1,7 +1,17 @@
-import React from 'react';
-import { FiPlus, FiTrash2 } from 'react-icons/fi';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useUserResponses } from '../../context/userResponsesContext';
+import { useAuth } from '../../context/authContext';
+import toast from 'react-hot-toast';
 
-const RatingQuestionComponent = ({ data, isHalfWidth = false, ...props }) => {
+const RatingQuestionComponent = ({ 
+  data, 
+  isEditMode = false, 
+  onUpdate, 
+  lessonId = null, 
+  componentId = null, 
+  isHalfWidth = false, 
+  ...props 
+}) => {
   // Handle different ways data might be passed
   const actualData = data || props || {};
   const displayTitle = actualData.title || 'Rating Questions';
@@ -11,7 +21,84 @@ const RatingQuestionComponent = ({ data, isHalfWidth = false, ...props }) => {
     'How confident are you in managing your emotions?'
   ];
 
-  // Display mode (for course content viewing)
+  const { getResponse, updateResponse, saveResponse, hasUnsavedChanges, loading } = useUserResponses();
+  const { currentUser } = useAuth();
+  
+  // Get saved responses when in view mode
+  const [userRatings, setUserRatings] = useState({});
+  const [isSaving, setIsSaving] = useState(false);
+  const [autoSaveTimeoutId, setAutoSaveTimeoutId] = useState(null);
+
+  useEffect(() => {
+    if (!isEditMode && lessonId && componentId) {
+      const savedResponse = getResponse(lessonId, componentId);
+      setUserRatings(savedResponse.ratings || {});
+    }
+  }, [lessonId, componentId, isEditMode, getResponse]);
+
+  // Auto-save functionality with debouncing
+  const debouncedAutoSave = useCallback(async () => {
+    if (!lessonId || !componentId || isEditMode || !hasUnsavedChanges(lessonId) || !currentUser) return;
+    
+    try {
+      setIsSaving(true);
+      const responseData = {
+        ratings: userRatings,
+        type: 'rating_questions',
+        completed: Object.keys(userRatings).length === displayQuestions.length
+      };
+      
+      await saveResponse(lessonId, componentId, 'rating_questions', responseData);
+    } catch (error) {
+      console.error('Auto-save failed:', error);
+      if (currentUser) {
+        toast.error('Failed to save your progress automatically');
+      }
+    } finally {
+      setIsSaving(false);
+    }
+  }, [lessonId, componentId, isEditMode, userRatings, displayQuestions, saveResponse, hasUnsavedChanges, currentUser]);
+
+  // Trigger auto-save after user interaction (immediate for ratings)
+  useEffect(() => {
+    if (autoSaveTimeoutId) {
+      clearTimeout(autoSaveTimeoutId);
+    }
+    
+    if (!isEditMode && lessonId && componentId && hasUnsavedChanges(lessonId) && currentUser) {
+      const timeoutId = setTimeout(() => {
+        debouncedAutoSave();
+      }, 1000); // 1 second delay for ratings
+      
+      setAutoSaveTimeoutId(timeoutId);
+    }
+    
+    return () => {
+      if (autoSaveTimeoutId) {
+        clearTimeout(autoSaveTimeoutId);
+      }
+    };
+  }, [userRatings, debouncedAutoSave, lessonId, componentId, isEditMode, hasUnsavedChanges, autoSaveTimeoutId]);
+
+  const handleRatingChange = (questionIndex, rating) => {
+    if (isEditMode) {
+      // Edit mode - if needed for editing functionality
+      return;
+    } else {
+      // View mode - save user response locally (not to API yet)
+      const newRatings = { ...userRatings, [questionIndex]: parseInt(rating) };
+      setUserRatings(newRatings);
+      
+      if (lessonId && componentId) {
+        updateResponse(lessonId, componentId, { 
+          ratings: newRatings,
+          type: 'rating_questions',
+          completed: Object.keys(newRatings).length === displayQuestions.length
+        });
+      }
+    }
+  };
+
   return (
     <div className="mb-6">
       <div className="bg-white border border-gray-200 p-5 rounded-lg">
@@ -32,8 +119,10 @@ const RatingQuestionComponent = ({ data, isHalfWidth = false, ...props }) => {
                     <div key={num} className="flex items-center">
                       <input 
                         type="radio" 
-                        name={`question-${index}`} 
+                        name={`question-${lessonId}-${componentId}-${index}`} 
                         value={num} 
+                        checked={userRatings[index] === num}
+                        onChange={(e) => handleRatingChange(index, e.target.value)}
                         className="mr-1 accent-[#bd6334]" 
                       />
                       <label className="text-sm">{num}</label>

@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { useUserProgress } from '../../context/userProgressContext';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useUserResponses } from '../../context/userResponsesContext';
+import { useAuth } from '../../context/authContext';
+import toast from 'react-hot-toast';
 
 const QuestionCardBox = ({ data, isEditMode = false, onUpdate, lessonId = null, componentId = null, isHalfWidth = false }) => {
   const { title, questions = [{ questionTitle: '', questionText: '', placeholder: '', consideration: '' }] } = data;
-  const { getResponse, updateResponse } = useUserProgress();
+  const { getResponse, updateResponse, saveResponse, hasUnsavedChanges, loading } = useUserResponses();
+  const { currentUser } = useAuth();
   
   // Get saved responses when in view mode
   const [userAnswers, setUserAnswers] = useState({});
+  const [isSaving, setIsSaving] = useState(false);
+  const [autoSaveTimeoutId, setAutoSaveTimeoutId] = useState(null);
 
   useEffect(() => {
     if (!isEditMode && lessonId && componentId) {
@@ -14,6 +19,51 @@ const QuestionCardBox = ({ data, isEditMode = false, onUpdate, lessonId = null, 
       setUserAnswers(savedResponse.answers || {});
     }
   }, [lessonId, componentId, isEditMode, getResponse]);
+
+  // Auto-save functionality with debouncing
+  const debouncedAutoSave = useCallback(async () => {
+    if (!lessonId || !componentId || isEditMode || !hasUnsavedChanges(lessonId) || !currentUser) return;
+    
+    try {
+      setIsSaving(true);
+      const responseData = {
+        answers: userAnswers,
+        type: 'question_card',
+        completed: Object.keys(userAnswers).length === questions.length && 
+                  Object.values(userAnswers).every(a => a.trim().length > 0)
+      };
+      
+      await saveResponse(lessonId, componentId, 'question_card', responseData);
+    } catch (error) {
+      console.error('Auto-save failed:', error);
+      if (currentUser) {
+        toast.error('Failed to save your progress automatically');
+      }
+    } finally {
+      setIsSaving(false);
+    }
+  }, [lessonId, componentId, isEditMode, userAnswers, questions, saveResponse, hasUnsavedChanges, currentUser]);
+
+  // Trigger auto-save after user stops typing for 3 seconds
+  useEffect(() => {
+    if (autoSaveTimeoutId) {
+      clearTimeout(autoSaveTimeoutId);
+    }
+    
+    if (!isEditMode && lessonId && componentId && hasUnsavedChanges(lessonId) && currentUser) {
+      const timeoutId = setTimeout(() => {
+        debouncedAutoSave();
+      }, 3000);
+      
+      setAutoSaveTimeoutId(timeoutId);
+    }
+    
+    return () => {
+      if (autoSaveTimeoutId) {
+        clearTimeout(autoSaveTimeoutId);
+      }
+    };
+  }, [userAnswers, debouncedAutoSave, lessonId, componentId, isEditMode, hasUnsavedChanges, autoSaveTimeoutId]);
 
   const handleAnswerChange = (questionIndex, answer) => {
     if (isEditMode) {
@@ -24,7 +74,7 @@ const QuestionCardBox = ({ data, isEditMode = false, onUpdate, lessonId = null, 
         onUpdate({ ...data, questions: newQuestions });
       }
     } else {
-      // View mode - save user response
+      // View mode - save user response locally (not to API yet)
       const newAnswers = { ...userAnswers, [questionIndex]: answer };
       setUserAnswers(newAnswers);
       
