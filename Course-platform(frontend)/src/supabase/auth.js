@@ -1,5 +1,28 @@
 import { supabase } from '../supabase/supabase';
 
+// Helper function to get the appropriate redirect URL based on environment
+const getRedirectURL = () => {
+    const currentOrigin = window.location.origin;
+    
+    // Check for environment-specific redirect URLs
+    const localRedirectURL = import.meta.env.VITE_LOCAL_REDIRECT_URL;
+    const prodRedirectURL = import.meta.env.VITE_PROD_REDIRECT_URL;
+    
+    let redirectURL;
+    
+    // If environment variables are set, use them
+    if (currentOrigin.includes('localhost') || currentOrigin.includes('127.0.0.1')) {
+        redirectURL = localRedirectURL || `${currentOrigin}/login`;
+        console.log('🔗 Using local redirect URL:', redirectURL);
+    } else {
+        // For production/deployed sites
+        redirectURL = prodRedirectURL || `${currentOrigin}/login`;
+        console.log('🔗 Using production redirect URL:', redirectURL);
+    }
+    
+    return redirectURL;
+};
+
 export const createNewUser = async (email, password, displayName = null) => {
     const signUpData = {
         email: email,
@@ -34,7 +57,19 @@ export const signInWithGoogle = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-            redirectTo: `${window.location.origin}/login`
+            redirectTo: getRedirectURL()
+        }
+    });
+    if (error) throw error;
+    return data;
+}
+
+// Generic OAuth sign-in function for future providers
+export const signInWithOAuth = async (provider) => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: provider,
+        options: {
+            redirectTo: getRedirectURL()
         }
     });
     if (error) throw error;
