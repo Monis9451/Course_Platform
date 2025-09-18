@@ -63,6 +63,31 @@ const getProgressByLessonId = async (lessonID) => {
     return data;
 }
 
+const getProgressByUserCourseModuleLesson = async (userID, courseID, moduleID, lessonID) => {
+    const {data, error} = await supabase.from('progress')
+        .select('*')
+        .eq('userID', userID)
+        .eq('courseID', courseID)
+        .eq('moduleID', moduleID)
+        .eq('lessonID', lessonID)
+        .single();
+    if (error && error.code !== 'PGRST116') { // PGRST116 is "not found" error
+        throw new Error(`Error fetching progress by user, course, module, and lesson: ${error.message}`);
+    }
+    return data;
+};
+
+const getUserCourseProgress = async (userID, courseID) => {
+    const {data, error} = await supabase.from('progress')
+        .select('*')
+        .eq('userID', userID)
+        .eq('courseID', courseID);
+    if (error) {
+        throw new Error(`Error fetching user course progress: ${error.message}`);
+    }
+    return data;
+};
+
 const updateProgress = async (progressID, updates) => {
     const {data, error} = await supabase.from('progress').update(updates).eq('progressID', progressID);
     if (error) {
@@ -87,6 +112,8 @@ module.exports = {
     getProgressByCourseId,
     getProgressByModuleId,
     getProgressByLessonId,
+    getProgressByUserCourseModuleLesson,
+    getUserCourseProgress,
     updateProgress,
     deleteProgress
 };
