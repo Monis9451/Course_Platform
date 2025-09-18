@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/authContext';
 import { UserProgressProvider } from './context/userProgressContext';
 import { UserResponsesProvider } from './context/userResponsesContext';
+import { CourseProgressProvider } from './context/courseProgressContext';
 import ProtectedRoute from './components/protectedRoutes';
 import AdminProtectedRoute from './components/AdminProtectedRoute';
 import Home from './pages/Home';
@@ -35,7 +36,8 @@ const App = () => {
     <AuthProvider>
       <UserProgressProvider>
         <UserResponsesProvider>
-          <div className="font-fitzgerald font-thin bg-white text-black min-h-screen">
+          <CourseProgressProvider>
+            <div className="font-fitzgerald font-thin bg-white text-black min-h-screen">
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -49,6 +51,8 @@ const App = () => {
             <Route path="/checkout/:id" element={<Checkout />} />
             <Route path="/thankyou/:id" element={<ThankYou />} />
             <Route path="/thankyou" element={<ThankYou />} />
+            <Route path="/temp-course-content" element={<TempCourseList />} />
+            <Route path="/temp-course-content/:id" element={<TempCourseContent />} />
             </Route>
 
             {/* Admin Protected Routes */}
@@ -59,8 +63,6 @@ const App = () => {
               <Route path="/admin/edit-courses" element={<EditCoursesList />} />
               <Route path="/admin/edit-course/:courseId" element={<EditCourseContent />} />
               <Route path="/admin/delete-courses" element={<DeleteCoursesList />} />
-              <Route path="/temp-course-content" element={<TempCourseList />} />
-              <Route path="/temp-course-content/:id" element={<TempCourseContent />} />
             </Route>
 
             <Route path="/about" element={<About />} />
@@ -117,6 +119,7 @@ const App = () => {
           }}
         />
       </div>
+      </CourseProgressProvider>
       </UserResponsesProvider>
       </UserProgressProvider>
     </AuthProvider>
