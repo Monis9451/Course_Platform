@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = React.useState(false);
-  const { currentUser, logout, isLoggingOut } = useAuth();
+  const { currentUser, logout, isLoggingOut, isAdmin } = useAuth();
   const navigate = useNavigate();
 
   const navigationItems = [
@@ -17,6 +17,18 @@ const Header = () => {
     { name: 'Contact Us', path: '/contact-us' },
     { name: 'Blogs', path: '/blogs' },
   ];
+
+  // Add course content for logged-in users
+  const userNavigationItems = currentUser ? [
+    ...navigationItems,
+    { name: 'My Courses', path: '/temp-course-content' },
+  ] : navigationItems;
+
+  // Add admin items if user is admin
+  const finalNavigationItems = (currentUser && isAdmin) ? [
+    ...userNavigationItems,
+    { name: 'Admin Dashboard', path: '/admin/dashboard' },
+  ] : userNavigationItems;
 
   const handleLogout = async () => {
     const toastId = toast.loading('Signing you out...');
@@ -251,7 +263,7 @@ const Header = () => {
             
             <div className="space-y-1">
               <div className="border-t border-gray-200"></div>
-              {navigationItems.map((item, index) => (
+              {finalNavigationItems.map((item, index) => (
                 <Link
                   key={index}
                   to={item.path}

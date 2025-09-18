@@ -4,6 +4,8 @@ import { getCourseWithDetails } from '../api/courseAPI';
 import WorkshopSidebar from '../components/CourseSidebar';
 import DynamicContentRenderer from '../components/DynamicContentRenderer';
 import { useUserResponses } from '../context/userResponsesContext';
+import { useCourseProgress } from '../context/courseProgressContext';
+import { useAuth } from '../context/authContext';
 import toast from 'react-hot-toast';
 
 const fontStyle = `
@@ -143,15 +145,24 @@ const SupportResourcesComponent = () => (
 const TempCourseContent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
   const [selectedLesson, setSelectedLesson] = useState({ moduleIndex: 0, lessonIndex: 0 });
-  const [completedLessons, setCompletedLessons] = useState(new Set([]));
-  const [lessonProgress, setLessonProgress] = useState({});
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [courseData, setCourseData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
   const { saveLessonResponses, hasUnsavedChanges, getUnsavedChangesCount } = useUserResponses();
+  const { 
+    loadCourseProgress, 
+    saveLessonProgress, 
+    markLessonCompleted,
+    mapDatabaseProgressToIndices,
+    getLessonProgress,
+    isLessonCompleted,
+    getCurrentCourseProgress,
+    setCourseDataForMapping
+  } = useCourseProgress();
   
   const lessonContentRef = useRef(null);
   const sidebarRef = useRef(null);
@@ -171,6 +182,16 @@ const TempCourseContent = () => {
         // Transform the database course data to match the expected format
         const transformedCourse = transformCourseData(course);
         setCourseData(transformedCourse);
+        
+        // Set course data for progress mapping
+        setCourseDataForMapping(transformedCourse);
+        
+        // Load user's progress for this course
+        if (currentUser?.id) {
+          await loadCourseProgress(id);
+          // Map database progress to indices after course data is available
+          setTimeout(() => mapDatabaseProgressToIndices(id, transformedCourse), 100);
+        }
       } catch (error) {
         console.error('Error fetching course:', error);
         setError(error.message);
@@ -180,7 +201,7 @@ const TempCourseContent = () => {
     };
 
     fetchCourseData();
-  }, [id]);
+  }, [id, currentUser?.id]); // Removed function dependencies to prevent infinite loop
 
   const transformCourseData = (dbCourse) => {
     // Create modules array with compulsory pages and database modules
@@ -221,6 +242,7 @@ const TempCourseContent = () => {
             modules.push({
               title: module.title,
               description: module.description,
+              moduleId: module.moduleID, // Add module ID for progress tracking
               lessons: sortedLessons
             });
           }
@@ -310,16 +332,17 @@ const TempCourseContent = () => {
 
   const completeAndContinue = () => {
     const { moduleIndex, lessonIndex } = selectedLesson;
-    const lessonKey = `${moduleIndex}-${lessonIndex}`;
     
-    setCompletedLessons(prev => new Set([...prev, lessonKey]));
-    
-    setLessonProgress(prev => ({
-      ...prev,
-      [lessonKey]: 100
-    }));
-    
+    // Get current module and lesson from courseData to get IDs
     const currentModule = courseData.modules[moduleIndex];
+    const currentLesson = currentModule.lessons[lessonIndex];
+    
+    // Mark lesson as completed in the database
+    if (currentLesson?.lessonData) {
+      markLessonCompleted(id, moduleIndex, lessonIndex, currentModule.moduleId, currentLesson.lessonData.lessonID);
+    }
+    
+    // Navigate to next lesson
     if (lessonIndex < currentModule.lessons.length - 1) {
       setSelectedLesson({ moduleIndex, lessonIndex: lessonIndex + 1 });
     } else if (moduleIndex < courseData.modules.length - 1) {
@@ -426,30 +449,30 @@ const TempCourseContent = () => {
 
   // Progress tracking effect
   useEffect(() => {
-    if (!lessonContentRef.current || !courseData) return;
+    if (!lessonContentRef.current || !courseData || !currentUser?.id) return;
     
-    const lessonKey = `${selectedLesson.moduleIndex}-${selectedLesson.lessonIndex}`;
     const scrollContainer = lessonContentRef.current;
+    const { moduleIndex, lessonIndex } = selectedLesson;
     
     const calculateScrollProgress = () => {
       const { scrollTop, scrollHeight, clientHeight } = scrollContainer;
       const scrollableDistance = scrollHeight - clientHeight;
-      if (scrollableDistance <= 0) return 0;
+      if (scrollableDistance <= 0) return;
       
       const scrollPercentage = Math.min(100, Math.ceil((scrollTop / scrollableDistance) * 100));
       
-      setLessonProgress(prev => {
-        const currentProgress = prev[lessonKey] || 0;
-        if (scrollPercentage > currentProgress) {
-          if (scrollPercentage > 95) {
-            setCompletedLessons(prevCompleted => new Set([...prevCompleted, lessonKey]));
-            return { ...prev, [lessonKey]: 100 };
-          }
-          
-          return { ...prev, [lessonKey]: scrollPercentage };
-        }
-        return prev;
-      });
+      // Get current module and lesson data
+      const currentModule = courseData.modules[moduleIndex];
+      const currentLesson = currentModule?.lessons[lessonIndex];
+      
+      // Only save progress for lessons that have actual lesson data (not default pages)
+      if (currentLesson?.lessonData && scrollPercentage > 0) {
+        const moduleDbId = currentModule.moduleId;
+        const lessonDbId = currentLesson.lessonData.lessonID;
+        
+        // Save progress to database (debounced)
+        saveLessonProgress(id, moduleIndex, lessonIndex, moduleDbId, lessonDbId, scrollPercentage);
+      }
     };
     
     scrollContainer.addEventListener('scroll', calculateScrollProgress);
@@ -457,7 +480,7 @@ const TempCourseContent = () => {
     return () => {
       scrollContainer.removeEventListener('scroll', calculateScrollProgress);
     };
-  }, [selectedLesson, courseData, setCompletedLessons]);
+  }, [selectedLesson, courseData, currentUser?.id, id, saveLessonProgress, setCourseDataForMapping, mapDatabaseProgressToIndices]);
 
   // Loading state
   if (loading) {
@@ -580,9 +603,9 @@ const TempCourseContent = () => {
               courseData={courseData}
               selectedLesson={selectedLesson}
               onLessonSelect={handleLessonSelect}
-              completedLessons={completedLessons}
-              setCompletedLessons={setCompletedLessons}
-              lessonProgress={lessonProgress}
+              completedLessons={getCurrentCourseProgress().completedLessons}
+              setCompletedLessons={() => {}} // Not needed since we use context
+              lessonProgress={getCurrentCourseProgress().lessonProgress}
             />
           </div>
 
@@ -621,9 +644,9 @@ const TempCourseContent = () => {
                   courseData={courseData}
                   selectedLesson={selectedLesson}
                   onLessonSelect={handleLessonSelect}
-                  completedLessons={completedLessons}
-                  setCompletedLessons={setCompletedLessons}
-                  lessonProgress={lessonProgress}
+                  completedLessons={getCurrentCourseProgress().completedLessons}
+                  setCompletedLessons={() => {}} // Not needed since we use context
+                  lessonProgress={getCurrentCourseProgress().lessonProgress}
                 />
               </div>
             </div>
