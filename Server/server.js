@@ -28,6 +28,7 @@ const moduleRoutes = require('./routes/module.routes');
 const lessonRoutes = require('./routes/lesson.routes');
 const emailRoutes = require('./routes/email.routes');
 const userResponseRoutes = require('./routes/userResponse.routes');
+const progressRoutes = require('./routes/progress.routes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -55,6 +56,7 @@ app.use('/api/modules', moduleRoutes);
 app.use('/api/lessons', lessonRoutes);
 app.use('/api/email', emailRoutes);
 app.use('/api/user-responses', userResponseRoutes);
+app.use('/api/progress', progressRoutes);
 
 
 // Error handling middleware
