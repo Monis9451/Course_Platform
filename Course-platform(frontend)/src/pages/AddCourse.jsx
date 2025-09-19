@@ -50,7 +50,8 @@ const allowedComponents = [
   componentTypes.INFO_CARD_PAIR,
   componentTypes.QUOTE,
   componentTypes.DROPDOWN,
-  componentTypes.RATING_QUESTION
+  componentTypes.RATING_QUESTION,
+  componentTypes.PRACTICE_INTEGRATION_TABLE
 ];
 
 const filteredComponentLibrary = Object.fromEntries(
@@ -3111,6 +3112,211 @@ const AddCourse = () => {
                       <FiTrash2 size={12} />
                     </button>
                   )}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+
+      case componentTypes.PRACTICE_INTEGRATION_TABLE:
+        return (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Title</label>
+              <input
+                type="text"
+                value={componentData.title || ''}
+                onChange={(e) => handleComponentDataChange('title', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Practice Integration Planning"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Description</label>
+              <textarea
+                value={componentData.description || ''}
+                onChange={(e) => handleComponentDataChange('description', e.target.value)}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 resize-none"
+                rows={3}
+                placeholder="For each practice, decide how you'll realistically integrate it into your life:"
+              />
+            </div>
+
+            <div className="grid grid-cols-5 gap-2">
+              <div>
+                <label className="block text-xs font-medium mb-1 text-gray-700">Practice Header</label>
+                <input
+                  type="text"
+                  value={componentData.headers?.practice || 'Practice'}
+                  onChange={(e) => {
+                    const newHeaders = { ...(componentData.headers || {}), practice: e.target.value };
+                    handleComponentDataChange('headers', newHeaders);
+                  }}
+                  className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium mb-1 text-gray-700">Frequency Header</label>
+                <input
+                  type="text"
+                  value={componentData.headers?.frequency || 'Frequency'}
+                  onChange={(e) => {
+                    const newHeaders = { ...(componentData.headers || {}), frequency: e.target.value };
+                    handleComponentDataChange('headers', newHeaders);
+                  }}
+                  className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium mb-1 text-gray-700">Duration Header</label>
+                <input
+                  type="text"
+                  value={componentData.headers?.duration || 'Duration'}
+                  onChange={(e) => {
+                    const newHeaders = { ...(componentData.headers || {}), duration: e.target.value };
+                    handleComponentDataChange('headers', newHeaders);
+                  }}
+                  className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium mb-1 text-gray-700">When/Where Header</label>
+                <input
+                  type="text"
+                  value={componentData.headers?.whenWhere || 'When/Where'}
+                  onChange={(e) => {
+                    const newHeaders = { ...(componentData.headers || {}), whenWhere: e.target.value };
+                    handleComponentDataChange('headers', newHeaders);
+                  }}
+                  className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium mb-1 text-gray-700">Reminders Header</label>
+                <input
+                  type="text"
+                  value={componentData.headers?.reminders || 'Reminders'}
+                  onChange={(e) => {
+                    const newHeaders = { ...(componentData.headers || {}), reminders: e.target.value };
+                    handleComponentDataChange('headers', newHeaders);
+                  }}
+                  className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium mb-1 text-gray-700">Frequency Options (one per line)</label>
+              <textarea
+                value={(componentData.frequencyOptions || []).join('\n')}
+                onChange={(e) => {
+                  const options = e.target.value.split('\n').filter(option => option.trim());
+                  handleComponentDataChange('frequencyOptions', options);
+                }}
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 resize-none"
+                rows={5}
+                placeholder="Daily&#10;2-3 times/week&#10;Weekly&#10;As needed&#10;Other"
+              />
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-xs font-medium text-gray-700">Table Rows</label>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newRow = {
+                      practicePlaceholder: `Practice ${(componentData.rows || []).length + 1}`,
+                      durationPlaceholder: '10 min',
+                      whenWherePlaceholder: 'Location, time',
+                      remindersPlaceholder: 'Reminder method'
+                    };
+                    const newRows = [...(componentData.rows || []), newRow];
+                    handleComponentDataChange('rows', newRows);
+                  }}
+                  className="flex items-center gap-1 px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-xs"
+                >
+                  <FiPlus size={12} />
+                  Add Row
+                </button>
+              </div>
+
+              {(componentData.rows || []).map((row, index) => (
+                <div key={index} className="border border-gray-200 p-3 rounded mb-2">
+                  <div className="flex justify-between items-center mb-2">
+                    <h5 className="text-xs font-medium">Row {index + 1}</h5>
+                    {(componentData.rows || []).length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newRows = (componentData.rows || []).filter((_, i) => i !== index);
+                          handleComponentDataChange('rows', newRows);
+                        }}
+                        className="px-2 py-1 text-red-500 hover:text-red-700 border border-gray-300 rounded text-xs"
+                      >
+                        <FiTrash2 size={12} />
+                      </button>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-xs text-gray-600 mb-1">Practice Placeholder</label>
+                      <input
+                        type="text"
+                        value={row.practicePlaceholder || ''}
+                        onChange={(e) => {
+                          const newRows = [...(componentData.rows || [])];
+                          newRows[index] = { ...newRows[index], practicePlaceholder: e.target.value };
+                          handleComponentDataChange('rows', newRows);
+                        }}
+                        className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        placeholder="Practice placeholder"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-600 mb-1">Duration Placeholder</label>
+                      <input
+                        type="text"
+                        value={row.durationPlaceholder || ''}
+                        onChange={(e) => {
+                          const newRows = [...(componentData.rows || [])];
+                          newRows[index] = { ...newRows[index], durationPlaceholder: e.target.value };
+                          handleComponentDataChange('rows', newRows);
+                        }}
+                        className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        placeholder="Duration placeholder"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-600 mb-1">When/Where Placeholder</label>
+                      <input
+                        type="text"
+                        value={row.whenWherePlaceholder || ''}
+                        onChange={(e) => {
+                          const newRows = [...(componentData.rows || [])];
+                          newRows[index] = { ...newRows[index], whenWherePlaceholder: e.target.value };
+                          handleComponentDataChange('rows', newRows);
+                        }}
+                        className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        placeholder="When/Where placeholder"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-600 mb-1">Reminders Placeholder</label>
+                      <input
+                        type="text"
+                        value={row.remindersPlaceholder || ''}
+                        onChange={(e) => {
+                          const newRows = [...(componentData.rows || [])];
+                          newRows[index] = { ...newRows[index], remindersPlaceholder: e.target.value };
+                          handleComponentDataChange('rows', newRows);
+                        }}
+                        className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        placeholder="Reminders placeholder"
+                      />
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
