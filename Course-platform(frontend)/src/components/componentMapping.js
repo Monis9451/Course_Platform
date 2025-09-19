@@ -51,7 +51,8 @@ export const COMPONENT_ID_MAPPING = {
   // Custom Components
   'custom-1': 'custom',
   'dropdown-1': 'dropdown',
-  'rating-question-1': 'rating_question'
+  'rating-question-1': 'rating_question',
+  'practice-integration-table-1': 'practice_integration_table'
 };
 
 // Helper function to parse content string to JSON

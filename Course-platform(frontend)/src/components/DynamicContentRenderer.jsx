@@ -17,7 +17,8 @@ const DynamicContentRenderer = ({ content, lessonId = null }) => {
       componentTypes.ORDERED_LIST_BOX,
       componentTypes.UNORDERED_LIST_BOX,
       componentTypes.NUMBERED_STEPS_BOX,
-      componentTypes.RATING_QUESTION
+      componentTypes.RATING_QUESTION,
+      componentTypes.PRACTICE_INTEGRATION_TABLE
     ];
     
     if (interactiveComponents.includes(componentType)) {
