@@ -23,6 +23,7 @@ import NumberedStepsBox from './NumberedStepsBox';
 import QuoteComponent from './QuoteComponent';
 import DropdownComponent from './DropdownComponent';
 import RatingQuestionComponent from './RatingQuestionComponent';
+import PracticeIntegrationTable from './PracticeIntegrationTable';
 
 export const componentTypes = {
   HEADING: 'heading',
@@ -66,7 +67,8 @@ export const componentTypes = {
   DESCRIPTION_WITH_IMAGE_BOX: 'description_with_image_box',
   INFO_CARD_PAIR: 'info_card_pair',
   DROPDOWN: 'dropdown',
-  RATING_QUESTION: 'rating_question'
+  RATING_QUESTION: 'rating_question',
+  PRACTICE_INTEGRATION_TABLE: 'practice_integration_table'
 };
 
 export const componentLibrary = {
@@ -545,6 +547,43 @@ export const componentLibrary = {
       questions: [
         'How stressed do you feel right now?',
         'How confident are you in managing your emotions?'
+      ]
+    },
+    isHalfWidth: false
+  },
+  [componentTypes.PRACTICE_INTEGRATION_TABLE]: {
+    name: 'Practice Integration Table',
+    component: PracticeIntegrationTable,
+    defaultData: {
+      title: 'Practice Integration Planning',
+      description: 'For each practice, decide how you\'ll realistically integrate it into your life:',
+      headers: {
+        practice: 'Practice',
+        frequency: 'Frequency',
+        duration: 'Duration',
+        whenWhere: 'When/Where',
+        reminders: 'Reminders'
+      },
+      frequencyOptions: ['Daily', '2-3 times/week', 'Weekly', 'As needed', 'Other'],
+      rows: [
+        {
+          practicePlaceholder: 'Practice 1',
+          durationPlaceholder: '5 min',
+          whenWherePlaceholder: 'Morning, bedroom',
+          remindersPlaceholder: 'Phone alarm'
+        },
+        {
+          practicePlaceholder: 'Practice 2',
+          durationPlaceholder: '10 min',
+          whenWherePlaceholder: 'Evening, living room',
+          remindersPlaceholder: 'After dinner'
+        },
+        {
+          practicePlaceholder: 'Practice 3',
+          durationPlaceholder: '15 min',
+          whenWherePlaceholder: 'Weekend, park',
+          remindersPlaceholder: 'Calendar event'
+        }
       ]
     },
     isHalfWidth: false
