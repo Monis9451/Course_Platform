@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getCourseWithDetails } from '../api/courseAPI';
 import WorkshopSidebar from '../components/CourseSidebar';
 import DynamicContentRenderer from '../components/DynamicContentRenderer';
+import SaveButton from '../components/SaveButton';
 import { useUserResponses } from '../context/userResponsesContext';
 import { useCourseProgress } from '../context/courseProgressContext';
 import { useAuth } from '../context/authContext';
@@ -151,11 +152,15 @@ const CourseContent_new = () => {
   const [courseData, setCourseData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentScrollProgress, setCurrentScrollProgress] = useState(0); // Track current scroll progress
   
   const { saveLessonResponses, hasUnsavedChanges, getUnsavedChangesCount } = useUserResponses();
   const { 
     loadCourseProgress, 
     saveLessonProgress, 
+    saveAllUnsavedProgress,
+    hasUnsavedProgressChanges,
+    getUnsavedProgressChangesCount,
     markLessonCompleted,
     mapDatabaseProgressToIndices,
     getLessonProgress,
@@ -166,6 +171,80 @@ const CourseContent_new = () => {
   
   const lessonContentRef = useRef(null);
   const sidebarRef = useRef(null);
+
+  // Get current lesson data for tracking
+  const getCurrentLessonData = () => {
+    if (!courseData) return null;
+    const { moduleIndex, lessonIndex } = selectedLesson;
+    const currentModule = courseData.modules[moduleIndex];
+    const currentLesson = currentModule?.lessons[lessonIndex];
+    return { currentModule, currentLesson, moduleIndex, lessonIndex };
+  };
+
+  // Check if there are any unsaved changes (progress or responses)
+  const hasAnyUnsavedChanges = () => {
+    const lessonData = getCurrentLessonData();
+    if (!lessonData) return false;
+    
+    const { currentLesson } = lessonData;
+    const lessonId = currentLesson?.lessonData?.lessonID;
+    
+    // Check for unsaved responses in current lesson
+    const hasUnsavedResponses = lessonId ? hasUnsavedChanges(lessonId) : false;
+    
+    // Check for unsaved progress changes in current course
+    const hasUnsavedProgress = hasUnsavedProgressChanges(id);
+    
+    return hasUnsavedResponses || hasUnsavedProgress;
+  };
+
+  // Get counts of unsaved changes
+  const getUnsavedChangesCounts = () => {
+    const lessonData = getCurrentLessonData();
+    if (!lessonData) return { progressCount: 0, responseCount: 0 };
+    
+    const { currentLesson } = lessonData;
+    const lessonId = currentLesson?.lessonData?.lessonID;
+    
+    const responseCount = lessonId ? getUnsavedChangesCount(lessonId) : 0;
+    const progressCount = getUnsavedProgressChangesCount(id);
+    
+    return { progressCount, responseCount };
+  };
+
+  // Save all unsaved changes (both progress and responses)
+  const saveAllChanges = async () => {
+    const lessonData = getCurrentLessonData();
+    if (!lessonData) return;
+    
+    const { currentLesson } = lessonData;
+    const lessonId = currentLesson?.lessonData?.lessonID;
+    
+    try {
+      // Save progress changes
+      if (hasUnsavedProgressChanges(id)) {
+        await saveAllUnsavedProgress(id);
+        toast.success('Progress saved successfully!');
+      }
+      
+      // Save response changes for current lesson
+      if (lessonId && hasUnsavedChanges(lessonId)) {
+        await saveLessonResponses(lessonId);
+        toast.success('Responses saved successfully!');
+      }
+      
+      console.log('All changes saved successfully');
+    } catch (error) {
+      console.error('Error saving changes:', error);
+      toast.error('Failed to save changes. Please try again.');
+      throw error;
+    }
+  };
+
+  // Helper function to handle navigation
+  const handleNavigateWithSave = async (path) => {
+    navigate(path);
+  };
 
   // Fetch course data from database
   useEffect(() => {
@@ -451,6 +530,9 @@ const CourseContent_new = () => {
   useEffect(() => {
     if (!lessonContentRef.current || !courseData || !currentUser?.id) return;
     
+    // Reset scroll progress when lesson changes
+    setCurrentScrollProgress(0);
+    
     const scrollContainer = lessonContentRef.current;
     const { moduleIndex, lessonIndex } = selectedLesson;
     
@@ -460,6 +542,9 @@ const CourseContent_new = () => {
       if (scrollableDistance <= 0) return;
       
       const scrollPercentage = Math.min(100, Math.ceil((scrollTop / scrollableDistance) * 100));
+      
+      // Update current scroll progress state for auto-save functionality
+      setCurrentScrollProgress(scrollPercentage);
       
       // Get current module and lesson data
       const currentModule = courseData.modules[moduleIndex];
@@ -492,7 +577,7 @@ const CourseContent_new = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 sm:gap-4">
                 <button 
-                  onClick={() => navigate('/courses')}
+                  onClick={() => handleNavigateWithSave('/courses')}
                   className="flex items-center gap-1 sm:gap-2 text-white hover:text-orange-200 transition-colors"
                 >
                   <svg className="w-4 sm:w-5 h-4 sm:h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -528,7 +613,7 @@ const CourseContent_new = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 sm:gap-4">
                 <button 
-                  onClick={() => navigate('/courses')}
+                  onClick={() => handleNavigateWithSave('/courses')}
                   className="flex items-center gap-1 sm:gap-2 text-white hover:text-orange-200 transition-colors"
                 >
                   <svg className="w-4 sm:w-5 h-4 sm:h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -551,7 +636,7 @@ const CourseContent_new = () => {
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Course Not Found</h2>
               <p className="text-gray-600 mb-8">{error}</p>
               <button
-                onClick={() => navigate('/courses')}
+                onClick={() => handleNavigateWithSave('/courses')}
                 className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors"
               >
                 Go Back to Course List
@@ -572,7 +657,7 @@ const CourseContent_new = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 sm:gap-4">
               <button 
-                onClick={() => navigate('/courses')}
+                onClick={() => handleNavigateWithSave('/courses')}
                 className="flex items-center gap-1 sm:gap-2 text-white hover:text-orange-200 transition-colors"
               >
                 <svg className="w-4 sm:w-5 h-4 sm:h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -656,6 +741,14 @@ const CourseContent_new = () => {
             {getCurrentLessonComponent()}
           </div>
         </div>
+        
+        {/* Save Button */}
+        <SaveButton
+          onSave={saveAllChanges}
+          hasChanges={hasAnyUnsavedChanges()}
+          progressChangesCount={getUnsavedChangesCounts().progressCount}
+          responseChangesCount={getUnsavedChangesCounts().responseCount}
+        />
       </div>
     </>
   );

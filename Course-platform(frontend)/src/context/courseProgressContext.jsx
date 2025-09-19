@@ -28,22 +28,22 @@ export const useCourseProgress = () => {
 export const CourseProgressProvider = ({ children }) => {
   const { currentUser } = useAuth();
   const [courseProgress, setCourseProgress] = useState({});
+  const [unsavedProgressChanges, setUnsavedProgressChanges] = useState({}); // Track unsaved progress changes
   const [isLoading, setIsLoading] = useState(false);
   const [currentCourseId, setCurrentCourseId] = useState(null);
   const [courseData, setCourseData] = useState(null); // Store course data for mapping
 
-  // Debounced save function to prevent too many API calls
-  const debouncedSaveProgress = useCallback(
-    debounce(async (progressData) => {
-      try {
-        await saveProgress(progressData);
-        console.log('Progress saved successfully');
-      } catch (error) {
-        console.error('Failed to save progress:', error);
-      }
-    }, 1000), // Wait 1 second after user stops scrolling
-    []
-  );
+  // Manual save function for progress
+  const saveProgressManually = useCallback(async (progressData) => {
+    try {
+      await saveProgress(progressData);
+      console.log('Progress saved successfully');
+      return true;
+    } catch (error) {
+      console.error('Failed to save progress:', error);
+      throw error;
+    }
+  }, []);
 
   // Helper function to create lesson key from indices
   const createLessonKey = (moduleIndex, lessonIndex) => {
@@ -109,7 +109,7 @@ export const CourseProgressProvider = ({ children }) => {
     }
   }, [currentUser?.id]);
 
-  // Save lesson progress (called from CourseContent_new with both indices and database IDs)
+  // Track lesson progress changes (no auto-save, just track changes)
   const saveLessonProgress = useCallback((courseId, moduleIndex, lessonIndex, moduleDbId, lessonDbId, progressPercentage) => {
     if (!currentUser?.id || !courseId) return;
 
@@ -129,23 +129,69 @@ export const CourseProgressProvider = ({ children }) => {
       }
     }));
 
-    // Use database IDs for saving to database
+    // Use database IDs for preparing save data
     const finalModuleId = moduleDbId || moduleIndex;
     const finalLessonId = lessonDbId || lessonIndex;
 
-    // Prepare progress data
-    const progressData = {
-      userID: currentUser.id,
-      courseID: parseInt(courseId),
-      moduleID: parseInt(finalModuleId),
-      lessonID: parseInt(finalLessonId),
-      status: progressPercentage >= 95 ? 'completed' : 'in-progress',
-      progressPercentage: parseInt(progressPercentage)
-    };
+    // Mark as unsaved change
+    const progressKey = `${moduleIndex}-${lessonIndex}`;
+    setUnsavedProgressChanges(prev => ({
+      ...prev,
+      [courseId]: {
+        ...prev[courseId],
+        [progressKey]: {
+          userID: currentUser.id,
+          courseID: parseInt(courseId),
+          moduleID: parseInt(finalModuleId),
+          lessonID: parseInt(finalLessonId),
+          status: progressPercentage >= 95 ? 'completed' : 'in-progress',
+          progressPercentage: parseInt(progressPercentage),
+          moduleIndex,
+          lessonIndex
+        }
+      }
+    }));
+  }, [currentUser?.id]);
 
-    // Save to database with debouncing
-    debouncedSaveProgress(progressData);
-  }, [currentUser?.id, debouncedSaveProgress]);
+  // Save all unsaved progress changes for a course
+  const saveAllUnsavedProgress = useCallback(async (courseId) => {
+    if (!currentUser?.id || !courseId || !unsavedProgressChanges[courseId]) {
+      return { success: true, saved: 0 };
+    }
+
+    const progressToSave = Object.values(unsavedProgressChanges[courseId]);
+    let savedCount = 0;
+
+    try {
+      for (const progressData of progressToSave) {
+        await saveProgressManually(progressData);
+        savedCount++;
+      }
+
+      // Clear unsaved changes for this course
+      setUnsavedProgressChanges(prev => {
+        const newUnsaved = { ...prev };
+        delete newUnsaved[courseId];
+        return newUnsaved;
+      });
+
+      return { success: true, saved: savedCount };
+    } catch (error) {
+      console.error('Error saving progress changes:', error);
+      throw error;
+    }
+  }, [currentUser?.id, saveProgressManually]);
+
+  // Check if there are unsaved progress changes for a course
+  const hasUnsavedProgressChanges = useCallback((courseId) => {
+    return !!unsavedProgressChanges[courseId] && Object.keys(unsavedProgressChanges[courseId]).length > 0;
+  }, [unsavedProgressChanges]);
+
+  // Get count of unsaved progress changes for a course
+  const getUnsavedProgressChangesCount = useCallback((courseId) => {
+    if (!unsavedProgressChanges[courseId]) return 0;
+    return Object.keys(unsavedProgressChanges[courseId]).length;
+  }, [unsavedProgressChanges]);
 
   // Mark lesson as completed
   const markLessonCompleted = useCallback((courseId, moduleIndex, lessonIndex, moduleDbId, lessonDbId) => {
@@ -244,10 +290,14 @@ export const CourseProgressProvider = ({ children }) => {
 
   const value = {
     courseProgress,
+    unsavedProgressChanges,
     isLoading,
     currentCourseId,
     loadCourseProgress,
     saveLessonProgress,
+    saveAllUnsavedProgress,
+    hasUnsavedProgressChanges,
+    getUnsavedProgressChangesCount,
     markLessonCompleted,
     mapDatabaseProgressToIndices,
     getCurrentCourseProgress,
