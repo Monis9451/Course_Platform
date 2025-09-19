@@ -12,7 +12,7 @@ import Login from './pages/Login';
 import Courses from './pages/Courses';
 import CourseDetails from './pages/CourseDetails';
 import About from './pages/About';
-import CourseContentNew from './pages/CourseContent_new';
+import CourseContent_new from './pages/CourseContent_new';
 import ContactUs from "./pages/ContactUs";
 import Checkout from "./pages/Checkout";
 import ThankYou from "./pages/Thankyou";
@@ -26,8 +26,6 @@ import AddCourse from './pages/AddCourse';
 import EditCoursesList from './pages/EditCoursesList';
 import EditCourseContent from './pages/EditCourseContent';
 import DeleteCoursesList from './pages/DeleteCoursesList';
-import TempCourseList from './pages/TempCourseList';
-import TempCourseContent from './pages/TempCourseContent';
 import Error from './pages/404';
 import './styles/standardColors.css'
 
@@ -47,12 +45,10 @@ const App = () => {
             {/* Protected Routes */}
             <Route element={<ProtectedRoute />}>
             <Route path="/course/:id" element={<CourseDetails />} />
-            <Route path="/course-content/:id" element={<CourseContentNew />} />
+            <Route path="/course-content/:id" element={<CourseContent_new />} />
             <Route path="/checkout/:id" element={<Checkout />} />
             <Route path="/thankyou/:id" element={<ThankYou />} />
             <Route path="/thankyou" element={<ThankYou />} />
-            <Route path="/temp-course-content" element={<TempCourseList />} />
-            <Route path="/temp-course-content/:id" element={<TempCourseContent />} />
             </Route>
 
             {/* Admin Protected Routes */}

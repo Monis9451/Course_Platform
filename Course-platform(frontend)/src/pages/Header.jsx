@@ -21,7 +21,7 @@ const Header = () => {
   // Add course content for logged-in users
   const userNavigationItems = currentUser ? [
     ...navigationItems,
-    { name: 'My Courses', path: '/temp-course-content' },
+    { name: 'My Courses', path: '/courses' },
   ] : navigationItems;
 
   // Add admin items if user is admin
