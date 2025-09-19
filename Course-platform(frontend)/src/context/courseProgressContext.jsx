@@ -63,7 +63,7 @@ export const CourseProgressProvider = ({ children }) => {
     };
   };
 
-  // Set course data for mapping (called from TempCourseContent)
+  // Set course data for mapping (called from CourseContent_new)
   const setCourseDataForMapping = useCallback((data) => {
     setCourseData(data);
   }, []);
@@ -109,7 +109,7 @@ export const CourseProgressProvider = ({ children }) => {
     }
   }, [currentUser?.id]);
 
-  // Save lesson progress (called from TempCourseContent with both indices and database IDs)
+  // Save lesson progress (called from CourseContent_new with both indices and database IDs)
   const saveLessonProgress = useCallback((courseId, moduleIndex, lessonIndex, moduleDbId, lessonDbId, progressPercentage) => {
     if (!currentUser?.id || !courseId) return;
 
