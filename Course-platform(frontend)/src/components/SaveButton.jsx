@@ -67,27 +67,13 @@ const SaveButton = ({
             <FiSave className="w-4 h-4" />
             <span>Save Progress</span>
             {totalChanges > 0 && (
-              <span className="bg-white bg-opacity-20 px-2 py-1 rounded-full text-xs">
+              <span className="bg-primary text-primary bg-opacity-20 px-2 py-1 rounded-full text-xs">
                 {totalChanges}
               </span>
             )}
           </>
         )}
       </button>
-      
-      {/* Tooltip showing what will be saved */}
-      {hasChanges && !saving && !justSaved && (
-        <div className="absolute bottom-full right-0 mb-2 bg-gray-800 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap">
-          Save:
-          {progressChangesCount > 0 && (
-            <span className="block">• {progressChangesCount} progress change{progressChangesCount !== 1 ? 's' : ''}</span>
-          )}
-          {responseChangesCount > 0 && (
-            <span className="block">• {responseChangesCount} response{responseChangesCount !== 1 ? 's' : ''}</span>
-          )}
-          <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-gray-800"></div>
-        </div>
-      )}
     </div>
   );
 };
