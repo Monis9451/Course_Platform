@@ -166,11 +166,58 @@ const CourseContent_new = () => {
     getLessonProgress,
     isLessonCompleted,
     getCurrentCourseProgress,
-    setCourseDataForMapping
+    setCourseDataForMapping,
+    saveOverallCourseProgress,
+    loadOverallCourseProgress,
+    applyCourseProgressToState
   } = useCourseProgress();
   
   const lessonContentRef = useRef(null);
   const sidebarRef = useRef(null);
+
+  // Calculate overall progress percentage
+  const calculateOverallProgress = () => {
+    if (!courseData) return 0;
+    
+    const totalLessons = courseData.modules.reduce((total, module) => total + module.lessons.length, 0);
+    const totalPossibleProgress = totalLessons * 100;
+    let totalProgress = 0;
+    
+    const currentProgress = getCurrentCourseProgress();
+    const completedLessons = currentProgress.completedLessons || new Set();
+    const lessonProgress = currentProgress.lessonProgress || {};
+    
+    // Add 100% for each completed lesson
+    completedLessons.forEach(() => {
+      totalProgress += 100;
+    });
+    
+    // Add partial progress for non-completed lessons
+    Object.entries(lessonProgress).forEach(([lessonKey, progress]) => {
+      if (!completedLessons.has(lessonKey)) {
+        totalProgress += progress;
+      }
+    });
+    
+    return Math.min(100, Math.round((totalProgress / totalPossibleProgress) * 100));
+  };
+
+  // Handle lesson completion toggling from sidebar
+  const handleLessonCompletionToggle = (moduleIndex, lessonIndex) => {
+    const lessonKey = `${moduleIndex}-${lessonIndex}`;
+    const currentProgress = getCurrentCourseProgress();
+    const completedLessons = new Set(currentProgress.completedLessons || new Set());
+    
+    if (completedLessons.has(lessonKey)) {
+      // Mark as incomplete (remove from completed lessons and set progress to 0)
+      completedLessons.delete(lessonKey);
+      saveLessonProgress(id, moduleIndex, lessonIndex, moduleIndex, lessonIndex, 0);
+    } else {
+      // Mark as complete (add to completed lessons and set progress to 100)
+      completedLessons.add(lessonKey);
+      saveLessonProgress(id, moduleIndex, lessonIndex, moduleIndex, lessonIndex, 100);
+    }
+  };
 
   // Get current lesson data for tracking
   const getCurrentLessonData = () => {
@@ -221,7 +268,7 @@ const CourseContent_new = () => {
     const lessonId = currentLesson?.lessonData?.lessonID;
     
     try {
-      // Save progress changes
+      // Save progress changes (individual lesson progress)
       if (hasUnsavedProgressChanges(id)) {
         await saveAllUnsavedProgress(id);
         toast.success('Progress saved successfully!');
@@ -232,8 +279,27 @@ const CourseContent_new = () => {
         await saveLessonResponses(lessonId);
         toast.success('Responses saved successfully!');
       }
+
+      // Save overall course progress and lesson completion status
+      const currentProgress = getCurrentCourseProgress();
+      const overallProgressPercentage = calculateOverallProgress();
+      const completedLessonsArray = Array.from(currentProgress.completedLessons || new Set());
+      const lessonProgressObj = currentProgress.lessonProgress || {};
       
-      console.log('All changes saved successfully');
+      // Get current lesson info for last accessed lesson
+      const lastAccessedLesson = {
+        moduleIndex: selectedLesson.moduleIndex,
+        lessonIndex: selectedLesson.lessonIndex
+      };
+
+      await saveOverallCourseProgress(
+        id, 
+        overallProgressPercentage, 
+        completedLessonsArray, 
+        lessonProgressObj, 
+        lastAccessedLesson
+      );
+      
     } catch (error) {
       console.error('Error saving changes:', error);
       toast.error('Failed to save changes. Please try again.');
@@ -270,6 +336,23 @@ const CourseContent_new = () => {
           await loadCourseProgress(id);
           // Map database progress to indices after course data is available
           setTimeout(() => mapDatabaseProgressToIndices(id, transformedCourse), 100);
+          
+          // Load overall course progress and apply to state
+          setTimeout(async () => {
+            const overallProgress = await loadOverallCourseProgress(id);
+            
+            if (overallProgress) {
+              applyCourseProgressToState(id, overallProgress);
+              
+              // Set the last accessed lesson if available
+              if (overallProgress.last_accessed_lesson) {
+                setSelectedLesson({
+                  moduleIndex: overallProgress.last_accessed_lesson.moduleIndex || 0,
+                  lessonIndex: overallProgress.last_accessed_lesson.lessonIndex || 0
+                });
+              }
+            }
+          }, 200);
         }
       } catch (error) {
         console.error('Error fetching course:', error);
@@ -689,7 +772,7 @@ const CourseContent_new = () => {
               selectedLesson={selectedLesson}
               onLessonSelect={handleLessonSelect}
               completedLessons={getCurrentCourseProgress().completedLessons}
-              setCompletedLessons={() => {}} // Not needed since we use context
+              setCompletedLessons={handleLessonCompletionToggle}
               lessonProgress={getCurrentCourseProgress().lessonProgress}
             />
           </div>
@@ -730,7 +813,7 @@ const CourseContent_new = () => {
                   selectedLesson={selectedLesson}
                   onLessonSelect={handleLessonSelect}
                   completedLessons={getCurrentCourseProgress().completedLessons}
-                  setCompletedLessons={() => {}} // Not needed since we use context
+                  setCompletedLessons={handleLessonCompletionToggle}
                   lessonProgress={getCurrentCourseProgress().lessonProgress}
                 />
               </div>

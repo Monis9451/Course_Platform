@@ -13,11 +13,9 @@ const getRedirectURL = () => {
     // If environment variables are set, use them
     if (currentOrigin.includes('localhost') || currentOrigin.includes('127.0.0.1')) {
         redirectURL = localRedirectURL || `${currentOrigin}/login`;
-        console.log('🔗 Using local redirect URL:', redirectURL);
     } else {
         // For production/deployed sites
         redirectURL = prodRedirectURL || `${currentOrigin}/login`;
-        console.log('🔗 Using production redirect URL:', redirectURL);
     }
     
     return redirectURL;

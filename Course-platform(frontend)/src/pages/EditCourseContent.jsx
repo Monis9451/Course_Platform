@@ -262,7 +262,6 @@ const EditCourseContent = () => {
       }
 
       const result = await response.json();
-      console.log('Upload response:', result);
       
       // Return the URL from the response
       return result.url;

@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/authContext';
-import { UserProgressProvider } from './context/userProgressContext';
 import { UserResponsesProvider } from './context/userResponsesContext';
 import { CourseProgressProvider } from './context/courseProgressContext';
 import ProtectedRoute from './components/protectedRoutes';
@@ -32,10 +31,9 @@ import './styles/standardColors.css'
 const App = () => {
   return (
     <AuthProvider>
-      <UserProgressProvider>
-        <UserResponsesProvider>
-          <CourseProgressProvider>
-            <div className="font-fitzgerald font-thin bg-white text-black min-h-screen">
+      <UserResponsesProvider>
+        <CourseProgressProvider>
+          <div className="font-fitzgerald font-thin bg-white text-black min-h-screen">
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -117,7 +115,6 @@ const App = () => {
       </div>
       </CourseProgressProvider>
       </UserResponsesProvider>
-      </UserProgressProvider>
     </AuthProvider>
   )
 }

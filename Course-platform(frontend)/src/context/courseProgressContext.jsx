@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { saveProgress, getUserCourseProgress } from '../api/progressAPI';
+import { saveProgress, getUserCourseProgress, getCourseProgress, saveCourseProgress } from '../api/progressAPI';
 import { useAuth } from './authContext';
 
 // Simple debounce function
@@ -37,7 +37,6 @@ export const CourseProgressProvider = ({ children }) => {
   const saveProgressManually = useCallback(async (progressData) => {
     try {
       await saveProgress(progressData);
-      console.log('Progress saved successfully');
       return true;
     } catch (error) {
       console.error('Failed to save progress:', error);
@@ -288,6 +287,75 @@ export const CourseProgressProvider = ({ children }) => {
     }
   };
 
+  // Load overall course progress and lesson completion from new table
+  const loadOverallCourseProgress = useCallback(async (courseId) => {
+    if (!currentUser?.id || !courseId) return null;
+
+    try {
+      const progressData = await getCourseProgress(currentUser.id, courseId);
+      return progressData;
+    } catch (error) {
+      console.error('Error loading overall course progress:', error);
+      return null;
+    }
+  }, [currentUser?.id]);
+
+  // Save overall course progress and lesson completion
+  const saveOverallCourseProgress = useCallback(async (courseId, overallProgressPercentage, completedLessonsArray, lessonProgressObj, lastAccessedLesson = null) => {
+    if (!currentUser?.id || !courseId) return null;
+
+    try {
+      const progressData = {
+        userId: currentUser.id,
+        courseId: parseInt(courseId),
+        overallProgressPercentage: Math.round(overallProgressPercentage),
+        completedLessons: completedLessonsArray,
+        lessonProgress: lessonProgressObj,
+        lastAccessedLesson: lastAccessedLesson
+      };
+
+      const result = await saveCourseProgress(progressData);
+      return result;
+    } catch (error) {
+      console.error('Error saving overall course progress:', error);
+      throw error;
+    }
+  }, [currentUser?.id]);
+
+  // Get current course progress data formatted for saving
+  const getFormattedCourseProgressForSaving = useCallback((courseId) => {
+    const progress = getCurrentCourseProgress(courseId);
+    
+    // Convert Set to Array for completed lessons
+    const completedLessonsArray = Array.from(progress.completedLessons || new Set());
+    
+    // Calculate overall progress percentage
+    const overallProgress = getCourseCompletionPercentage(courseId);
+    
+    return {
+      overallProgressPercentage: overallProgress,
+      completedLessons: completedLessonsArray,
+      lessonProgress: progress.lessonProgress || {}
+    };
+  }, [getCurrentCourseProgress, getCourseCompletionPercentage]);
+
+  // Apply loaded course progress to current state
+  const applyCourseProgressToState = useCallback((courseId, progressData) => {
+    if (!progressData) return;
+
+    const completedLessonsSet = new Set(progressData.completed_lessons || []);
+    const lessonProgress = progressData.lesson_progress || {};
+
+    setCourseProgress(prev => ({
+      ...prev,
+      [courseId]: {
+        ...prev[courseId],
+        lessonProgress: lessonProgress,
+        completedLessons: completedLessonsSet
+      }
+    }));
+  }, []);
+
   const value = {
     courseProgress,
     unsavedProgressChanges,
@@ -305,7 +373,11 @@ export const CourseProgressProvider = ({ children }) => {
     isLessonCompleted,
     getCourseCompletionPercentage,
     clearCourseProgress,
-    setCourseDataForMapping
+    setCourseDataForMapping,
+    loadOverallCourseProgress,
+    saveOverallCourseProgress,
+    getFormattedCourseProgressForSaving,
+    applyCourseProgressToState
   };
 
   return (

@@ -41,11 +41,9 @@ const DeleteCoursesList = () => {
       return;
     }
 
-    console.log('Deleting course:', courseId, 'with token:', authToken ? 'present' : 'missing');
     setDeleting(courseId);
     try {
       const result = await deleteCourseCascade(courseId, authToken);
-      console.log('Delete result:', result);
       setCourses((prev) => prev.filter((c) => c.courseID !== courseId));
       toast.success('Course deleted successfully!');
     } catch (error) {

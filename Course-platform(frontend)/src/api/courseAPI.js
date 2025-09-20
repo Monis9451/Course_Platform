@@ -112,8 +112,6 @@ export const updateLessonContent = async (lessonId, content, token) => {
 export const deleteCourseCascade = async (courseId, token) => {
   try {
     const url = `${API_BASE_URL}/courses/cascade-delete/${courseId}`;
-    console.log('Making DELETE request to:', url);
-    console.log('With token:', token ? 'present' : 'missing');
     
     const response = await fetch(url, {
       method: 'DELETE',
@@ -123,17 +121,12 @@ export const deleteCourseCascade = async (courseId, token) => {
       },
     });
     
-    console.log('Response status:', response.status);
-    console.log('Response ok:', response.ok);
-    
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      console.log('Error response data:', errorData);
       throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
     }
     
     const data = await response.json();
-    console.log('Success response data:', data);
     return data;
   } catch (error) {
     console.error('Error deleting course and related data:', error);

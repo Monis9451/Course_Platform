@@ -8,7 +8,6 @@ const Footer = () => {
   const handleNewsletterSignup = (e) => {
     e.preventDefault()
     // Handle newsletter signup logic here
-    console.log('Newsletter signup:', email)
     setEmail('')
     alert('Thank you for subscribing to our newsletter!')
   }

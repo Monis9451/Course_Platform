@@ -31,6 +31,19 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
   
   const toggleLessonCompletion = (moduleIndex, lessonIndex, event) => {
     event.stopPropagation()
+    
+    // If setCompletedLessons is provided and it's a function that handles moduleIndex and lessonIndex
+    if (setCompletedLessons && typeof setCompletedLessons === 'function') {
+      // Try calling it with moduleIndex and lessonIndex first (new API)
+      try {
+        setCompletedLessons(moduleIndex, lessonIndex);
+        return;
+      } catch (error) {
+        // If that fails, fall back to the old API
+      }
+    }
+    
+    // Fall back to old API or local state handling
     const lessonKey = `${moduleIndex}-${lessonIndex}`
     updateCompletedLessons(prev => {
       const newSet = new Set(prev)

@@ -370,7 +370,6 @@ const AddCourse = () => {
       
       // Upload thumbnail if a file is selected
       if (selectedThumbnailFile) {
-        console.log('Uploading thumbnail...');
         imageURL = await handleFileUpload(selectedThumbnailFile);
         if (!imageURL) {
           toast.error('Failed to upload thumbnail');
@@ -384,8 +383,6 @@ const AddCourse = () => {
         imageURL
       };
 
-      console.log('Creating course with data:', courseDataWithImage);
-      
       const response = await fetch(`${import.meta.env.VITE_API_URL}/courses/create`, {
         method: 'POST',
         headers: {
@@ -402,12 +399,10 @@ const AddCourse = () => {
       }
 
       const result = await response.json();
-      console.log('Course creation response:', result);
       
       // The course model returns data as an array, so we need to access the first element
       const createdCourse = result.data.course[0];
       setCourseId(createdCourse.courseID);
-      console.log('Course created with ID:', createdCourse.courseID);
       
       // Update courseData with the uploaded image URL
       setCourseData(prev => ({ ...prev, imageURL }));
@@ -467,14 +462,6 @@ const AddCourse = () => {
     setLoading(true);
     try {
       const modulePromises = modules.map(async (module) => {
-        console.log('Creating module with data:', {
-          courseID: courseId,
-          title: module.title,
-          description: module.description,
-          order: module.order,
-          lessonNumber: module.lessonNumber
-        });
-
         const response = await fetch(`${import.meta.env.VITE_API_URL}/modules/create`, {
           method: 'POST',
           headers: {
@@ -497,15 +484,11 @@ const AddCourse = () => {
         }
         
         const result = await response.json();
-        console.log('Module created:', result);
         return result.data.module[0] || result.data.module;
       });
 
       const createdModules = await Promise.all(modulePromises);
-      console.log('All modules created successfully:', createdModules);
-      setModules(createdModules);
-      
-      // Initialize lessons array
+      setModules(createdModules);      // Initialize lessons array
       const allLessons = [];
       createdModules.forEach((module) => {
         for (let i = 0; i < module.lessonNumber; i++) {
@@ -626,7 +609,6 @@ const AddCourse = () => {
       }
 
       const result = await response.json();
-      console.log('Upload response:', result);
       
       // Return the URL from the response
       return result.url;
@@ -941,7 +923,6 @@ const AddCourse = () => {
 
   const deleteIncompleteCourse = async (courseId) => {
     try {
-      console.log('Deleting course with ID:', courseId);
       setDeletingCourseId(courseId);
       
       const response = await fetch(`${import.meta.env.VITE_API_URL}/courses/${courseId}`, {
@@ -950,8 +931,6 @@ const AddCourse = () => {
           'Authorization': `Bearer ${authToken}`
         }
       });
-
-      console.log('Delete response status:', response.status);
 
       if (response.ok || response.status === 204) {
         // Remove the course from the incomplete courses list
