@@ -30,6 +30,7 @@ export const CourseProgressProvider = ({ children }) => {
   const [courseProgress, setCourseProgress] = useState({});
   const [unsavedProgressChanges, setUnsavedProgressChanges] = useState({}); // Track unsaved progress changes
   const [isLoading, setIsLoading] = useState(false);
+  const [isProgressLoaded, setIsProgressLoaded] = useState(false); // Track if progress has been loaded from database
   const [currentCourseId, setCurrentCourseId] = useState(null);
   const [courseData, setCourseData] = useState(null); // Store course data for mapping
 
@@ -73,6 +74,7 @@ export const CourseProgressProvider = ({ children }) => {
 
     setIsLoading(true);
     setCurrentCourseId(courseId);
+    setIsProgressLoaded(false); // Reset progress loaded state
 
     try {
       const response = await getUserCourseProgress(currentUser.id, courseId);
@@ -105,61 +107,68 @@ export const CourseProgressProvider = ({ children }) => {
       console.error('Error loading course progress:', error);
     } finally {
       setIsLoading(false);
+      setIsProgressLoaded(true); // Mark progress as loaded after fetch completes
     }
   }, [currentUser?.id]);
 
   // Track lesson progress changes (no auto-save, just track changes)
-  const saveLessonProgress = useCallback((courseId, moduleIndex, lessonIndex, moduleDbId, lessonDbId, progressPercentage) => {
-    if (!currentUser?.id || !courseId) return;
+  const saveLessonProgress = useCallback(
+    debounce((courseId, moduleIndex, lessonIndex, moduleDbId, lessonDbId, progressPercentage) => {
+      if (!currentUser?.id || !courseId) return;
 
-    // Update local state immediately using index-based key for UI compatibility
-    const indexKey = createLessonKey(moduleIndex, lessonIndex);
-    setCourseProgress(prev => ({
-      ...prev,
-      [courseId]: {
-        ...prev[courseId],
-        lessonProgress: {
-          ...prev[courseId]?.lessonProgress,
-          [indexKey]: progressPercentage
-        },
-        completedLessons: progressPercentage >= 95 
-          ? new Set([...prev[courseId]?.completedLessons || [], indexKey])
-          : prev[courseId]?.completedLessons || new Set()
-      }
-    }));
-
-    // Use database IDs for preparing save data
-    const finalModuleId = moduleDbId || moduleIndex;
-    const finalLessonId = lessonDbId || lessonIndex;
-
-    // Mark as unsaved change
-    const progressKey = `${moduleIndex}-${lessonIndex}`;
-    setUnsavedProgressChanges(prev => ({
-      ...prev,
-      [courseId]: {
-        ...prev[courseId],
-        [progressKey]: {
-          userID: currentUser.id,
-          courseID: parseInt(courseId),
-          moduleID: parseInt(finalModuleId),
-          lessonID: parseInt(finalLessonId),
-          status: progressPercentage >= 95 ? 'completed' : 'in-progress',
-          progressPercentage: parseInt(progressPercentage),
-          moduleIndex,
-          lessonIndex
+      // Update local state immediately using index-based key for UI compatibility
+      const indexKey = createLessonKey(moduleIndex, lessonIndex);
+      setCourseProgress(prev => ({
+        ...prev,
+        [courseId]: {
+          ...prev[courseId],
+          lessonProgress: {
+            ...prev[courseId]?.lessonProgress,
+            [indexKey]: progressPercentage
+          },
+          completedLessons: progressPercentage >= 95 
+            ? new Set([...prev[courseId]?.completedLessons || [], indexKey])
+            : prev[courseId]?.completedLessons || new Set()
         }
-      }
-    }));
-  }, [currentUser?.id]);
+      }));
+
+      // Use database IDs for preparing save data
+      const finalModuleId = moduleDbId || moduleIndex;
+      const finalLessonId = lessonDbId || lessonIndex;
+
+      // Mark as unsaved change
+      const progressKey = `${moduleIndex}-${lessonIndex}`;
+      setUnsavedProgressChanges(prev => ({
+        ...prev,
+        [courseId]: {
+          ...prev[courseId],
+          [progressKey]: {
+            userID: currentUser.id,
+            courseID: parseInt(courseId),
+            moduleID: parseInt(finalModuleId),
+            lessonID: parseInt(finalLessonId),
+            status: progressPercentage >= 95 ? 'completed' : 'in-progress',
+            progressPercentage: parseInt(progressPercentage),
+            moduleIndex,
+            lessonIndex
+          }
+        }
+      }));
+    }, 500), // 500ms debounce
+    [currentUser?.id]
+  );
 
   // Save all unsaved progress changes for a course
   const saveAllUnsavedProgress = useCallback(async (courseId) => {
     if (!currentUser?.id || !courseId || !unsavedProgressChanges[courseId]) {
+      console.log('saveAllUnsavedProgress: No unsaved changes to save', { courseId, hasChanges: !!unsavedProgressChanges[courseId] });
       return { success: true, saved: 0 };
     }
 
     const progressToSave = Object.values(unsavedProgressChanges[courseId]);
     let savedCount = 0;
+
+    console.log('saveAllUnsavedProgress: Starting save for course', courseId, 'with', progressToSave.length, 'changes');
 
     try {
       for (const progressData of progressToSave) {
@@ -167,10 +176,14 @@ export const CourseProgressProvider = ({ children }) => {
         savedCount++;
       }
 
+      console.log('saveAllUnsavedProgress: Successfully saved', savedCount, 'progress changes');
+
       // Clear unsaved changes for this course
       setUnsavedProgressChanges(prev => {
         const newUnsaved = { ...prev };
         delete newUnsaved[courseId];
+        console.log('saveAllUnsavedProgress: Cleared unsaved changes for course', courseId);
+        console.log('saveAllUnsavedProgress: Remaining unsaved changes:', Object.keys(newUnsaved));
         return newUnsaved;
       });
 
@@ -236,6 +249,9 @@ export const CourseProgressProvider = ({ children }) => {
         completedLessons
       }
     }));
+    
+    // Mark progress as loaded after mapping completes
+    setIsProgressLoaded(true);
   }, [courseProgress]);
 
   // Get progress for current course
@@ -360,6 +376,7 @@ export const CourseProgressProvider = ({ children }) => {
     courseProgress,
     unsavedProgressChanges,
     isLoading,
+    isProgressLoaded,
     currentCourseId,
     loadCourseProgress,
     saveLessonProgress,

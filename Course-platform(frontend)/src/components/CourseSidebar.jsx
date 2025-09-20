@@ -3,7 +3,7 @@ import { HiSpeakerWave } from "react-icons/hi2"
 import { FaFileAlt } from "react-icons/fa"
 import { BsPencilFill } from "react-icons/bs";
 
-const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSelect, completedLessons, setCompletedLessons, lessonProgress }) => {
+const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSelect, completedLessons, setCompletedLessons, lessonProgress, isProgressLoaded = false }) => {
   const currentCompletedLessons = completedLessons || new Set([])
   const updateCompletedLessons = setCompletedLessons || (() => {})
   const currentLessonProgress = lessonProgress || {}
@@ -11,6 +11,9 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
   const totalLessons = workshopData.modules.reduce((total, module) => total + module.lessons.length, 0)
   
   const calculateOverallProgress = () => {
+    // Don't calculate progress until it's loaded from database
+    if (!isProgressLoaded) return 0;
+    
     const totalPossibleProgress = totalLessons * 100;
     let totalProgress = 0;
     
@@ -140,11 +143,13 @@ const WorkshopSidebar = ({ courseData: workshopData, selectedLesson, onLessonSel
     <div className="w-80 bg-white max-h-screen h-full overflow-y-auto border-r border-gray-200" style={{ paddingBottom: "60px" }}>
       <div className="p-4 border-b border-gray-200">
         <div className="text-sm font-semibold text-gray-600 mb-1">Workshop Content</div>
-        <div className="text-xl font-bold text-primary mb-1">{progressPercentage}% COMPLETE</div>
+        <div className="text-xl font-bold text-primary mb-1">
+          {isProgressLoaded ? `${progressPercentage}% COMPLETE` : 'Loading...'}
+        </div>
         <div className="w-full bg-gray-200 rounded-full h-2">
           <div 
-            className="bg-primary h-2 rounded-full transition-all duration-300" 
-            style={{ width: `${progressPercentage}%` }}
+            className="bg-primary h-2 rounded-full transition-all duration-500" 
+            style={{ width: `${isProgressLoaded ? progressPercentage : 0}%` }}
           ></div>
         </div>
       </div>

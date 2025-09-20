@@ -169,7 +169,8 @@ const CourseContent_new = () => {
     setCourseDataForMapping,
     saveOverallCourseProgress,
     loadOverallCourseProgress,
-    applyCourseProgressToState
+    applyCourseProgressToState,
+    isProgressLoaded
   } = useCourseProgress();
   
   const lessonContentRef = useRef(null);
@@ -268,16 +269,22 @@ const CourseContent_new = () => {
     const lessonId = currentLesson?.lessonData?.lessonID;
     
     try {
+      let progressSaved = false;
+      let responsesSaved = false;
+      
       // Save progress changes (individual lesson progress)
       if (hasUnsavedProgressChanges(id)) {
-        await saveAllUnsavedProgress(id);
-        toast.success('Progress saved successfully!');
+        const result = await saveAllUnsavedProgress(id);
+        if (result.success && result.saved > 0) {
+          progressSaved = true;
+          console.log('Progress saved:', result.saved, 'changes');
+        }
       }
       
       // Save response changes for current lesson
       if (lessonId && hasUnsavedChanges(lessonId)) {
         await saveLessonResponses(lessonId);
-        toast.success('Responses saved successfully!');
+        responsesSaved = true;
       }
 
       // Save overall course progress and lesson completion status
@@ -299,6 +306,17 @@ const CourseContent_new = () => {
         lessonProgressObj, 
         lastAccessedLesson
       );
+      
+      // Show appropriate success message
+      if (progressSaved && responsesSaved) {
+        toast.success('All changes saved successfully!');
+      } else if (progressSaved) {
+        toast.success('Progress saved successfully!');
+      } else if (responsesSaved) {
+        toast.success('Responses saved successfully!');
+      } else {
+        toast.success('All changes saved successfully!');
+      }
       
     } catch (error) {
       console.error('Error saving changes:', error);
@@ -618,6 +636,7 @@ const CourseContent_new = () => {
     
     const scrollContainer = lessonContentRef.current;
     const { moduleIndex, lessonIndex } = selectedLesson;
+    let lastSavedPercentage = 0;
     
     const calculateScrollProgress = () => {
       const { scrollTop, scrollHeight, clientHeight } = scrollContainer;
@@ -634,12 +653,14 @@ const CourseContent_new = () => {
       const currentLesson = currentModule?.lessons[lessonIndex];
       
       // Only save progress for lessons that have actual lesson data (not default pages)
-      if (currentLesson?.lessonData && scrollPercentage > 0) {
+      // And only if the progress has changed by at least 1%
+      if (currentLesson?.lessonData && scrollPercentage > 0 && Math.abs(scrollPercentage - lastSavedPercentage) >= 1) {
         const moduleDbId = currentModule.moduleId;
         const lessonDbId = currentLesson.lessonData.lessonID;
         
         // Save progress to database (debounced)
         saveLessonProgress(id, moduleIndex, lessonIndex, moduleDbId, lessonDbId, scrollPercentage);
+        lastSavedPercentage = scrollPercentage;
       }
     };
     
@@ -648,7 +669,7 @@ const CourseContent_new = () => {
     return () => {
       scrollContainer.removeEventListener('scroll', calculateScrollProgress);
     };
-  }, [selectedLesson, courseData, currentUser?.id, id, saveLessonProgress, setCourseDataForMapping, mapDatabaseProgressToIndices]);
+  }, [selectedLesson, courseData, currentUser?.id, id]);
 
   // Loading state
   if (loading) {
@@ -774,6 +795,7 @@ const CourseContent_new = () => {
               completedLessons={getCurrentCourseProgress().completedLessons}
               setCompletedLessons={handleLessonCompletionToggle}
               lessonProgress={getCurrentCourseProgress().lessonProgress}
+              isProgressLoaded={isProgressLoaded}
             />
           </div>
 
@@ -815,6 +837,7 @@ const CourseContent_new = () => {
                   completedLessons={getCurrentCourseProgress().completedLessons}
                   setCompletedLessons={handleLessonCompletionToggle}
                   lessonProgress={getCurrentCourseProgress().lessonProgress}
+                  isProgressLoaded={isProgressLoaded}
                 />
               </div>
             </div>
