@@ -6,7 +6,8 @@ const { adminDashboardHandler,
         adminCheckHandler,
         getUserProfile, 
         getUserByEmailHandler,
-        getAllUsersHandler } = require('../controllers/userController');
+        getAllUsersHandler,
+        getUserCoursesHandler } = require('../controllers/userController');
 
 // Admin routes
 router.get('/admin/dashboard', verifySupabaseToken, isAdmin, adminDashboardHandler);
@@ -14,6 +15,7 @@ router.get('/admin/check', verifySupabaseToken, adminCheckHandler);
 
 // User profile routes
 router.get('/me', verifySupabaseToken, getUserProfile);
+router.get('/my-courses', verifySupabaseToken, getUserCoursesHandler);
 
 // User management routes (admin only)
 router.get('/email/:email', verifySupabaseToken, isAdmin, getUserByEmailHandler);

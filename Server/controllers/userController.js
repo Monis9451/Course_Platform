@@ -1,6 +1,8 @@
 const { catchAsync } = require('../utils/catchAsync');
 const { AppError } = require('../utils/appError');
 const supabase = require('../config/supabase');
+const { getEnrollmentsByUserId } = require('../models/enrollmentModel');
+const { getCourseById } = require('../models/courseModel');
 
 const adminDashboardHandler = catchAsync(async (req, res, next) => {
     res.status(200).json({ 
@@ -105,10 +107,55 @@ const getUserByEmailHandler = catchAsync(async (req, res, next) => {
     }
 });
 
+const getUserCoursesHandler = catchAsync(async (req, res, next) => {
+    const userId = req.user?.id;
+    
+    if (!userId) {
+        return next(new AppError('User not authenticated', 401));
+    }
+
+    try {
+        // Get user's enrollments
+        const enrollments = await getEnrollmentsByUserId(userId);
+        
+        if (!enrollments || enrollments.length === 0) {
+            return res.status(200).json({
+                status: 'success',
+                data: { courses: [] },
+                message: 'No enrolled courses found'
+            });
+        }
+
+        // Get course details for each enrollment
+        const coursePromises = enrollments.map(enrollment => 
+            getCourseById(enrollment.courseID)
+        );
+        
+        const courses = await Promise.all(coursePromises);
+        
+        // Combine course data with enrollment info
+        const userCourses = courses.map((course, index) => ({
+            ...course,
+            enrollmentProgress: enrollments[index].progress,
+            enrolledAt: enrollments[index].created_at
+        }));
+
+        res.status(200).json({
+            status: 'success',
+            data: { courses: userCourses },
+            message: 'User courses fetched successfully'
+        });
+    } catch (error) {
+        console.error('Error fetching user courses:', error);
+        return next(new AppError('Failed to fetch user courses', 500));
+    }
+});
+
 module.exports = {
     adminDashboardHandler,
     adminCheckHandler,
     getUserProfile,
     getUserByEmailHandler,
-    getAllUsersHandler
+    getAllUsersHandler,
+    getUserCoursesHandler
 };

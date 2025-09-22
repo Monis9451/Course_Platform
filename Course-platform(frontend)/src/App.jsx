@@ -25,6 +25,7 @@ import AddCourse from './pages/AddCourse';
 import EditCoursesList from './pages/EditCoursesList';
 import EditCourseContent from './pages/EditCourseContent';
 import DeleteCoursesList from './pages/DeleteCoursesList';
+import UserCourses from './pages/UserCourses';
 import Error from './pages/404';
 import './styles/standardColors.css'
 
@@ -46,6 +47,7 @@ const App = () => {
             <Route path="/checkout/:id" element={<Checkout />} />
             <Route path="/thankyou/:id" element={<ThankYou />} />
             <Route path="/thankyou" element={<ThankYou />} />
+            <Route path="/my-courses" element={<UserCourses />} />
             </Route>
 
             {/* Admin Protected Routes */}
