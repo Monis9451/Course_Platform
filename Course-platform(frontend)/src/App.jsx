@@ -43,7 +43,6 @@ const App = () => {
             {/* Protected Routes */}
             <Route element={<ProtectedRoute />}>
             <Route path="/course/:id" element={<CourseDetails />} />
-            <Route path="/course-content/:id" element={<CourseContent_new />} />
             <Route path="/checkout/:id" element={<Checkout />} />
             <Route path="/thankyou/:id" element={<ThankYou />} />
             <Route path="/thankyou" element={<ThankYou />} />
@@ -51,6 +50,7 @@ const App = () => {
 
             {/* Admin Protected Routes */}
             <Route element={<AdminProtectedRoute />}>
+              <Route path="/course-content/:id" element={<CourseContent_new />} />
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/analytics" element={<UserAnalytics />} />
               <Route path="/admin/add-course" element={<AddCourse />} />

@@ -21,7 +21,7 @@ router.get('/incomplete', verifySupabaseToken, isAdmin, getIncompleteCoursesHand
 router.get('/incomplete/details', verifySupabaseToken, isAdmin, getIncompleteCoursesWithDetailsHandler);
 router.delete('/cascade-delete/:id', verifySupabaseToken, isAdmin, deleteCourseHandler);
 router.get('/:id', getCourseByIdHandler);
-router.get('/:id/details', getCourseWithDetailsHandler);
+router.get('/:id/details', verifySupabaseToken, isAdmin, getCourseWithDetailsHandler);
 router.put('/:id', verifySupabaseToken, isAdmin, updateCourseHandler);
 router.put('/:id/complete', verifySupabaseToken, isAdmin, markCourseAsCompletedHandler);
 

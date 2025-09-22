@@ -20,10 +20,10 @@ router.post('/add-content', verifySupabaseToken, isAdmin, addingContentToLesson)
 router.put('/:lessonID', verifySupabaseToken, isAdmin, updateLesson);
 router.delete('/:lessonID', verifySupabaseToken, isAdmin, deleteLesson);
 
-// Public routes for reading lessons (could be protected if needed)
-router.get('/', getAllLessons);
-router.get('/:lessonID', getLessonById);
-router.get('/module/:moduleID', getLessonsByModuleId);
-router.get('/course/:courseID', getLessonsByCourseId);
+// Admin-only routes for reading lessons (restricted access)
+router.get('/', verifySupabaseToken, isAdmin, getAllLessons);
+router.get('/:lessonID', verifySupabaseToken, isAdmin, getLessonById);
+router.get('/module/:moduleID', verifySupabaseToken, isAdmin, getLessonsByModuleId);
+router.get('/course/:courseID', verifySupabaseToken, isAdmin, getLessonsByCourseId);
 
 module.exports = router;
