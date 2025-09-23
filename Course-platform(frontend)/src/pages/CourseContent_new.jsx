@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getCourseWithDetails } from '../api/courseAPI';
+import { checkCourseAccess } from '../api/paymentAPI';
 import WorkshopSidebar from '../components/CourseSidebar';
 import DynamicContentRenderer from '../components/DynamicContentRenderer';
 import SaveButton from '../components/SaveButton';
@@ -146,7 +147,7 @@ const SupportResourcesComponent = () => (
 const CourseContent_new = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { currentUser } = useAuth();
+  const { currentUser, authToken, isAdmin } = useAuth();
   const [selectedLesson, setSelectedLesson] = useState({ moduleIndex: 0, lessonIndex: 0 });
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [courseData, setCourseData] = useState(null);
@@ -336,6 +337,30 @@ const CourseContent_new = () => {
       try {
         setLoading(true);
         
+        // Check if user is logged in
+        if (!currentUser || !authToken) {
+          toast.error('Please log in to access this course');
+          navigate('/login');
+          return;
+        }
+
+        // Check course access (admin always has access)
+        if (!isAdmin) {
+          try {
+            const accessCheck = await checkCourseAccess(id, authToken);
+            if (!accessCheck.hasAccess) {
+              toast.error('You need to purchase this course to access it');
+              navigate(`/checkout/${id}`);
+              return;
+            }
+          } catch (error) {
+            console.error('Error checking course access:', error);
+            toast.error('Unable to verify course access');
+            navigate('/courses');
+            return;
+          }
+        }
+        
         const course = await getCourseWithDetails(id);
         
         if (!course) {
@@ -381,7 +406,7 @@ const CourseContent_new = () => {
     };
 
     fetchCourseData();
-  }, [id, currentUser?.id]); // Removed function dependencies to prevent infinite loop
+  }, [id, currentUser?.id, authToken, isAdmin, navigate]); // Added auth dependencies
 
   const transformCourseData = (dbCourse) => {
     // Create modules array with compulsory pages and database modules

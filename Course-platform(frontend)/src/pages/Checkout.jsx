@@ -1,8 +1,17 @@
 import { GoClock } from "react-icons/go";
 import { FaArrowRight } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import Header from "../pages/Header";
+import StripePaymentForm from "../components/StripePaymentForm";
+import { createPaymentIntent, checkCourseAccess } from "../api/paymentAPI";
+import { useAuth } from "../context/authContext";
+import toast from 'react-hot-toast';
+
+// Initialize Stripe
+const stripePromise = loadStripe('pk_test_51RsNCkGvi0rYXYeQadhLnRdb8oIuxZhlFzIBJ7KNHDBDdlvAha26Ol2ujr2aRcI51bcPvWoYdntqilRoQZeg2Zci00K7OgwCCg');
 
 const courseData = {
   1: {
@@ -51,14 +60,102 @@ const courseData = {
 
 function Checkout() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { currentUser, authToken, isAdmin } = useAuth();
   const [course, setCourse] = useState(null);
+  const [clientSecret, setClientSecret] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasAccess, setHasAccess] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
 
   useEffect(() => {
-    const courseId = parseInt(id);
-    if (courseData[courseId]) {
+    const initializeCheckout = async () => {
+      const courseId = parseInt(id);
+      
+      if (!courseData[courseId]) {
+        setIsLoading(false);
+        return;
+      }
+
       setCourse(courseData[courseId]);
+
+      // Check if user is logged in
+      if (!currentUser || !authToken) {
+        toast.error('Please log in to purchase a course');
+        navigate('/login');
+        return;
+      }
+
+      // Admin should have direct access
+      if (isAdmin) {
+        toast.success('Admin access granted');
+        navigate(`/course-content/${courseId}`);
+        return;
+      }
+
+      try {
+        // Check if user already has access
+        const accessCheck = await checkCourseAccess(courseId, authToken);
+        
+        if (accessCheck.hasAccess) {
+          toast.success('You already have access to this course');
+          navigate(`/course-content/${courseId}`);
+          return;
+        }
+
+        setHasAccess(false);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error checking course access:', error);
+        setIsLoading(false);
+      }
+    };
+
+    initializeCheckout();
+  }, [id, currentUser, authToken, isAdmin, navigate]);
+
+  const handleCompletePurchase = async () => {
+    if (!currentUser || !authToken) {
+      toast.error('Please log in to continue');
+      return;
     }
-  }, [id]);
+
+    try {
+      setIsLoading(true);
+      const paymentData = await createPaymentIntent(course.id, authToken);
+      setClientSecret(paymentData.clientSecret);
+      setShowPayment(true);
+    } catch (error) {
+      console.error('Error creating payment intent:', error);
+      toast.error(error.message || 'Failed to initialize payment');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePaymentSuccess = (paymentIntent) => {
+    toast.success('Payment successful!');
+    navigate(`/thankyou/${course.id}`);
+  };
+
+  const handlePaymentError = (error) => {
+    console.error('Payment error:', error);
+    toast.error('Payment failed. Please try again.');
+  };
+
+  if (isLoading) {
+    return (
+      <>
+        <Header />
+        <div className="flex flex-col bg-cream min-h-screen w-full px-4 sm:px-8">
+          <div className="flex flex-col items-center justify-center mt-12 mb-8 text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#B45B29] mb-4"></div>
+            <p className="text-lg">Loading...</p>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   if (!course) {
     return (
@@ -171,11 +268,28 @@ function Checkout() {
                 </div>
               ))}
             </div>
-            <Link to={`/thankyou/${course.id}`}>
-              <button className="w-full bg-[#B45B29] text-white cursor-pointer p-4 mt-10 mb-5 hover:bg-[#a44d1f] transition flex items-center justify-center gap-4 text-base sm:text-lg font-semibold" style={{ cursor: 'pointer' }}>
-                Complete Purchase <FaArrowRight />
+            {showPayment && clientSecret ? (
+              <Elements stripe={stripePromise}>
+                <StripePaymentForm
+                  clientSecret={clientSecret}
+                  courseId={course.id}
+                  courseTitle={course.title}
+                  amount={course.price}
+                  authToken={authToken}
+                  onSuccess={handlePaymentSuccess}
+                  onError={handlePaymentError}
+                />
+              </Elements>
+            ) : (
+              <button 
+                onClick={handleCompletePurchase}
+                disabled={isLoading}
+                className="w-full bg-[#B45B29] text-white cursor-pointer p-4 mt-10 mb-5 hover:bg-[#a44d1f] transition flex items-center justify-center gap-4 text-base sm:text-lg font-semibold disabled:opacity-50" 
+                style={{ cursor: 'pointer' }}
+              >
+                {isLoading ? 'Loading...' : 'Complete Purchase'} <FaArrowRight />
               </button>
-            </Link>
+            )}
             <div className="flex flex-col items-center justify-center text-center gap-2 text-sm text-gray-600">
               <p>Secure Payment Processing</p>
               <p>
