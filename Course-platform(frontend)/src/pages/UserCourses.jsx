@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom'
 import Header from '../pages/Header'
 import { useAuth } from '../context/authContext'
 import { getUserCourses } from '../api/userAPI'
+import { getAllCourses } from '../api/courseAPI'
 import toast from 'react-hot-toast'
 
 const UserCourses = () => {
   const [userCourses, setUserCourses] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
-  const { currentUser, authToken } = useAuth()
+  const { currentUser, authToken, isAdmin } = useAuth()
 
   useEffect(() => {
     const fetchUserCourses = async () => {
@@ -20,7 +21,23 @@ const UserCourses = () => {
 
       try {
         setIsLoading(true)
-        const courses = await getUserCourses(authToken)
+        
+        let courses = []
+        
+        if (isAdmin) {
+          // Admin gets access to all courses
+          const allCourses = await getAllCourses()
+          courses = allCourses.map(course => ({
+            ...course,
+            enrollmentProgress: 0, // Admin doesn't track progress
+            enrolledAt: new Date().toISOString(),
+            isAdminAccess: true
+          }))
+        } else {
+          // Regular user gets enrolled courses
+          courses = await getUserCourses(authToken)
+        }
+        
         setUserCourses(courses)
         setError(null)
       } catch (error) {
@@ -33,7 +50,7 @@ const UserCourses = () => {
     }
 
     fetchUserCourses()
-  }, [currentUser, authToken])
+  }, [currentUser, authToken, isAdmin])
 
   if (isLoading) {
     return (
@@ -55,9 +72,14 @@ const UserCourses = () => {
       {/* Hero section */}
       <section className="bg-cream py-20">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-fitzgerald text-center text-black mb-6">My Courses</h1>
+          <h1 className="text-4xl md:text-5xl font-fitzgerald text-center text-black mb-6">
+            {isAdmin ? 'All Courses (Admin)' : 'My Courses'}
+          </h1>
           <p className="text-xl font-fitzgerald text-center text-black max-w-3xl mx-auto mb-10">
-            Your purchased courses and learning journey
+            {isAdmin 
+              ? 'Admin access to all available courses'
+              : 'Your purchased courses and learning journey'
+            }
           </p>
         </div>
       </section>
@@ -90,14 +112,19 @@ const UserCourses = () => {
               </div>
               <h3 className="text-2xl font-fitzgerald text-black mb-4">No Courses Yet</h3>
               <p className="text-gray-600 mb-8 max-w-md mx-auto">
-                You haven't purchased any courses yet. Explore our available workshops to start your transformation journey.
+                {isAdmin 
+                  ? 'No courses are available in the system yet.'
+                  : 'You haven\'t purchased any courses yet. Explore our available workshops to start your transformation journey.'
+                }
               </p>
-              <Link 
-                to="/courses" 
-                className="inline-block bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-primary-dark transition-colors duration-200"
-              >
-                Browse All Courses
-              </Link>
+              {!isAdmin && (
+                <Link 
+                  to="/courses" 
+                  className="inline-block bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-primary-dark transition-colors duration-200"
+                >
+                  Browse All Courses
+                </Link>
+              )}
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -111,10 +138,10 @@ const UserCourses = () => {
                     />
                     <div className="absolute top-4 left-4">
                       <span className="bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
-                        {course.category || 'WORKSHOP'}
+                        {course.isAdminAccess ? 'ADMIN ACCESS' : (course.category || 'WORKSHOP')}
                       </span>
                     </div>
-                    {course.enrollmentProgress && (
+                    {!course.isAdminAccess && course.enrollmentProgress && (
                       <div className="absolute bottom-4 left-4 right-4">
                         <div className="bg-white bg-opacity-90 rounded-lg p-2">
                           <div className="flex justify-between items-center mb-1">
@@ -142,7 +169,10 @@ const UserCourses = () => {
                     
                     <div className="flex items-center justify-between">
                       <div className="text-sm text-gray-500">
-                        Enrolled: {course.enrolledAt ? new Date(course.enrolledAt).toLocaleDateString() : 'N/A'}
+                        {course.isAdminAccess 
+                          ? 'Admin Access' 
+                          : `Enrolled: ${course.enrolledAt ? new Date(course.enrolledAt).toLocaleDateString() : 'N/A'}`
+                        }
                       </div>
                     </div>
                     
@@ -151,7 +181,7 @@ const UserCourses = () => {
                         to={`/course-content/${course.courseID}`}
                         className="w-full bg-primary text-white py-2 px-4 rounded-lg font-medium hover:bg-primary-dark transition-colors duration-200 block text-center"
                       >
-                        Continue Learning
+                        {course.isAdminAccess ? 'Access Course' : 'Continue Learning'}
                       </Link>
                     </div>
                   </div>

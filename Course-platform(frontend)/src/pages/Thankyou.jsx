@@ -113,12 +113,12 @@ function ThankYou() {
           </p>
           <div className="space-y-4">
             <div>
-              <Link to="/">
+              <Link to="/user-courses">
                 <a
                   href="#"
                   className="text-[#bd6334] hover:text-[#a65525] inline-block mt-4"
                 >
-                  Return to homepage
+                  Go to My Courses
                 </a>
               </Link>
             </div>
