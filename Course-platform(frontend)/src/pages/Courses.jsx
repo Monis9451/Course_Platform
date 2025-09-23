@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Header from '../pages/Header'
+import { useAuth } from '../context/authContext'
 
 const Courses = () => {
   const [isLoading, setIsLoading] = useState(true)
+  const { isAdmin, currentUser } = useAuth()
   
   const courses = [
     {
@@ -76,21 +78,34 @@ const Courses = () => {
                     </h3>
                     <p className="text-black font-fitzgerald mb-6 line-clamp-3">
                       {course.description}
-                    </p>                    <div className="flex gap-4">
-                      <button 
-                        onClick={() => window.location.href = course.id === 3 ? '/bundle' : `/checkout/${course.id}`}
-                        className="bg-primary hover:bg-[#a3532c] text-white font-fitzgerald px-8 py-2 rounded-none transition-colors duration-200"
-                        style={{ cursor: 'pointer' }}
-                      >
-                        Buy Now
-                      </button>
-                      <button 
-                        onClick={() => window.location.href = `/course/${course.id}`}
-                        className="border border-primary text-[#bd6334] hover:bg-[#bd6334] hover:text-white font-fitzgerald px-8 py-2 rounded-none transition-colors duration-200"
-                        style={{ cursor: 'pointer' }}
-                      >
-                        Learn More
-                      </button>
+                    </p>
+                    <div className="flex gap-4">
+                      {isAdmin ? (
+                        <button 
+                          onClick={() => window.location.href = `/course-content/${course.id}`}
+                          className="bg-primary hover:bg-[#a3532c] text-white font-fitzgerald px-8 py-2 rounded-none transition-colors duration-200"
+                          style={{ cursor: 'pointer' }}
+                        >
+                          Access Course
+                        </button>
+                      ) : (
+                        <>
+                          <button 
+                            onClick={() => window.location.href = course.id === 3 ? '/bundle' : `/checkout/${course.id}`}
+                            className="bg-primary hover:bg-[#a3532c] text-white font-fitzgerald px-8 py-2 rounded-none transition-colors duration-200"
+                            style={{ cursor: 'pointer' }}
+                          >
+                            Buy Now
+                          </button>
+                          <button 
+                            onClick={() => window.location.href = `/course/${course.id}`}
+                            className="border border-primary text-[#bd6334] hover:bg-[#bd6334] hover:text-white font-fitzgerald px-8 py-2 rounded-none transition-colors duration-200"
+                            style={{ cursor: 'pointer' }}
+                          >
+                            Learn More
+                          </button>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
