@@ -23,7 +23,11 @@ const verifySupabaseToken = catchAsync(async (req, res, next) => {
     return next(new AppError("Invalid or expired token", 401));
   }
 
-  req.user = user;
+  // Check if user is admin
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const isAdmin = user.email === adminEmail;
+
+  req.user = { ...user, isAdmin };
   next();
 });
 

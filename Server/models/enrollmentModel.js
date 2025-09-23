@@ -60,6 +60,21 @@ const updateEnrollment = async (enrollmentID, updates) => {
     return data;
 }
 
+const checkUserCourseAccess = async (userID, courseID) => {
+    const {data, error} = await supabase
+        .from('enrollment')
+        .select('enrollmentID')
+        .eq('userID', userID)
+        .eq('courseID', courseID)
+        .single();
+    
+    if (error && error.code !== 'PGRST116') { // PGRST116 is "no rows returned"
+        throw new Error(`Error checking course access: ${error.message}`);
+    }
+    
+    return !!data; // Returns true if enrollment exists, false otherwise
+}
+
 module.exports = {
     createEnrollment,
     getAllEnrollments,
@@ -67,5 +82,6 @@ module.exports = {
     getEnrollmentsByUserId,
     getEnrollmentsByCourseId,
     deleteEnrollment,
-    updateEnrollment
+    updateEnrollment,
+    checkUserCourseAccess
 };
