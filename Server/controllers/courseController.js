@@ -18,7 +18,12 @@ const createCourseHandler = catchAsync(async (req, res, next) => {
     return next(new AppError('Course title is required', 400));
   }
 
-  const newCourse = await createCourse(title, description || '', imageURL || '', moduleNumbers || []);
+  const newCourse = await createCourse(
+    title, 
+    description || '', 
+    imageURL || '', 
+    moduleNumbers || []
+  );
 
   res.status(201).json({
     status: 'success',
@@ -91,9 +96,15 @@ const updateCourseHandler = catchAsync(async (req, res, next) => {
     return next(new AppError('Course ID is required', 400));
   }
 
-  const updatedCourse = await updateCourse(id, { title, description, imageURL, moduleNumbers });
+  const updateData = {};
+  if (title !== undefined) updateData.title = title;
+  if (description !== undefined) updateData.description = description;
+  if (imageURL !== undefined) updateData.imageURL = imageURL;
+  if (moduleNumbers !== undefined) updateData.moduleNumbers = moduleNumbers;
 
-  if (!updatedCourse) {
+  const updatedCourse = await updateCourse(id, updateData);
+
+  if (!updatedCourse || updatedCourse.length === 0) {
     return next(new AppError('Course not found', 404));
   }
 
