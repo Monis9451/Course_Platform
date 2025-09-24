@@ -30,6 +30,7 @@ const emailRoutes = require('./routes/email.routes');
 const userResponseRoutes = require('./routes/userResponse.routes');
 const progressRoutes = require('./routes/progress.routes');
 const paymentRoutes = require('./routes/payment.routes');
+const frontPageContentRoutes = require('./routes/frontPageContent.routes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -59,6 +60,7 @@ app.use('/api/email', emailRoutes);
 app.use('/api/user-responses', userResponseRoutes);
 app.use('/api/progress', progressRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/front-page-content', frontPageContentRoutes);
 
 
 // Error handling middleware
