@@ -344,21 +344,35 @@ const CourseContent_new = () => {
           return;
         }
 
+        console.log('=== COURSE ACCESS CHECK ===');
+        console.log('User ID:', currentUser?.id);
+        console.log('User Email:', currentUser?.email);
+        console.log('Is Admin:', isAdmin);
+        console.log('Course ID:', id);
+        console.log('Auth Token exists:', !!authToken);
+
         // Check course access (admin always has access)
         if (!isAdmin) {
+          console.log('User is not admin, checking enrollment...');
           try {
             const accessCheck = await checkCourseAccess(id, authToken);
+            console.log('Access check response:', accessCheck);
+            
             if (!accessCheck.hasAccess) {
+              console.log('Access denied, redirecting to checkout');
               toast.error('You need to purchase this course to access it');
               navigate(`/checkout/${id}`);
               return;
             }
+            console.log('Access granted via enrollment');
           } catch (error) {
             console.error('Error checking course access:', error);
             toast.error('Unable to verify course access');
             navigate('/courses');
             return;
           }
+        } else {
+          console.log('Access granted via admin privileges');
         }
         
         const course = await getCourseWithDetails(id);

@@ -1,12 +1,25 @@
 const supabase = require('../config/supabase');
 
 const createEnrollment = async (userID, courseID, progress) => {
+    console.log('=== CREATING ENROLLMENT ===');
+    console.log('Creating enrollment for userID:', userID);
+    console.log('Creating enrollment for courseID:', courseID);
+    console.log('Progress:', progress);
+    
+    // Ensure courseID is a number for consistency
+    const numericCourseID = parseInt(courseID);
+    console.log('Converted courseID for enrollment:', numericCourseID);
+    
     const {data, error} = await supabase.from('enrollment').insert([{
         userID,
-        courseID,
+        courseID: numericCourseID,
         progress
     }]);
+    
+    console.log('Enrollment creation result:', { data, error });
+    
     if (error) {
+        console.error('Enrollment creation error:', error);
         throw new Error(`Error creating enrollment: ${error.message}`);
     }
     return data;
@@ -61,18 +74,34 @@ const updateEnrollment = async (enrollmentID, updates) => {
 }
 
 const checkUserCourseAccess = async (userID, courseID) => {
+    console.log('=== ENROLLMENT CHECK ===');
+    console.log('Checking enrollment for userID:', userID);
+    console.log('Checking enrollment for courseID:', courseID);
+    console.log('UserID type:', typeof userID);
+    console.log('CourseID type:', typeof courseID);
+    
+    // Ensure courseID is a number for consistency
+    const numericCourseID = parseInt(courseID);
+    console.log('Converted courseID:', numericCourseID);
+    
     const {data, error} = await supabase
         .from('enrollment')
-        .select('enrollmentID')
-        .eq('userID', userID)
-        .eq('courseID', courseID)
+        .select('enrollmentID, userID, courseID')
+        .eq('userID', userID)  // userID should remain as UUID string
+        .eq('courseID', numericCourseID)  // courseID should be number
         .single();
     
+    console.log('Enrollment query result:', { data, error });
+    console.log('Error details:', error);
+    
     if (error && error.code !== 'PGRST116') { // PGRST116 is "no rows returned"
+        console.error('Enrollment query error:', error);
         throw new Error(`Error checking course access: ${error.message}`);
     }
     
-    return !!data; // Returns true if enrollment exists, false otherwise
+    const hasAccess = !!data;
+    console.log('Final access result:', hasAccess);
+    return hasAccess; // Returns true if enrollment exists, false otherwise
 }
 
 module.exports = {

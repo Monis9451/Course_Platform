@@ -123,8 +123,14 @@ const checkCourseAccess = catchAsync(async (req, res, next) => {
   const { courseId } = req.params;
   const { id: userID, isAdmin } = req.user;
 
+  console.log('=== COURSE ACCESS CHECK ===');
+  console.log('Course ID:', courseId);
+  console.log('User ID:', userID);
+  console.log('Is Admin:', isAdmin);
+
   // Admin has access to all courses
   if (isAdmin) {
+    console.log('Admin access granted');
     return res.status(200).json({
       success: true,
       hasAccess: true,
@@ -134,6 +140,7 @@ const checkCourseAccess = catchAsync(async (req, res, next) => {
 
   try {
     const hasAccess = await checkUserCourseAccess(userID, courseId);
+    console.log('Database access check result:', hasAccess);
     
     res.status(200).json({
       success: true,

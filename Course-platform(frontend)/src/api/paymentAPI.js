@@ -54,6 +54,11 @@ export const confirmPayment = async (paymentIntentId, authToken) => {
 };
 
 export const checkCourseAccess = async (courseId, authToken) => {
+  console.log('=== FRONTEND API CALL ===');
+  console.log('Checking access for course:', courseId);
+  console.log('Auth token exists:', !!authToken);
+  console.log('API URL:', `${API_BASE_URL}/payments/check-access/${courseId}`);
+  
   try {
     const response = await fetch(`${API_BASE_URL}/payments/check-access/${courseId}`, {
       method: 'GET',
@@ -62,9 +67,14 @@ export const checkCourseAccess = async (courseId, authToken) => {
       }
     });
 
+    console.log('Response status:', response.status);
+    console.log('Response ok:', response.ok);
+
     const data = await response.json();
+    console.log('Response data:', data);
     
     if (!response.ok) {
+      console.error('API Error:', data);
       throw new Error(data.message || 'Failed to check course access');
     }
 

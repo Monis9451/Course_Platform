@@ -2,14 +2,17 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Header from '../pages/Header'
 import { useAuth } from '../context/authContext'
+import { checkCourseAccess } from '../api/paymentAPI'
+import toast from 'react-hot-toast'
 
 const Courses = () => {
   const [isLoading, setIsLoading] = useState(true)
-  const { isAdmin, currentUser } = useAuth()
+  const [courseAccess, setCourseAccess] = useState({})
+  const { isAdmin, currentUser, authToken } = useAuth()
   
   const courses = [
     {
-      id: 1,
+      id: 23, // Updated to database ID
       title: "Unburdening Trauma",
       description: "A 6-Week Self-Paced Workshop - Break Emotional Cycles, Reclaim Peace & Rewire Your Response to Pain. Transform your life from within in just 6 weeks.",
       img_src: "/1.png",
@@ -17,7 +20,7 @@ const Courses = () => {
       category: "WORKSHOP"
     },
     {
-      id: 2,
+      id: 30, // Updated to database ID
       title: "Unburdening Love",
       description: "A 6-Week Self-Paced Workshop - Break Free from Relationship Blocks and Cultivate Healthy Love. Transform your relationships in just 6 weeks.",
       img_src: "/love_course.png",
@@ -25,7 +28,7 @@ const Courses = () => {
       category: "WORKSHOP"
     },
     {
-      id: 3,
+      id: 32, // Updated to database ID
       title: "Bundle",
       description: "Complete Bundle: Unburdening Trauma + Unburdening Love. Get both transformative workshops together and save money. Complete access to trauma healing and relationship transformation programs.",
       img_src: "/3.png",
@@ -34,14 +37,43 @@ const Courses = () => {
     },
   ]
 
-  // Simulate loading effect
+  // Check course access for logged-in users
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 500)
-    
-    return () => clearTimeout(timer)
-  }, [])
+    const checkAllCourseAccess = async () => {
+      setIsLoading(true)
+      
+      if (!currentUser || !authToken || isAdmin) {
+        // Admin has access to all courses, no need to check
+        // Non-logged-in users will see "Buy Now" buttons
+        setIsLoading(false)
+        return
+      }
+
+      try {
+        const accessPromises = courses.map(async (course) => {
+          try {
+            const accessCheck = await checkCourseAccess(course.id, authToken)
+            return { [course.id]: accessCheck.hasAccess }
+          } catch (error) {
+            console.warn(`Failed to check access for course ${course.id}:`, error)
+            return { [course.id]: false }
+          }
+        })
+
+        const accessResults = await Promise.all(accessPromises)
+        const accessMap = accessResults.reduce((acc, result) => ({ ...acc, ...result }), {})
+        setCourseAccess(accessMap)
+      } catch (error) {
+        console.error('Error checking course access:', error)
+        toast.error('Failed to check course access')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    checkAllCourseAccess()
+  }, [currentUser, authToken, isAdmin])
+  
   return (
     <div>
         <Header />
@@ -81,6 +113,7 @@ const Courses = () => {
                     </p>
                     <div className="flex gap-4">
                       {isAdmin ? (
+                        // Admin has access to all courses
                         <button 
                           onClick={() => window.location.href = `/course-content/${course.id}`}
                           className="bg-primary hover:bg-[#a3532c] text-white font-fitzgerald px-8 py-2 rounded-none transition-colors duration-200"
@@ -88,7 +121,17 @@ const Courses = () => {
                         >
                           Access Course
                         </button>
+                      ) : courseAccess[course.id] ? (
+                        // User has purchased this course
+                        <button 
+                          onClick={() => window.location.href = `/course-content/${course.id}`}
+                          className="bg-green-600 hover:bg-green-700 text-white font-fitzgerald px-8 py-2 rounded-none transition-colors duration-200"
+                          style={{ cursor: 'pointer' }}
+                        >
+                          Access Course
+                        </button>
                       ) : (
+                        // User hasn't purchased this course
                         <>
                           <button 
                             onClick={() => window.location.href = course.id === 32 ? '/bundle' : `/checkout/${course.id}`}
