@@ -1,55 +1,122 @@
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-
-// Course Data
-const courseData = {
-  1: {
-    id: 1,
-    title: "Unburdening Trauma: A 6-Week Self-Paced Workshop",
-    description: "A transformative journey to heal past wounds and create lasting change",
-    duration: "6 weeks",
-    image: "/1.png"
-  },
-  2: {
-    id: 2,
-    title: "Unburdening Love: A 6-Week Self-Paced Workshop",
-    description: "Break free from relationship blocks and cultivate healthy love",
-    duration: "6 weeks",
-    image: "/love_course.png"
-  },
-  3: {
-    id: 3,
-    title: "Unburdening Love + Trauma: The 12-Week Self-Paced Healing Bundle",
-    description: "Complete healing journey combining both transformative courses",
-    duration: "12 weeks",
-    image: "/3.png"
-  }
-};
+import { getCourseWithFrontPageContent } from "../api/courseAPI";
+import { staticCourseData, isBundleCourse } from "../data/staticCourseData";
 
 function ThankYou() {
   const { id } = useParams();
   const [course, setCourse] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Helper function to transform database course data for thank you page
+  const transformCourseForThankYou = (dbCourse) => {
+    const frontPageContent = dbCourse.frontPageContent;
+    
+    return {
+      id: dbCourse.courseID,
+      title: `${dbCourse.title}: ${frontPageContent?.course_type || "Self-Paced Workshop"}`,
+      description: frontPageContent?.front_page_description || dbCourse.description || "A transformative journey of healing and growth",
+      duration: frontPageContent?.duration || "6 weeks",
+      image: dbCourse.imageURL || `/course-${dbCourse.courseID}.png`
+    };
+  };
 
   useEffect(() => {
-    if (id) {
-      const courseId = parseInt(id);
-      if (courseData[courseId]) {
-        setCourse(courseData[courseId]);
+    const loadCourseData = async () => {
+      try {
+        console.log('=== THANK YOU PAGE INITIALIZATION ===');
+        console.log('Course ID from URL:', id);
+        
+        setIsLoading(true);
+        setError(null);
+        
+        let courseId;
+        
+        if (id) {
+          courseId = parseInt(id);
+          console.log('Parsed course ID:', courseId);
+        } else {
+          // Default to first individual course if no ID provided
+          courseId = 23;
+          console.log('No ID provided, defaulting to course 23');
+        }
+        
+        if (isNaN(courseId)) {
+          throw new Error('Invalid course ID');
+        }
+
+        let courseData;
+
+        // If it's the bundle course, use static data
+        if (isBundleCourse(courseId)) {
+          console.log('Loading static data for bundle course');
+          courseData = {
+            id: staticCourseData[courseId].id,
+            title: staticCourseData[courseId].title + ": " + staticCourseData[courseId].subtitle,
+            description: staticCourseData[courseId].description,
+            duration: staticCourseData[courseId].duration,
+            image: staticCourseData[courseId].img_src
+          };
+          console.log('Bundle course data loaded:', courseData);
+        } else {
+          // For individual courses, fetch from database
+          console.log('Fetching individual course data from database...');
+          const dbCourse = await getCourseWithFrontPageContent(courseId);
+          console.log('Database response:', dbCourse);
+          
+          if (!dbCourse) {
+            throw new Error('Course not found');
+          }
+
+          courseData = transformCourseForThankYou(dbCourse);
+          console.log('Transformed course data:', courseData);
+        }
+
+        setCourse(courseData);
+        console.log('Course data set successfully for thank you page');
+
+      } catch (err) {
+        console.error('=== THANK YOU PAGE ERROR ===');
+        console.error('Error type:', err.constructor.name);
+        console.error('Error message:', err.message);
+        console.error('Full error:', err);
+        
+        if (err.message.includes('Course not found')) {
+          setError('Course not found');
+        } else {
+          setError('Failed to load course information');
+        }
+      } finally {
+        setIsLoading(false);
       }
-    } else {
-      setCourse(courseData[1]);
-    }
+    };
+
+    loadCourseData();
   }, [id]);
 
-  if (!course) {
+  if (isLoading) {
+    return (
+      <div className="container max-w-4xl mx-auto px-4 py-20">
+        <div className="bg-cream rounded-lg shadow-lg p-12 text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#B45B29] mb-4 mx-auto"></div>
+          <p className="text-lg">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!course || error) {
     return (
       <div className="container max-w-4xl mx-auto px-4 py-20">
         <div className="bg-cream rounded-lg shadow-lg p-12 text-center">
           <h1 className="text-3xl md:text-4xl font-serif mb-6 text-[#70533E]">
-            Course Not Found
+            {error === 'Course not found' ? 'Course Not Found' : 'Error Loading Course'}
           </h1>
           <p className="text-xl text-gray-700 mb-8">
-            The Workshop you're looking for doesn't exist.
+            {error === 'Course not found' 
+              ? "The Workshop you're looking for doesn't exist."
+              : "There was an error loading the course information."}
           </p>
           <Link to="/">
             <button className="bg-[#bd6334] hover:bg-[#a65525] text-white py-3 px-6 rounded">
@@ -113,13 +180,28 @@ function ThankYou() {
           </p>
           <div className="space-y-4">
             <div>
-              <Link to="/user-courses">
-                <a
-                  href="#"
+              {isBundleCourse(course.id) ? (
+                <Link
+                  to="/courses"
                   className="text-[#bd6334] hover:text-[#a65525] inline-block mt-4"
                 >
-                  Go to My Courses
-                </a>
+                  View All Your Courses
+                </Link>
+              ) : (
+                <Link
+                  to={`/course-content/${course.id}`}
+                  className="text-[#bd6334] hover:text-[#a65525] inline-block mt-4"
+                >
+                  Start Your Course
+                </Link>
+              )}
+            </div>
+            <div>
+              <Link
+                to="/user-courses"
+                className="text-[#bd6334] hover:text-[#a65525] inline-block mt-4 ml-4"
+              >
+                Go to My Courses
               </Link>
             </div>
           </div>

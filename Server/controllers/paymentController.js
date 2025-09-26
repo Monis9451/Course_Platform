@@ -3,43 +3,54 @@ const { createEnrollment, checkUserCourseAccess } = require('../models/enrollmen
 const { catchAsync } = require('../utils/catchAsync');
 const { AppError } = require('../utils/appError');
 
-// Course pricing data (should match frontend)
+// Course pricing data (updated for database IDs)
 const coursePricing = {
-  1: { price: 75, title: "Unburdening Trauma: A 6-Week Self-Paced Workshop" },
-  2: { price: 75, title: "Unburdening Love: A 6-Week Self-Paced Workshop" },
-  3: { price: 120, title: "Unburdening Love + Trauma: The 12-Week Self-Paced Healing Bundle" }
+  23: { price: 75, title: "Unburdening Trauma: A 6-Week Self-Paced Workshop" },
+  30: { price: 75, title: "Unburdening Love: A 6-Week Self-Paced Workshop" },
+  32: { price: 120, title: "Unburdening Love + Trauma: The 12-Week Self-Paced Healing Bundle" }
 };
 
 // Create payment intent
 const createPaymentIntent = catchAsync(async (req, res, next) => {
-  const { courseId } = req.body;
-  const { userID } = req.user;
+  const { amount, currency, description, metadata } = req.body;
+  const { id: userID } = req.user;
 
-  if (!courseId) {
-    return next(new AppError('Course ID is required', 400));
-  }
-
-  // Get course pricing
-  const courseData = coursePricing[courseId];
-  if (!courseData) {
-    return next(new AppError('Invalid course ID', 400));
+  if (!amount || !currency || !description) {
+    return next(new AppError('Amount, currency, and description are required', 400));
   }
 
   try {
-    // Check if user already has access to this course
-    const hasAccess = await checkUserCourseAccess(userID, courseId);
-    if (hasAccess) {
-      return next(new AppError('You already have access to this course', 400));
+    const { courseIds = [], isBundle = false } = metadata || {};
+
+    // Check if user already has access to the course(s)
+    if (courseIds.length > 0) {
+      const accessChecks = await Promise.all(
+        courseIds.map(courseId => checkUserCourseAccess(userID, courseId))
+      );
+      
+      if (isBundle) {
+        // For bundle, check if user has access to all courses
+        if (accessChecks.every(hasAccess => hasAccess)) {
+          return next(new AppError('You already have access to all courses in this bundle', 400));
+        }
+      } else {
+        // For individual course
+        if (accessChecks[0]) {
+          return next(new AppError('You already have access to this course', 400));
+        }
+      }
     }
 
     // Create payment intent
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: courseData.price * 100, // Convert to cents
-      currency: 'gbp',
+      amount: parseInt(amount), // Amount should be in cents
+      currency: currency.toLowerCase(),
       metadata: {
-        courseId: courseId.toString(),
+        ...metadata,
         userId: userID.toString(),
-        courseTitle: courseData.title
+        description: description,
+        courseIds: JSON.stringify(courseIds),
+        isBundle: isBundle.toString()
       },
       automatic_payment_methods: {
         enabled: true,
@@ -48,9 +59,7 @@ const createPaymentIntent = catchAsync(async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      clientSecret: paymentIntent.client_secret,
-      courseTitle: courseData.title,
-      amount: courseData.price
+      clientSecret: paymentIntent.client_secret
     });
   } catch (error) {
     console.error('Stripe payment intent creation error:', error);
@@ -60,11 +69,11 @@ const createPaymentIntent = catchAsync(async (req, res, next) => {
 
 // Confirm payment and create enrollment (for development)
 const confirmPayment = catchAsync(async (req, res, next) => {
-  const { paymentIntentId, courseId } = req.body;
-  const { userID } = req.user;
+  const { paymentIntentId } = req.body;
+  const { id: userID } = req.user;
 
-  if (!paymentIntentId || !courseId) {
-    return next(new AppError('Payment intent ID and course ID are required', 400));
+  if (!paymentIntentId) {
+    return next(new AppError('Payment intent ID is required', 400));
   }
 
   try {
@@ -72,18 +81,33 @@ const confirmPayment = catchAsync(async (req, res, next) => {
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
     
     if (paymentIntent.status === 'succeeded') {
-      // Check if enrollment already exists
-      const hasAccess = await checkUserCourseAccess(userID, courseId);
+      const { courseIds, isBundle } = paymentIntent.metadata;
+      const courseIdsArray = courseIds ? JSON.parse(courseIds) : [];
 
-      if (!hasAccess) {
-        // Create enrollment record
-        await createEnrollment(userID, courseId, 0);
+      if (courseIdsArray.length === 0) {
+        return next(new AppError('No course IDs found in payment metadata', 400));
       }
+
+      // Create enrollments for all courses
+      const enrollmentPromises = courseIdsArray.map(async (courseId) => {
+        const hasAccess = await checkUserCourseAccess(userID, courseId);
+        if (!hasAccess) {
+          await createEnrollment(userID, courseId, 0);
+          return courseId;
+        }
+        return null;
+      });
+
+      const enrolledCourses = (await Promise.all(enrollmentPromises)).filter(Boolean);
 
       res.status(200).json({
         success: true,
-        message: 'Payment confirmed and enrollment created',
-        enrolled: true
+        message: isBundle === 'true' 
+          ? `Payment confirmed. You now have access to ${enrolledCourses.length} courses in the bundle!`
+          : 'Payment confirmed and enrollment created',
+        enrolled: true,
+        enrolledCourses: enrolledCourses,
+        isBundle: isBundle === 'true'
       });
     } else {
       return next(new AppError('Payment not successful', 400));
@@ -97,7 +121,7 @@ const confirmPayment = catchAsync(async (req, res, next) => {
 // Check if user has access to a course
 const checkCourseAccess = catchAsync(async (req, res, next) => {
   const { courseId } = req.params;
-  const { userID, isAdmin } = req.user;
+  const { id: userID, isAdmin } = req.user;
 
   // Admin has access to all courses
   if (isAdmin) {
