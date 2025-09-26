@@ -1,6 +1,6 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-export const createPaymentIntent = async (courseId, authToken) => {
+export const createPaymentIntent = async (amount, currency, description, authToken, metadata = {}) => {
   try {
     const response = await fetch(`${API_BASE_URL}/payments/create-payment-intent`, {
       method: 'POST',
@@ -8,7 +8,12 @@ export const createPaymentIntent = async (courseId, authToken) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${authToken}`
       },
-      body: JSON.stringify({ courseId })
+      body: JSON.stringify({ 
+        amount, 
+        currency, 
+        description, 
+        metadata 
+      })
     });
 
     const data = await response.json();
@@ -24,7 +29,7 @@ export const createPaymentIntent = async (courseId, authToken) => {
   }
 };
 
-export const confirmPayment = async (paymentIntentId, courseId, authToken) => {
+export const confirmPayment = async (paymentIntentId, authToken) => {
   try {
     const response = await fetch(`${API_BASE_URL}/payments/confirm-payment`, {
       method: 'POST',
@@ -32,7 +37,7 @@ export const confirmPayment = async (paymentIntentId, courseId, authToken) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${authToken}`
       },
-      body: JSON.stringify({ paymentIntentId, courseId })
+      body: JSON.stringify({ paymentIntentId })
     });
 
     const data = await response.json();

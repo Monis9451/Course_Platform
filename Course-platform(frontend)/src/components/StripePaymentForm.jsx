@@ -66,7 +66,7 @@ const StripePaymentForm = ({
 
       if (paymentIntent.status === 'succeeded') {
         // Confirm payment with our backend
-        await confirmPayment(paymentIntent.id, courseId, authToken);
+        await confirmPayment(paymentIntent.id, authToken);
         onSuccess(paymentIntent);
       }
     } catch (err) {
