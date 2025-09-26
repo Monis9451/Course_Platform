@@ -3,436 +3,127 @@ import { useParams, Link } from 'react-router-dom'
 import { FiUser, FiClock, FiFileText, FiVideo, FiDownload } from 'react-icons/fi'
 import { FaCheckCircle, FaHeadphones, FaPencilAlt, FaRegLightbulb } from 'react-icons/fa'
 import Header from '../pages/Header'
-
-// Course Data
-const dummyCoursesData = {
-  1: {
-    id: 1,
-    title: "Unburdening Trauma",
-    subtitle: "A 6-Week Self-Paced Workshop",
-    description: "Break Emotional Cycles, Reclaim Peace & Rewire Your Response to Pain",
-    tagline: "Transform Your Life from Within in Just 6 Weeks",
-    additionalTagline: "Accessible, Expert-Led Guidance to Heal and Build Emotional Freedom",
-    fullDescription: "Are you ready to stop reliving your pain and start healing from it? Whether you're struggling with anxiety, emotional overwhelm, or feeling stuck in repeating patterns, this 6-week self-paced Workshop will guide you through deep emotional healing, body-based regulation, and practical tools for lasting change. Led by a trauma-informed psychologist, Unburdening Trauma is a powerful journey designed to help you reconnect with your body, release emotional baggage, and transform your inner world, so you can move forward with clarity, peace, and resilience.",
-    instructor: "Dr. Samina Khatun",
-    duration: "6 weeks",
-    lessons: 24,
-    level: "ALL LEVELS",
-    price: 75,
-    featured: true,
-    img_src: "/1.png",
-    img_alt: "Unburdening Trauma Workshop",
-    benefits: [
-      "Understand Trauma in the Body: Learn why trauma gets stored and how to gently release it through body-based awareness.",
-      "Reclaim Inner Safety: Cultivate a felt sense of safety, presence, and connection within yourself.",
-      "Heal the Inner Child: Address emotional wounds rooted in childhood experiences.",
-      "Transform Limiting Beliefs: Shift self-sabotaging thought patterns into supportive, empowering ones.",
-      "Let Go of Emotional Baggage: Release what you've been holding onto so you can finally feel lighter.",
-      "Anchor Lasting Healing: Build practices that support ongoing growth, self-love, and emotional resilience."
-    ],
-    modules: [
-      {
-        id: 1,
-        title: "Unburdening Trauma & the Body",
-        description: "Why We Get Stuck in Pain – and How Awareness Sets Us Free"
-      },
-      {
-        id: 2,
-        title: "Reconnecting with the Body",
-        description: "Coming Back to Yourself – Safety, Sensation, and Presence"
-      },
-      {
-        id: 3,
-        title: "Inner Child Healing",
-        description: "Reclaiming the Parts of You That Still Hurt"
-      },
-      {
-        id: 4,
-        title: "Rewriting the Story",
-        description: "Challenging Limiting Beliefs and Thought Loops"
-      },
-      {
-        id: 5,
-        title: "Releasing Emotional Baggage",
-        description: "Letting Go of What You've Been Carrying"
-      },
-      {
-        id: 6,
-        title: "Integration & Forward Momentum",
-        description: "Staying Connected to Growth, Resilience, and Self-Love"
-      }
-    ],
-    whyDifferent: [
-      {
-        title: "Expert-Led",
-        description: "Created by a trauma-informed psychologist with years of experience supporting emotional healing and nervous system regulation."
-      },
-      {
-        title: "Affordable",
-        description: "Access the depth of therapeutic techniques without the cost of private therapy sessions."
-      },
-      {
-        title: "Self-Paced",
-        description: "Go through the modules in your own time with lifetime access, so you can return whenever needed."
-      },
-      {
-        title: "Personal Support",
-        description: "Reach out via email for guidance and support throughout the Workshop."
-      }
-    ],
-    testimonials: [
-      {
-        text: "I didn't realise how disconnected I was from my body until this Workshop. It taught me how to feel again — safely.",
-        author: "Leah T."
-      },
-      {
-        text: "The inner child work was so powerful. For the first time, I felt compassion for myself instead of shame.",
-        author: "David R."
-      }
-    ],
-    bonuses: [
-      "Voice-Led Structured Workshop: Be guided by Dr. Samina as she walks you through each module with clarity and compassion.",
-      "Exclusive Meditations & Visualisations: Deepen your healing with supportive audio practices throughout the journey.",
-      "Downloadable Materials: Access printable worksheets, reflection tools, and healing exercises to track your progress.",
-      "Journal Prompts & Body-Based Practices: Build awareness and transformation with carefully designed, trauma-informed exercises."
-    ],
-    faqs: [
-      {
-        id: 1,
-        question: "Is there a refund policy for this Workshop?",
-        answer: "Due to the nature of the Workshop, refunds are not available. Once purchased, you'll receive immediate access to all content. This Workshop is built to create meaningful transformation — if you commit to it, the results will follow.",
-        icon: "💰"
-      },
-      {
-        id: 2,
-        question: "Do I need to be in therapy to take this Workshop?",
-        answer: "Not at all. This Workshop is designed for anyone seeking to process and heal trauma. It can also complement your work in therapy if you're currently seeing a professional.",
-        icon: "🧠"
-      },
-      {
-        id: 3,
-        question: "Is this Workshop suitable for people with no prior healing experience?",
-        answer: "Yes. Whether you're just beginning your healing journey or have done work before, this Workshop provides accessible yet powerful tools for all levels.",
-        icon: "🌱"
-      },
-      {
-        id: 4,
-        question: "How long will I have access to the materials?",
-        answer: "You'll have lifetime access to all modules, audio practices, and downloads.",
-        icon: "⏰"
-      },
-      {
-        id: 5,
-        question: "Is there support available during the Workshop?",
-        answer: "Yes! You can contact Dr. Samina via email for any Workshop-related questions or clarification. Please note this is not a substitute for therapy. For clinical or personalised support, we recommend working with a licensed therapist.",
-        icon: "💬"
-      }
-    ]
-  },
-  2: {
-    id: 2,
-    title: "Unburdening Love",
-    subtitle: "A 6-Week Self-Paced Workshop",
-    description: "Break Free from Relationship Blocks and Cultivate Healthy Love",
-    tagline: "Transform Your Relationships in Just 6 Weeks",
-    additionalTagline: "Affordable, Expert-Led Guidance to Heal and Thrive in Love",
-    fullDescription: "Are you ready to break free from the emotional blocks holding you back in love? Whether you're single, in a relationship, or navigating a marriage, this 6-week self-paced Workshop will help you release deep-seated barriers, heal past wounds, and cultivate healthy, lasting love. Led by an experienced psychologist, Unburdening Love is a transformative Workshop designed to help you uncover the roots of your relationship struggles and provide you with the tools to create healthier, more fulfilling connections with yourself and others.",
-    instructor: "Dr. Samina Khatun",
-    duration: "6 weeks",
-    lessons: 20,
-    level: "ALL LEVELS",
-    price: 75,
-    featured: true,
-    img_src: "/love_course.png",
-    img_alt: "Unburdening Love Workshop",
-    benefits: [
-      "Release Deep-Seated Love Blocks: Understand and heal the emotional patterns preventing you from experiencing healthy love.",
-      "Heal Past Wounds: Address past hurts and traumas that continue to impact your relationships.",
-      "Understand Yourself and Others: Gain deeper insight into your emotional triggers, attachment styles, and patterns.",
-      "Create Healthy Relationships: Learn actionable tools to build stronger, more conscious relationships."
-    ],
-    modules: [
-      {
-        id: 1,
-        title: "Healing the Roots of Attachment",
-        description: "Explore how early experiences shape your approach to love and relationships."
-      },
-      {
-        id: 2,
-        title: "The Hidden Wounds of Love",
-        description: "Uncover emotional baggage and limiting beliefs that may be holding you back."
-      },
-      {
-        id: 3,
-        title: "Understanding Triggers & Nervous System Responses",
-        description: "Learn how past wounds affect your emotional reactions and how to regulate them."
-      },
-      {
-        id: 4,
-        title: "Honouring Your Needs",
-        description: "Reclaim your voice, set boundaries, and create emotional safety in relationships."
-      },
-      {
-        id: 5,
-        title: "Rewriting the Love Story",
-        description: "Shift relationship patterns and choose love from a place of self-worth and wholeness."
-      },
-      {
-        id: 6,
-        title: "Integrating Healing into Life",
-        description: "Anchor your healing and sustain healthy love in your everyday interactions."
-      }
-    ],
-    whyDifferent: [
-      {
-        title: "Expert-Led",
-        description: "Designed by a licensed psychologist with years of experience in relationship therapy, this Workshop combines science-backed methods for deep healing."
-      },
-      {
-        title: "Affordable",
-        description: "High-quality, transformative material without the hefty price tag of therapy or one-on-one coaching."
-      },
-      {
-        title: "Self-Paced",
-        description: "Complete the modules at your own pace with lifetime access to all materials, so you can return to them whenever you need."
-      },
-      {
-        title: "Personal Support",
-        description: "Have your questions answered and get the support you need via email throughout the Workshop."
-      }
-    ],
-    testimonials: [
-      {
-        text: "I had no idea how much I was carrying from my childhood and past relationships. This Workshop helped me see it and, more importantly, let it go.",
-        author: "Sarah M."
-      },
-      {
-        text: "The exercises helped me realize my own attachment style and how it was affecting my relationship. I'm now communicating better and feeling more secure in love.",
-        author: "James L."
-      }
-    ],
-    bonuses: [
-      "Voice-Led Structured Workshop: Follow a guided, step-by-step journey led by Dr. Samina to help you navigate each module with ease and clarity.",
-      "Visualisation & Meditations: Access exclusive visualisations and meditations led by Dr. Samina to support your healing and transformation process.",
-      "Downloadable Materials: Receive printable worksheets, assessment tools, and exercises to deepen your learning and track your progress throughout the Workshop.",
-      "Exclusive Prompts & Exercises: Engage with thoughtfully designed exercises to help you reflect, heal, and create lasting change in your relationships."
-    ],
-    faqs: [
-      {
-        id: 1,
-        question: "Is there a refund policy for this Workshop?",
-        answer: "Due to the nature of the Workshop, refunds are not available. Once you purchase, you'll have immediate access to all the Workshop materials. We believe in the transformative power of this Workshop, and we're confident that if you commit to the process, you'll see lasting results.",
-        icon: "💰"
-      },
-      {
-        id: 2,
-        question: "Do I need to be in therapy to do this Workshop?",
-        answer: "No, you do not need to be in therapy to take this Workshop. It's designed for anyone looking to improve their relationships and heal emotional blocks, whether or not you're in therapy. If you're currently seeing a therapist, this Workshop can be a great complement to that work.",
-        icon: "🧠"
-      },
-      {
-        id: 3,
-        question: "Is this Workshop for singles, people in relationships, or married couples?",
-        answer: "Yes! Whether you're single, dating, or in a committed relationship, this Workshop is designed to help you release emotional blocks that affect how you connect with yourself and others. It's valuable for anyone looking to create stronger, healthier relationships.",
-        icon: "💕"
-      },
-      {
-        id: 4,
-        question: "How long do I have access to the Workshop?",
-        answer: "You get lifetime access to all Workshop materials, so you can work through the modules at your own pace whenever it fits your schedule.",
-        icon: "⏰"
-      },
-      {
-        id: 5,
-        question: "Is there support throughout the Workshop?",
-        answer: "Yes! You'll have access to me via email to ask any Workshop-related questions, seek clarification, or get additional support as you work through the material. Please note that I am available for Workshop-related inquiries only. For any personal therapeutic needs or general psychological support, I recommend reaching out to a licensed therapist.",
-        icon: "💬"
-      }
-    ]
-  },
-  3: {
-    id: 3,
-    title: "Unburdening Love + Trauma",
-    subtitle: "The 12-Week Self-Paced Healing Bundle",
-    description: "Heal Emotional Wounds, Reclaim Self-Worth & Create Conscious Relationships",
-    tagline: "Complete Transformation in Just 12 Weeks",
-    additionalTagline: "Holistic Healing Journey for Deep, Lasting Change",
-    fullDescription: "If you're carrying pain from the past that's affecting your present, whether in love, in life, or in your relationship with yourself, this bundle is for you. The Healing Bundle combines Unburdening Love and Unburdening Trauma, two deeply complementary Workshop designed by trauma-informed psychologist Dr Samina. This 12-week, self-paced journey will guide you through healing emotional wounds, understanding your patterns, and building safe, loving relationships, starting with the one you have with yourself.",
-    instructor: "Dr. Samina Khatun",
-    duration: "12 weeks",
-    lessons: 44,
-    level: "ALL LEVELS",
-    price: 120,
-    originalPrice: 150,
-    featured: true,
-    img_src: "/3.png",
-    img_alt: "Healing Bundle Course",
-    benefits: [
-      "Complete Emotional Healing: Address trauma patterns and relationship wounds in one comprehensive journey.",
-      "Nervous System Regulation: Learn to reconnect with your body and regulate your emotional responses.",
-      "Inner Child Healing: Address emotional wounds rooted in childhood experiences and early relationships.",
-      "Healthy Relationship Patterns: Build conscious, self-led approaches to love and connection.",
-      "Self-Worth Reclamation: Develop a strong, loving relationship with yourself as the foundation for all other relationships.",
-      "Lasting Transformation: Build practices that support ongoing growth, resilience, and emotional freedom."
-    ],
-    modules: [
-      {
-        id: 1,
-        title: "Unburdening Trauma & the Body",
-        description: "Why We Get Stuck in Pain – and How Awareness Sets Us Free"
-      },
-      {
-        id: 2,
-        title: "Reconnecting with the Body",
-        description: "Coming Back to Yourself – Safety, Sensation, and Presence"
-      },
-      {
-        id: 3,
-        title: "Inner Child Healing",
-        description: "Reclaiming the Parts of You That Still Hurt"
-      },
-      {
-        id: 4,
-        title: "Rewriting the Story",
-        description: "Challenging Limiting Beliefs and Thought Loops"
-      },
-      {
-        id: 5,
-        title: "Releasing Emotional Baggage",
-        description: "Letting Go of What You've Been Carrying"
-      },
-      {
-        id: 6,
-        title: "Integration & Forward Momentum",
-        description: "Staying Connected to Growth, Resilience, and Self-Love"
-      },
-      {
-        id: 7,
-        title: "Understanding Love Blocks",
-        description: "Identifying the Patterns That Keep You from Love"
-      },
-      {
-        id: 8,
-        title: "Attachment & Connection",
-        description: "Healing Your Relationship Blueprint"
-      },
-      {
-        id: 9,
-        title: "Self-Worth in Love",
-        description: "Building a Foundation of Healthy Self-Love"
-      },
-      {
-        id: 10,
-        title: "Boundaries & Communication",
-        description: "Creating Safe, Respectful Connections"
-      },
-      {
-        id: 11,
-        title: "Conscious Relationships",
-        description: "Moving from Reactive to Intentional Love"
-      },
-      {
-        id: 12,
-        title: "Living in Love",
-        description: "Integrating Healing into Daily Life and Relationships"
-      }
-    ],
-    whyDifferent: [
-      {
-        title: "Complete Transformation",
-        description: "Address both trauma healing and relationship patterns in one comprehensive, integrated Workshop."
-      },
-      {
-        title: "Expert-Led",
-        description: "Created by a trauma-informed psychologist with years of experience in emotional healing and relationship therapy."
-      },
-      {
-        title: "Exceptional Value",
-        description: "Get both Workshop for less than the cost of one therapy session - normally £150 when purchased separately."
-      },
-      {
-        title: "Self-Paced",
-        description: "Complete the 12-week journey at your own pace with lifetime access to all materials."
-      },
-      {
-        title: "Holistic Approach",
-        description: "Combining both Workshop offers a complete path to healing that addresses emotional pain at the root, then helps you build healthier connections."
-      }
-    ],
-    testimonials: [
-      {
-        text: "I started with trauma, and then moved into love. The combination changed everything. I finally understand myself and I feel hopeful again.",
-        author: "Layla R."
-      },
-      {
-        text: "The love Workshop gave me the relationship tools I never got growing up, but the trauma Workshop gave me the emotional grounding to actually use them.",
-        author: "Ben C."
-      }
-    ],
-    bonuses: [
-      "Unburdening Trauma (6 Weeks): A body-based healing Workshop focused on emotional release, nervous system regulation, and inner child healing",
-      "Unburdening Love (6 Weeks): A relationship-focused journey into attachment, boundaries, and self-worth in love",
-      "12 Voice-Led Modules guided by Dr Samina",
-      "Downloadable Worksheets, Tools & Prompts to support your healing",
-      "Meditations & Visualisations designed to deepen emotional transformation",
-      "Email Access to Dr Samina for Workshop-related support"
-    ],
-    faqs: [
-      {
-        id: 1,
-        question: "Do I need to do the courses in a specific order?",
-        answer: "You can start where it feels right, but we recommend beginning with Unburdening Trauma if you're navigating emotional overwhelm or early wounds, and Unburdening Love if your focus is more on relationships.",
-        icon: "📋"
-      },
-      {
-        id: 2,
-        question: "Is this bundle therapy?",
-        answer: "No. These are educational and therapeutic-style courses designed for self-reflection and growth. They are not a substitute for therapy, but they can complement therapy well.",
-        icon: "🧠"
-      },
-      {
-        id: 3,
-        question: "How long do I have access?",
-        answer: "You'll receive lifetime access to both courses and all materials.",
-        icon: "⏰"
-      },
-      {
-        id: 4,
-        question: "Is there a refund policy?",
-        answer: "Due to the digital nature of the Workshop, refunds are not available. You'll have immediate, permanent access to all content upon purchase.",
-        icon: "💰"
-      },
-      {
-        id: 5,
-        question: "Is support available?",
-        answer: "Yes, you'll have email access to Dr Samina for any Workshop-related questions or clarifications.",
-        icon: "💬"
-      }
-    ]
-  }
-}
+import { getCourseWithFrontPageContent } from '../api/courseAPI'
+import { staticCourseData, sharedStaticContent, isBundleCourse } from '../data/staticCourseData'
 
 const CourseDetails = () => {
   const { id } = useParams()
   const [course, setCourse] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const [openFaqId, setOpenFaqId] = useState(null)
 
   const toggleFaq = (faqId) => {
     setOpenFaqId(openFaqId === faqId ? null : faqId)
   }
 
-  useEffect(() => {
-    const fetchCourse = () => {
-      setTimeout(() => {
-        const courseData = dummyCoursesData[parseInt(id)]
-        setCourse(courseData)
-        setLoading(false)
-      }, 500)
+  // Helper function to transform database data to component format
+  const transformCourseData = (dbCourse) => {
+    console.log('Transforming course data:', dbCourse); // Debug log
+    
+    if (!dbCourse) {
+      console.error('No course data provided to transform');
+      return null;
     }
 
-    fetchCourse()
-  }, [id])
+    const frontPageContent = dbCourse.frontPageContent;
+    console.log('Front page content:', frontPageContent); // Debug log
+    
+    // Parse lessons from pricing_details if available
+    const lessons = frontPageContent?.pricing_details?.courseDetails?.lessons || dbCourse.moduleNumbers || 20;
+    const duration = frontPageContent?.pricing_details?.courseDetails?.duration || frontPageContent?.duration || "6 weeks";
+    const instructor = frontPageContent?.pricing_details?.courseDetails?.instructor || frontPageContent?.instructor_info?.name || sharedStaticContent.defaultInstructor;
+    
+    // Transform testimonials from database format
+    const testimonials = (frontPageContent?.testimonials || []).map(t => ({
+      text: t.content,
+      author: t.name
+    }));
+
+    // Transform modules from database format
+    const modules = (dbCourse.modules || []).map(module => ({
+      id: module.moduleID,
+      title: module.title,
+      description: module.description
+    }));
+
+    console.log('Transformed modules:', modules); // Debug log
+
+    return {
+      id: dbCourse.courseID,
+      title: dbCourse.title,
+      subtitle: frontPageContent?.course_type || "Self-Paced Workshop",
+      description: dbCourse.description,
+      tagline: "Transform Your Life with Expert Guidance",
+      additionalTagline: "Expert-Led Guidance to Transform Your Life",
+      fullDescription: frontPageContent?.front_page_description || dbCourse.description,
+      instructor: instructor,
+      duration: duration,
+      lessons: lessons,
+      level: sharedStaticContent.defaultFeatures.level,
+      price: parseFloat(frontPageContent?.price) || 75,
+      featured: true,
+      img_src: dbCourse.imageURL || `/course-${dbCourse.courseID}.png`,
+      img_alt: `${dbCourse.title} Course`,
+      benefits: frontPageContent?.benefits || [],
+      modules: modules,
+      whyDifferent: frontPageContent?.why_this_course || [],
+      testimonials: testimonials,
+      bonuses: frontPageContent?.bonuses || sharedStaticContent.defaultWhatIncluded,
+      faqs: frontPageContent?.faqs || sharedStaticContent.defaultFaqs
+    };
+  };
+
+  useEffect(() => {
+    const fetchCourse = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        const courseId = parseInt(id);
+        console.log('Fetching course with ID:', courseId); // Debug log
+        
+        // If it's the bundle course (course 32), use static data
+        if (isBundleCourse(courseId)) {
+          console.log('Using static data for bundle course'); // Debug log
+          setCourse(staticCourseData[courseId]);
+          setLoading(false);
+          return;
+        }
+
+        // For other courses, fetch from database
+        console.log('Fetching dynamic course data from database'); // Debug log
+        const courseData = await getCourseWithFrontPageContent(courseId);
+        console.log('Received course data:', courseData); // Debug log
+        
+        if (!courseData) {
+          console.error('No course data returned from API');
+          setError('Course not found');
+          setLoading(false);
+          return;
+        }
+
+        const transformedCourse = transformCourseData(courseData);
+        console.log('Transformed course data:', transformedCourse); // Debug log
+        
+        if (!transformedCourse) {
+          setError('Failed to process course data');
+          setLoading(false);
+          return;
+        }
+
+        setCourse(transformedCourse);
+        
+      } catch (err) {
+        console.error('Error fetching course:', err);
+        setError(err.message || 'Failed to load course data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourse();
+  }, [id]);
 
   if (loading) {
     return (
@@ -445,13 +136,19 @@ const CourseDetails = () => {
     )
   }
 
-  if (!course) {
+  if (error || !course) {
     return (
       <div className="min-h-screen bg-cream">
         <Header />
         <div className="container mx-auto px-4 py-20 text-center">
-          <h1 className="text-3xl font-fitzgerald text-black mb-4">Workshop Not Found</h1>
-          <p className="text-gray-600 font-fitzgerald mb-8">The Workshop you're looking for doesn't exist or has been removed.</p>
+          <h1 className="text-3xl font-fitzgerald text-black mb-4">
+            {error === 'Course not found' ? 'Workshop Not Found' : 'Error Loading Workshop'}
+          </h1>
+          <p className="text-gray-600 font-fitzgerald mb-8">
+            {error === 'Course not found' 
+              ? "The Workshop you're looking for doesn't exist or has been removed."
+              : "There was an error loading the workshop. Please try again later."}
+          </p>
           <Link to="/courses" className="bg-primary text-white font-fitzgerald px-8 py-3 hover:bg-primary-dark transition-colors" style={{ cursor: 'pointer' }}>
             Browse All Courses
           </Link>
