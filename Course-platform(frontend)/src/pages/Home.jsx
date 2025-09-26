@@ -371,14 +371,14 @@ const Home = () => {
               {/* Buttons */}
               <div className="flex gap-3">
                 <button
-                  onClick={() => window.location.href = "/checkout/1"}
+                  onClick={() => window.location.href = "/checkout/23"}
                   className="flex-1 bg-primary text-white py-3 px-4 rounded-full text-base font-medium hover:bg-gray-800 transition-colors"
                   style={{ cursor: 'pointer' }}
                 >
                   BUY NOW
                 </button>
                 <button
-                  onClick={() => window.location.href = "/course/1"}
+                  onClick={() => window.location.href = "/course/23"}
                   className="flex-1 border-2 border-primary text-primary py-3 px-4 rounded-full text-base font-medium hover:bg-primary hover:text-white transition-colors"
                   style={{ cursor: 'pointer' }}
                 >
@@ -408,14 +408,14 @@ const Home = () => {
               {/* Buttons */}
               <div className="flex gap-3">
                 <button
-                  onClick={() => window.location.href = "/checkout/2"}
+                  onClick={() => window.location.href = "/checkout/30"}
                   className="flex-1 bg-primary text-white py-3 px-4 rounded-full text-base font-medium hover:bg-gray-800 transition-colors"
                   style={{ cursor: 'pointer' }}
                 >
                   BUY NOW
                 </button>
                 <button
-                  onClick={() => window.location.href = "/course/2"}
+                  onClick={() => window.location.href = "/course/30"}
                   className="flex-1 border-2 border-primary text-primary py-3 px-4 rounded-full text-base font-medium hover:bg-primary hover:text-white transition-colors"
                   style={{ cursor: 'pointer' }}
                 >
@@ -445,14 +445,14 @@ const Home = () => {
               {/* Button */}
               <div className="flex gap-3">
                 <button
-                  onClick={() => window.location.href = "/checkout/3"}
+                  onClick={() => window.location.href = "/checkout/32"}
                   className="flex-1 bg-primary text-white py-3 px-4 rounded-full text-base font-medium hover:bg-gray-800 transition-colors"
                   style={{ cursor: 'pointer' }}
                 >
                   BUY NOW
                 </button>
                 <button
-                  onClick={() => window.location.href = "/course/3"}
+                  onClick={() => window.location.href = "/course/32"}
                   className="flex-1 border-2 border-primary text-primary py-3 px-4 rounded-full text-base font-medium hover:bg-primary hover:text-white transition-colors"
                 >
                   LEARN MORE

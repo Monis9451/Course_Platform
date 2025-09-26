@@ -198,7 +198,7 @@ function ThankYou() {
             </div>
             <div>
               <Link
-                to="/user-courses"
+                to="/my-courses"
                 className="text-[#bd6334] hover:text-[#a65525] inline-block mt-4 ml-4"
               >
                 Go to My Courses
