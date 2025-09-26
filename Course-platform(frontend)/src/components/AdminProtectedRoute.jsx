@@ -30,6 +30,23 @@ const AdminProtectedRoute = () => {
     previousUser.current = currentUser;
   }, [currentUser, isLoggingOut]);
 
+  // Handle toast messages in useEffect to avoid render-time state updates
+  useEffect(() => {
+    if (loading || isLoggingOut) return;
+
+    if (!currentUser) {
+      if (!hasShownToast.current && !wasLoggingOut.current) {
+        toast.error('🔒 Please login to access this page');
+        hasShownToast.current = true;
+      }
+    } else if (!isAdmin) {
+      if (!hasShownToast.current && !wasLoggingOut.current) {
+        toast.error('🚫 Access denied. Admin privileges required.');
+        hasShownToast.current = true;
+      }
+    }
+  }, [currentUser, isAdmin, loading, isLoggingOut]);
+
   if (loading || isLoggingOut) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -45,18 +62,10 @@ const AdminProtectedRoute = () => {
 
   // Don't show login error if we just finished logging out
   if (!currentUser) {
-    if (!hasShownToast.current && !isLoggingOut && !wasLoggingOut.current) {
-      toast.error('🔒 Please login to access this page');
-      hasShownToast.current = true;
-    }
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   if (!isAdmin) {
-    if (!hasShownToast.current && !wasLoggingOut.current) {
-      toast.error('🚫 Access denied. Admin privileges required.');
-      hasShownToast.current = true;
-    }
     return <Navigate to="/" replace />;
   }
 
