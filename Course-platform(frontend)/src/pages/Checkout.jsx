@@ -7,56 +7,13 @@ import { loadStripe } from '@stripe/stripe-js';
 import Header from "../pages/Header";
 import StripePaymentForm from "../components/StripePaymentForm";
 import { createPaymentIntent, checkCourseAccess } from "../api/paymentAPI";
+import { getCourseWithFrontPageContent } from "../api/courseAPI";
+import { staticCourseData, isBundleCourse, getBundleCourseIds } from "../data/staticCourseData";
 import { useAuth } from "../context/authContext";
 import toast from 'react-hot-toast';
 
 // Initialize Stripe
 const stripePromise = loadStripe('pk_test_51RsNCkGvi0rYXYeQadhLnRdb8oIuxZhlFzIBJ7KNHDBDdlvAha26Ol2ujr2aRcI51bcPvWoYdntqilRoQZeg2Zci00K7OgwCCg');
-
-const courseData = {
-  1: {
-    id: 1,
-    title: "Unburdening Trauma: A 6-Week Self-Paced Workshop",
-    description: "A transformative journey to heal past wounds and create lasting change",
-    duration: "6 weeks",
-    price: 75,
-    originalPrice: 120,
-    image: "/1.png",
-    benefits: [
-      "Lifetime Access to Workshop",
-      "All Workshop Materials & Resources",
-      "Email Support from Dr. Samina",
-    ]
-  },
-  2: {
-    id: 2,
-    title: "Unburdening Love: A 6-Week Self-Paced Workshop",
-    description: "Break free from relationship blocks and cultivate healthy love",
-    duration: "6 weeks",
-    price: 75,
-    originalPrice: 120,
-    image: "/love_course.png",
-    benefits: [
-      "Lifetime Access to Workshop",
-      "All Workshop Materials & Resources",
-      "Email Support from Dr. Samina",
-    ]
-  },
-  3: {
-    id: 3,
-    title: "Unburdening Love + Trauma: The 12-Week Self-Paced Healing Bundle",
-    description: "Complete healing journey combining both transformative courses",
-    duration: "12 weeks",
-    price: 120,
-    originalPrice: 150,
-    image: "/3.png",
-    benefits: [
-      "Lifetime Access to Both Courses",
-      "All Workshop Materials & Resources",
-      "Email Support from Dr. Samina",
-    ]
-  }
-};
 
 function Checkout() {
   const { id } = useParams();
@@ -67,46 +24,208 @@ function Checkout() {
   const [isLoading, setIsLoading] = useState(true);
   const [hasAccess, setHasAccess] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Helper function to transform database course data for checkout
+  const transformCourseForCheckout = (dbCourse) => {
+    console.log('Transforming course data:', dbCourse);
+    const frontPageContent = dbCourse.frontPageContent;
+    console.log('Front page content:', frontPageContent);
+    
+    const transformed = {
+      id: dbCourse.courseID,
+      title: `${dbCourse.title}: ${frontPageContent?.course_type || frontPageContent?.pricing_details?.courseDetails?.course_type || "Self-Paced Workshop"}`,
+      description: dbCourse.description || frontPageContent?.front_page_description || "A transformative learning experience",
+      duration: frontPageContent?.duration || frontPageContent?.pricing_details?.courseDetails?.duration || "6 weeks",
+      price: frontPageContent?.price || frontPageContent?.pricing_details?.price || 75,
+      image: dbCourse.imageURL || `/course-${dbCourse.courseID}.png`,
+      benefits: [
+        "Lifetime Access to Workshop",
+        "All Workshop Materials & Resources", 
+        "Email Support from Dr. Samina"
+      ]
+    };
+    
+    console.log('Transformed course data:', transformed);
+    return transformed;
+  };
 
   useEffect(() => {
     const initializeCheckout = async () => {
-      const courseId = parseInt(id);
-      
-      if (!courseData[courseId]) {
-        setIsLoading(false);
-        return;
-      }
-
-      setCourse(courseData[courseId]);
-
-      // Check if user is logged in
-      if (!currentUser || !authToken) {
-        toast.error('Please log in to purchase a course');
-        navigate('/login');
-        return;
-      }
-
-      // Admin should have direct access
-      if (isAdmin) {
-        toast.success('Admin access granted');
-        navigate(`/course-content/${courseId}`);
-        return;
-      }
-
       try {
-        // Check if user already has access
-        const accessCheck = await checkCourseAccess(courseId, authToken);
+        console.log('=== CHECKOUT INITIALIZATION START ===');
+        console.log('Course ID from URL params:', id);
+        console.log('Current user:', currentUser);
+        console.log('Auth token exists:', !!authToken);
+        console.log('Is admin:', isAdmin);
         
-        if (accessCheck.hasAccess) {
-          toast.success('You already have access to this course');
+        setIsLoading(true);
+        setError(null);
+        
+        const courseId = parseInt(id);
+        console.log('Parsed course ID:', courseId);
+        
+        if (isNaN(courseId)) {
+          throw new Error('Invalid course ID');
+        }
+        
+        let courseData;
+
+        // If it's the bundle course (course 3), use static data
+        if (isBundleCourse(courseId)) {
+          console.log('Using static data for bundle course');
+          courseData = {
+            id: staticCourseData[courseId].id,
+            title: staticCourseData[courseId].title + ": " + staticCourseData[courseId].subtitle,
+            description: staticCourseData[courseId].description,
+            duration: staticCourseData[courseId].duration,
+            price: staticCourseData[courseId].price,
+            originalPrice: staticCourseData[courseId].originalPrice,
+            image: staticCourseData[courseId].img_src,
+            benefits: [
+              "Lifetime Access to Both Courses",
+              "All Workshop Materials & Resources",
+              "Email Support from Dr. Samina",
+            ]
+          };
+          console.log('Bundle course data:', courseData);
+        } else {
+          // For other courses, fetch from database
+          console.log('Fetching course data from database...');
+          try {
+            const dbCourse = await getCourseWithFrontPageContent(courseId);
+            console.log('Database course response:', dbCourse);
+            
+            if (!dbCourse) {
+              throw new Error('Course not found in database');
+            }
+
+            courseData = transformCourseForCheckout(dbCourse);
+            console.log('Transformed course data:', courseData);
+          } catch (apiError) {
+            console.error('API Error details:', apiError);
+            throw new Error(`Failed to load course data: ${apiError.message}`);
+          }
+        }
+
+        setCourse(courseData);
+        console.log('Course data set successfully');
+
+        // Check if user is logged in
+        if (!currentUser || !authToken) {
+          console.log('User not logged in - redirecting to login');
+          toast.error('Please log in to purchase a course');
+          navigate('/login');
+          return;
+        }
+
+        // Admin should have direct access
+        if (isAdmin) {
+          console.log('Admin access granted');
+          toast.success('Admin access granted');
           navigate(`/course-content/${courseId}`);
           return;
         }
 
-        setHasAccess(false);
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Error checking course access:', error);
+        // Check if user already has access to the course(s)
+        console.log('Checking course access...');
+        let hasAccessToCourse = false;
+        
+        try {
+          if (isBundleCourse(courseId)) {
+            // For bundle course, check access to both individual courses
+            console.log('Checking bundle course access');
+            const bundleCourseIds = getBundleCourseIds();
+            console.log('Bundle course IDs:', bundleCourseIds);
+            
+            const accessChecks = await Promise.all(
+              bundleCourseIds.map(id => {
+                console.log(`Checking access for course ${id}`);
+                return checkCourseAccess(id, authToken);
+              })
+            );
+            console.log('Bundle access checks results:', accessChecks);
+            hasAccessToCourse = accessChecks.every(check => check.hasAccess);
+          } else {
+            // For individual courses
+            console.log(`Checking access for individual course ${courseId}`);
+            const accessCheck = await checkCourseAccess(courseId, authToken);
+            console.log('Individual course access check:', accessCheck);
+            hasAccessToCourse = accessCheck.hasAccess;
+          }
+          
+          console.log('User has access to course:', hasAccessToCourse);
+        } catch (accessError) {
+          console.error('Error checking course access:', accessError);
+          // Don't fail the entire checkout if access check fails, just assume no access
+          hasAccessToCourse = false;
+        }
+
+        if (hasAccessToCourse) {
+          console.log('User already has access - showing access message');
+          setHasAccess(true);
+          setIsLoading(false);
+          return;
+        }
+
+        // Create payment intent
+        console.log('Creating payment intent...');
+        console.log('Payment details:', {
+          amount: courseData.price * 100,
+          currency: 'gbp',
+          title: courseData.title,
+          hasAuthToken: !!authToken
+        });
+        
+        try {
+          const metadata = {};
+          
+          // Add course IDs to metadata for backend processing
+          if (isBundleCourse(courseId)) {
+            metadata.courseIds = getBundleCourseIds(); // [23, 30]
+            metadata.isBundle = true;
+          } else {
+            metadata.courseIds = [courseId];
+            metadata.isBundle = false;
+          }
+          
+          console.log('Payment metadata:', metadata);
+          
+          const paymentData = await createPaymentIntent(
+            courseData.price * 100, // Convert to cents
+            'gbp',
+            courseData.title,
+            authToken,
+            metadata
+          );
+          
+          console.log('Payment intent created successfully:', paymentData);
+          setClientSecret(paymentData.clientSecret);
+          setShowPayment(true);
+        } catch (paymentError) {
+          console.error('Payment intent creation failed:', paymentError);
+          throw new Error(`Payment initialization failed: ${paymentError.message}`);
+        }
+
+      } catch (err) {
+        console.error('=== CHECKOUT INITIALIZATION ERROR ===');
+        console.error('Error type:', err.constructor.name);
+        console.error('Error message:', err.message);
+        console.error('Full error:', err);
+        console.error('Stack trace:', err.stack);
+        
+        if (err.message.includes('Failed to load course data')) {
+          setError('Error loading course information');
+        } else if (err.message.includes('Payment initialization failed')) {
+          setError('Failed to initialize payment');
+        } else if (err.message.includes('Invalid course ID')) {
+          setError('Invalid course ID');
+        } else {
+          setError(`Checkout error: ${err.message}`);
+        }
+        
+        toast.error(err.message || 'Failed to initialize checkout');
+      } finally {
         setIsLoading(false);
       }
     };
@@ -122,8 +241,37 @@ function Checkout() {
 
     try {
       setIsLoading(true);
-      const paymentData = await createPaymentIntent(course.id, authToken);
-      setClientSecret(paymentData.clientSecret);
+      
+      const metadata = {};
+      
+      if (isBundleCourse(course.id)) {
+        // Bundle course payment logic - will enroll user in courses 23 and 30
+        metadata.courseIds = getBundleCourseIds(); // [23, 30]
+        metadata.isBundle = true;
+        
+        const paymentData = await createPaymentIntent(
+          course.price * 100, // Convert to cents  
+          'gbp',
+          `Bundle: ${course.title}`,
+          authToken,
+          metadata
+        );
+        setClientSecret(paymentData.clientSecret);
+      } else {
+        // Individual course payment
+        metadata.courseIds = [course.id];
+        metadata.isBundle = false;
+        
+        const paymentData = await createPaymentIntent(
+          course.price * 100, // Convert to cents
+          'gbp', 
+          course.title,
+          authToken,
+          metadata
+        );
+        setClientSecret(paymentData.clientSecret);
+      }
+      
       setShowPayment(true);
     } catch (error) {
       console.error('Error creating payment intent:', error);
@@ -135,6 +283,8 @@ function Checkout() {
 
   const handlePaymentSuccess = (paymentIntent) => {
     toast.success('Payment successful!');
+    
+    // Navigate to thank you page with course ID
     navigate(`/thankyou/${course.id}`);
   };
 
@@ -157,26 +307,61 @@ function Checkout() {
     );
   }
 
-  if (!course) {
+  if (!course || error) {
     return (
       <>
         <Header />
         <div className="flex flex-col bg-cream min-h-screen w-full px-4 sm:px-8">
           <div className="flex flex-col items-center justify-center mt-12 mb-8 text-center">
             <h1 className="text-black text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
-              Course Not Found
+              {error === 'Course not found' ? 'Course Not Found' : 'Error Loading Course'}
             </h1>
             <p className="text-gray-700 text-lg sm:text-xl">
-              The Workshop you're looking for doesn't exist.
+              {error === 'Course not found' 
+                ? "The Workshop you're looking for doesn't exist."
+                : "There was an error loading the course. Please try again later."}
             </p>
-            <Link to="/" className="mt-4 bg-[#B45B29] text-white px-6 py-3 rounded" style={{ cursor: 'pointer' }}>
-              Return to Homepage
+            <Link to="/courses" className="mt-4 bg-[#B45B29] text-white px-6 py-3 rounded" style={{ cursor: 'pointer' }}>
+              Browse All Courses
             </Link>
           </div>
         </div>
       </>
     );
   }
+
+  if (hasAccess) {
+    return (
+      <>
+        <Header />
+        <div className="flex flex-col bg-cream min-h-screen w-full px-4 sm:px-8">
+          <div className="flex flex-col items-center justify-center mt-12 mb-8 text-center">
+            <h1 className="text-black text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
+              You Already Have Access!
+            </h1>
+            <p className="text-gray-700 text-lg sm:text-xl mb-6">
+              {isBundleCourse(course.id) 
+                ? "You already have access to both courses in this bundle."
+                : "You already have access to this course."}
+            </p>
+            {isBundleCourse(course.id) ? (
+              <Link to="/courses" className="bg-[#B45B29] text-white px-6 py-3 rounded mr-4" style={{ cursor: 'pointer' }}>
+                View All Courses
+              </Link>
+            ) : (
+              <Link to={`/course-content/${course.id}`} className="bg-[#B45B29] text-white px-6 py-3 rounded mr-4" style={{ cursor: 'pointer' }}>
+                Go to Course
+              </Link>
+            )}
+            <Link to="/courses" className="bg-gray-600 text-white px-6 py-3 rounded" style={{ cursor: 'pointer' }}>
+              Browse Other Courses
+            </Link>
+          </div>
+        </div>
+      </>
+    );
+  }
+  
   return (
     <>
       <Header />
