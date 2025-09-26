@@ -91,7 +91,7 @@ const Courses = () => {
                       ) : (
                         <>
                           <button 
-                            onClick={() => window.location.href = course.id === 3 ? '/bundle' : `/checkout/${course.id}`}
+                            onClick={() => window.location.href = course.id === 32 ? '/bundle' : `/checkout/${course.id}`}
                             className="bg-primary hover:bg-[#a3532c] text-white font-fitzgerald px-8 py-2 rounded-none transition-colors duration-200"
                             style={{ cursor: 'pointer' }}
                           >
