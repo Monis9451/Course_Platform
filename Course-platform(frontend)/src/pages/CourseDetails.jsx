@@ -15,7 +15,7 @@ const CourseDetails = () => {
 
   const toggleFaq = (faqId) => {
     setOpenFaqId(openFaqId === faqId ? null : faqId)
-  }
+  } 
 
   // Helper function to transform database data to component format
   const transformCourseData = (dbCourse) => {
