@@ -475,13 +475,6 @@ function Checkout() {
                 {isLoading ? 'Loading...' : 'Complete Purchase'} <FaArrowRight />
               </button>
             )}
-            <div className="flex flex-col items-center justify-center text-center gap-2 text-sm text-gray-600">
-              <p>Secure Payment Processing</p>
-              <p>
-                By completing your purchase, you agree to our Terms of Service
-                and Privacy Policy
-              </p>
-            </div>
           </div>
         </div>
       </div>{" "}
